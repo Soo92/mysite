@@ -59,18 +59,22 @@
 				</td></tr>
 			<tr>
 				<tr>
-					<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기</td>
-					<td colspan="9" bgcolor="#ffffff" align="left"><p id="preview_text" style="text-align:center">dd</p></td>
+					<td class="od_view_title" width="50" height="150" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기</td>
+					<td colspan="9" bgcolor="#ffffff" align="left"><p id="preview_text" style="text-align:center;color:#000000;font-family:a;font-size:70px;font-weight:bold;">미리보기</p></td>
 				</tr>
-				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">아크릴색상</td>
+				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">색상</td>
 				<td width="120" bgcolor="#ffffff" align="left">
 					<span id="pro_color_span">
-						<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="chpro(this.value);">
+						<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
 							<option value="" selected="">색상선택-클릭</option>
-							<option value="A.검정">검정</option>
-							<option value="B.무광검정">무광검정</option>
-							<option value="A.백색">백색</option>
-							<option value="B.무광백색">무광백색</option>
+							<option value="#00000">검은색</option>
+							<option value="#018d44">동백잎</option>
+							<option value="#ee2b6e">핫핑크</option>
+							<option value="#ac1f30">사과색</option>
+							<option value="#f2ea01">레몬색</option>
+							<option value="#ffffff">흰색</option>
+							<option value="#3e64af">바다색</option>
+							<option value="#6e5048">고목나무색</option>
 						</select>
 					</span>
 				</td>
@@ -107,11 +111,14 @@
 
 				<!--<input type="text" size="8" name="pro_font" id="pro_font"  value=""> 텍스트형식으로입력선택-->
 
-				<select name="pro_font" class="form" style="font-size:12;">
+				<select name="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
 					<option value="">선택</option>
-					<option value="추천-1" selected="">추천-1번</option>
-					<option value="추천-2">추천-2번</option>
-					<option value="추천-3">추천-3번</option>
+					<option value="a" selected="">돈부리덮밥</option>
+					<option value="b">이자카야 선술집</option>
+					<option value="c">문화공원 나들이</option>
+					<option value="d">맑은 샘물터</option>
+					<option value="e">호두나무</option>
+					<option value="f">책읽는 골목</option>
 				</select>
 			</td>
 
@@ -119,7 +126,12 @@
 
 			<td class="od_view_title" width="60" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">사이즈(높이)</td>
 			<td width="100" bgcolor="#ffffff" align="left">
-				<input type="text" size="6" name="pro_size" id="pro_size" class="pro_size" value="">cm
+				<select name="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
+					<option value="">선택</option>
+					<option value="10" selected="">10cm</option>
+					<option value="20">20cm</option>
+					<option value="30">30cm</option>
+				</select>
 			</td>
 			<td class="od_view_title" width="40" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">SET</td>
 			<td width="100" bgcolor="#ffffff" align="left">
@@ -129,7 +141,7 @@
 		<tr>
 			<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">내용</td>
 			<td colspan="9" bgcolor="#ffffff" align="left">
-				<input type="text" style="width:95%" name="pro_text" id="pro_text" value="" onkeyup="preview_update()">
+				<input type="text" style="width:95%" name="pro_text" id="pro_text" value="미리보기" onkeyup="preview_update()">
 			</td>
 		</tr>
 		<tr>
@@ -1211,7 +1223,12 @@ function cnt_ddamddang(data)
 function preview_update()
 {
 	var x = document.myform.pro_text.value
+	var f_clr = document.myform.pro_color.value
+	var f_size = (60 + document.myform.pro_size.value*1)
+	var f_w = document.myform.pro_font.value
+
 	document.getElementById("preview_text").innerHTML = x
+	document.getElementById("preview_text").style="text-align:center;color:"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
 }
 
 //계산함수
