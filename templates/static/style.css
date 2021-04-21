@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+@font-face {
+  src : url("fonts/a.ttf");font-family:"a";
+}
+@font-face {
+  src : url("fonts/b.ttf");font-family:"b";
+}
+@font-face {
+  src : url("fonts/c.ttf");font-family:"c";
+}
+@font-face {
+  src : url("fonts/d.ttf");font-family:"d";
+}
+@font-face {
+  src : url("fonts/e.ttf");font-family:"e";
+}
+@font-face {
+  src : url("fonts/f.ttf");font-family:"f";
+}
