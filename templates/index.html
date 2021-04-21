@@ -60,34 +60,33 @@
 			<tr>
 				<tr>
 					<td class="od_view_title" width="50" height="150" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기</td>
-					<td colspan="9" bgcolor="#ffffff" align="left"><p id="preview_text" style="text-align:center;color:#000000;font-family:a;font-size:70px;font-weight:bold;">미리보기</p></td>
+					<td colspan="9" bgcolor="#ffffff" align="left" style="background-color:#c4c4c4;"><p id="preview_text" style="text-shadow: 1px 1px, 2px 2px, 3px 3px, 4px 4px, 5px 5px;text-align:center;color:#000000;font-family:a;font-size:70px;font-weight:bold;">미리보기</p></td>
 				</tr>
 				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">색상</td>
 				<td width="120" bgcolor="#ffffff" align="left">
 					<span id="pro_color_span">
 						<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
-							<option value="" selected="">색상선택-클릭</option>
-							<option value="#00000">검은색</option>
-							<option value="#018d44">동백잎</option>
-							<option value="#ee2b6e">핫핑크</option>
-							<option value="#ac1f30">사과색</option>
-							<option value="#f2ea01">레몬색</option>
-							<option value="#ffffff">흰색</option>
-							<option value="#3e64af">바다색</option>
-							<option value="#6e5048">고목나무색</option>
+							<option value="000000" selected="">검은색</option>
+							<option value="018d44">동백잎</option>
+							<option value="ee2b6e">핫핑크</option>
+							<option value="ac1f30">사과색</option>
+							<option value="f2ea01">레몬색</option>
+							<option value="ffffff">흰색</option>
+							<option value="3e64af">바다색</option>
+							<option value="6e5048">고목나무색</option>
 						</select>
 					</span>
 				</td>
 				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">아크릴두께</td>
 				<td width="70" bgcolor="#ffffff" align="left">
 					<span id="pro_tick_span">
-						<select name="pro_tick" class="form" style="font-size:12;">
+						<select name="pro_tick" class="form" style="font-size:12;" onchange="preview_update()">
 							<option value="">선택</option>
-							<option value="2mm">2mm</option>
-							<option value="3mm">3mm</option>
-							<option value="5mm" selected="">5mm</option>
-							<option value="8mm">8mm</option>
-							<option value="10mm">10mm</option>
+							<option value="2">2mm</option>
+							<option value="3">3mm</option>
+							<option value="5" selected="">5mm</option>
+							<option value="8">8mm</option>
+							<option value="10">10mm</option>
 							<!--<option value="10T">10T</option>-->
 						</select>
 					</span>
@@ -1226,9 +1225,20 @@ function preview_update()
 	var f_clr = document.myform.pro_color.value
 	var f_size = (60 + document.myform.pro_size.value*1)
 	var f_w = document.myform.pro_font.value
+	var f_thi = document.myform.pro_tick.value
+	var f_shwd = "1px 1px 1px #" + f_clr
+
+	for (step = 2; step <= f_thi; step++) {
+	  f_shwd=f_shwd + ",1px " + step + "px 1px #ffffff"
+	}
+  f_shwd=f_shwd +
+		",1px " +(4 + step*1)+ "px 6px rgba(16,16,16,0.4),"+
+		"1px " +(8 + step*1)+ "px 10px rgba(16,16,16,0.2),"+
+		"1px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
+		"1px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
 	document.getElementById("preview_text").innerHTML = x
-	document.getElementById("preview_text").style="text-align:center;color:"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+	document.getElementById("preview_text").style="text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
 }
 
 //계산함수
@@ -1491,7 +1501,7 @@ function w_sum()
 	spqty_nn.innerHTML = pcount;		//세트수량
 	spcnt_nn.innerHTML = pqty;			//글자갯수
 	spsum_nn.innerHTML = setComma(psum);
-	tempHtml =  "<a href='##'><img src='./img/icon_del.png' border=0 onClick='delline(this)' name='del_" + currentlist + "'></a>";			// 이미지 경로임
+	tempHtml =  "<a href='##'><img src='static/icon_del.png' border=0 onClick='delline(this)' name='del_" + currentlist + "'></a>";			// 이미지 경로임
 	spdel_nn.innerHTML = tempHtml;
 	//tt_sum = eval(spptm)+eval(psum);   //소계 합산
 	var tt_sum2 = 0;
