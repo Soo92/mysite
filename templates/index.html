@@ -5,7 +5,7 @@
 
 	<meta http-equiv="imagetoolbar" content="no">
 	<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
-	<title>미리보는 견적 | 알리네 간판 </title>
+	<title> 제작상품 미리보기 | 알리네 간판 </title>
 	<link rel="stylesheet" href="static/default.css">
 	<link rel="stylesheet" href="static/style.css">
 	<link rel="stylesheet" href="static/style(1).css">
@@ -32,1571 +32,1201 @@
 <script src="static/common.js.다운로드"></script>
 <script src="static/wrest.js.다운로드"></script>
 
-
 </head>
-<body topmargin="0" leftmargin="0">
+<body topmargin="0" leftmargin="0" onload="preview_update()">
 	<div style="width:700;">
-
-
-		<iframe name="fontpreview" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="700" height="350" src="static/preview_ac2.html">
-		</iframe>
-
-		<br><br>
-		<br>
-
+		<br><br><br>
 		<!-- 계산기부분 시작 -->
 		<form name="myform">
-
 			<input type="hidden" name="ptm" value="0">
 			<input type="hidden" name="p_listcnt" value="1">
 			<input type="hidden" name="p_price">
 			<input type="hidden" name="p_mnsize" value="3">  <!--미니멈 글씨높이-->
 			<input type="hidden" name="p_mxsize" value="55">  <!--맥시멈 글씨높이-->
-
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" width="700" align="left">
 				<tbody><tr><td align="center" bgcolor="#FFFFFF" colspan="10">
 					<img src="static/3dtexttitle2.jpg" border="0">
 				</td></tr>
-			<tr>
-				<tr>
-					<td class="od_view_title" width="50" height="150" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기</td>
-					<td colspan="9" bgcolor="#ffffff" align="left" style="background-color:#c4c4c4;"><p id="preview_text" style="text-shadow: 1px 1px, 2px 2px, 3px 3px, 4px 4px, 5px 5px;text-align:center;color:#000000;font-family:a;font-size:70px;font-weight:bold;">미리보기</p></td>
-				</tr>
-				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">색상</td>
-				<td width="120" bgcolor="#ffffff" align="left">
-					<span id="pro_color_span">
-						<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
-							<option value="000000" selected="">검은색</option>
-							<option value="018d44">동백잎</option>
-							<option value="ee2b6e">핫핑크</option>
-							<option value="ac1f30">사과색</option>
-							<option value="f2ea01">레몬색</option>
-							<option value="ffffff">흰색</option>
-							<option value="3e64af">바다색</option>
-							<option value="6e5048">고목나무색</option>
-						</select>
-					</span>
+					<tr>
+						<td class="od_view_title" width="50" height="150" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기</td>
+						<td colspan="9" bgcolor="#ffffff" align="left" style="background-color:#212529;"><p id="preview_text" contenteditable="true" spellcheck="false">여기에 문구</p></td>
+					</tr>
+					<tr height=30>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">색상</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<span id="pro_color_span">
+							<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
+								<option value="000000">검은색</option>
+								<option value="018d44">동백잎</option>
+								<option value="ee2b6e">핫핑크</option>
+								<option value="ac1f30">사과색</option>
+								<option value="f2ea01">레몬색</option>
+								<option value="ffffff" selected="">흰색</option>
+								<option value="3e64af">바다색</option>
+								<option value="6e5048">고목나무색</option>
+							</select>
+						</span>
+					</td>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">아크릴두께</td>
+					<td width="70" bgcolor="#ffffff" align="left">
+						<span id="pro_tick_span">
+							<select name="pro_tick" class="form" style="font-size:12;" onchange="preview_update()">
+								<option value="2">2mm</option>
+								<option value="3">3mm</option>
+								<option value="5" selected="">5mm</option>
+								<option value="8">8mm</option>
+								<option value="10">10mm</option>
+								<!--<option value="10T">10T</option>-->
+							</select>
+						</span>
+					</td>
+				<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
+				<td width="100" bgcolor="#ffffff" align="left">
+					<select name="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
+						<option value="a" selected="">돈부리덮밥</option>
+						<option value="b">이자카야 선술집</option>
+						<option value="c">문화공원 나들이</option>
+						<option value="d">맑은 샘물터</option>
+						<option value="e">호두나무</option>
+						<option value="f">책읽는 골목</option>
+					</select>
 				</td>
-				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">아크릴두께</td>
-				<td width="70" bgcolor="#ffffff" align="left">
-					<span id="pro_tick_span">
-						<select name="pro_tick" class="form" style="font-size:12;" onchange="preview_update()">
-							<option value="">선택</option>
-							<option value="2">2mm</option>
-							<option value="3">3mm</option>
-							<option value="5" selected="">5mm</option>
-							<option value="8">8mm</option>
-							<option value="10">10mm</option>
-							<!--<option value="10T">10T</option>-->
-						</select>
-					</span>
+				<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">사이즈(높이)</td>
+				<td width="100" bgcolor="#ffffff" align="left">
+					<select name="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
+						<option value="10" selected="">10cm</option>
+						<option value="20">20cm</option>
+						<option value="30">30cm</option>
+					</select>
 				</td>
-				<!--<td class="od_view_title" width="70" bgcolor=#f0f0f0 align=center style="font-weight:bold;">고무색상</td>
-				<td width="100" bgcolor=#ffffff align=left>-->
-
-
-				<!--<input type="text" size="8" name="pro_font" id="pro_font"  value=""> 텍스트형식으로입력선택-->
-
-
-				<!--  <select name="pro_rbcolor" class="form" style="font-size:12;">
-				<option value=''>선택</option>
-				<option value="검정" selected>검정</option>
-				<option value="백색">백색</option>
-
-			</select>-->
-
-			<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
-			<td width="100" bgcolor="#ffffff" align="left">
-
-				<!--<input type="text" size="8" name="pro_font" id="pro_font"  value=""> 텍스트형식으로입력선택-->
-
-				<select name="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
-					<option value="">선택</option>
-					<option value="a" selected="">돈부리덮밥</option>
-					<option value="b">이자카야 선술집</option>
-					<option value="c">문화공원 나들이</option>
-					<option value="d">맑은 샘물터</option>
-					<option value="e">호두나무</option>
-					<option value="f">책읽는 골목</option>
-				</select>
-			</td>
-
-
-
-			<td class="od_view_title" width="60" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">사이즈(높이)</td>
-			<td width="100" bgcolor="#ffffff" align="left">
-				<select name="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
-					<option value="">선택</option>
-					<option value="10" selected="">10cm</option>
-					<option value="20">20cm</option>
-					<option value="30">30cm</option>
-				</select>
-			</td>
-			<td class="od_view_title" width="40" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">SET</td>
-			<td width="100" bgcolor="#ffffff" align="left">
-				<input type="text" size="6" name="pro_count" id="pro_count" class="pro_count" value="1">
-			</td>
-		</tr>
-		<tr>
-			<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">내용</td>
-			<td colspan="9" bgcolor="#ffffff" align="left">
-				<input type="text" style="width:95%" name="pro_text" id="pro_text" value="미리보기" onkeyup="preview_update()">
-			</td>
-		</tr>
-		<tr>
-			<td colspan="10" align="center" bgcolor="#F8F8F8" style="padding:3px;">
-				<div class="btn_confirm">
-					<input type="button" id="btn_submit2" class="btn_submit" onclick="JavaScript:w_sum();" value="견적추가">
-					<input type="button" id="btn_submit3" class="btn_submit" onclick="JavaScript:window.location.reload();" value="전체삭제">
-				</div>
-			</td>
 			</tr>
 			<tr>
-					<td colspan="10" align="center">
-						<span id="splist">
-							<table bgcolor="#dddddd" cellspacing="1" border="0" cellpadding="0">
-								<tbody><tr>
+				<td align="center" colspan="10" height="50" bgcolor="#686868" style="font-size:18px;"><font color="#FFFFFF">합계 : &nbsp;<span id="spst">0</span>&nbsp; 원</font><br>
+					<font color="#FFFFFF"><font size="2" color="white">아래 주문자정보를 입력하신다음, 하단 "주문내역접수" 버튼을 누르신 후</font>
+					<br> <font size="2" color="white">글자갯수에 관계없이 견적금액에 맞춰</font> <font color="yellow">구매수량(</font><font color="yellow">&nbsp;<span id="spcount">0</span>&nbsp;)개 로</font> <font color="yellow">결제</font><font size="2" color="white">해주세요.</font></font></td>
+				</tr>
+			</tbody></table>
+		</form>
 
-									<td class="od_view_title" width="100" align="center" valign="center" height="18" bgcolor="#645649"><font color="#FFFFFF"><b>아크릴색상</b></font></td>
-									<td class="od_view_title" width="70" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>아크릴두께</b></font></td>
-									<!--<td class="od_view_title" width="70" align="center" bgcolor="#686868"><font color="#FFFFFF"><b>고무색상</b></font></td>-->
-									<td class="od_view_title" width="50" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>사이즈(높이)</b></font></td>
-									<td class="od_view_title" width="220" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>내용</b></font></td>
-									<td class="od_view_title" width="55" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>글자갯수</b></font></td>
-									<td class="od_view_title" width="60" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>서체</b></font></td>
-									<td class="od_view_title" width="30" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>SET</b></font></td>
-									<td class="od_view_title" width="60" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>금액</b></font></td>
-									<td class="od_view_title" width="30" align="center" bgcolor="#645649"><font color="#FFFFFF"><b>삭제</b></font></td>
+		<!-- 계산기부분 계산함수 시작 -->
+		<script language="javascript">
+		//<!--   삭제옵션   이 함수 추가  -->
+		function delline(thisobj) {
+			var arrTemp = thisobj.name.split("_");
+			var currentlinenum = arrTemp[1];
 
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor1"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick1"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor1"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize1"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext1"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt1"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont1"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty1"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum1"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel1"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor2"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick2"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor2"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize2"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext2"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt2"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont2"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty2"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum2"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel2"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor3"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick3"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor3"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize3"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext3"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt3"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont3"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty3"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum3"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel3"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor4"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick4"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor4"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize4"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext4"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt4"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont4"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty4"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum4"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel4"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor5"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick5"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor1"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize5"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext5"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt5"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont5"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty5"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum5"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel5"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor6"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick6"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor6"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize6"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext6"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt6"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont6"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty6"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum6"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel6"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor7"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick7"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor7"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize7"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext7"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt7"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont7"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty7"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum7"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel7"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor8"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick8"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor8"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize8"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext8"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt8"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont8"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty8"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum8"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel8"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor9"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick9"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor9"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize9"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext9"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt9"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont9"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty9"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum9"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel9"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor10"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick10"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor1"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize10"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext10"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt10"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont10"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty10"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum10"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel10"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor11"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick11"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor11"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize11"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext11"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt11"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont11"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty11"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum11"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel11"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor12"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick12"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor12"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize12"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext12"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt12"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont12"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty12"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum12"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel12"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor13"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick13"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor13"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize13"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext13"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt13"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont13"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty13"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum13"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel13"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#e0ffde"><span id="spcolor14"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptick14"></span></td>
-									<!--<td align="center" bgcolor="#e0ffde"><span id="sprbcolor14"></span></td>-->
-									<td align="center" bgcolor="#e0ffde"><span id="spsize14"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="sptext14"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spcnt14"></span>
-									</td><td align="center" bgcolor="#e0ffde"><span id="spfont14"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spqty14"></span></td>
-									<td align="right" bgcolor="#e0ffde"><span id="spsum14"></span></td>
-									<td align="center" bgcolor="#e0ffde"><span id="spdel14"></span></td>
-								</tr>
-								<tr>
-									<td align="center" height="18" bgcolor="#f9f7cd"><span id="spcolor15"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptick15"></span></td>
-									<!--<td align="center" bgcolor="#f9f7cd"><span id="sprbcolor15"></span></td>-->
-									<td align="center" bgcolor="#f9f7cd"><span id="spsize15"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="sptext15"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spcnt15"></span>
-									</td><td align="center" bgcolor="#f9f7cd"><span id="spfont15"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spqty15"></span></td>
-									<td align="right" bgcolor="#f9f7cd"><span id="spsum15"></span></td>
-									<td align="center" bgcolor="#f9f7cd"><span id="spdel15"></span></td>
-								</tr>
+			plistcnt = eval(document.myform.p_listcnt.value);		//리스트갯수
 
+			//alert(plistcnt);
+			//alert(currentlinenum);
 
-								<tr>
-									<td align="center" colspan="9" height="50" bgcolor="#686868" style="font-size:18px;"><font color="#FFFFFF">합계 : &nbsp;<span id="spst">0</span>&nbsp; 원</font><br>
-										<font color="#FFFFFF"><font size="2" color="white">아래 주문자정보를 입력하신다음, 하단 "주문내역접수" 버튼을 누르신 후</font>
-										<br> <font size="2" color="white">글자갯수에 관계없이 견적금액에 맞춰</font> <font color="yellow">구매수량(</font><font color="yellow">&nbsp;<span id="spcount">0</span>&nbsp;)개 로</font> <font color="yellow">결제</font><font size="2" color="white">해주세요.</font></font></td>
-									</tr>
-								</tbody></table>
-							</span>
-						</td>
-					</tr>
-				</tbody></table>
+			sptick_nn = eval("document.all.sptick"+currentlinenum);
+			spcolor_nn = eval("document.all.spcolor"+currentlinenum);
+			sprbcolor_nn = eval("document.all.sprbcolor"+currentlinenum);
+			spfont_nn = eval("document.all.spfont"+currentlinenum);
+			spsize_nn = eval("document.all.spsize"+currentlinenum);
+			sptext_nn = eval("document.all.sptext"+currentlinenum);
+			//spprice_nn = eval("document.all.spprice"+currentlinenum);
+			spqty_nn = eval("document.all.spqty"+currentlinenum);
+			spcnt_nn = eval("document.all.spcnt"+currentlinenum);
+			spsum_nn = eval("document.all.spsum"+currentlinenum);
+			spdel_nn = eval("document.all.spdel"+currentlinenum);
 
-			</form>
+			sptick_nn.innerHTML = "";
+			spcolor_nn.innerHTML = "";
+			//sprbcolor_nn.innerHTML = "";
+			spfont_nn.innerHTML = "";
+			spsize_nn.innerHTML = "";
+			sptext_nn.innerHTML = "";
+			//spprice_nn.innerHTML = "";
+			spqty_nn.innerHTML = "";
+			spcnt_nn.innerHTML = "";
+			spsum_nn.innerHTML = "";
+			spdel_nn.innerHTML = "";
 
-			<!-- 계산기부분 계산함수 시작 -->
-			<script language="javascript">
-			//<!--   삭제옵션   이 함수 추가  -->
-			function delline(thisobj) {
-
-
-				var arrTemp = thisobj.name.split("_");
-				var currentlinenum = arrTemp[1];
-
-				plistcnt = eval(document.myform.p_listcnt.value);		//리스트갯수
-
-				//alert(plistcnt);
-				//alert(currentlinenum);
-
-				sptick_nn = eval("document.all.sptick"+currentlinenum);
-				spcolor_nn = eval("document.all.spcolor"+currentlinenum);
-				sprbcolor_nn = eval("document.all.sprbcolor"+currentlinenum);
-				spfont_nn = eval("document.all.spfont"+currentlinenum);
-				spsize_nn = eval("document.all.spsize"+currentlinenum);
-				sptext_nn = eval("document.all.sptext"+currentlinenum);
-				//spprice_nn = eval("document.all.spprice"+currentlinenum);
-				spqty_nn = eval("document.all.spqty"+currentlinenum);
-				spcnt_nn = eval("document.all.spcnt"+currentlinenum);
-				spsum_nn = eval("document.all.spsum"+currentlinenum);
-				spdel_nn = eval("document.all.spdel"+currentlinenum);
-
-				sptick_nn.innerHTML = "";
-				spcolor_nn.innerHTML = "";
-				//sprbcolor_nn.innerHTML = "";
-				spfont_nn.innerHTML = "";
-				spsize_nn.innerHTML = "";
-				sptext_nn.innerHTML = "";
-				//spprice_nn.innerHTML = "";
-				spqty_nn.innerHTML = "";
-				spcnt_nn.innerHTML = "";
-				spsum_nn.innerHTML = "";
-				spdel_nn.innerHTML = "";
-
-				var tt_sum2 = 0;
-				for(i=1;i<16;i++)
-				{
-					tempspsum_nn = eval("document.all.spsum"+i);
-					if(tempspsum_nn.innerHTML != '')
-					{
-						tt_sum2 = tt_sum2 + eval(no_comma(tempspsum_nn.innerHTML));
-					}
-				}
-
-				/*
-				if (eval(tt_sum2) < 10000)
-				{
-				document.all.spst.innerHTML = setComma("10000");		//합계값 화면상에 뿌리기
-				document.all.spcount.innerHTML = "10";
-			}
-			else
-			{*/
-			document.all.spst.innerHTML = setComma(tt_sum2);		//합계값 화면상에 뿌리기
-			document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);		// 주문수량 화면상에 뿌리기 - 내림 (-3은 자리수 000)
-			//}
-
-
-			//document.all.spst.innerHTML = setComma(tt_sum2);
-			//document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);
-
-			if(plistcnt > 1)
+			var tt_sum2 = 0;
+			for(i=1;i<16;i++)
 			{
-				document.myform.p_listcnt.value = eval(plistcnt)-1;
-			}
-		}
-		//<!--   삭제옵션  여기까지 이 함수 추가  -->
-
-		//상품 선택에 따라 옵션값을 다르게 보여주기 위한 함수
-
-		function chpro(p_color)
-		{
-			var sTempHTML = "";
-
-			if(p_color == 'A.검정'){
-				sTempHTML = "<select name='pro_tick' class='form' style='font-size:12;' >"
-				sTempHTML = sTempHTML + "<option value=''>선택</option>"
-				//sTempHTML = sTempHTML + "<option value='2mm'>2mm</option>"
-				sTempHTML = sTempHTML + "<option value='3mm'>3mm</option>"
-				sTempHTML = sTempHTML + "<option value='5mm'selected>5mm</option>"
-				sTempHTML = sTempHTML + "<option value='8mm'>8mm</option>"
-				sTempHTML = sTempHTML + "<option value='10mm'>10mm</option>"
-				sTempHTML = sTempHTML + "</select>"
-				document.getElementById("pro_tick_span").innerHTML = sTempHTML;
-			}
-			if(p_color == 'A.백색'){
-				sTempHTML = "<select name='pro_tick' class='form' style='font-size:12;' >"
-				sTempHTML = sTempHTML + "<option value=''>선택</option>"
-				//sTempHTML = sTempHTML + "<option value='2mm'>2mm</option>"
-				sTempHTML = sTempHTML + "<option value='3mm'>3mm</option>"
-				sTempHTML = sTempHTML + "<option value='5mm'selected>5mm</option>"
-				sTempHTML = sTempHTML + "<option value='8mm'>8mm</option>"
-				sTempHTML = sTempHTML + "<option value='10mm'>10mm</option>"
-				sTempHTML = sTempHTML + "</select>"
-				document.getElementById("pro_tick_span").innerHTML = sTempHTML;
-			}
-			if(p_color == 'B.무광검정'){
-				sTempHTML = "<select name='pro_tick' class='form' style='font-size:12;' >"
-				sTempHTML = sTempHTML + "<option value=''>선택</option>"
-				//sTempHTML = sTempHTML + "<option value='3mm'>3mm</option>"
-				sTempHTML = sTempHTML + "<option value='5mm'selected>5mm</option>"
-				sTempHTML = sTempHTML + "<option value='10mm'>10mm</option>"
-				sTempHTML = sTempHTML + "</select>"
-				document.getElementById("pro_tick_span").innerHTML = sTempHTML;
-			}
-			if(p_color == 'B.무광백색'){
-				sTempHTML = "<select name='pro_tick' class='form' style='font-size:12;' >"
-				sTempHTML = sTempHTML + "<option value=''>선택</option>"
-				//sTempHTML = sTempHTML + "<option value='3mm'>3mm</option>"
-				sTempHTML = sTempHTML + "<option value='5mm'selected>5mm</option>"
-				sTempHTML = sTempHTML + "<option value='10mm'>10mm</option>"
-				sTempHTML = sTempHTML + "</select>"
-				document.getElementById("pro_tick_span").innerHTML = sTempHTML;
+				tempspsum_nn = eval("document.all.spsum"+i);
+				if(tempspsum_nn.innerHTML != '')
+				{
+					tt_sum2 = tt_sum2 + eval(no_comma(tempspsum_nn.innerHTML));
+				}
 			}
 
-}
-
-//타입별 단가표
-function chmm(nType,nTick,nSize)
-{
-
-	var arrType = nType.split(".");
-	//document.myform.p_price.value = arrVal[0];	//단가
-	var tempPriceTable = '';
-
-	switch(nTick)
-	{
-		case "2mm":
-		switch(true)
-		{
-			case 3 <= nSize && nSize <= 5:tempPriceTable = ('700,1500,1500');break;
-			case 5 < nSize && nSize <= 10:tempPriceTable = ('1200,2500,2500');break;
-			case 10 < nSize && nSize <= 15:tempPriceTable = ('1600,3500,3500');break;
-		}
-		break;
-		case "3mm":
-		switch(true)
-		{
-			case 3 <= nSize && nSize <= 5:tempPriceTable = ('1000,1500,2000');break;
-			case 5 < nSize && nSize <= 10:tempPriceTable = ('2000,2500,3000');break;
-			case 10 < nSize && nSize <= 15:tempPriceTable = ('3000,3500,4000');break;
-			case 15 < nSize && nSize <= 20:tempPriceTable = ('4500,5500,6000');break;
-			case 20 < nSize && nSize <= 25:tempPriceTable = ('6000,7000,8000');break;
-		}
-		break;
-		case "5mm":
-		switch(true)
-		{
-			case 3 <= nSize && nSize <= 5:tempPriceTable = ('1500,2500,3000');break;
-			case 5 < nSize && nSize <= 10:tempPriceTable = ('2500,3500,4000');break;
-			case 10 < nSize && nSize <= 15:tempPriceTable = ('4500,5500,7000');break;
-			case 15 < nSize && nSize <= 20:tempPriceTable = ('6500,8500,10000');break;
-			case 20 < nSize && nSize <= 25:tempPriceTable = ('9000,12000,14000');break;
-			case 25 < nSize && nSize <= 30:tempPriceTable = ('12000,15000,18000');break;
-			case 30 < nSize && nSize <= 35:tempPriceTable = ('15000,19000,23000');break;
-			case 35 < nSize && nSize <= 40:tempPriceTable = ('19000,23500,28000');break;
-			case 40 < nSize && nSize <= 45:tempPriceTable = ('23000,28500,34000');break;
-			case 45 < nSize && nSize <= 50:tempPriceTable = ('29000,34500,40000');break;
-			case 50 < nSize && nSize <= 55:tempPriceTable = ('35000,42000,48000');break;
-		}
-		break;
-		case "8mm":
-		switch(true)
-		{
-			case 3 <= nSize && nSize <= 5:tempPriceTable = ('2000,4000,4000');break;
-			case 5 < nSize && nSize <= 10:tempPriceTable = ('4000,8000,8000');break;
-			case 10 < nSize && nSize <= 15:tempPriceTable = ('7000,14000,14000');break;
-			case 15 < nSize && nSize <= 20:tempPriceTable = ('10000,20000,20000');break;
-			case 20 < nSize && nSize <= 25:tempPriceTable = ('14000,28000,28000');break;
-			case 25 < nSize && nSize <= 30:tempPriceTable = ('18000,36000,36000');break;
-			case 30 < nSize && nSize <= 35:tempPriceTable = ('23000,46000,46000');break;
-			case 35 < nSize && nSize <= 40:tempPriceTable = ('28000,56000,56000');break;
-			case 40 < nSize && nSize <= 45:tempPriceTable = ('34000,56000,56000');break;
-			case 45 < nSize && nSize <= 50:tempPriceTable = ('40000,56000,56000');break;
-			case 50 < nSize && nSize <= 55:tempPriceTable = ('48000,56000,56000');break;
-		}
-		break;
-		case "10mm":
-		switch(true)
-		{
-			case 3 <= nSize && nSize <= 5:tempPriceTable = ('3000,4000,6000');break;
-			case 5 < nSize && nSize <= 10:tempPriceTable = ('6000,8000,12000');break;
-			case 10 < nSize && nSize <= 15:tempPriceTable = ('10500,13000,21000');break;
-			case 15 < nSize && nSize <= 20:tempPriceTable = ('15000,19000,30000');break;
-			case 20 < nSize && nSize <= 25:tempPriceTable = ('21000,26000,42000');break;
-			case 25 < nSize && nSize <= 30:tempPriceTable = ('27000,34000,54000');break;
-			case 30 < nSize && nSize <= 35:tempPriceTable = ('34500,43000,69000');break;
-			case 35 < nSize && nSize <= 40:tempPriceTable = ('42000,53000,84000');break;
-			case 40 < nSize && nSize <= 45:tempPriceTable = ('51000,65000,69000');break;
-			case 45 < nSize && nSize <= 50:tempPriceTable = ('60000,77000,84000');break;
-			case 50 < nSize && nSize <= 55:tempPriceTable = ('72000,89000,84000');break;
-
-		}
-		break;
-	}
-	var arrPriceTable = tempPriceTable.split(",");
-	switch(arrType[0])
-	{
-		case 'A':document.myform.p_price.value = arrPriceTable[0];break;
-		case 'B':document.myform.p_price.value = arrPriceTable[1];break;
-		case 'C':document.myform.p_price.value = arrPriceTable[2];break;
-	}
-}
-
-//수치에 3자리마다 콤마찍는 함수
-function setComma(str)
-{
-	str = "" + str + "";
-	var retValue = "";
-
-	for(i=0;i<str.length;i++)
-	{
-		if(i>0&&(i%3)==0&&str.length>3)
-		{
-			retValue = str.charAt(str.length -i -1) + "," + retValue;
+			/*
+			if (eval(tt_sum2) < 10000)
+			{
+			document.all.spst.innerHTML = setComma("10000");		//합계값 화면상에 뿌리기
+			document.all.spcount.innerHTML = "10";
 		}
 		else
+		{*/
+		document.all.spst.innerHTML = setComma(tt_sum2);		//합계값 화면상에 뿌리기
+		document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);		// 주문수량 화면상에 뿌리기 - 내림 (-3은 자리수 000)
+		//}
+
+
+		//document.all.spst.innerHTML = setComma(tt_sum2);
+		//document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);
+
+		if(plistcnt > 1)
 		{
-			retValue = str.charAt(str.length -i -1) + retValue;
+			document.myform.p_listcnt.value = eval(plistcnt)-1;
 		}
 	}
-	return retValue;
-}
+	//<!--   삭제옵션  여기까지 이 함수 추가  -->
 
-//결과값 반내림 함수
-function roundXL(n, digits) {
-	if (digits >= 0) return parseFloat(n.toFixed(digits)); // 소수부 반올림
+	//상품 선택에 따라 옵션값을 다르게 보여주기 위한 함수
 
-	digits = Math.pow(10, digits); // 정수부 반올림
-	var t = Math.floor(n * digits) / digits;
-
-	return parseFloat(t.toFixed(0));
-}
-
-// 공백을 없앤다.
-function no_blank(data)
-{
-	var tmp = '';
-	var comma = ' ';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	function chpro(p_color)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var sTempHTML = "";
+
+		if(p_color == 'A.검정'){
+			sTempHTML = "<select name='pro_tick' class='form' style='font-size:12;' >"
+			sTempHTML = sTempHTML + "<option value=''>선택</option>"
+			//sTempHTML = sTempHTML + "<option value='2mm'>2mm</option>"
+			sTempHTML = sTempHTML + "<option value='3mm'>3mm</option>"
+			sTempHTML = sTempHTML + "<option value='5mm'selected>5mm</option>"
+			sTempHTML = sTempHTML + "<option value='8mm'>8mm</option>"
+			sTempHTML = sTempHTML + "<option value='10mm'>10mm</option>"
+			sTempHTML = sTempHTML + "</select>"
+			document.getElementById("pro_tick_span").innerHTML = sTempHTML;
+		}
 	}
-	return tmp;
-}
 
-//쌍따음표 삭제
-function no_ssddam(data)
-{
-	var tmp = '';
-	var comma = '\"';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//타입별 단가표
+	function chmm(nType,nTick,nSize)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+
+		var arrType = nType.split(".");
+		//document.myform.p_price.value = arrVal[0];	//단가
+		var tempPriceTable = '';
+
+		switch(nTick)
+		{
+			case "2mm":
+			switch(true)
+			{
+				case 3 <= nSize && nSize <= 5:tempPriceTable = ('700,1500,1500');break;
+				case 5 < nSize && nSize <= 10:tempPriceTable = ('1200,2500,2500');break;
+				case 10 < nSize && nSize <= 15:tempPriceTable = ('1600,3500,3500');break;
+			}
+			break;
+			case "3mm":
+			switch(true)
+			{
+				case 3 <= nSize && nSize <= 5:tempPriceTable = ('1000,1500,2000');break;
+				case 5 < nSize && nSize <= 10:tempPriceTable = ('2000,2500,3000');break;
+				case 10 < nSize && nSize <= 15:tempPriceTable = ('3000,3500,4000');break;
+				case 15 < nSize && nSize <= 20:tempPriceTable = ('4500,5500,6000');break;
+				case 20 < nSize && nSize <= 25:tempPriceTable = ('6000,7000,8000');break;
+			}
+			break;
+			case "5mm":
+			switch(true)
+			{
+				case 3 <= nSize && nSize <= 5:tempPriceTable = ('1500,2500,3000');break;
+				case 5 < nSize && nSize <= 10:tempPriceTable = ('2500,3500,4000');break;
+				case 10 < nSize && nSize <= 15:tempPriceTable = ('4500,5500,7000');break;
+				case 15 < nSize && nSize <= 20:tempPriceTable = ('6500,8500,10000');break;
+				case 20 < nSize && nSize <= 25:tempPriceTable = ('9000,12000,14000');break;
+				case 25 < nSize && nSize <= 30:tempPriceTable = ('12000,15000,18000');break;
+				case 30 < nSize && nSize <= 35:tempPriceTable = ('15000,19000,23000');break;
+				case 35 < nSize && nSize <= 40:tempPriceTable = ('19000,23500,28000');break;
+				case 40 < nSize && nSize <= 45:tempPriceTable = ('23000,28500,34000');break;
+				case 45 < nSize && nSize <= 50:tempPriceTable = ('29000,34500,40000');break;
+				case 50 < nSize && nSize <= 55:tempPriceTable = ('35000,42000,48000');break;
+			}
+			break;
+			case "8mm":
+			switch(true)
+			{
+				case 3 <= nSize && nSize <= 5:tempPriceTable = ('2000,4000,4000');break;
+				case 5 < nSize && nSize <= 10:tempPriceTable = ('4000,8000,8000');break;
+				case 10 < nSize && nSize <= 15:tempPriceTable = ('7000,14000,14000');break;
+				case 15 < nSize && nSize <= 20:tempPriceTable = ('10000,20000,20000');break;
+				case 20 < nSize && nSize <= 25:tempPriceTable = ('14000,28000,28000');break;
+				case 25 < nSize && nSize <= 30:tempPriceTable = ('18000,36000,36000');break;
+				case 30 < nSize && nSize <= 35:tempPriceTable = ('23000,46000,46000');break;
+				case 35 < nSize && nSize <= 40:tempPriceTable = ('28000,56000,56000');break;
+				case 40 < nSize && nSize <= 45:tempPriceTable = ('34000,56000,56000');break;
+				case 45 < nSize && nSize <= 50:tempPriceTable = ('40000,56000,56000');break;
+				case 50 < nSize && nSize <= 55:tempPriceTable = ('48000,56000,56000');break;
+			}
+			break;
+			case "10mm":
+			switch(true)
+			{
+				case 3 <= nSize && nSize <= 5:tempPriceTable = ('3000,4000,6000');break;
+				case 5 < nSize && nSize <= 10:tempPriceTable = ('6000,8000,12000');break;
+				case 10 < nSize && nSize <= 15:tempPriceTable = ('10500,13000,21000');break;
+				case 15 < nSize && nSize <= 20:tempPriceTable = ('15000,19000,30000');break;
+				case 20 < nSize && nSize <= 25:tempPriceTable = ('21000,26000,42000');break;
+				case 25 < nSize && nSize <= 30:tempPriceTable = ('27000,34000,54000');break;
+				case 30 < nSize && nSize <= 35:tempPriceTable = ('34500,43000,69000');break;
+				case 35 < nSize && nSize <= 40:tempPriceTable = ('42000,53000,84000');break;
+				case 40 < nSize && nSize <= 45:tempPriceTable = ('51000,65000,69000');break;
+				case 45 < nSize && nSize <= 50:tempPriceTable = ('60000,77000,84000');break;
+				case 50 < nSize && nSize <= 55:tempPriceTable = ('72000,89000,84000');break;
+
+			}
+			break;
+		}
+		var arrPriceTable = tempPriceTable.split(",");
+		switch(arrType[0])
+		{
+			case 'A':document.myform.p_price.value = arrPriceTable[0];break;
+			case 'B':document.myform.p_price.value = arrPriceTable[1];break;
+			case 'C':document.myform.p_price.value = arrPriceTable[2];break;
+		}
 	}
-	return tmp;
-}
 
-//따음표 삭제
-function no_ddam(data)
-{
-	var tmp = '';
-	var comma = '\'';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//수치에 3자리마다 콤마찍는 함수
+	function setComma(str)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		str = "" + str + "";
+		var retValue = "";
+
+		for(i=0;i<str.length;i++)
+		{
+			if(i>0&&(i%3)==0&&str.length>3)
+			{
+				retValue = str.charAt(str.length -i -1) + "," + retValue;
+			}
+			else
+			{
+				retValue = str.charAt(str.length -i -1) + retValue;
+			}
+		}
+		return retValue;
 	}
-	return tmp;
-}
 
+	//결과값 반내림 함수
+	function roundXL(n, digits) {
+		if (digits >= 0) return parseFloat(n.toFixed(digits)); // 소수부 반올림
 
-// 각괄호 삭제
-function no_gagualho(data)
-{
-	var tmp = '';
-	var comma = '[';
-	var i;
+		digits = Math.pow(10, digits); // 정수부 반올림
+		var t = Math.floor(n * digits) / digits;
 
-	for (i=0; i<data.length; i++)
+		return parseFloat(t.toFixed(0));
+	}
+
+	// 공백을 없앤다.
+	function no_blank(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = ' ';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반각괄호 삭제
-function no_bgagualho(data)
-{
-	var tmp = '';
-	var comma = ']';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//쌍따음표 삭제
+	function no_ssddam(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '\"';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 포괄호 삭제
-function no_pogualho(data)
-{
-	var tmp = '';
-	var comma = '{';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//따음표 삭제
+	function no_ddam(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '\'';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반포괄호 삭제
-function no_bpogualho(data)
-{
-	var tmp = '';
-	var comma = '}';
-	var i;
 
-	for (i=0; i<data.length; i++)
+	// 각괄호 삭제
+	function no_gagualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '[';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 꺽쇠괄호 삭제
-function no_tgualho(data)
-{
-	var tmp = '';
-	var comma = '<';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반각괄호 삭제
+	function no_bgagualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = ']';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반꺽쇠괄호 삭제
-function no_btgualho(data)
-{
-	var tmp = '';
-	var comma = '>';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 포괄호 삭제
+	function no_pogualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '{';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// ^ 삭제
-function no_smile(data)
-{
-	var tmp = '';
-	var comma = '^';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반포괄호 삭제
+	function no_bpogualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '}';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//  ~ 삭제
-function no_mulbar(data)
-{
-	var tmp = '';
-	var comma = '~';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 꺽쇠괄호 삭제
+	function no_tgualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '<';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// | 삭제
-function no_serobar(data)
-{
-	var tmp = '';
-	var comma = '|';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반꺽쇠괄호 삭제
+	function no_btgualho(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '>';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//쩜 삭제
-function no_point(data)
-{
-	var tmp = '';
-	var comma = '.';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// ^ 삭제
+	function no_smile(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '^';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//콤마 삭제
-function no_comma(data)
-{
-	var tmp = '';
-	var comma = ',';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//  ~ 삭제
+	function no_mulbar(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '~';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//하이픈 삭제
-function no_middlebar(data)
-{
-	var tmp = '';
-	var comma = '-';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// | 삭제
+	function no_serobar(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '|';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//언더바 삭제
-function no_underbar(data)
-{
-	var tmp = '';
-	var comma = '_';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//쩜 삭제
+	function no_point(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '.';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//슬러시 삭제
-function no_slash(data)
-{
-	var tmp = '';
-	var comma = '/';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//콤마 삭제
+	function no_comma(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = ',';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//땡땡이 삭제
-function no_ddang(data)
-{
-	var tmp = '';
-	var comma = ':';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//하이픈 삭제
+	function no_middlebar(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '-';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//땀땡이 삭제
-function no_ddamddang(data)
-{
-	var tmp = '';
-	var comma = '\;';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//언더바 삭제
+	function no_underbar(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '_';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-//괄호 삭제
-function no_gualho(data)
-{
-	var tmp = '';
-	var comma = '(';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//슬러시 삭제
+	function no_slash(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = '/';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반괄호  삭제
-function no_bgualho(data)
-{
-	var tmp = '';
-	var comma = ')';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//땡땡이 삭제
+	function no_ddang(data)
 	{
-		if (data.charAt(i) != comma)
-		tmp += data.charAt(i);
+		var tmp = '';
+		var comma = ':';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 쌍따음표 갯수
-function cnt_ssddam(data)
-{
-	var tmp = 0;
-	var comma = '"';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//땀땡이 삭제
+	function no_ddamddang(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = '';
+		var comma = '\;';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 따음표 갯수
-function cnt_ddam(data)
-{
-	var tmp = 0;
-	var comma = '\'';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	//괄호 삭제
+	function no_gualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = '';
+		var comma = '(';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 각괄호 갯수
-function cnt_gagualho(data)
-{
-	var tmp = 0;
-	var comma = '[';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반괄호  삭제
+	function no_bgualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = '';
+		var comma = ')';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) != comma)
+			tmp += data.charAt(i);
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반각괄호 갯수
-function cnt_bgagualho(data)
-{
-	var tmp = 0;
-	var comma = ']';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 쌍따음표 갯수
+	function cnt_ssddam(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '"';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 포괄호 갯수
-function cnt_pogualho(data)
-{
-	var tmp = 0;
-	var comma = '{';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 따음표 갯수
+	function cnt_ddam(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '\'';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반포괄호 갯수
-function cnt_bpogualho(data)
-{
-	var tmp = 0;
-	var comma = '}';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 각괄호 갯수
+	function cnt_gagualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '[';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 꺽쇠괄호 갯수
-function cnt_tgualho(data)
-{
-	var tmp = 0;
-	var comma = '<';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반각괄호 갯수
+	function cnt_bgagualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = ']';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-
-// 반꺽쇠괄호 갯수
-function cnt_btgualho(data)
-{
-	var tmp = 0;
-	var comma = '>';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 포괄호 갯수
+	function cnt_pogualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '{';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 괄호갯수
-function cnt_gualho(data)
-{
-	var tmp = 0;
-	var comma = '(';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반포괄호 갯수
+	function cnt_bpogualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '}';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 반괄호  갯수
-function cnt_bgualho(data)
-{
-	var tmp = 0;
-	var comma = ')';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 꺽쇠괄호 갯수
+	function cnt_tgualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '<';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// ^ 갯수
-function cnt_smile(data)
-{
-	var tmp = 0;
-	var comma = '^';
-	var i;
 
-	for (i=0; i<data.length; i++)
+	// 반꺽쇠괄호 갯수
+	function cnt_btgualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '>';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// ~ 갯수
-function cnt_mulbar(data)
-{
-	var tmp = 0;
-	var comma = '~';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 괄호갯수
+	function cnt_gualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '(';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// | 갯수
-function cnt_serobar(data)
-{
-	var tmp = 0;
-	var comma = '|';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 반괄호  갯수
+	function cnt_bgualho(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = ')';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-
-// 점 갯수
-function cnt_point(data)
-{
-	var tmp = 0;
-	var comma = '.';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// ^ 갯수
+	function cnt_smile(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '^';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 콤마 갯수
-function cnt_comma(data)
-{
-	var tmp = 0;
-	var comma = ',';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// ~ 갯수
+	function cnt_mulbar(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '~';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 하이픈 갯수
-function cnt_middlebar(data)
-{
-	var tmp = 0;
-	var comma = '-';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// | 갯수
+	function cnt_serobar(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '|';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 언더바 갯수
-function cnt_underbar(data)
-{
-	var tmp = 0;
-	var comma = '_';
-	var i;
 
-	for (i=0; i<data.length; i++)
+	// 점 갯수
+	function cnt_point(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '.';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 슬래시 갯수
-function cnt_slash(data)
-{
-	var tmp = 0;
-	var comma = '/';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 콤마 갯수
+	function cnt_comma(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = ',';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 땡땡이 갯수
-function cnt_ddang(data)
-{
-	var tmp = 0;
-	var comma = ':';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 하이픈 갯수
+	function cnt_middlebar(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
+		var tmp = 0;
+		var comma = '-';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-// 땀땡이 갯수
-function cnt_ddamddang(data)
-{
-	var tmp = 0;
-	var comma = '\;';
-	var i;
-
-	for (i=0; i<data.length; i++)
+	// 언더바 갯수
+	function cnt_underbar(data)
 	{
-		if (data.charAt(i) == comma)
-		tmp += 1;
-	}
-	return tmp;
-}
+		var tmp = 0;
+		var comma = '_';
+		var i;
 
-function preview_update()
-{
-	var x = document.myform.pro_text.value
-	var f_clr = document.myform.pro_color.value
-	var f_size = (60 + document.myform.pro_size.value*1)
-	var f_w = document.myform.pro_font.value
-	var f_thi = document.myform.pro_tick.value
-	var f_shwd = "1px 1px 1px #" + f_clr
-
-	for (step = 2; step <= f_thi; step++) {
-	  f_shwd=f_shwd + ",1px " + step + "px 1px #ffffff"
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
 	}
-  f_shwd=f_shwd +
+
+	// 슬래시 갯수
+	function cnt_slash(data)
+	{
+		var tmp = 0;
+		var comma = '/';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
+	}
+
+	// 땡땡이 갯수
+	function cnt_ddang(data)
+	{
+		var tmp = 0;
+		var comma = ':';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
+	}
+
+	// 땀땡이 갯수
+	function cnt_ddamddang(data)
+	{
+		var tmp = 0;
+		var comma = '\;';
+		var i;
+
+		for (i=0; i<data.length; i++)
+		{
+			if (data.charAt(i) == comma)
+			tmp += 1;
+		}
+		return tmp;
+	}
+
+	function preview_update()
+	{
+		var f_clr = document.myform.pro_color.value
+		var f_size = (60 + document.myform.pro_size.value*1)
+		var f_w = document.myform.pro_font.value
+		var f_thi = document.myform.pro_tick.value
+		var f_shwd = "1px 1px 10px #" + f_clr
+
+		for (step = 2; step <= f_thi; step++) {
+			f_shwd=f_shwd + ",1px " + step + "px 1px #B2B2B2"
+		}
+		f_shwd=f_shwd +
 		",1px " +(4 + step*1)+ "px 6px rgba(16,16,16,0.4),"+
 		"1px " +(8 + step*1)+ "px 10px rgba(16,16,16,0.2),"+
 		"1px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
 		"1px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-	document.getElementById("preview_text").innerHTML = x
-	document.getElementById("preview_text").style="text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
-}
-
-//계산함수
-function w_sum()
-{
-	pmnsize = eval(document.myform.p_mnsize.value);		//최소세로
-	pmxsize = eval(document.myform.p_mxsize.value);		//최대세로
-	plistcnt = eval(document.myform.p_listcnt.value);		//리스트갯수
-
-	ptick = document.myform.pro_tick.value;		//두께
-	pcolor = document.myform.pro_color.value;		//색상
-	//prbcolor = document.myform.pro_rbcolor.value;		//색상
-	pfont = document.myform.pro_font.value;	//서체
-	psize = eval(document.myform.pro_size.value);	//높이
-	ptext = document.myform.pro_text.value;	//내용
-	pcount = document.myform.pro_count.value;	//세트수량
-
-
-	if(plistcnt == 16)
-	{
-		alert('견적은 15개 까지만 가능 합니다.\n삭제 후 다시 시도하시거나 \n견적내용을 보내시고 추가로 작성바랍니다.');
-		return;
+		document.getElementById("preview_text").style="text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
 	}
 
-	if(document.myform.pro_tick.value == '')
+	//계산함수
+	function w_sum()
 	{
-		alert('아크릴두께를 선택 하십시오.');
-		document.myform.pro_tick.focus();
-		return;
-	}
-	if(document.myform.pro_color.value == '')
-	{
-		alert('아크릴색상을 선택 하십시오.');
-		document.myform.pro_color.focus();
-		return;
-	}
-	if(document.myform.pro_font.value == '')
-	{
-		alert('글자서체를 선택 하십시오.');
-		document.myform.pro_font.focus();
-		return;
+		pmnsize = eval(document.myform.p_mnsize.value);		//최소세로
+		pmxsize = eval(document.myform.p_mxsize.value);		//최대세로
+		plistcnt = eval(document.myform.p_listcnt.value);		//리스트갯수
 
-	}
-	if(document.myform.pro_size.value == '')
-	{
-		alert('글자사이즈(높이)를 입력하여 주십시오.');
-		document.myform.pro_size.focus();
-		return;
-	}
-	if(document.myform.pro_count.value == '')
-	{
-		alert('작업 셋트 수량을 입력하여 주십시오.');
-		document.myform.pro_count.focus();
-		return;
-	}
-	if(document.myform.pro_tick.value == '2mm')
-	{
-		if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 15)
+		ptick = document.myform.pro_tick.value;		//두께
+		pcolor = document.myform.pro_color.value;		//색상
+		//prbcolor = document.myform.pro_rbcolor.value;		//색상
+		pfont = document.myform.pro_font.value;	//서체
+		psize = eval(document.myform.pro_size.value);	//높이
+		ptext = document.myform.pro_text.value;	//내용
+		pcount = document.myform.pro_count.value;	//세트수량
+
+
+		if(plistcnt == 16)
 		{
-			alert('아크릴두께 2mm 제품은 작업배송간에 파손이 잦아 15cm이하 사이즈만 제작.발송 가능합니다.');
+			alert('견적은 15개 까지만 가능 합니다.\n삭제 후 다시 시도하시거나 \n견적내용을 보내시고 추가로 작성바랍니다.');
+			return;
+		}
+
+		if(document.myform.pro_tick.value == '')
+		{
+			alert('아크릴두께를 선택 하십시오.');
+			document.myform.pro_tick.focus();
+			return;
+		}
+		if(document.myform.pro_color.value == '')
+		{
+			alert('아크릴색상을 선택 하십시오.');
+			document.myform.pro_color.focus();
+			return;
+		}
+		if(document.myform.pro_font.value == '')
+		{
+			alert('글자서체를 선택 하십시오.');
+			document.myform.pro_font.focus();
+			return;
+
+		}
+		if(document.myform.pro_size.value == '')
+		{
+			alert('글자사이즈(높이)를 입력하여 주십시오.');
 			document.myform.pro_size.focus();
 			return;
 		}
-	}
-
-	if(document.myform.pro_tick.value == '3mm')
-	{
-		if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 25)
+		if(document.myform.pro_count.value == '')
 		{
-			alert('아크릴두께 3mm 제품은 작업배송간에 파손이 잦아 25cm이하 사이즈만 제작.발송 가능합니다.');
+			alert('작업 셋트 수량을 입력하여 주십시오.');
+			document.myform.pro_count.focus();
+			return;
+		}
+		if(document.myform.pro_tick.value == '2mm')
+		{
+			if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 15)
+			{
+				alert('아크릴두께 2mm 제품은 작업배송간에 파손이 잦아 15cm이하 사이즈만 제작.발송 가능합니다.');
+				document.myform.pro_size.focus();
+				return;
+			}
+		}
+
+		if(document.myform.pro_tick.value == '3mm')
+		{
+			if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 25)
+			{
+				alert('아크릴두께 3mm 제품은 작업배송간에 파손이 잦아 25cm이하 사이즈만 제작.발송 가능합니다.');
+				document.myform.pro_size.focus();
+				return;
+			}
+		}
+
+		if(document.myform.pro_tick.value == '5mm')
+		{
+			if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 40)
+			{
+				alert('아크릴두께 5mm 제품은 대형사이즈 작업배송간에 파손이 잦아 40cm이하 사이즈만 제작.발송 가능합니다.');
+				document.myform.pro_size.focus();
+				return;
+			}
+		}
+
+		if(document.myform.pro_tick.value == '8mm')
+		{
+			if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 45)
+			{
+				alert('아크릴두께 8mm 제품은 대형사이즈 작업배송간에 파손이 잦아 45cm이하 사이즈만 제작.발송 가능합니다.');
+				document.myform.pro_size.focus();
+				return;
+			}
+		}
+
+		if(psize < pmnsize)
+		{
+			alert("최소사이즈는 "+pmnsize+"cm 입니다.");
 			document.myform.pro_size.focus();
 			return;
 		}
-	}
-
-	if(document.myform.pro_tick.value == '5mm')
-	{
-		if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 40)
+		if(psize > pmxsize)
 		{
-			alert('아크릴두께 5mm 제품은 대형사이즈 작업배송간에 파손이 잦아 40cm이하 사이즈만 제작.발송 가능합니다.');
+			alert("최대사이즈는 "+pmxsize+"cm 입니다.");
 			document.myform.pro_size.focus();
 			return;
 		}
-	}
-
-	if(document.myform.pro_tick.value == '8mm')
-	{
-		if(eval(document.myform.pro_size.value) < 3 || eval(document.myform.pro_size.value) > 45)
+		if(document.myform.pro_text.value == '')
 		{
-			alert('아크릴두께 8mm 제품은 대형사이즈 작업배송간에 파손이 잦아 45cm이하 사이즈만 제작.발송 가능합니다.');
-			document.myform.pro_size.focus();
+			alert('글자내용을 입력하여 주십시오.');
+			document.myform.pro_text.focus();
 			return;
 		}
-	}
 
-	if(psize < pmnsize)
-	{
-		alert("최소사이즈는 "+pmnsize+"cm 입니다.");
-		document.myform.pro_size.focus();
-		return;
-	}
-	if(psize > pmxsize)
-	{
-		alert("최대사이즈는 "+pmxsize+"cm 입니다.");
-		document.myform.pro_size.focus();
-		return;
-	}
-	if(document.myform.pro_text.value == '')
-	{
-		alert('글자내용을 입력하여 주십시오.');
-		document.myform.pro_text.focus();
-		return;
-	}
+		//단가 확인
+		chmm(pcolor,ptick,psize);
+		pprice = document.myform.p_price.value;	//가격
 
-	//단가 확인
-	chmm(pcolor,ptick,psize);
-	pprice = document.myform.p_price.value;	//가격
+		var lenText = 0;
+		var tempText = '';
+		var tempcnt_ssddam = 0;
+		var tempcnt_ddam = 0;
+		var tempcnt_gagualho = 0;
+		var tempcnt_bgagualho = 0;
+		var tempcnt_pogualho = 0;
+		var tempcnt_bpogualho = 0;
+		var tempcnt_smile = 0;
+		var tempcnt_mulbar = 0;
+		var tempcnt_serobar = 0;
+		var tempcnt_tgualho = 0;
+		var tempcnt_btgualho = 0;
+		var tempcnt_gualho = 0;
+		var tempcnt_bgualho = 0;
+		var tempcnt_point = 0;
+		var tempcnt_comma = 0;
+		var tempcnt_middlebar = 0;
+		var tempcnt_underbar = 0;
+		var tempcnt_slash = 0;
+		var tempcnt_ddang = 0;
+		var tempcnt_ddamddang = 0;
 
-	var lenText = 0;
-	var tempText = '';
-	var tempcnt_ssddam = 0;
-	var tempcnt_ddam = 0;
-	var tempcnt_gagualho = 0;
-	var tempcnt_bgagualho = 0;
-	var tempcnt_pogualho = 0;
-	var tempcnt_bpogualho = 0;
-	var tempcnt_smile = 0;
-	var tempcnt_mulbar = 0;
-	var tempcnt_serobar = 0;
-	var tempcnt_tgualho = 0;
-	var tempcnt_btgualho = 0;
-	var tempcnt_gualho = 0;
-	var tempcnt_bgualho = 0;
-	var tempcnt_point = 0;
-	var tempcnt_comma = 0;
-	var tempcnt_middlebar = 0;
-	var tempcnt_underbar = 0;
-	var tempcnt_slash = 0;
-	var tempcnt_ddang = 0;
-	var tempcnt_ddamddang = 0;
+		tempText = no_blank(ptext);  //공백제거
 
-	tempText = no_blank(ptext);  //공백제거
-
-	//.,-_ 특수문자 가격조정을 위해 갯수 확인
-	tempcnt_ssddam = cnt_ssddam(tempText);
-	tempcnt_ddam = cnt_ddam(tempText);
-	tempcnt_gagualho = cnt_gagualho(tempText);
-	tempcnt_bgagualho = cnt_bgagualho(tempText);
-	tempcnt_pogualho = cnt_pogualho(tempText);
-	tempcnt_bpogualho = cnt_bpogualho(tempText);
-	tempcnt_smile = cnt_smile(tempText);
-	tempcnt_mulbar = cnt_mulbar(tempText);
-	tempcnt_serobar = cnt_serobar(tempText);
-	tempcnt_tgualho = cnt_tgualho(tempText);
-	tempcnt_btgualho = cnt_btgualho(tempText);
-	tempcnt_gualho = cnt_gualho(tempText);
-	tempcnt_bgualho = cnt_bgualho(tempText);
-	tempcnt_point = cnt_point(tempText);
-	tempcnt_comma = cnt_comma(tempText);
-	tempcnt_middlebar = cnt_middlebar(tempText);
-	tempcnt_underbar = cnt_underbar(tempText);
-	tempcnt_slash = cnt_slash(tempText);
-	tempcnt_ddang = cnt_ddang(tempText);
-	tempcnt_ddamddang = cnt_ddamddang(tempText);
+		//.,-_ 특수문자 가격조정을 위해 갯수 확인
+		tempcnt_ssddam = cnt_ssddam(tempText);
+		tempcnt_ddam = cnt_ddam(tempText);
+		tempcnt_gagualho = cnt_gagualho(tempText);
+		tempcnt_bgagualho = cnt_bgagualho(tempText);
+		tempcnt_pogualho = cnt_pogualho(tempText);
+		tempcnt_bpogualho = cnt_bpogualho(tempText);
+		tempcnt_smile = cnt_smile(tempText);
+		tempcnt_mulbar = cnt_mulbar(tempText);
+		tempcnt_serobar = cnt_serobar(tempText);
+		tempcnt_tgualho = cnt_tgualho(tempText);
+		tempcnt_btgualho = cnt_btgualho(tempText);
+		tempcnt_gualho = cnt_gualho(tempText);
+		tempcnt_bgualho = cnt_bgualho(tempText);
+		tempcnt_point = cnt_point(tempText);
+		tempcnt_comma = cnt_comma(tempText);
+		tempcnt_middlebar = cnt_middlebar(tempText);
+		tempcnt_underbar = cnt_underbar(tempText);
+		tempcnt_slash = cnt_slash(tempText);
+		tempcnt_ddang = cnt_ddang(tempText);
+		tempcnt_ddamddang = cnt_ddamddang(tempText);
 
 
 
 
-	lenText = tempText.length;		//글자수 체크
+		lenText = tempText.length;		//글자수 체크
 
-	tempText = no_gualho(tempText);  //괄호 제거
-	tempText = no_bgualho(tempText);  //반괄호 제거
-	tempText = no_ssddam(tempText);  //쌍따음표 제거
-	tempText = no_ddam(tempText);  //따음표 제거
-	tempText = no_gagualho(tempText); // 각괄호 제거
-	tempText = no_bgagualho(tempText); // 반각괄호 제거
-	tempText = no_pogualho(tempText); // 포괄호 제거
-	tempText = no_bpogualho(tempText); // 반포괄호 제거
-	tempText = no_smile(tempText); // ^ 제거
-	tempText = no_mulbar(tempText); // ~ 제거
-	tempText = no_serobar(tempText); // | 제거
-	tempText = no_tgualho(tempText); // 꺽쇠괄호 제거
-	tempText = no_btgualho(tempText); // 반꺽쇠괄호 제거
-	tempText = no_point(tempText);  //쩜 제거
-	tempText = no_comma(tempText);  //콤마 제거
-	tempText = no_middlebar(tempText);  //하이픈 제거
-	tempText = no_underbar(tempText);  //언더바 제거
-	tempText = no_slash(tempText);  //슬래시 제거
-	tempText = no_ddang(tempText);  //땡땡이 제거
-	tempText = no_ddamddang(tempText);  //땀땡이 제거
+		tempText = no_gualho(tempText);  //괄호 제거
+		tempText = no_bgualho(tempText);  //반괄호 제거
+		tempText = no_ssddam(tempText);  //쌍따음표 제거
+		tempText = no_ddam(tempText);  //따음표 제거
+		tempText = no_gagualho(tempText); // 각괄호 제거
+		tempText = no_bgagualho(tempText); // 반각괄호 제거
+		tempText = no_pogualho(tempText); // 포괄호 제거
+		tempText = no_bpogualho(tempText); // 반포괄호 제거
+		tempText = no_smile(tempText); // ^ 제거
+		tempText = no_mulbar(tempText); // ~ 제거
+		tempText = no_serobar(tempText); // | 제거
+		tempText = no_tgualho(tempText); // 꺽쇠괄호 제거
+		tempText = no_btgualho(tempText); // 반꺽쇠괄호 제거
+		tempText = no_point(tempText);  //쩜 제거
+		tempText = no_comma(tempText);  //콤마 제거
+		tempText = no_middlebar(tempText);  //하이픈 제거
+		tempText = no_underbar(tempText);  //언더바 제거
+		tempText = no_slash(tempText);  //슬래시 제거
+		tempText = no_ddang(tempText);  //땡땡이 제거
+		tempText = no_ddamddang(tempText);  //땀땡이 제거
 
-	//글자별로 숫자,영문,한글 / 한자 및 기타언어 구문하여 계산
-	var i;
+		//글자별로 숫자,영문,한글 / 한자 및 기타언어 구문하여 계산
+		var i;
 
-	psum = 0;
-	for (i=0; i<tempText.length; i++)
-	{
-		//alert(tempText.charCodeAt(i));
-		switch(true)
+		psum = 0;
+		for (i=0; i<tempText.length; i++)
 		{
-			case 33 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 300:psum=psum+(pprice*1);break;
-			case 44032 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 55203:psum=psum+(pprice*1);break;
-			case 12593 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 12643:psum=psum+(pprice*1);break;
-			default:psum=psum+(pprice*1.3);break;
+			//alert(tempText.charCodeAt(i));
+			switch(true)
+			{
+				case 33 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 300:psum=psum+(pprice*1);break;
+				case 44032 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 55203:psum=psum+(pprice*1);break;
+				case 12593 <= tempText.charCodeAt(i) && tempText.charCodeAt(i) <= 12643:psum=psum+(pprice*1);break;
+				default:psum=psum+(pprice*1.3);break;
+			}
+			//break;
 		}
-		//break;
-	}
-	console.log(psum)
-	psum = psum + (pprice * ((tempcnt_point + tempcnt_comma + tempcnt_ddam) / 4  + (tempcnt_gualho + tempcnt_bgualho + tempcnt_pogualho + tempcnt_bpogualho + tempcnt_gagualho + tempcnt_bgagualho + tempcnt_tgualho + tempcnt_btgualho + tempcnt_smile + tempcnt_mulbar + tempcnt_serobar + tempcnt_middlebar + tempcnt_underbar + tempcnt_ssddam + tempcnt_slash + tempcnt_ddang + tempcnt_ddamddang) / 2));
-	console.log(psum)
-	psum = psum * pcount;
-	console.log(psum)
+		console.log(psum)
+		psum = psum + (pprice * ((tempcnt_point + tempcnt_comma + tempcnt_ddam) / 4  + (tempcnt_gualho + tempcnt_bgualho + tempcnt_pogualho + tempcnt_bpogualho + tempcnt_gagualho + tempcnt_bgagualho + tempcnt_tgualho + tempcnt_btgualho + tempcnt_smile + tempcnt_mulbar + tempcnt_serobar + tempcnt_middlebar + tempcnt_underbar + tempcnt_ssddam + tempcnt_slash + tempcnt_ddang + tempcnt_ddamddang) / 2));
+		console.log(psum)
+		psum = psum * pcount;
+		console.log(psum)
 
-	pqty = lenText;	//수량
+		pqty = lenText;	//수량
 
-	/*
-	pprice = pprice;	//단가
-	pqty = lenText;	//수량
-	psum = pprice * (lenText - tempcnt_point - tempcnt_comma - tempcnt_middlebar - tempcnt_underbar + (tempcnt_point + tempcnt_comma) / 4  + (tempcnt_middlebar + tempcnt_underbar) / 2) * pcount ;		//실제 단가 계산하는 함수  (pcount는 세트갯수)
-	*/
+		//<!--   삭제옵션  여기부터 -->
+		var currentlist = 1;
 
-	//<!--   삭제옵션  여기부터 -->
-	var currentlist = 1;
-
-	//
-	for(i=1;i<16;i++)
-	{
-		tempsptick_nn = eval("document.all.sptick"+i);
-		if(tempsptick_nn.innerHTML == '')
+		//
+		for(i=1;i<16;i++)
 		{
-			currentlist = i;
-			break;
+			tempsptick_nn = eval("document.all.sptick"+i);
+			if(tempsptick_nn.innerHTML == '')
+			{
+				currentlist = i;
+				break;
+			}
 		}
-	}
 
-	//화면상에 계산된값을 뿌려주기위한 준비
-	spptm  = document.myform.ptm.value;
-	sptick_nn = eval("document.all.sptick"+currentlist);
-	spcolor_nn = eval("document.all.spcolor"+currentlist);
-	//sprbcolor_nn = eval("document.all.sprbcolor"+plistcnt);
-	spfont_nn = eval("document.all.spfont"+currentlist);
-	spsize_nn = eval("document.all.spsize"+currentlist);
-	sptext_nn = eval("document.all.sptext"+currentlist);
-	spprice_nn = eval("document.all.spprice"+currentlist);
-	spqty_nn = eval("document.all.spqty"+currentlist);
-	spcnt_nn = eval("document.all.spcnt"+currentlist);
-	spsum_nn = eval("document.all.spsum"+currentlist);
-	spdel_nn = eval("document.all.spdel"+currentlist);
+		//화면상에 계산된값을 뿌려주기위한 준비
+		spptm  = document.myform.ptm.value;
+		sptick_nn = eval("document.all.sptick"+currentlist);
+		spcolor_nn = eval("document.all.spcolor"+currentlist);
+		spfont_nn = eval("document.all.spfont"+currentlist);
+		spsize_nn = eval("document.all.spsize"+currentlist);
+		sptext_nn = eval("document.all.sptext"+currentlist);
+		spprice_nn = eval("document.all.spprice"+currentlist);
+		spqty_nn = eval("document.all.spqty"+currentlist);
+		spcnt_nn = eval("document.all.spcnt"+currentlist);
+		spsum_nn = eval("document.all.spsum"+currentlist);
+		spdel_nn = eval("document.all.spdel"+currentlist);
 
-	var arrcolorname = pcolor.split(".");
+		var arrcolorname = pcolor.split(".");
 
-	//화면상에 계산된값을 뿌리기
-	sptick_nn.innerHTML = ptick;
-	spcolor_nn.innerHTML = arrcolorname[1];
-	//sprbcolor_nn.innerHTML = prbcolor;
-	spfont_nn.innerHTML = pfont;
-	spsize_nn.innerHTML = psize;
-	sptext_nn.innerHTML = ptext;
-	//spprice_nn.innerHTML = pprice;
-	spqty_nn.innerHTML = pcount;		//세트수량
-	spcnt_nn.innerHTML = pqty;			//글자갯수
-	spsum_nn.innerHTML = setComma(psum);
-	tempHtml =  "<a href='##'><img src='static/icon_del.png' border=0 onClick='delline(this)' name='del_" + currentlist + "'></a>";			// 이미지 경로임
-	spdel_nn.innerHTML = tempHtml;
-	//tt_sum = eval(spptm)+eval(psum);   //소계 합산
-	var tt_sum2 = 0;
-	for(i=1;i<16;i++)
-	{
-		//alert("for:" + tt_sum2);
-		tempspsum_nn = eval("document.all.spsum"+i);
-		//alert(tempspsum_nn.innerHTML);
-		if(tempspsum_nn.innerHTML != '')
+		//화면상에 계산된값을 뿌리기
+		sptick_nn.innerHTML = ptick;
+		spcolor_nn.innerHTML = arrcolorname[1];
+		//sprbcolor_nn.innerHTML = prbcolor;
+		spfont_nn.innerHTML = pfont;
+		spsize_nn.innerHTML = psize;
+		sptext_nn.innerHTML = ptext;
+		//spprice_nn.innerHTML = pprice;
+		spqty_nn.innerHTML = pcount;		//세트수량
+		spcnt_nn.innerHTML = pqty;			//글자갯수
+		spsum_nn.innerHTML = setComma(psum);
+		tempHtml =  "<a href='##'><img src='static/icon_del.png' border=0 onClick='delline(this)' name='del_" + currentlist + "'></a>";			// 이미지 경로임
+		spdel_nn.innerHTML = tempHtml;
+		//tt_sum = eval(spptm)+eval(psum);   //소계 합산
+		var tt_sum2 = 0;
+		for(i=1;i<16;i++)
 		{
-			tt_sum2 = tt_sum2 + eval(no_comma(tempspsum_nn.innerHTML));
-			//alert("if:" + tt_sum2);
+			//alert("for:" + tt_sum2);
+			tempspsum_nn = eval("document.all.spsum"+i);
+			//alert(tempspsum_nn.innerHTML);
+			if(tempspsum_nn.innerHTML != '')
+			{
+				tt_sum2 = tt_sum2 + eval(no_comma(tempspsum_nn.innerHTML));
+				//alert("if:" + tt_sum2);
+			}
 		}
-	}
-	//<!--   삭제옵션  여기까지 -->
-	/*
-	var tt_discount1 = 0;
-	var tt_discount2 = 0;
+	document.all.spst.innerHTML = setComma(tt_sum2);		//합계값 화면상에 뿌리기
+	document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);		// 주문수량 화면상에 뿌리기 - 내림 (-3은 자리수 000)
+	document.myform.ptm.value = tt_sum2;		//총 합계금액 임시 저장
 
-	tt_sum
-	*/
-
-
-	/*
-	if (eval(tt_sum2) < 10000)
+	if(plistcnt < 16)
 	{
-	document.all.spst.innerHTML = setComma("10000");		//합계값 화면상에 뿌리기
-	document.all.spcount.innerHTML = "10";
-}
-else
-{*/
-document.all.spst.innerHTML = setComma(tt_sum2);		//합계값 화면상에 뿌리기
-document.all.spcount.innerHTML = setComma(roundXL(tt_sum2,-3)/1000);		// 주문수량 화면상에 뿌리기 - 내림 (-3은 자리수 000)
-//}
-
-
-
-document.myform.ptm.value = tt_sum2;		//총 합계금액 임시 저장
-
-if(plistcnt < 16)
-{
-	document.myform.p_listcnt.value = eval(plistcnt)+1;   //리스트 갯수 저장
-}
-
-/*
-
-
-// (((가로*세로)/9000)+(가로*세로)/100))*수량)
-
-ppri = Math.ceil(((plen*pwid)/90000)*pric);	//상품1개당 가격
-ppri = roundXL(ppri, -3);
-mpri = 0;
-
-if(pma == true)
-{
-//{[(가로 + 세로)/100]*2}*1000*수량
-mpri = Math.ceil(((plen+pwid)/100)*2*1000);	//면치기 가격
-mpri = roundXL(mpri, -3);
-}
-else
-{
-mpri = Math.ceil(0);	//면치기 가격
-mpri = roundXL(mpri, -3);
-}
-
-dpri = Math.ceil(1000*phl);	//다보구멍 가격
-
-//sump = Math.ceil(plen/1000*pwid/1000*pan/1000*300*pric*puni);
-sump = Math.ceil(((ppri+mpri)*puni)+dpri);
-//sump = roundXL(sump, -2);
-tsump = setComma(sump);
-
-
-if(pma == true)
-{
-sptext_nn.innerHTML = "O";
-}
-else
-{
-sptext_nn.innerHTML = "X";
-}
-
-spprice_nn.innerHTML = phl;
-spqty_nn.innerHTML = puni;
-spsum_nn.innerHTML = tsump;
-
-tt_sum = eval(spptm)+eval(sump);
-document.all.spst.innerHTML = setComma(tt_sum);
-document.all.spcount.innerHTML = setComma(tt_sum/1000);
-
-document.myform.ptm.value = tt_sum;
-//			document.myform.sumbtn.value = "추가견적";
-
-
-*/
+		document.myform.p_listcnt.value = eval(plistcnt)+1;   //리스트 갯수 저장
+	}
 }
 </script>
 
@@ -1840,8 +1470,8 @@ document.myform.ptm.value = tt_sum;
 		//document.getElementById("wr_content").value = "^^";
 		form.submit();
 	}
-	</script>
-	<!-- 주문자정보란 전송함수  끝-->
+</script>
+<!-- 주문자정보란 전송함수  끝-->
 
 
 </div>
