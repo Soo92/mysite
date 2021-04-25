@@ -1,12 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
 <style>
-  #info {
-	position: absolute;
-	top: 10px;
-	width: 100%;
-	text-align: center;
-	z-index: 100;
-	display:block;
-}
+  .preview {
+    position:absolute;
+    color:black;
+    font-size:50px;
+    top:50%;
+    left:50%;
+    border:5px solid black;
+    border-radius:5px;
+    transform:translate(-50%,-50%)
+  }
 </style>
+</head>
+<body>
 
-<div id="info">Description</div>
+<div style="height:600px;position:relative;background-color:aqua;" >
+  <div class="preview">
+	포장
+  </div>
+  <div class="preview">
+	포장
+  </div>
+  <div class="preview" style="color:blue;font-size:49px">
+	포장
+  </div>
+  <div class="preview" style="color:red;font-size:48px;text-decoration: underline;">
+	TAKE-OUT
+  </div>
+</div>
+
+</body>
+</html>
