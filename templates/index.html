@@ -12,182 +12,106 @@
 	<link rel="stylesheet" href="static/style(2).css">
 	<link rel="stylesheet" href="static/style(3).css">
 	<link rel="stylesheet" href="static/style(4).css">
-	<!--[if lte IE 8]>
-	<script src="https://wakusign.com/gnuboard5/js/html5.js"></script>
-	<![endif]-->
-	<script src="static/jquery-1.8.3.min.js.다운로드"></script>
-	<script src="static/jquery.menu.js.다운로드"></script>
-	<script src="static/common.js.다운로드"></script>
-	<script src="static/wrest.js.다운로드"></script>
+	<script src="static/my.js"></script>
 
 </head>
 <form name="my_b">
 	<body topmargin="0" leftmargin="0" onload="preview_update()">
-		<div style="width:700;">
-			<br>
-			<!-- 계산기부분 시작 -->
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" width="700" align="left">
-				<tbody>
-					<tr><td align="center" bgcolor="#FFFFFF" colspan="10">
-						<img src="static/3dtexttitle2.jpg" border="0"></td>
-					</tr>
-					<tr>
-						<td class="od_view_title" width="50" height="300" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">미리보기
-							<br>
-							<br>
-							조명 <input type="checkbox" id="light_on" name="light_on" onchange="preview_update()" checked="true">
+		<div style="width:700px;height:300px;position:relative;background-color:aqua;" >
+			<div id="pro_back">
+				<div id="preview_text" contenteditable="true" spellcheck="false">여기에문구</div>
+			</div>
+		</div>
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" width="700" align="left">
+			<tbody>
+				<tr>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<span id="pro_color_span">
+							<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
+								<option value="000000">검은색</option>
+								<option value="018d44">동백잎</option>
+								<option value="ee2b6e">핫핑크</option>
+								<option value="ac1f30">사과색</option>
+								<option value="f2ea01">레몬색</option>
+								<option value="ffffff" selected="">흰색</option>
+								<option value="3e64af">바다색</option>
+								<option value="6e5048">고목나무색</option>
+							</select>
+						</span>
+					</td>
+					<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<select name="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
+							<option value="a" selected="">돈부리덮밥</option>
+							<option value="b">이자카야 선술집</option>
+							<option value="c">문화공원 나들이</option>
+							<option value="d">맑은 샘물터</option>
+							<option value="e">호두나무</option>
+							<option value="f">책읽는 골목</option>
+						</select>
+					</td>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<select name="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
+							<option value="10">5cm</option>
+							<option value="20">10cm</option>
+							<option value="30">15cm</option>
+							<option value="40" selected="">20cm</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=30>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						조명 <input type="checkbox" id="light_on" name="light_on" onchange="preview_update()" checked="true">
+					</td>
+					<td width="70" bgcolor="#ffffff" align="left">
+						<span id="pro_tick_span">
 							<select name="selected_back" class="form" style="font-size:12;" onchange="preview_update()">
 								<option value="0" selected="">단품</option>
 								<option value="1">벽돌</option>
 								<option value="2">창문</option>
 								<option value="3">통유리</option>
-								<!--<option value="10T">10T</option>-->
 							</select>
-						</td>
-						<td colspan="9" bgcolor="#ffffff" id="pro_back" align="left">
-							<div id="preview_text" contenteditable="true" spellcheck="false">여기에문구</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">두께</td>
-						<td width="70" bgcolor="#ffffff" align="left">
-							<span id="pro_tick_span">
-								<select name="pro_tick" class="form" style="font-size:12;" onchange="preview_update()">
-									<option value="10">20mm</option>
-									<option value="15" selected="">25mm</option>
-									<!--<option value="10T">10T</option>-->
-								</select>
-							</span>
-						</td>
-						<td class="od_view_title" width="50" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
-						<td width="100" bgcolor="#ffffff" align="left">
-							<select name="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
-								<option value="a" selected="">돈부리덮밥</option>
-								<option value="b">이자카야 선술집</option>
-								<option value="c">문화공원 나들이</option>
-								<option value="d">맑은 샘물터</option>
-								<option value="e">호두나무</option>
-								<option value="f">책읽는 골목</option>
+						</span>
+					</td>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						밑줄 <input type="checkbox" id="underline_on" name="underline_on" onchange="preview_update()" checked="true">
+					</td>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						테두리 <input type="checkbox" id="border_on" name="border_on" onchange="preview_update()" checked="true">
+					</td>
+					<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						측면 투광 <input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
+					</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<span>
+							<select name="side_color_on" class="form" id="side_color_on" style="font-size:12;" onchange="preview_update()">
+								<option value="000000">검은색</option>
+								<option value="018d44">동백잎</option>
+								<option value="ee2b6e">핫핑크</option>
+								<option value="ac1f30">사과색</option>
+								<option value="f2ea01">레몬색</option>
+								<option value="ffffff">흰색</option>
+								<option value="3e64af" selected="">바다색</option>
+								<option value="6e5048">고목나무색</option>
 							</select>
-						</td>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
-						<td width="100" bgcolor="#ffffff" align="left">
-							<select name="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
-								<option value="10">5cm</option>
-								<option value="20">10cm</option>
-								<option value="30">15cm</option>
-								<option value="40" selected="">20cm</option>
+							<select name="side_color_off" class="form" id="side_color_off" style="font-size:12;" hidden=true onchange="preview_update()">
+								<option value="808080">회색</option>
+								<option value="ffffff" selected="">흰색</option>
+								<option value="000000">흑색</option>
+								<option value="ffd700">금색</option>
+								<option value="c0c0c0">은색</option>
 							</select>
-						</td>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="10" height="50" bgcolor="#686868" style="font-size:18px;"><font color="#FFFFFF">합계 : &nbsp;<span id="spst">0</span>&nbsp; 원</font><br>
+						<font color="#FFFFFF"><font size="2" color="white">아래 주문자정보를 입력하신다음, 하단 "주문내역접수" 버튼을 누르신 후</font>
+						<br> <font size="2" color="white">글자갯수에 관계없이 견적금액에 맞춰</font> <font color="yellow">구매수량(</font><font color="yellow">&nbsp;<span id="spcount">0</span>&nbsp;)개 로</font> <font color="yellow">결제</font><font size="2" color="white">해주세요.</font></font></td>
 					</tr>
-					<tr height=30>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
-						<td width="100" bgcolor="#ffffff" align="left">
-							<span id="pro_color_span">
-								<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
-									<option value="000000">검은색</option>
-									<option value="018d44">동백잎</option>
-									<option value="ee2b6e">핫핑크</option>
-									<option value="ac1f30">사과색</option>
-									<option value="f2ea01">레몬색</option>
-									<option value="ffffff" selected="">흰색</option>
-									<option value="3e64af">바다색</option>
-									<option value="6e5048">고목나무색</option>
-								</select>
-							</span>
-						</td>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
-							밑줄 <input type="checkbox" id="underline_on" name="underline_on" onchange="preview_update()" checked="true">
-						</td>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
-							테두리 <input type="checkbox" id="border_on" name="border_on" onchange="preview_update()" checked="true">
-						</td>
-						<td class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
-							측면 투광 <input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
-						</td>
-						<td width="100" bgcolor="#ffffff" align="left">
-							<span>
-								<select name="side_color_on" class="form" id="side_color_on" style="font-size:12;" onchange="preview_update()">
-									<option value="000000">검은색</option>
-									<option value="018d44">동백잎</option>
-									<option value="ee2b6e">핫핑크</option>
-									<option value="ac1f30">사과색</option>
-									<option value="f2ea01">레몬색</option>
-									<option value="ffffff">흰색</option>
-									<option value="3e64af" selected="">바다색</option>
-									<option value="6e5048">고목나무색</option>
-								</select>
-								<select name="side_color_off" class="form" id="side_color_off" style="font-size:12;" hidden=true onchange="preview_update()">
-									<option value="808080">회색</option>
-									<option value="ffffff" selected="">흰색</option>
-									<option value="000000">흑색</option>
-									<option value="ffd700">금색</option>
-									<option value="c0c0c0">은색</option>
-								</select>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td align="center" colspan="10" height="50" bgcolor="#686868" style="font-size:18px;"><font color="#FFFFFF">합계 : &nbsp;<span id="spst">0</span>&nbsp; 원</font><br>
-							<font color="#FFFFFF"><font size="2" color="white">아래 주문자정보를 입력하신다음, 하단 "주문내역접수" 버튼을 누르신 후</font>
-							<br> <font size="2" color="white">글자갯수에 관계없이 견적금액에 맞춰</font> <font color="yellow">구매수량(</font><font color="yellow">&nbsp;<span id="spcount">0</span>&nbsp;)개 로</font> <font color="yellow">결제</font><font size="2" color="white">해주세요.</font></font></td>
-						</tr>
-					</tbody></table>
-				</div>
+				</tbody></table>
 			</body>
 		</form>
 		</html>
-		<!-- 계산기부분 계산함수 시작 -->
-		<script language="javascript">
-		function preview_update()
-		{
-			var f_clr = document.my_b.pro_color.value
-			var f_side_on = document.my_b.side_on.checked
-			var f_clr_side_on = document.my_b.side_color_on.value
-			var f_clr_side_off = document.my_b.side_color_off.value
-			var f_size = (60 + document.my_b.pro_size.value*1)
-			var f_w = document.my_b.pro_font.value
-			var f_thi = document.my_b.pro_tick.value
-			var f_shwd = "1px 1px "+(10+document.my_b.pro_size.value*1)+"px #" + f_clr
-			var f_back = document.my_b.selected_back.value
-
-			if(f_clr!="ffffff" & f_side_on) {
-				document.my_b.side_color_on.hidden=f_side_on
-			} else {
-				document.my_b.side_color_on.hidden=!f_side_on
-			}
-			document.my_b.side_color_off.hidden=f_side_on
-
-			for (step = 2; step <= f_thi; step++) {
-				if (f_side_on) {
-					if(step<f_thi/3 || step>f_thi*2/3 ) {
-						f_shwd=f_shwd + ",1px " + step + "px 1px #ffffff"
-					} else {
-						if (document.my_b.side_color_on.hidden) {
-							f_shwd=f_shwd + ",1px " + step + "px 1px #" + f_clr
-						} else {
-							f_shwd=f_shwd + ",1px " + step + "px 1px #" + f_clr_side_on
-						}
-					}
-				} else {
-					f_shwd=f_shwd + ",1px " + step + "px 1px #"  + f_clr_side_off
-				}
-			}
-			f_shwd=f_shwd +
-			",1px " +(4 + step*1)+ "px 6px rgba(16,16,16,0.4),"+
-			"1px " +(8 + step*1)+ "px 10px rgba(16,16,16,0.2),"+
-			"1px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
-			"1px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
-
-			document.getElementById("preview_text").style="text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
-			if (f_back==0)  {
-				document.getElementById("pro_back").style="background-color:#212529"
-			} else if(f_back==1) {
-				document.getElementById("pro_back").style="background-image:url('static/brick_wall.jpg')"
-			} else if(f_back==2) {
-				document.getElementById("pro_back").style="background-image:url('static/window1.jpg');background-size: 450px;background-repeat:no-repeat"
-			} else if(f_back==3) {
-				document.getElementById("pro_back").style="background-image:url('static/window2.jpg');background-size: 450px;background-repeat:no-repeat"
-			}
-		}
-		</script>
