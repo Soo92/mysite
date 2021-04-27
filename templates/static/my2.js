@@ -13,7 +13,7 @@ function preview_update()
   var f_clr = arr_clr[0]
   var f_w = sel_font.value
   var f_size = (60 + sel_size.value*2)
-  var f_thi = 8
+  var f_thi = 6
   var f_shwd = "1px 2px 0px #" + arr_clr[1]
 
   for (step = 2; step <= f_thi; step++) {
