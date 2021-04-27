@@ -3,7 +3,7 @@ function preview_update()
   var sel_text = document.getElementById("preview_text").innerText
   var text_cnt = sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "").length
   if (text_cnt>20) {
-    toast("20자 이내로 입력해주세요")
+    toast("20자 이내로 입력해 주세요")
     document.getElementById("preview_text").innerText=sel_text.slice(0,20)
   }
   var sel_clr = document.getElementById("pro_color");
@@ -30,11 +30,12 @@ function preview_update()
   f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
   f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-  document.getElementById("preview_text").style="width:700px;max-height:"+f_size*4.2+"px;overflow:inherit;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
-  if (document.getElementById("preview_text").clientHeight >= f_size*4.2) {
-    document.getElementById("preview_text").style="width:700px;max-height:"+f_size*4.2+"px;overflow:auto;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+  pre_style="width:fit-content;max-width:650px;max-height:450px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;margin:0 auto;"
+  if (document.getElementById("preview_text").clientHeight >= 450) {
+    pre_style=pre_style+"overflow:auto;"
   }
-  document.getElementById("pro_back").style="background-color:#868e96"
+  document.getElementById("preview_text").style=pre_style
+  document.getElementById("pro_back").style="background-color:#868e96;height:500px;"
 
   var price_total = 0
   var price_KE ={}
