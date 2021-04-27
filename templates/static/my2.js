@@ -1,6 +1,8 @@
 function preview_update()
 {
   var sel_text = document.getElementById("preview_text").innerText
+  console.log(sel_text.replace(/(^\s*)|(\s*$)/gi, ""))
+  console.log(sel_text.replace(/(^\s*)|(\s*$)/gi, "").length)
   var sel_clr = document.getElementById("pro_color");
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
@@ -25,9 +27,8 @@ function preview_update()
   f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
   f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-  document.getElementById("preview_text").style="text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+  document.getElementById("preview_text").style="width:700px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
   document.getElementById("pro_back").style="background-color:#868e96"
-  document.getElementById("boption").innerText= sel_text+"/" +t_clr+"/" +t_font+"/" +t_size
 
   var price_total = 0
   var price_KE ={}
@@ -52,7 +53,7 @@ function preview_update()
   var check_spc = /[~!@#$%^&*()_+|<>?:{}]/;
   var check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
-  o_cnt=0;e_cnt=0;k_cnt=0;
+  o_cnt=0;e_cnt=0;k_cnt=0;f_cnt=0;
   for (i = 0; i < sel_text.length; i++) {
     tmp=sel_text.charAt(i)
     tmp_price=0
@@ -84,6 +85,8 @@ function preview_update()
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
+  document.getElementById("btext").innerText=sel_text.replace(/(\r\n\t|\n|\r\t)/gm,"")
+  document.getElementById("boption").innerText=t_clr+"/" +t_font+"/" +t_size
   document.getElementById("btotal").innerText=price_total
   document.getElementById("bcount").innerText=price_total/1200
 }
