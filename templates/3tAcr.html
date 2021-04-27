@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)https://wakusign.com/gnuboard5/bbs/ordercalc_acy.php?ca_type=storefarm -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -13,14 +12,14 @@
 	<link rel="stylesheet" href="static/style(3).css">
 	<link rel="stylesheet" href="static/style(4).css">
 	<script src="static/my2.js"></script>
-
 </head>
 	<body topmargin="0" leftmargin="0" onload="preview_update()">
+		<div id="toast"></div>
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" width="700" align="left">
 			<tbody>
 				<tr>
 					<td colspan="10" height="250" bgcolor="#ffffff" id="pro_back" align="left">
-						<div id="preview_text" contenteditable="true" spellcheck="false" style="font-family:'a','b','c','d','e','f','g','h'" onkeydown="preview_update()">
+						<div id="preview_text" contenteditable="true" spellcheck="false" style="font-family:'a','b','c','d','e','f','g','h'" onkeyup="preview_update()">
 							여기에 써보세요
 						</div>
 					</td>
@@ -65,16 +64,15 @@
 					<td align="center" colspan="10" height="100" bgcolor="#686868" style="font-size:18px;">
 						<font color="#FFFFFF">합계 : &nbsp;<span id="btotal">0</span>&nbsp; 원</font>
 						<br>
-						<br> <font size="2" color="white">제작 문구에 </font>
-						<font color="yellow"><span id="btext">문구</font>
-						<font size="2" color="white">를 입력하시고</font>
-						<br> <font size="2" color="white">제작 옵션에 </font>
-						<font color="yellow"><span id="boption">색/서체/크기</font>
-						<font size="2" color="white">를 입력해주세요</font>
-						<br> <font size="2" color="white">견적금액에 맞춰</font>
+						<br> <font id="drcnt" size="2" color="white">제작 문구에 </font>
+						<font color="yellow"><span id="btext">문구</font><font id="drcnt" size="2" color="white">를 입력하시고</font>
+						<br id="drcnt"> <font id="drcnt" size="2" color="white">제작 옵션에 </font>
+						<font color="yellow"><span id="boption">색/서체/크기</font><font id="drcnt" size="2" color="white">를 입력해주세요</font>
+						<br id="drcnt">
+						<font id="drcnt" size="2" color="white">견적금액에 맞춰</font>
 						<font color="yellow">구매수량 (</font>
-						<font color="yellow"><span id="bcount">0</span> )개</font>
-						<font size="2" color="white">로 결제해주세요.</font>
+						<font color="yellow"><span id="bcount">0</span></font>
+						<font color="yellow"><span id="bcount"> )개</span></font><font id="drcnt" size="2" color="white">로 결제해주세요.</font>
 					</td>
 					</tr>
 				</tbody></table>

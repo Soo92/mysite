@@ -1,8 +1,11 @@
 function preview_update()
 {
   var sel_text = document.getElementById("preview_text").innerText
-  console.log(sel_text.replace(/(^\s*)|(\s*$)/gi, ""))
-  console.log(sel_text.replace(/(^\s*)|(\s*$)/gi, "").length)
+  var text_cnt = sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "").length
+  if (text_cnt>20) {
+    toast("20자 이내로 입력해주세요")
+    document.getElementById("preview_text").innerText=sel_text.slice(0,20)
+  }
   var sel_clr = document.getElementById("pro_color");
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
@@ -27,7 +30,10 @@ function preview_update()
   f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
   f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-  document.getElementById("preview_text").style="width:700px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+  document.getElementById("preview_text").style="width:700px;max-height:"+f_size*4.2+"px;overflow:inherit;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+  if (document.getElementById("preview_text").clientHeight >= f_size*4.2) {
+    document.getElementById("preview_text").style="width:700px;max-height:"+f_size*4.2+"px;overflow:auto;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;"
+  }
   document.getElementById("pro_back").style="background-color:#868e96"
 
   var price_total = 0
@@ -68,7 +74,7 @@ function preview_update()
       tmp_price=price_ETC[t_size]
     }
 
-    if (t_clr.search("미러")>0) {
+    if (t_clr.search("미러")>-1) {
       if (tmp_price<=2000) {
         tmp_price=tmp_price+200
       } else if (tmp_price<5000) {
@@ -85,8 +91,24 @@ function preview_update()
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
-  document.getElementById("btext").innerText=sel_text.replace(/(\r\n\t|\n|\r\t)/gm,"")
+  document.getElementById("btext").innerText=sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "")
   document.getElementById("boption").innerText=t_clr+"/" +t_font+"/" +t_size
   document.getElementById("btotal").innerText=price_total
   document.getElementById("bcount").innerText=price_total/1200
+}
+
+let removeToast;
+
+function toast(string) {
+    const toast = document.getElementById("toast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
 }
