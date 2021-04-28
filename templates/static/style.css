@@ -1,28 +1,28 @@
 @charset "utf-8";
 
 @font-face {
-  src : url("fonts/a.ttf");font-family:"a";
+  src : url("fonts/야놀자야체.ttf");font-family:"a";
 }
 @font-face {
-  src : url("fonts/b.ttf");font-family:"b";
+  src : url("fonts/BMDOHYEON.ttf");font-family:"b";
 }
 @font-face {
-  src : url("fonts/c.ttf");font-family:"c";
+  src : url("fonts/InterparkGothicLight.ttf");font-family:"c";
 }
 @font-face {
-  src : url("fonts/d.ttf");font-family:"d";
+  src : url("fonts/eng/Aquatico-Regular.otf");font-family:"d";
 }
 @font-face {
-  src : url("fonts/e.ttf");font-family:"e";
+  src : url("fonts/eng/Baloo-Regular.ttf");font-family:"e";
 }
 @font-face {
-  src : url("fonts/f.ttf");font-family:"f";
+  src : url("fonts/jp/02TogeGothic-Light.otf");font-family:"f";
 }
 @font-face {
-  src : url("fonts/f.ttf");font-family:"g";
+  src : url("fonts/jp/NikkyouSans-B6aV.ttf");font-family:"g";
 }
 @font-face {
-  src : url("fonts/f.ttf");font-family:"h";
+  src : url("fonts/ch/GoJuOn.ttf");font-family:"h";
 }
 
 #drcnt {

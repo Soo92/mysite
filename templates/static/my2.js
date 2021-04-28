@@ -1,14 +1,39 @@
+
+function showTextFile() {
+  var input = document.getElementById('ssa');
+
+  const selectedFiles = input.files;
+  const list = document.createElement('ul');
+  tmp=""
+  for(const file of selectedFiles) {
+    tmp=tmp+"/"+file.webkitRelativePath.split("/")[1]
+  }
+  console.log(tmp)
+}
+
+function init_page(){
+  back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
+  select = document.getElementById('back_option');
+  for (const element of back_optin_list.split("/")) {
+    var opt = document.createElement('option');
+    opt.value = element;
+    opt.innerHTML = element.split(".")[0];
+    select.appendChild(opt);
+  }
+}
+
 function preview_update()
 {
   var sel_text = document.getElementById("preview_text").innerText
   var text_cnt = sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "").length
   if (text_cnt>20) {
-    toast("20자 이내로 입력해 주세요")
+    toast("20자씩 나눠서 입력해 주세요")
     document.getElementById("preview_text").innerText=sel_text.slice(0,20)
   }
   var sel_clr = document.getElementById("pro_color");
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
+  var sel_back = document.getElementById('back_option');
 
   var t_clr = sel_clr.options[sel_clr.selectedIndex].text
   var t_font = sel_font.options[sel_font.selectedIndex].text
@@ -17,8 +42,8 @@ function preview_update()
   var arr_clr = sel_clr.value.split(",")
   var f_clr = arr_clr[0]
   var f_w = sel_font.value
-  var f_size = (60 + sel_size.value*2)
-  var f_thi = 6
+  var f_size = (50 + sel_size.value*2)
+  var f_thi = 5
   var f_shwd = "1px 2px 0px #" + arr_clr[1]
 
   for (step = 2; step <= f_thi; step++) {
@@ -30,12 +55,12 @@ function preview_update()
   f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
   f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-  pre_style="width:fit-content;max-width:650px;max-height:450px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;margin:0 auto;"
-  if (document.getElementById("preview_text").clientHeight >= 450) {
+  pre_style="width:fit-content;min-width:"+f_size+"px;min-height:"+f_size+"px;max-width:600px;max-height:400px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;margin:0 auto;"
+  if (document.getElementById("preview_text").clientHeight >= 400) {
     pre_style=pre_style+"overflow:auto;"
   }
   document.getElementById("preview_text").style=pre_style
-  document.getElementById("pro_back").style="background-color:#868e96;height:500px;"
+  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');background-color:#868e96;background-size:600px 400px;"
 
   var price_total = 0
   var price_KE ={}

@@ -52,10 +52,10 @@ function preview_update()
   if (f_back==0)  {
     document.getElementById("pro_back").style="background-color:#212529"
   } else if(f_back==1) {
-    document.getElementById("pro_back").style="background-image:url('static/brick_wall.jpg')"
+    document.getElementById("pro_back").style="background-image:url('static/background/brick_wall.jpg')"
   } else if(f_back==2) {
-    document.getElementById("pro_back").style="background-image:url('static/window1.jpg');background-size: 450px;background-repeat:no-repeat"
+    document.getElementById("pro_back").style="background-image:url('static/background/window1.jpg');background-size: 450px;background-repeat:no-repeat"
   } else if(f_back==3) {
-    document.getElementById("pro_back").style="background-image:url('static/window2.jpg');background-size: 450px;background-repeat:no-repeat"
+    document.getElementById("pro_back").style="background-image:url('static/background/window2.jpg');background-size: 450px;background-repeat:no-repeat"
   }
 }
