@@ -11,19 +11,19 @@ function showTextFile() {
   console.log(tmp)
 }
 
-function init_page(){
-  back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
-  select = document.getElementById('back_option');
-  for (const element of back_optin_list.split("/")) {
-    var opt = document.createElement('option');
-    opt.value = element;
-    opt.innerHTML = element.split(".")[0];
-    select.appendChild(opt);
-  }
-}
-
 function preview_update()
 {
+  select = document.getElementById('back_option');
+  if(select.length<1) {
+    back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
+    for (const element of back_optin_list.split("/")) {
+      var opt = document.createElement('option');
+      opt.value = element;
+      opt.innerHTML = element.split(".")[0];
+      select.appendChild(opt);
+    }
+  }
+
   var sel_text = document.getElementById("preview_text").innerText
   var text_cnt = sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "").length
   if (text_cnt>20) {

@@ -13,15 +13,25 @@
 	<link rel="stylesheet" href="static/style(4).css">
 	<script src="static/my2.js"></script>
 </head>
-	<body topmargin="0" leftmargin="0" onload="init_page();preview_update();">
+	<body topmargin="0" leftmargin="0" onload="preview_update();">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
+		<div class="font_preload" style="opacity: 0">
+		    <span style="font-family: 'a', Arial, sans-serif;"></span>
+				<span style="font-family: 'b', Arial, sans-serif;"></span>
+				<span style="font-family: 'c', Arial, sans-serif;"></span>
+				<span style="font-family: 'd', Arial, sans-serif;"></span>
+				<span style="font-family: 'e', Arial, sans-serif;"></span>
+				<span style="font-family: 'f', Arial, sans-serif;"></span>
+				<span style="font-family: 'g', Arial, sans-serif;"></span>
+				<span style="font-family: 'h', Arial, sans-serif;"></span>
+		</div>
 
 		<div id="toast"></div>
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" width="600" align="center">
 			<tbody>
 				<tr>
 					<td colspan="10" bgcolor="#ffffff" id="pro_back" align="left" height="400px">
-						<div id="preview_text" contenteditable="true" spellcheck="false" style="font-family:'a','b','c','d','e','f','g','h'" onkeyup="preview_update()">
+						<div id="preview_text" contenteditable="true" spellcheck="false" onkeyup="preview_update()">
 							여기에<br>써보세요
 						</div>
 						<div style="text-align:right">
