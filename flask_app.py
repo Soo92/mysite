@@ -13,6 +13,6 @@ def hello_world():
 def home():
     return render_template('index.html',title='자동견적')
 
-@app.route('/t3')
-def t3():
+@app.route('/t2')
+def t2():
     return render_template('3tAcr.html',title='3t 아크릴')
