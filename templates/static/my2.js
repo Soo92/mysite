@@ -11,6 +11,17 @@ function showTextFile() {
   console.log(tmp)
 }
 
+function paste_value(e){
+  console.log(event.clipboardData.getData('text/plain'))
+  event.clipboardData.setData('text/plain', event.clipboardData.getData('Text'))
+}
+function first_enter(){
+  if (document.getElementById("preview_text").spellcheck) {
+    document.getElementById("preview_text").spellcheck=false
+    document.getElementById("preview_text").innerText=""
+  }
+}
+
 function preview_update()
 {
   select = document.getElementById('back_option');
@@ -43,7 +54,7 @@ function preview_update()
   var f_clr = arr_clr[0]
   var f_w = sel_font.value
   var f_h = (sel_size.value*7)
-  var f_thi = 5
+  var f_thi = 3
   var f_shwd = "0.5px 1px 0px #" + arr_clr[1]
 
   for (step = 2; step <= f_thi; step++) {
@@ -63,7 +74,6 @@ function preview_update()
     bb=tmzzp[i].clientHeight
     if(tmzzp[i].style.fontFamily==f_w){
       f_scale=parseInt(aa)/bb
-      console.log(f_scale)
       break
     }
   }
@@ -140,7 +150,7 @@ function preview_update()
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
-  document.getElementById("btext").innerText=sel_text.replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "")
+  document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '/').replace(/(^\s*)|(\s*$)/gi, "").replace(/(\s*)/g, "")
   document.getElementById("boption").innerText=t_clr+"/" +t_font+"/" +t_size
   document.getElementById("btotal").innerText=price_total
   document.getElementById("bcount").innerText=price_total/1200
