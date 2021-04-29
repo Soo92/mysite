@@ -12,13 +12,19 @@ function showTextFile() {
 }
 
 function paste_value(e){
-  console.log(event.clipboardData.getData('text/plain'))
-  event.clipboardData.setData('text/plain', event.clipboardData.getData('Text'))
+  console.log(event.clipboardData.getData('Text'))
+  document.execCommand('insertHTML', false, event.clipboardData.getData('Text'));
+  event.preventDefault();
 }
+
 function first_enter(){
-  if (document.getElementById("preview_text").spellcheck) {
-    document.getElementById("preview_text").spellcheck=false
-    document.getElementById("preview_text").innerText=""
+  var tmp=document.getElementById("preview_text")
+  if (tmp.spellcheck) {
+    tmp.spellcheck=false
+    tmp.innerText=""
+  } else if (tmp.innerText.trim()=="") {
+    tmp.spellcheck=true
+    tmp.innerHTML="여기에<br>써보세요"
   }
 }
 
