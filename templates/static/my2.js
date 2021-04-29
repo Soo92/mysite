@@ -42,9 +42,9 @@ function preview_update()
   var arr_clr = sel_clr.value.split(",")
   var f_clr = arr_clr[0]
   var f_w = sel_font.value
-  var f_size = (50 + sel_size.value*2)
+  var f_h = (sel_size.value*7)
   var f_thi = 5
-  var f_shwd = "1px 2px 0px #" + arr_clr[1]
+  var f_shwd = "0.5px 1px 0px #" + arr_clr[1]
 
   for (step = 2; step <= f_thi; step++) {
     f_shwd=f_shwd + ","+ step/2 +"px " + step + "px 0px #" +  arr_clr[2]
@@ -55,12 +55,35 @@ function preview_update()
   f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
   f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
 
-  pre_style="width:fit-content;min-width:"+f_size+"px;min-height:"+f_size+"px;max-width:600px;max-height:400px;text-shadow:"+f_shwd+"text-align:center;color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_size+"px;font-weight:bold;margin:0 auto;"
-  if (document.getElementById("preview_text").clientHeight >= 400) {
+  f_scale=1
+  tmzzp=document.getElementById("pre_text").children
+  var i;
+  for (i = 0; i < tmzzp.length; i++) {
+    aa=tmzzp[i].style.fontSize
+    bb=tmzzp[i].clientHeight
+    if(tmzzp[i].style.fontFamily==f_w){
+      f_scale=parseInt(aa)/bb
+      console.log(f_scale)
+      break
+    }
+  }
+
+  pre_width="600"
+  pre_height="400"
+  if (sel_size.value<10) {
+    back_scale=1.2
+  } else {
+    back_scale=1
+  }
+
+  pre_style="width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
+    +"text-shadow:"+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;margin:0 auto;text-align:center;"
+  if (document.getElementById("preview_text").clientHeight >= pre_height) {
     pre_style=pre_style+"overflow:auto;"
   }
   document.getElementById("preview_text").style=pre_style
-  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');background-color:#868e96;background-size:600px 400px;"
+  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');background-color:#868e96;"
+    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;"
 
   var price_total = 0
   var price_KE ={}
