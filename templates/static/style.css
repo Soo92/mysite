@@ -1,28 +1,61 @@
 @charset "utf-8";
 
 @font-face {
-  src : url("fonts/야놀자야체.ttf");font-family:"a";
+  font-family:"a";
+  src : url(fonts/야놀자야체.ttf);
+  src: url(fonts/야놀자야체.eot),
+      url(fonts/야놀자야체.woff2) format("woff2"),
+      url(fonts/야놀자야체.woff) format("woff"),
+      url(fonts/야놀자야체.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/BMDOHYEON.ttf");font-family:"b";
+  font-family:"b";
+  src: url(fonts/BMDOHYEON.eot),
+      url(fonts/BMDOHYEON.woff2) format("woff2"),
+      url(fonts/BMDOHYEON.woff) format("woff"),
+      url(fonts/BMDOHYEON.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/InterparkGothicLight.ttf");font-family:"c";
+  font-family:"c";
+  src: url(fonts/InterparkGothicLight.eot),
+      url(fonts/InterparkGothicLight.woff2) format("woff2"),
+      url(fonts/InterparkGothicLight.woff) format("woff"),
+      url(fonts/InterparkGothicLight.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/eng/Aquatico-Regular.otf");font-family:"d";
+  font-family:"d";
+  src: url(fonts/Aquatico-Regular.eot),
+      url(fonts/Aquatico-Regular.woff2) format("woff2"),
+      url(fonts/Aquatico-Regular.woff) format("woff"),
+      url(fonts/Aquatico-Regular.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/eng/Baloo-Regular.ttf");font-family:"e";
+  font-family:"e";
+  src: url(fonts/Baloo-Regular.eot),
+      url(fonts/Baloo-Regular.woff2) format("woff2"),
+      url(fonts/Baloo-Regular.woff) format("woff"),
+      url(fonts/Baloo-Regular.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/jp/02TogeGothic-Light.otf");font-family:"f";
+  font-family:"f";
+  src: url(fonts/02TogeGothic-Light.eot),
+      url(fonts/02TogeGothic-Light.woff2) format("woff2"),
+      url(fonts/02TogeGothic-Light.woff) format("woff"),
+      url(fonts/02TogeGothic-Light.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/jp/NikkyouSans-B6aV.ttf");font-family:"g";
+  font-family:"g";
+  src: url(fonts/NikkyouSans.eot),
+      url(fonts/NikkyouSans.woff2) format("woff2"),
+      url(fonts/NikkyouSans.woff) format("woff"),
+      url(fonts/NikkyouSans.ttf) format("truetype");
 }
 @font-face {
-  src : url("fonts/ch/GoJuOn.ttf");font-family:"h";
+  font-family:"h";
+  src: url(fonts/GoJuOn.eot),
+      url(fonts/GoJuOn.woff2) format("woff2"),
+      url(fonts/GoJuOn.woff) format("woff"),
+      url(fonts/GoJuOn.ttf) format("truetype");
 }
 
 #drcnt {
