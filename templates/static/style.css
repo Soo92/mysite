@@ -58,7 +58,7 @@
       url(fonts/GoJuOn.ttf) format("truetype");
 }
 
-#drcnt {
+.drcnt {
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -87,4 +87,15 @@
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0)
+}
+
+.goldtextcss {
+background: #fad56d; /*if no support for background-clip*/
+background: radial-gradient(farthest-corner at 40% -5%, #ce9f28 3%, #fad56d 5%, #d67b00 35%, #d67b00 65%, #fad56d 99%, #ce9f28 1000%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.preview_3d_text {
+  position:absolute;transform:translate(-50%, -50%);
 }

@@ -1,5 +1,4 @@
 let removeToast;
-
 function toast(string) {
     const toast = document.getElementById("toast");
 
@@ -31,7 +30,7 @@ function copyIt(bID) {
   if (window.clipboardData) {
     window.clipboardData.setData("Text", copyText);
   } else {
-    var tmp = document.createElement('input');
+    tmp = document.createElement('input');
     copied.appendChild(tmp);
     tmp.value=copyText;
     tmp.select();
@@ -47,7 +46,7 @@ function paste_value(e){
 }
 
 function first_enter(){
-  var tmp=document.getElementById("preview_text")
+  tmp=document.getElementById("preview_text")
   if (tmp.spellcheck) {
     tmp.spellcheck=false
     tmp.innerText=""
@@ -59,6 +58,11 @@ function first_enter(){
 
 function preview_update()
 {
+  pre_width=document.getElementById("pro_back").width
+  pre_height=document.getElementById("pro_back").height
+
+  select_div = document.getElementById('back_view');
+  select_div.style="top:"+pre_height*0.95+"px;left:"+pre_width*0.9+"px;"
   select = document.getElementById('back_option');
   if(select.length<1) {
     back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
@@ -70,6 +74,7 @@ function preview_update()
     }
   }
 
+  var sel_text_list = document.getElementById("preview_list")
   var sel_text = document.getElementById("preview_text").innerText
   if (sel_text.length>20) {
     toast("20자씩 나눠서 입력해 주세요")
@@ -90,22 +95,6 @@ function preview_update()
   var t_font = sel_font.options[sel_font.selectedIndex].text
   var t_size = sel_size.options[sel_size.selectedIndex].text
 
-  var arr_clr = sel_clr.value.split(",")
-  var f_clr = arr_clr[0]
-  var f_w = sel_font.value
-  var f_h = (sel_size.value*7)
-  var f_thi = 2.5
-  var f_shwd = "0.5px 1px 0px #" + arr_clr[1]
-
-  for (step = 2; step <= f_thi; step=step+0.5) {
-    f_shwd=f_shwd + ","+ step/2 +"px " + step + "px 0px #" +  arr_clr[2]
-  }
-  f_shwd=f_shwd +
-  ","+f_thi/2+"px " +(4 + step*1)+ "px 6px rgba(16,16,16,0.4),"+
-  f_thi/2+"px " +(8 + step*1)+ "px 10px rgba(16,16,16,0.2),"+
-  f_thi/2+"px " +(11 + step*1)+ "px 35px rgba(16,16,16,0.2),"+
-  f_thi/2+"px " +(16 + step*1)+ "px 60px rgba(16,16,16,0.4);"
-
   f_scale=1
   tmzzp=document.getElementById("pre_text").children
   var i;
@@ -118,22 +107,64 @@ function preview_update()
     }
   }
 
-  pre_width="600"
-  pre_height="400"
   if (sel_size.value<10) {
     back_scale=1.2
   } else {
     back_scale=1
   }
 
-  pre_style="width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
-    +"text-shadow:"+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;margin:0 auto;text-align:center;"
-  if (document.getElementById("preview_text").clientHeight >= pre_height) {
-    pre_style=pre_style+"overflow:auto;"
-  }
-  document.getElementById("preview_text").style=pre_style
-  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');background-color:#868e96;"
+  var arr_clr = sel_clr.value.split(",")
+  var f_w = sel_font.value
+  var f_h = (sel_size.value*10)
+/* 굵기 변경시 초기화 필요함 div */
+  var f_thi = 2
+  var f_cnt = 20
+
+  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
     +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;"
+  clr_i=0
+  for (step = 0; step <= f_thi; step=step+(f_thi/f_cnt)) {
+    pre_style="";f_shwd="";f_clr = arr_clr[clr_i];
+    if(clr_i<arr_clr.length-1) {clr_i=clr_i+1;}
+    if(step==0) {
+      tmp=document.getElementById("preview_text")
+      pre_style="background:#"+arr_clr[0]+";" /*if no support for background-clip*/
+        +"background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
+                +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
+        +"-webkit-background-clip:text;"
+        +"-webkit-text-fill-color:transparent;"
+    } else {
+      tmpid="side"+(step*f_cnt/f_thi);
+      tmp=document.getElementById(tmpid)
+      if(!tmp) {
+        tmp = document.createElement('div');
+        tmp.id=tmpid
+        tmp.className="drcnt preview_3d_text";
+        sel_text_list.appendChild(tmp);
+      }
+    }
+    if (clr_i==2&t_clr.search("미러")>-1) {
+      console.log(step)
+      f_shwd="text-shadow:"+"0.5px 1px 2px;"
+    }
+    if (step+(f_thi/f_cnt) >= f_thi) {
+      console.log(step)
+      f_shwd="text-shadow:"+
+        "0.5px 1px 6px rgba(16,16,16,0.4),"+
+        "1px 2px 10px rgba(16,16,16,0.2),"+
+        "1.5px 3px 35px rgba(16,16,16,0.2),"+
+        "2px 4px 60px rgba(16,16,16,0.4);"
+    }
+    pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
+      +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:center;"
+      +"z-index:"+(f_thi-step)*(f_cnt/f_thi)+";left:"+(pre_width/2+step/2)+"px;top:"+(pre_height/2+step)+"px;"
+    if (tmp.clientHeight >= pre_height) {
+      pre_style=pre_style+"overflow:hidden;"
+    }
+
+    tmp.style=pre_style;
+    tmp.innerText=sel_text;
+  }
 
 /*외부 수정 가능하게*/
   var price_total = 0
