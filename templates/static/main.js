@@ -1,3 +1,18 @@
+let removeToast;
+
+function toast(string) {
+    const toast = document.getElementById("toast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+}
 
 function showTextFile() {
   var input = document.getElementById('ssa');
@@ -8,6 +23,22 @@ function showTextFile() {
   for(const file of selectedFiles) {
     tmp=tmp+"/"+file.webkitRelativePath.split("/")[1]
   }
+}
+
+function copyIt(bID) {
+  copied=document.getElementById(bID);
+  copyText=document.getElementById(bID).innerText.trim();
+  if (window.clipboardData) {
+    window.clipboardData.setData("Text", copyText);
+  } else {
+    var tmp = document.createElement('input');
+    copied.appendChild(tmp);
+    tmp.value=copyText;
+    tmp.select();
+    document.execCommand("copy");
+    tmp.remove();
+  }
+  toast("복사됨!")
 }
 
 function paste_value(e){
@@ -43,6 +74,11 @@ function preview_update()
   if (sel_text.length>20) {
     toast("20자씩 나눠서 입력해 주세요")
     sel_text=sel_text.slice(0,20)
+    document.getElementById("preview_text").innerText=sel_text
+  }
+  if (sel_text.indexOf("؊")>-1) {
+    toast("사용할 수 없는 문자입니다")
+    sel_text=sel_text.replace("؊","")
     document.getElementById("preview_text").innerText=sel_text
   }
   var sel_clr = document.getElementById("pro_color");
@@ -122,8 +158,11 @@ function preview_update()
   var check_eng = /[a-zA-Z]/;
   var check_spc = /[~!@#$%^&*()_+|<>?:{}]/;
   var check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  var check_n = /\n/;
+  var check_s = /\s/;
 
   o_cnt=0;e_cnt=0;k_cnt=0;f_cnt=0;
+  n_cnt=0;s_cnt=0;
   for (i = 0; i < sel_text.length; i++) {
     tmp=sel_text.charAt(i)
     tmp_price=0
@@ -133,6 +172,14 @@ function preview_update()
     } else if (check_eng.test(tmp)){
       e_cnt=e_cnt+1
       tmp_price=price_KE[t_size]
+    } else if (check_n.test(tmp)) {
+      n_cnt=n_cnt+1
+      tmp_price=price_KE[t_size]
+    } else if (check_s.test(tmp)) {
+      s_cnt=s_cnt+1
+      if (s_cnt%3==0) {
+        tmp_price=price_KE[t_size]
+      }
     } else if (check_num.test(tmp) || check_spc.test(tmp) || tmp.trim()!=""){
       o_cnt=o_cnt+1
       tmp_price=price_ETC[t_size]
@@ -151,7 +198,6 @@ function preview_update()
     }
     price_total=price_total+tmp_price
   }
-
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
@@ -160,21 +206,4 @@ function preview_update()
   document.getElementById("boption").innerText=t_clr+"/" +t_font+"/" +t_size
   document.getElementById("btotal").innerText=price_total
   document.getElementById("bcount").innerText=price_total/1200
-
-}
-
-let removeToast;
-
-function toast(string) {
-    const toast = document.getElementById("toast");
-
-    toast.classList.contains("reveal") ?
-        (clearTimeout(removeToast), removeToast = setTimeout(function () {
-            document.getElementById("toast").classList.remove("reveal")
-        }, 1000)) :
-        removeToast = setTimeout(function () {
-            document.getElementById("toast").classList.remove("reveal")
-        }, 1000)
-    toast.classList.add("reveal"),
-        toast.innerText = string
 }
