@@ -99,3 +99,7 @@ background: radial-gradient(farthest-corner at 40% -5%, #ce9f28 3%, #fad56d 5%, 
 .preview_3d_text {
   position:absolute;transform:translate(-50%, -50%);
 }
+
+.preload_box {
+  position:fixed;opacity:0;z-index:-999;
+}

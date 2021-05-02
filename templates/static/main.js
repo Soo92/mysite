@@ -1,4 +1,7 @@
 let removeToast;
+back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
+font_list="a/b/c/d/e/f/g/h"
+
 function toast(string) {
     const toast = document.getElementById("toast");
 
@@ -56,21 +59,32 @@ function first_enter(){
   }
 }
 
-function preview_update()
-{
-  pre_width=document.getElementById("pro_back").width
-  pre_height=document.getElementById("pro_back").height
 
+function preview_update(){
   select = document.getElementById('back_option');
   if(select.length<1) {
-    back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
     for (const element of back_optin_list.split("/")) {
       var opt = document.createElement('option');
       opt.value = element;
       opt.innerHTML = element.split(".")[0];
       select.appendChild(opt);
+      var tmp = document.createElement('img');
+      tmp.src="static/background/"+element;
+      pre_img = document.getElementById('pre_img');
+      pre_img.appendChild(tmp);
+    }
+    pre_text = document.getElementById('pre_text');
+    for (const element of font_list.split("/")) {
+      var opt = document.createElement('p');
+      opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
+      opt.innerText = "ㄱ가간갆뷁agfG";
+      opt.id = "font"+element
+      pre_text.appendChild(opt);
     }
   }
+
+  pre_width=document.getElementById("pro_back").width
+  pre_height=document.getElementById("pro_back").height
 
   var sel_text_list = document.getElementById("preview_list")
   var sel_text = document.getElementById("preview_text").innerText
@@ -93,18 +107,11 @@ function preview_update()
   var t_font = sel_font.options[sel_font.selectedIndex].text
   var t_size = sel_size.options[sel_size.selectedIndex].text
 
-  f_scale=1
-  tmzzp=document.getElementById("pre_text").children
-  var i;
-  for (i = 0; i < tmzzp.length; i++) {
-    aa=tmzzp[i].style.fontSize
-    bb=tmzzp[i].clientHeight
-    console.log(f_scale)
-    if(tmzzp[i].style.fontFamily==f_w){
-      f_scale=parseInt(aa)/bb
-      break
-    }
-  }
+  var arr_clr = sel_clr.value.split(",")
+  var f_w = sel_font.value
+  var f_h = (sel_size.value*10)
+  var f_thi = 2
+  var f_cnt = 20
 
   if (sel_size.value<10) {
     back_scale=1.2
@@ -112,14 +119,14 @@ function preview_update()
     back_scale=1
   }
 
-  var arr_clr = sel_clr.value.split(",")
-  var f_w = sel_font.value
-  var f_h = (sel_size.value*10)
-  var f_thi = 2
-  var f_cnt = 20
+  f_scale=1
+  tmp=document.getElementById("font"+f_w)
+  aa=tmp.style.fontSize;
+  bb=tmp.clientHeight;
+  f_scale=parseInt(aa)/bb
 
   document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
-    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;"
+    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
   clr_i=0
   for (step = 0; step <= f_cnt; step++) {
     pre_style="";f_shwd="";f_clr = arr_clr[clr_i];
@@ -143,9 +150,8 @@ function preview_update()
       tmp.innerText=sel_text;
     }
     if (clr_i==2&t_clr.search("미러")>-1) {
-      f_shwd="text-shadow:"+"0.5px 1px 2px;"
+//      f_shwd="text-shadow:"+"0.5px 1px 2px;"
     }
-    console.log(f_h)
     if (step == f_cnt) {
       f_shwd="text-shadow:"+
         "0.5px 1px 6px rgba(16,16,16,0.4),"+

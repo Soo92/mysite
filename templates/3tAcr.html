@@ -10,21 +10,13 @@
 	</head>
 	<body topmargin="0" leftmargin="0" onload="preview_update();">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
-		<div id="pre_text" class="font_preload" style="opacity:0;position:fixed;">
-		    <p style="font-family: 'a';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'b';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'c';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'd';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'e';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'f';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'g';font-size:20px">간ㄷ바gG</p>
-				<p style="font-family: 'h';font-size:20px">간ㄷ바gG</p>
-		</div>
+		<div id="pre_text" class="preload_box">		</div>
+		<div id="pre_img" class="preload_box">		</div>
 		<div id="toast"></div>
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" align="center">
 			<tbody>
 				<tr>
-					<td colspan="10" bgcolor="#ffffff" id="pro_back" align="left" width="860" height="500">
+					<td id="pro_back" colspan="10" bgcolor="#ffffff" align="left" width="860" height="500">
 						<div id="preview_list" style="position:relative;height:inherit;width:inherit;">
 							<div id="preview_text" class="preview_3d_text" contenteditable="true" spellcheck="true"
 								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_update()" onkeyup="preview_update()" onpaste="paste_value()"
@@ -44,10 +36,11 @@
 					<td colspan="2" bgcolor="#ffffff" align="left">
 						<span id="pro_color_span">
 							<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
-								<option value="EDEAC9,F6F3EC,B8AEA5" selected="">백색 아크릴</option>
+								// 메인,밝음,어두움
+								<option value="EDEAC9,F6F3EC,D4D1CA" selected="">백색 아크릴</option>
 								<option value="000000,383C46,1F1B23">흑색 아크릴</option>
-								<option value="c0c0c0,939590,8C8D8F">실버미러 아크릴</option>
-								<option value="FAD56D,CE9F2B,D67B00">골드미러 아크릴</option>
+								<option value="E6E1DD,EDE8E4,8C8D8F">실버미러 아크릴</option>
+								<option value="FCE587,FDF2BA,D8B245">골드미러 아크릴</option>
 							</select>
 						</span>
 					</td>

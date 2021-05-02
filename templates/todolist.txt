@@ -9,5 +9,6 @@ V.pre loading 동작 > background image
 9.폰트리스트 다넣기
 3.줄 간격 바짝 붙히는 거
 10.폰트 리사이징
+11.좌우정렬
 
 독도체?
