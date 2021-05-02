@@ -61,8 +61,6 @@ function preview_update()
   pre_width=document.getElementById("pro_back").width
   pre_height=document.getElementById("pro_back").height
 
-  select_div = document.getElementById('back_view');
-  select_div.style="top:"+pre_height*0.95+"px;left:"+pre_width*0.9+"px;"
   select = document.getElementById('back_option');
   if(select.length<1) {
     back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
@@ -101,6 +99,7 @@ function preview_update()
   for (i = 0; i < tmzzp.length; i++) {
     aa=tmzzp[i].style.fontSize
     bb=tmzzp[i].clientHeight
+    console.log(f_scale)
     if(tmzzp[i].style.fontFamily==f_w){
       f_scale=parseInt(aa)/bb
       break
@@ -121,7 +120,7 @@ function preview_update()
   var f_cnt = 20
 
   document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
-    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;"
+    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;"
   clr_i=0
   for (step = 0; step <= f_thi; step=step+(f_thi/f_cnt)) {
     pre_style="";f_shwd="";f_clr = arr_clr[clr_i];
@@ -142,13 +141,12 @@ function preview_update()
         tmp.className="drcnt preview_3d_text";
         sel_text_list.appendChild(tmp);
       }
+      tmp.innerText=sel_text;
     }
     if (clr_i==2&t_clr.search("미러")>-1) {
-      console.log(step)
       f_shwd="text-shadow:"+"0.5px 1px 2px;"
     }
     if (step+(f_thi/f_cnt) >= f_thi) {
-      console.log(step)
       f_shwd="text-shadow:"+
         "0.5px 1px 6px rgba(16,16,16,0.4),"+
         "1px 2px 10px rgba(16,16,16,0.2),"+
@@ -163,7 +161,6 @@ function preview_update()
     }
 
     tmp.style=pre_style;
-    tmp.innerText=sel_text;
   }
 
 /*외부 수정 가능하게*/
