@@ -115,14 +115,13 @@ function preview_update()
   var arr_clr = sel_clr.value.split(",")
   var f_w = sel_font.value
   var f_h = (sel_size.value*10)
-/* 굵기 변경시 초기화 필요함 div */
   var f_thi = 2
   var f_cnt = 20
 
   document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
     +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;"
   clr_i=0
-  for (step = 0; step <= f_thi; step=step+(f_thi/f_cnt)) {
+  for (step = 0; step <= f_cnt; step++) {
     pre_style="";f_shwd="";f_clr = arr_clr[clr_i];
     if(clr_i<arr_clr.length-1) {clr_i=clr_i+1;}
     if(step==0) {
@@ -133,7 +132,7 @@ function preview_update()
         +"-webkit-background-clip:text;"
         +"-webkit-text-fill-color:transparent;"
     } else {
-      tmpid="side"+(step*f_cnt/f_thi);
+      tmpid="side"+(step);
       tmp=document.getElementById(tmpid)
       if(!tmp) {
         tmp = document.createElement('div');
@@ -146,7 +145,8 @@ function preview_update()
     if (clr_i==2&t_clr.search("미러")>-1) {
       f_shwd="text-shadow:"+"0.5px 1px 2px;"
     }
-    if (step+(f_thi/f_cnt) >= f_thi) {
+    console.log(f_h)
+    if (step == f_cnt) {
       f_shwd="text-shadow:"+
         "0.5px 1px 6px rgba(16,16,16,0.4),"+
         "1px 2px 10px rgba(16,16,16,0.2),"+
@@ -155,7 +155,7 @@ function preview_update()
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:center;"
-      +"z-index:"+(f_thi-step)*(f_cnt/f_thi)+";left:"+(pre_width/2+step/2)+"px;top:"+(pre_height/2+step)+"px;"
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;"
     if (tmp.clientHeight >= pre_height) {
       pre_style=pre_style+"overflow:hidden;"
     }
