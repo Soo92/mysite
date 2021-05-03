@@ -155,12 +155,13 @@ function preview_update(){
     if (clr_i==2&t_clr.search("미러")>-1) {
 //      f_shwd="text-shadow:"+"0.5px 1px 2px;"
     }
+//6 10 35 60
     if (step == f_cnt) {
       f_shwd="text-shadow:"+
-        "0.5px 1px 6px rgba(16,16,16,0.4),"+
-        "1px 2px 10px rgba(16,16,16,0.2),"+
-        "1.5px 3px 35px rgba(16,16,16,0.2),"+
-        "2px 4px 60px rgba(16,16,16,0.4);"
+        f_thi/4+"px "+0.5*f_thi/4+"px "+f_thi*1.1+"px rgba(16,16,16,0.4),"+
+        f_thi*2/4+"px "+0.5*f_thi*2/4+"px "+f_thi*1.2+"px rgba(16,16,16,0.2),"+
+        f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
+        f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:"+f_align+";"
