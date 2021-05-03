@@ -57,6 +57,7 @@ function first_enter(){
     tmp.spellcheck=true
     tmp.innerHTML="여기에<br>써보세요"
   }
+  tmp.innerText=tmp.innerText.trim()
 }
 
 
@@ -77,7 +78,7 @@ function preview_update(){
     for (const element of font_list.split("/")) {
       var opt = document.createElement('p');
       opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
-      opt.innerText = element+":ㄱ가간갆뷁agfG";
+      opt.innerText = element+":ㄱ가간agfG";
       opt.id = "font"+element
       pre_text.appendChild(opt);
     }
@@ -88,6 +89,7 @@ function preview_update(){
 
   var sel_text_list = document.getElementById("preview_list")
   var sel_text = document.getElementById("preview_text").innerText
+  var sel_HTML = document.getElementById("preview_text").innerHTML
   if (sel_text.length>20) {
     toast("20자씩 나눠서 입력해 주세요")
     sel_text=sel_text.slice(0,20)
@@ -98,6 +100,19 @@ function preview_update(){
     sel_text=sel_text.replace("؊","")
     document.getElementById("preview_text").innerText=sel_text
   }
+  console.log("A"+sel_HTML)
+  console.log(sel_text)
+  if (sel_HTML.search("<div><br></div><div><br></div>")>-1) {
+    toast("줄바꿈은 한번만 가능합니다");
+    sel_text=sel_text.replace(/\n$/gm, '');
+    document.getElementById("preview_text").innerText=sel_text
+  }
+//두줄바꾸는거 찾기
+  if (sel_HTML.search("<div><br></div>")>-1 && (sel_HTML.search("<div><br></div>")+15)!=sel_HTML.length) {
+    sel_text=sel_text.replace(/\n$/gm, '');
+    document.getElementById("preview_text").innerText=sel_text
+  }
+  sel_text=document.getElementById("preview_text").innerText
   var sel_clr = document.getElementById("pro_color");
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
@@ -116,16 +131,13 @@ function preview_update(){
   var f_thi = 2
   var f_cnt = 20
 
-  if (sel_size.value<10) {
-    back_scale=1.2
-  } else {
-    back_scale=1
-  }
+  if (sel_size.value<10) {    back_scale=1.2
+  } else {    back_scale=1  }
 
   f_scale=1
-  tmp=document.getElementById("font"+f_w)
-  aa=tmp.style.fontSize;
-  bb=tmp.clientHeight;
+  tmp=document.getElementById("font"+f_w);
+//  tmp.innerText=sel_text.replace(/(\n|\r\n)/g, '');
+  aa=tmp.style.fontSize;  bb=tmp.clientHeight;
   f_scale=parseInt(aa)/bb
 
   document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
@@ -165,7 +177,9 @@ function preview_update(){
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:"+f_align+";"
-      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;"
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;"
+      //"text-decoration:underline;"
+      //"border-style:solid;border-radius:"+f_h/10+"px;"
     if (tmp.clientHeight >= pre_height) {
       pre_style=pre_style+"overflow:hidden;"
     }
@@ -242,6 +256,6 @@ function preview_update(){
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
 /*.replace(/(^\s*)|(\s*$)/gi, "؉").replace(/(\s*)/g, "")*/
   document.getElementById("boption").innerText=t_clr+"/" +sel_font.value+"/" +t_size+"/"+t_align
-  document.getElementById("btotal").innerText=price_total
+  document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
 }

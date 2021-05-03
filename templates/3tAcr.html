@@ -15,8 +15,19 @@
 		<div id="toast"></div>
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" align="center">
 			<tbody>
+				<tr id="back_view" bgcolor="#ffffff" height="30">
+					<td colspan="5">
+					</td>
+					<td id="pro_light" colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						조명 <input type="checkbox" id="light_on" onchange="preview_update()">
+					</td>
+					<td colspan="4" bgcolor="#ffffff" align="left">
+						<select id="back_option" onchange="preview_update()">
+						</select>
+					</td>
+				</tr>
 				<tr>
-					<td id="pro_back" colspan="10" bgcolor="#ffffff" width="860" height="500">
+					<td id="pro_back" colspan="8" bgcolor="#ffffff" width="860" height="500">
 						<div id="preview_list" style="position:relative;height:inherit;width:inherit;">
 							<div id="preview_text" class="preview_3d_text" contenteditable="true" spellcheck="true"
 								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_update()" onkeyup="preview_update()" onpaste="paste_value()"
@@ -24,10 +35,6 @@
 								position:absolute;transform:translate(-50%, -50%);z-index:50;left:50%;top:50%;">
 								여기에<br>써보세요
 							</div>
-						</div>
-						<div id="back_view">
-							<select id="back_option" onchange="preview_update()">
-							</select>
 						</div>
 					</td>
 				</tr>
@@ -87,6 +94,53 @@
 							<option value="left">왼쪽</option>
 							<option value="center" selected>가운데</option>
 							<option value="right">오른쪽</option>
+						</select>
+					</td>
+				</tr>
+				<tr height="30">
+					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<select id="pro_color_LED" style="font-size:12;" onchange="preview_update()">
+							<option value="000000">검은색</option>
+							<option value="018d44">동백잎</option>
+							<option value="ee2b6e">핫핑크</option>
+							<option value="ac1f30">사과색</option>
+							<option value="f2ea01">레몬색</option>
+							<option value="ffffff" selected="">흰색</option>
+							<option value="3e64af">바다색</option>
+							<option value="6e5048">고목나무색</option>
+						</select>
+					</td>
+					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						측면 투광 <input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
+					</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<select name="side_color_on" class="form" id="side_color_on" style="font-size:12;" onchange="preview_update()">
+							<option value="000000">검은색</option>
+							<option value="018d44">동백잎</option>
+							<option value="ee2b6e">핫핑크</option>
+							<option value="ac1f30">사과색</option>
+							<option value="f2ea01">레몬색</option>
+							<option value="ffffff">흰색</option>
+							<option value="3e64af" selected="">바다색</option>
+							<option value="6e5048">고목나무색</option>
+						</select>
+						<select name="side_color_off" class="form" id="side_color_off" style="font-size:12;" hidden=true onchange="preview_update()">
+							<option value="808080">회색</option>
+							<option value="ffffff" selected="">흰색</option>
+							<option value="000000">흑색</option>
+							<option value="ffd700">금색</option>
+							<option value="c0c0c0">은색</option>
+						</select>
+					</td>
+					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
+						추가효과
+					</td>
+					<td width="100" bgcolor="#ffffff" align="left">
+						<select id="side_color_on" style="font-size:12;" onchange="preview_update()">
+							<option value="3e64af" selected="">미적용</option>
+							<option value="ffffff">밑줄</option>
+							<option value="6e5048">테두리</option>
 						</select>
 					</td>
 				</tr>

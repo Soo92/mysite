@@ -21,6 +21,11 @@
 @font-face {  font-family:"B09";  src: url("fonts/B09.MEMENTO.eot"),      url("fonts/B09.MEMENTO.woff2") format("woff2"),      url("fonts/B09.MEMENTO.woff") format("woff"),      url("fonts/B09.MEMENTO.ttf") format("truetype");}
 @font-face {  font-family:"B10";  src: url("fonts/B10.Hangover.eot"),      url("fonts/B10.Hangover.woff2") format("woff2"),      url("fonts/B10.Hangover.woff") format("woff"),      url("fonts/B10.Hangover.ttf") format("truetype");}
 
+body {
+  font-family:'A08';
+  font-size:10pt;
+}
+
 .drcnt {
   -ms-user-select: none;
   -moz-user-select: -moz-none;
