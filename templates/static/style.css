@@ -1,62 +1,24 @@
 @charset "utf-8";
 
-@font-face {
-  font-family:"a";
-  src : url(fonts/야놀자야체.ttf);
-  src: url(fonts/야놀자야체.eot),
-      url(fonts/야놀자야체.woff2) format("woff2"),
-      url(fonts/야놀자야체.woff) format("woff"),
-      url(fonts/야놀자야체.ttf) format("truetype");
-}
-@font-face {
-  font-family:"b";
-  src: url(fonts/BMDOHYEON.eot),
-      url(fonts/BMDOHYEON.woff2) format("woff2"),
-      url(fonts/BMDOHYEON.woff) format("woff"),
-      url(fonts/BMDOHYEON.ttf) format("truetype");
-}
-@font-face {
-  font-family:"c";
-  src: url(fonts/InterparkGothicLight.eot),
-      url(fonts/InterparkGothicLight.woff2) format("woff2"),
-      url(fonts/InterparkGothicLight.woff) format("woff"),
-      url(fonts/InterparkGothicLight.ttf) format("truetype");
-}
-@font-face {
-  font-family:"d";
-  src: url(fonts/Aquatico-Regular.eot),
-      url(fonts/Aquatico-Regular.woff2) format("woff2"),
-      url(fonts/Aquatico-Regular.woff) format("woff"),
-      url(fonts/Aquatico-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family:"e";
-  src: url(fonts/Baloo-Regular.eot),
-      url(fonts/Baloo-Regular.woff2) format("woff2"),
-      url(fonts/Baloo-Regular.woff) format("woff"),
-      url(fonts/Baloo-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family:"f";
-  src: url(fonts/02TogeGothic-Light.eot),
-      url(fonts/02TogeGothic-Light.woff2) format("woff2"),
-      url(fonts/02TogeGothic-Light.woff) format("woff"),
-      url(fonts/02TogeGothic-Light.ttf) format("truetype");
-}
-@font-face {
-  font-family:"g";
-  src: url(fonts/NikkyouSans.eot),
-      url(fonts/NikkyouSans.woff2) format("woff2"),
-      url(fonts/NikkyouSans.woff) format("woff"),
-      url(fonts/NikkyouSans.ttf) format("truetype");
-}
-@font-face {
-  font-family:"h";
-  src: url(fonts/GoJuOn.eot),
-      url(fonts/GoJuOn.woff2) format("woff2"),
-      url(fonts/GoJuOn.woff) format("woff"),
-      url(fonts/GoJuOn.ttf) format("truetype");
-}
+@font-face {  font-family:"A01";  src: url("fonts/A01.라이터를 켜라.eot"),      url("fonts/A01.라이터를 켜라.woff2") format("woff2"),      url("fonts/A01.라이터를 켜라.woff") format("woff"),      url("fonts/A01.라이터를 켜라.ttf") format("truetype");}
+@font-face {  font-family:"A02";  src: url("fonts/A02.왕의 남자.eot"),      url("fonts/A02.왕의 남자.woff2") format("woff2"),      url("fonts/A02.왕의 남자.woff") format("woff"),      url("fonts/A02.왕의 남자.ttf") format("truetype");}
+@font-face {  font-family:"A03";  src: url("fonts/A03.지구를 구해라.eot"),      url("fonts/A03.지구를 구해라.woff2") format("woff2"),      url("fonts/A03.지구를 구해라.woff") format("woff"),      url("fonts/A03.지구를 구해라.ttf") format("truetype");}
+@font-face {  font-family:"A04";  src: url("fonts/A04.시실리 2km.eot"),      url("fonts/A04.시실리 2km.woff2") format("woff2"),      url("fonts/A04.시실리 2km.woff") format("woff"),      url("fonts/A04.시실리 2km.ttf") format("truetype");}
+@font-face {  font-family:"A06";  src: url("fonts/A06.클래식.eot"),      url("fonts/A06.클래식.woff2") format("woff2"),      url("fonts/A06.클래식.woff") format("woff"),      url("fonts/A06.클래식.ttf") format("truetype");}
+@font-face {  font-family:"A07";  src: url("fonts/A07.건축학개론.eot"),      url("fonts/A07.건축학개론.woff2") format("woff2"),      url("fonts/A07.건축학개론.woff") format("woff"),      url("fonts/A07.건축학개론.ttf") format("truetype");}
+@font-face {  font-family:"A08";  src: url("fonts/A08.친절한금자씨.eot"),      url("fonts/A08.친절한금자씨.woff2") format("woff2"),      url("fonts/A08.친절한금자씨.woff") format("woff"),      url("fonts/A08.친절한금자씨.ttf") format("truetype");}
+@font-face {  font-family:"A09";  src: url("fonts/A09.시라노;연애조작단.eot"),      url("fonts/A09.시라노;연애조작단.woff2") format("woff2"),      url("fonts/A09.시라노;연애조작단.woff") format("woff"),      url("fonts/A09.시라노;연애조작단.ttf") format("truetype");}
+@font-face {  font-family:"A10";  src: url("fonts/A10.범죄와의전쟁.eot"),      url("fonts/A10.범죄와의전쟁.woff2") format("woff2"),      url("fonts/A10.범죄와의전쟁.woff") format("woff"),      url("fonts/A10.범죄와의전쟁.ttf") format("truetype");}
+@font-face {  font-family:"B01";  src: url("fonts/B01.Roman Holiday.eot"),      url("fonts/B01.Roman Holiday.woff2") format("woff2"),      url("fonts/B01.Roman Holiday.woff") format("woff"),      url("fonts/B01.Roman Holiday.ttf") format("truetype");}
+@font-face {  font-family:"B02";  src: url("fonts/B02.Tom and Jerry.eot"),      url("fonts/B02.Tom and Jerry.woff2") format("woff2"),      url("fonts/B02.Tom and Jerry.woff") format("woff"),      url("fonts/B02.Tom and Jerry.ttf") format("truetype");}
+@font-face {  font-family:"B03";  src: url("fonts/B03.Fight Clup.eot"),      url("fonts/B03.Fight Clup.woff2") format("woff2"),      url("fonts/B03.Fight Clup.woff") format("woff"),      url("fonts/B03.Fight Clup.ttf") format("truetype");}
+@font-face {  font-family:"B04";  src: url("fonts/B04.Antman.eot"),      url("fonts/B04.Antman.woff2") format("woff2"),      url("fonts/B04.Antman.woff") format("woff"),      url("fonts/B04.Antman.ttf") format("truetype");}
+@font-face {  font-family:"B05";  src: url("fonts/B05.FOREST GUMP.eot"),      url("fonts/B05.FOREST GUMP.woff2") format("woff2"),      url("fonts/B05.FOREST GUMP.woff") format("woff"),      url("fonts/B05.FOREST GUMP.ttf") format("truetype");}
+@font-face {  font-family:"B06";  src: url("fonts/B06.GRAVITY.eot"),      url("fonts/B06.GRAVITY.woff2") format("woff2"),      url("fonts/B06.GRAVITY.woff") format("woff"),      url("fonts/B06.GRAVITY.ttf") format("truetype");}
+@font-face {  font-family:"B07";  src: url("fonts/B07.Schindler's List.eot"),      url("fonts/B07.Schindler's List.woff2") format("woff2"),      url("fonts/B07.Schindler's List.woff") format("woff"),      url("fonts/B07.Schindler's List.ttf") format("truetype");}
+@font-face {  font-family:"B08";  src: url("fonts/B08.MONSTER HUNTER.eot"),      url("fonts/B08.MONSTER HUNTER.woff2") format("woff2"),      url("fonts/B08.MONSTER HUNTER.woff") format("woff"),      url("fonts/B08.MONSTER HUNTER.ttf") format("truetype");}
+@font-face {  font-family:"B09";  src: url("fonts/B09.MEMENTO.eot"),      url("fonts/B09.MEMENTO.woff2") format("woff2"),      url("fonts/B09.MEMENTO.woff") format("woff"),      url("fonts/B09.MEMENTO.ttf") format("truetype");}
+@font-face {  font-family:"B10";  src: url("fonts/B10.Hangover.eot"),      url("fonts/B10.Hangover.woff2") format("woff2"),      url("fonts/B10.Hangover.woff") format("woff"),      url("fonts/B10.Hangover.ttf") format("truetype");}
 
 .drcnt {
   -ms-user-select: none;

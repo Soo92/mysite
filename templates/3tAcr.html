@@ -16,7 +16,7 @@
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" align="center">
 			<tbody>
 				<tr>
-					<td id="pro_back" colspan="10" bgcolor="#ffffff" align="left" width="860" height="500">
+					<td id="pro_back" colspan="10" bgcolor="#ffffff" width="860" height="500">
 						<div id="preview_list" style="position:relative;height:inherit;width:inherit;">
 							<div id="preview_text" class="preview_3d_text" contenteditable="true" spellcheck="true"
 								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_update()" onkeyup="preview_update()" onpaste="paste_value()"
@@ -32,41 +32,61 @@
 					</td>
 				</tr>
 				<tr height="30">
-					<td colspan="1" class="od_view_title" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">소재 색상</td>
-					<td colspan="2" bgcolor="#ffffff" align="left">
+					<td colspan="1" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">소재 색상</td>
+					<td colspan="1" bgcolor="#ffffff" align="left">
 						<span id="pro_color_span">
-							<select name="pro_color" class="form" id="pro_color" style="font-size:12;" onchange="preview_update()">
+							<select id="pro_color" onchange="preview_update()">
 								// 메인,밝음,어두움
-								<option value="EDEAC9,F6F3EC,D4D1CA" selected="">백색 아크릴</option>
+								<option value="EDEAC9,F6F3EC,D4D1CA" selected>백색 아크릴</option>
 								<option value="000000,383C46,1F1B23">흑색 아크릴</option>
 								<option value="E6E1DD,EDE8E4,8C8D8F">실버미러 아크릴</option>
 								<option value="FCE587,FDF2BA,D8B245">골드미러 아크릴</option>
 							</select>
 						</span>
 					</td>
-					<td colspan="1" class="od_view_title" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
-					<td colspan="2" bgcolor="#ffffff" align="left">
-						<select id="pro_font" class="form" style="font-size:12;" onchange="preview_update()">
-							<option value="a" selected="">야놀자야체</option>
-							<option value="b">배민도현체</option>
-							<option value="c">인터파크고딕체</option>
-							<option value="d">Aquatico-Regular(영)</option>
-							<option value="e">Baloo-Regular(영)</option>
-							<option value="f">02TogeGothic-Light(일)</option>
-							<option value="g">NikkyouSans-B6aV(일)</option>
-							<option value="h">GoJuOn(중)</option>
+					<td colspan="1"bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
+					<td colspan="1" bgcolor="#ffffff" align="left">
+						<select id="pro_font" onchange="preview_update()">
+							<option value="A01" selected>라이터를 켜라</option>
+							<option value="A02">왕의 남자</option>
+							<option value="A03">지구를 구해라</option>
+							<option value="A04">시실리2km</option>
+							<option value="A05">클래식</option>
+							<option value="A06">건축학개론</option>
+							<option value="A07">친절한금자씨</option>
+							<option value="A08">시라노;연애조작단</option>
+							<option value="A09">??</option>
+							<option value="A10">범죄와의 전쟁</option>
+							<option value="B01">Roman Holiday(영)</option>
+							<option value="B02">Tom and Jerry(영)</option>
+							<option value="B03">Fight Clup(영)</option>
+							<option value="B04">Antman(영)</option>
+							<option value="B05">FOREST GUMP(영)</option>
+							<option value="B06">GRAVITY(영)</option>
+							<option value="B07">Schindler's List(영)</option>
+							<option value="B08">MONSTER HUNTER(영)</option>
+							<option value="B09">Hangover(영)</option>
+							<option value="B10">MEMENTO(영)</option>
 						</select>
 					</td>
-					<td colspan="2" class="od_view_title" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
+					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
 					<td colspan="1" bgcolor="#ffffff" align="left">
-						<select id="pro_size" id="pro_size" class="pro_size" class="form" style="font-size:12;" onchange="preview_update()">
+						<select id="pro_size" onchange="preview_update()">
 							<option value="4">4cm</option>
-							<option value="5" selected="">5cm</option>
+							<option value="5" selected>5cm</option>
 							<option value="6">6cm</option>
 							<option value="8">8cm</option>
 							<option value="10">10cm</option>
 							<option value="15">15cm</option>
 							<option value="20">20cm</option>
+						</select>
+					</td>
+					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">정렬</td>
+					<td colspan="1" bgcolor="#ffffff" align="left">
+						<select id="pro_align" onchange="preview_update()">
+							<option value="left">왼쪽</option>
+							<option value="center" selected>가운데</option>
+							<option value="right">오른쪽</option>
 						</select>
 					</td>
 				</tr>

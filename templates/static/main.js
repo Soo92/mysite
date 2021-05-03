@@ -1,6 +1,6 @@
 let removeToast;
 back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
-font_list="a/b/c/d/e/f/g/h"
+font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10"
 
 function toast(string) {
     const toast = document.getElementById("toast");
@@ -77,7 +77,7 @@ function preview_update(){
     for (const element of font_list.split("/")) {
       var opt = document.createElement('p');
       opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
-      opt.innerText = "ㄱ가간갆뷁agfG";
+      opt.innerText = element+":ㄱ가간갆뷁agfG";
       opt.id = "font"+element
       pre_text.appendChild(opt);
     }
@@ -102,14 +102,17 @@ function preview_update(){
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
   var sel_back = document.getElementById('back_option');
+  var sel_align = document.getElementById('pro_align');
 
   var t_clr = sel_clr.options[sel_clr.selectedIndex].text
   var t_font = sel_font.options[sel_font.selectedIndex].text
   var t_size = sel_size.options[sel_size.selectedIndex].text
+  var t_align = sel_align.options[sel_align.selectedIndex].text
 
   var arr_clr = sel_clr.value.split(",")
   var f_w = sel_font.value
   var f_h = (sel_size.value*10)
+  var f_align = sel_align.value
   var f_thi = 2
   var f_cnt = 20
 
@@ -160,7 +163,7 @@ function preview_update(){
         "2px 4px 60px rgba(16,16,16,0.4);"
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
-      +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:center;"
+      +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;"
     if (tmp.clientHeight >= pre_height) {
       pre_style=pre_style+"overflow:hidden;"
@@ -237,7 +240,7 @@ function preview_update(){
   }
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
 /*.replace(/(^\s*)|(\s*$)/gi, "؉").replace(/(\s*)/g, "")*/
-  document.getElementById("boption").innerText=t_clr+"/" +t_font+"/" +t_size
+  document.getElementById("boption").innerText=t_clr+"/" +sel_font.value+"/" +t_size+"/"+t_align
   document.getElementById("btotal").innerText=price_total
   document.getElementById("bcount").innerText=price_total/1200
 }
