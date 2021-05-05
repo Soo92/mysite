@@ -2,6 +2,48 @@ let removeToast;
 back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
 font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10"
 
+
+function createRange(node, chars, range) {
+    if (!range) {
+        range = document.createRange()
+        range.selectNode(node);
+        range.setStart(node, 0);
+    }
+    if (chars.count === 0) {
+        range.setEnd(node, chars.count);
+    } else if (node && chars.count >0) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (node.textContent.length < chars.count) {
+                chars.count -= node.textContent.length;
+            } else {
+                 range.setEnd(node, chars.count);
+                 chars.count = 0;
+            }
+        } else {
+            for (var lp = 0; lp < node.childNodes.length; lp++) {
+                range = createRange(node.childNodes[lp], chars, range);
+
+                if (chars.count === 0) {
+                   break;
+                }
+            }
+        }
+   }
+   return range;
+}
+
+function setCurrentCursorPosition(chars) {
+    if (chars >= 0) {
+        var selection = window.getSelection();
+        range = createRange(document.getElementById("preview_text").parentNode, { count: chars });
+        if (range) {
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    }
+}
+
 function toast(string) {
     const toast = document.getElementById("toast");
 
@@ -57,11 +99,12 @@ function first_enter(){
     tmp.spellcheck=true
     tmp.innerHTML="여기에<br>써보세요"
   }
-  tmp.innerText=tmp.innerText.trim()
 }
 
 
 function preview_update(){
+  pro_w = document.getElementById('pro_wh').value;
+
   select = document.getElementById('back_option');
   if(select.length<1) {
     for (const element of back_optin_list.split("/")) {
@@ -94,44 +137,54 @@ function preview_update(){
     toast("20자씩 나눠서 입력해 주세요")
     sel_text=sel_text.slice(0,20)
     document.getElementById("preview_text").innerText=sel_text
+    console.log(setCurrentCursorPosition())
+    setCurrentCursorPosition(20)
   }
   if (sel_text.indexOf("؊")>-1) {
     toast("사용할 수 없는 문자입니다")
     sel_text=sel_text.replace("؊","")
     document.getElementById("preview_text").innerText=sel_text
   }
-  console.log("A"+sel_HTML)
-  console.log(sel_text)
-  if (sel_HTML.search("<div><br></div><div><br></div>")>-1) {
-    toast("줄바꿈은 한번만 가능합니다");
-    sel_text=sel_text.replace(/\n$/gm, '');
+  if (sel_text.search(/\n{3}/)>-1) {
+    toast("줄바꿈은 한번만 가능합니다!")
+    sel_text=sel_text.replace(/\n{3}/, "\n\n");
     document.getElementById("preview_text").innerText=sel_text
   }
-//두줄바꾸는거 찾기
-  if (sel_HTML.search("<div><br></div>")>-1 && (sel_HTML.search("<div><br></div>")+15)!=sel_HTML.length) {
-    sel_text=sel_text.replace(/\n$/gm, '');
+  if (sel_text.search(/\n{2}/)==0) {
+    toast("줄바꿈은 한번만 가능합니다")
+    sel_text=sel_text.replace(/\n{2}/, "\n");
     document.getElementById("preview_text").innerText=sel_text
   }
-  sel_text=document.getElementById("preview_text").innerText
+
   var sel_clr = document.getElementById("pro_color");
   var sel_font = document.getElementById("pro_font");
   var sel_size = document.getElementById("pro_size");
   var sel_back = document.getElementById('back_option');
   var sel_align = document.getElementById('pro_align');
+  var sel_deco = document.getElementById('side_deco');
 
   var t_clr = sel_clr.options[sel_clr.selectedIndex].text
   var t_font = sel_font.options[sel_font.selectedIndex].text
   var t_size = sel_size.options[sel_size.selectedIndex].text
   var t_align = sel_align.options[sel_align.selectedIndex].text
 
-  var arr_clr = sel_clr.value.split(",")
   var f_w = sel_font.value
-  var f_h = (sel_size.value*10)
+  var f_h = sel_size.value
   var f_align = sel_align.value
-  var f_thi = 2
+  var f_deco = sel_deco.value;
+  if (pro_w=="a") {
+    var f_thi = 2
+  } else if (pro_w="b") {
+    var f_thi = 10
+  } else if (pro_w="c") {
+
+  }
   var f_cnt = 20
 
-  if (sel_size.value<10) {    back_scale=1.2
+  var max_w = 450
+  var max_h = 400
+
+  if (sel_size.value<50) {    back_scale=1.4
   } else {    back_scale=1  }
 
   f_scale=1
@@ -142,18 +195,61 @@ function preview_update(){
 
   document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
     +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
-  clr_i=0
+
+  if (pro_w=="a") {
+    arr_clr = sel_clr.value.split(",")
+  } else if (pro_w="b") {
+    arr_clr=[document.getElementById("pro_color_LED").value,document.getElementById("side_color_on").value,document.getElementById("side_color_off").value]
+  } else if (pro_w="c") {
+
+  }
+  taper=0
   for (step = 0; step <= f_cnt; step++) {
-    pre_style="";f_shwd="";f_clr = arr_clr[clr_i];
-    if(clr_i<arr_clr.length-1) {clr_i=clr_i+1;}
+    pre_style="";f_shwd="";
+
     if(step==0) {
+      f_clr=arr_clr[0]
       tmp=document.getElementById("preview_text")
-      pre_style="background:#"+arr_clr[0]+";" /*if no support for background-clip*/
-        +"background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
-                +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
-        +"-webkit-background-clip:text;"
-        +"-webkit-text-fill-color:transparent;"
+      if (pro_w=="a") {
+        pre_style="background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
+                  +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
+          +"-webkit-background-clip:text;"
+          +"-webkit-text-fill-color:transparent;"
+        } else if (pro_w="b") {
+          f_shwd="text-shadow:0.5px 0.5px #D9D9D9;"
+        }
     } else {
+      if (pro_w=="a") {
+        if (step==1) {
+          f_clr=arr_clr[1]
+        } else {
+          f_clr=arr_clr[2]
+        }
+      } else if (pro_w="b") {
+        if (step<=(f_cnt*7/20) || (f_cnt*15/20)<=step ) {
+          f_clr=arr_clr[2]
+        } else {
+          f_clr=arr_clr[1]
+        }
+        if (step<=(f_cnt*15/20)) {
+          taper=taper+(1/3)
+          // /*f_h/100
+        }
+        console.log(taper)
+        console.log(f_h)
+        f_shwd="text-shadow:"
+        for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
+          f_shwd=f_shwd+t_v+"px "+taper+"px #"+f_clr+","
+                        +t_v+"px "+-taper+"px #"+f_clr+","
+                        +taper+"px "+t_v+"px #"+f_clr+","
+                        +-taper+"px "+t_v+"px #"+f_clr
+          if(t_v+0.05>=taper) {
+            f_shwd=f_shwd+";"
+          } else {
+            f_shwd=f_shwd+","
+          }
+        }
+      }
       tmpid="side"+(step);
       tmp=document.getElementById(tmpid)
       if(!tmp) {
@@ -164,9 +260,6 @@ function preview_update(){
       }
       tmp.innerText=sel_text;
     }
-    if (clr_i==2&t_clr.search("미러")>-1) {
-//      f_shwd="text-shadow:"+"0.5px 1px 2px;"
-    }
 //6 10 35 60
     if (step == f_cnt) {
       f_shwd="text-shadow:"+
@@ -175,15 +268,14 @@ function preview_update(){
         f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
         f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
     }
-    pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+pre_width+"px;max-height:"+pre_height+"px;"
-      +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+f_h*f_scale+"px;text-align:"+f_align+";"
+    pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+max_w+"px;max-height:"+max_h+"px;"
+      +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+(f_h*f_scale*back_scale)+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;"
-      //"text-decoration:underline;"
-      //"border-style:solid;border-radius:"+f_h/10+"px;"
-    if (tmp.clientHeight >= pre_height) {
-      pre_style=pre_style+"overflow:hidden;"
+    if (f_deco=="underL") {
+      pre_style=pre_style+"border-bottom:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
+    } else if (f_deco=="borderL") {
+      pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
     }
-
     tmp.style=pre_style;
   }
 

@@ -7,6 +7,7 @@
 		<title> 제작상품 미리보기 | 알리네 간판 </title>
 		<link rel="stylesheet" href="static/style.css">
 		<script src="static/main.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	<body topmargin="0" leftmargin="0" onload="preview_update();">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
@@ -17,6 +18,12 @@
 			<tbody>
 				<tr id="back_view" bgcolor="#ffffff" height="30">
 					<td colspan="5">
+						종류
+						<select id="pro_wh" onchange="preview_update()">
+							<option value="a">스카시</option>
+							<option value="b" selected>루미</option>
+							<option value="c">구로</option>
+						</select>
 					</td>
 					<td id="pro_light" colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
 						조명 <input type="checkbox" id="light_on" onchange="preview_update()">
@@ -27,7 +34,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td id="pro_back" colspan="8" bgcolor="#ffffff" width="860" height="500">
+					<td id="pro_back" colspan="8" bgcolor="#ffffff" width="1020" height="490">
 						<div id="preview_list" style="position:relative;height:inherit;width:inherit;">
 							<div id="preview_text" class="preview_3d_text" contenteditable="true" spellcheck="true"
 								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_update()" onkeyup="preview_update()" onpaste="paste_value()"
@@ -79,13 +86,13 @@
 					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
 					<td colspan="1" bgcolor="#ffffff" align="left">
 						<select id="pro_size" onchange="preview_update()">
-							<option value="4">4cm</option>
-							<option value="5" selected>5cm</option>
-							<option value="6">6cm</option>
-							<option value="8">8cm</option>
-							<option value="10">10cm</option>
-							<option value="15">15cm</option>
-							<option value="20">20cm</option>
+							<option value="20">4cm</option>
+							<option value="25" selected>5cm</option>
+							<option value="30">6cm</option>
+							<option value="40">8cm</option>
+							<option value="50">10cm</option>
+							<option value="75">15cm</option>
+							<option value="100">20cm</option>
 						</select>
 					</td>
 					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">정렬</td>
@@ -137,10 +144,10 @@
 						추가효과
 					</td>
 					<td width="100" bgcolor="#ffffff" align="left">
-						<select id="side_color_on" style="font-size:12;" onchange="preview_update()">
-							<option value="3e64af" selected="">미적용</option>
-							<option value="ffffff">밑줄</option>
-							<option value="6e5048">테두리</option>
+						<select id="side_deco" style="font-size:12;" onchange="preview_update()">
+							<option value="none" selected="">미적용</option>
+							<option value="underL">밑줄</option>
+							<option value="borderL">테두리</option>
 						</select>
 					</td>
 				</tr>
