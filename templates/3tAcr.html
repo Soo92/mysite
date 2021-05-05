@@ -108,36 +108,31 @@
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
 					<td width="100" bgcolor="#ffffff" align="left">
 						<select id="pro_color_LED" style="font-size:12;" onchange="preview_update()">
-							<option value="000000">검은색</option>
-							<option value="018d44">동백잎</option>
-							<option value="ee2b6e">핫핑크</option>
-							<option value="ac1f30">사과색</option>
-							<option value="f2ea01">레몬색</option>
-							<option value="ffffff" selected="">흰색</option>
-							<option value="3e64af">바다색</option>
-							<option value="6e5048">고목나무색</option>
+							<option value="ffffff" selected="">백색</option>
+							<option value="ffd400">노랑</option>
+							<option value="ff0000">적색</option>
+							<option value="0067a3">청색</option>
+							<option value="008000">녹색</option>
+							<option value="ee2b6e">핑크</option>
 						</select>
 					</td>
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
 						측면 투광 <input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
 					</td>
 					<td width="100" bgcolor="#ffffff" align="left">
-						<select name="side_color_on" class="form" id="side_color_on" style="font-size:12;" onchange="preview_update()">
-							<option value="000000">검은색</option>
-							<option value="018d44">동백잎</option>
-							<option value="ee2b6e">핫핑크</option>
-							<option value="ac1f30">사과색</option>
-							<option value="f2ea01">레몬색</option>
-							<option value="ffffff">흰색</option>
-							<option value="3e64af" selected="">바다색</option>
-							<option value="6e5048">고목나무색</option>
+						<select id="side_color_on" style="font-size:12;" onchange="preview_update()">
+							<option value="ffffff" selected="">백색</option>
+							<option value="ffd400">노랑</option>
+							<option value="ff0000">적색</option>
+							<option value="0067a3">청색</option>
+							<option value="008000">녹색</option>
+							<option value="ee2b6e">핑크</option>
+							<option value="660099">자주</option>
+							<option value="ff7f00">주황</option>
 						</select>
-						<select name="side_color_off" class="form" id="side_color_off" style="font-size:12;" hidden=true onchange="preview_update()">
-							<option value="808080">회색</option>
+						<select id="side_color_off" style="font-size:12;" onchange="preview_update()">
 							<option value="ffffff" selected="">흰색</option>
-							<option value="000000">흑색</option>
-							<option value="ffd700">금색</option>
-							<option value="c0c0c0">은색</option>
+							<option value="000000">검정색</option>
 						</select>
 					</td>
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">

@@ -2,6 +2,23 @@ let removeToast;
 back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
 font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10"
 
+var price_KE ={}
+price_KE["4cm"]=1200
+price_KE["5cm"]=1500
+price_KE["6cm"]=2000
+price_KE["8cm"]=3500
+price_KE["10cm"]=4500
+price_KE["15cm"]=7000
+price_KE["20cm"]=9500
+var price_ETC ={}
+price_ETC["4cm"]=2000
+price_ETC["5cm"]=2200
+price_ETC["6cm"]=3000
+price_ETC["8cm"]=4000
+price_ETC["10cm"]=5000
+price_ETC["15cm"]=8000
+price_ETC["20cm"]=10000
+
 
 function createRange(node, chars, range) {
     if (!range) {
@@ -172,6 +189,23 @@ function preview_update(){
   var f_h = sel_size.value
   var f_align = sel_align.value
   var f_deco = sel_deco.value;
+
+  var f_light = document.getElementById("light_on").checked
+  var f_side = document.getElementById("side_on").checked
+  var f_main_LED = document.getElementById("pro_color_LED").value
+
+  if (f_side) {
+    if (f_main_LED!="ffffff") {
+      document.getElementById("side_color_on").value=f_main_LED
+      document.getElementById("side_color_on").disabled=true
+    } else {
+      document.getElementById("side_color_on").disabled=false
+    }
+  }
+
+  var f_side_LED = document.getElementById("side_color_on").value
+  var f_side_back = document.getElementById("side_color_off").value
+
   if (pro_w=="a") {
     var f_thi = 2
   } else if (pro_w="b") {
@@ -193,13 +227,24 @@ function preview_update(){
   aa=tmp.style.fontSize;  bb=tmp.clientHeight;
   f_scale=parseInt(aa)/bb
 
-  document.getElementById("pro_back").style="background-image:url('static/background/"+sel_back.value+"');"
-    +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
+  if(f_light) {
+    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+sel_back.value+"');"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
+  } else {
+    pre_back="background:url('static/background/"+sel_back.value+"');"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
+    f_main_LED="ffffff"
+  }
+  document.getElementById("pro_back").style=pre_back
 
   if (pro_w=="a") {
     arr_clr = sel_clr.value.split(",")
   } else if (pro_w="b") {
-    arr_clr=[document.getElementById("pro_color_LED").value,document.getElementById("side_color_on").value,document.getElementById("side_color_off").value]
+    if (f_side) {
+      arr_clr=[f_main_LED,f_side_LED,f_side_back]
+    } else {
+      arr_clr=[f_main_LED,f_side_back,f_side_back]
+    }
   } else if (pro_w="c") {
 
   }
@@ -235,8 +280,6 @@ function preview_update(){
           taper=taper+(1/3)
           // /*f_h/100
         }
-        console.log(taper)
-        console.log(f_h)
         f_shwd="text-shadow:"
         for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
           f_shwd=f_shwd+t_v+"px "+taper+"px #"+f_clr+","
@@ -281,22 +324,6 @@ function preview_update(){
 
 /*외부 수정 가능하게*/
   var price_total = 0
-  var price_KE ={}
-  price_KE["4cm"]=1200
-  price_KE["5cm"]=1500
-  price_KE["6cm"]=2000
-  price_KE["8cm"]=3500
-  price_KE["10cm"]=4500
-  price_KE["15cm"]=7000
-  price_KE["20cm"]=9500
-  var price_ETC ={}
-  price_ETC["4cm"]=2000
-  price_ETC["5cm"]=2200
-  price_ETC["6cm"]=3000
-  price_ETC["8cm"]=4000
-  price_ETC["10cm"]=5000
-  price_ETC["15cm"]=8000
-  price_ETC["20cm"]=10000
 
   var check_num = /[0-9]/;
   var check_eng = /[a-zA-Z]/;
