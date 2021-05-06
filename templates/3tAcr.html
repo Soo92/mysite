@@ -46,11 +46,11 @@
 						</div>
 					</td>
 				</tr>
-				<tr height="30">
+				<tr height="50px">
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_color" style="margin-right:10px" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">색상</span><i class="arrow down"></i>
+								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">색상</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
@@ -63,7 +63,7 @@
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_font" style="margin-right:10px" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
+								<span id="pro_font" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<div id="font_list">
@@ -96,7 +96,7 @@
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_size" style="margin-right:10px" data-value="40" data-select="8cm">글자 높이</span><i class="arrow down"></i>
+								<span id="pro_size" data-value="40" data-select="8cm">글자 높이</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="20" onclick="select_itm(pro_size,this);preview_update()">4cm</a>
@@ -111,18 +111,18 @@
 					</td>
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
-								<span hidden id="pro_align" style="margin-right:10px" data-value="center" data-select="중">정렬</span>
+								<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
 								<a data-value="left" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_left.jpg"> </img></a>
 								<a data-value="center" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_centor.jpg"> </img></a>
 								<a data-value="right" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_right.jpg"> </img></a>
 						</div>
 					</td>
 				</tr>
-				<tr height="30">
+				<tr height="50px">
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_color_LED" style="margin-right:10px" data-value="ffffff" data-select="백색">LED</span><i class="arrow down"></i>
+								<span id="pro_color_LED" data-value="ffffff" data-select="백색">LED</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
@@ -137,7 +137,7 @@
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="side_color_on" style="margin-right:10px" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
+								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
@@ -153,7 +153,7 @@
 						</div>
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="side_color_off" style="margin-right:10px" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
+								<span id="side_color_off" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
@@ -164,7 +164,7 @@
 					<td width="100" bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="side_deco" style="margin-right:10px" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
+								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
@@ -174,18 +174,18 @@
 						</div>
 					</td>
 				</tr>
-				<tr height="40px">
+				<tr height="50px">
 					<td>
-						<font class="drcnt" color="black">제작 문구</font>
+						<font class="drcnt" color="black"  style="font-weight:bold;">제작 문구</font>
 					</td>
 					<td colspan="10">
 						<span id="btext" style="font-weight:bold;">문구</span>
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('btext')">
 						</td>
 				</tr>
-				<tr height="40px">
+				<tr height="50px">
 					<td>
-					<font class="drcnt" color="black">제작 옵션</font>
+					<font class="drcnt" color="black" style="font-weight:bold;">제작 옵션</font>
 				</td>
 				<td colspan="10">
 					<span id="boption" style="font-weight:bold;">색/서체/크기</span>
@@ -196,8 +196,7 @@
 					<td colspan="2">
 						<font class="drcnt" style="font-weight:bold;">수량 </font><font class="drcnt">( 견적금액 )</font>
 					</td>
-					<td align="right" colspan="10">
-
+					<td align="right" colspan="3">
 						<input class="button button1" type="button" value="복사하기" onclick="copyIt('bcount')">
 						<font style="font-weight:bold;"><span id="bcount">0</span></font>
 						<font class="drcnt" style="font-weight:bold;"> 개 </font>

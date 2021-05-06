@@ -125,7 +125,30 @@ function select_itm(t,e) {
   $(t).data("value",$(e).data("value"));
   $(t).data("select",e.text);
   $(t).text(e.text);
+
+//여기 마우스 드래그
+  var clicked = false, clickY;
+  $(e).on({
+      'mousemove': function(e) {
+          clicked && updateScrollPos(e);
+      },
+      'mousedown': function(e) {
+          clicked = true;
+          console.log(t.pageY)
+          console.log(e.pageY)
+          clickY = t.pageY;
+      },
+      'mouseup': function() {
+          clicked = false;
+          $('html').css('cursor', 'auto');
+      }
+  });
+  var updateScrollPos = function(e) {
+      $(t).css('cursor', 'row-resize');
+      $(t).scrollTop($(t).scrollTop() + (clickY - e.pageY));
+  }
 }
+
 
 function change_font(wh,e) {
   $(e).attr('class',"dropbtn_clicked")
