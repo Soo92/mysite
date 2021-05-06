@@ -179,38 +179,40 @@ function preview_update(){
     document.getElementById("preview_text").innerText=sel_text
   }
 
+  var sel_back = document.getElementById('back_option');
   var sel_clr = $("#pro_color")
-  var sel_font = $("pro_font");
-  var sel_size = $("pro_size");
-  var sel_back = $('back_option');
-  var sel_align = $('pro_align');
-  var sel_deco = $('side_deco');
+  var sel_font = $("#pro_font");
+  var sel_size = $("#pro_size");
+  var sel_align = $('#pro_align');
+  var sel_deco = $('#side_deco');
 
   var t_clr = sel_clr.data("select")
   var t_font = sel_font.data("select")
   var t_size = sel_size.data("select")
   var t_align = sel_align.data("select")
+  var t_deco = sel_deco.data("select")
 
-  var f_w = sel_font.value
-  var f_h = sel_size.value
-  var f_align = sel_align.value
-  var f_deco = sel_deco.value;
+  var f_w = sel_font.data("value")
+  var f_h = sel_size.data("value")
+  var f_align = sel_align.data("value")
+  var f_deco = sel_deco.data("value");
 
   var f_light = document.getElementById("light_on").checked
   var f_side = document.getElementById("side_on").checked
-  var f_main_LED = document.getElementById("pro_color_LED").value
+  var f_main_LED = $("#pro_color_LED").data("value")
 
   if (f_side) {
+    $("#side_color_on").parent().show();
     if (f_main_LED!="ffffff") {
-      document.getElementById("side_color_on").value=f_main_LED
-      document.getElementById("side_color_on").disabled=true
-    } else {
-      document.getElementById("side_color_on").disabled=false
+      $("#side_color_on").data("value",f_main_LED);
+      $("#side_color_on").parent().hide();
     }
+  } else {
+    $("#side_color_on").parent().hide();
   }
 
-  var f_side_LED = document.getElementById("side_color_on").value
-  var f_side_back = document.getElementById("side_color_off").value
+  var f_side_LED = $("#side_color_on").data("value");
+  var f_side_back = $("#side_color_off").data("value");
 
   if (pro_w=="a") {
     var f_thi = 2
@@ -224,7 +226,7 @@ function preview_update(){
   var max_w = 450
   var max_h = 400
 
-  if (sel_size.value<50) {    back_scale=1.4
+  if (f_h<50) {    back_scale=1.5
   } else {    back_scale=1  }
 
   f_scale=1
@@ -235,10 +237,10 @@ function preview_update(){
 
   if(f_light) {
     pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+sel_back.value+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
   } else {
     pre_back="background:url('static/background/"+sel_back.value+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
     f_main_LED="ffffff"
   }
   document.getElementById("pro_back").style=pre_back
@@ -325,7 +327,8 @@ function preview_update(){
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+(f_h*f_scale*back_scale)+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;"
     if (f_deco=="underL") {
-      pre_style=pre_style+"border-bottom:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
+//      pre_style=pre_style+"border-bottom:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
+      pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
       pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
     }
@@ -384,7 +387,7 @@ function preview_update(){
   }
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
 /*.replace(/(^\s*)|(\s*$)/gi, "؉").replace(/(\s*)/g, "")*/
-  document.getElementById("boption").innerText=t_clr+"/" +sel_font.value+"/" +t_size+"/"+t_align
+  document.getElementById("boption").innerText=t_clr.split(" ")[0]+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
 }

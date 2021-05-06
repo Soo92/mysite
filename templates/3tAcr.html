@@ -21,15 +21,15 @@
 					<td colspan="5">
 						종류
 						<select id="pro_wh" onchange="preview_update()">
-							<option value="a" selected>스카시</option>
-							<option value="b">루미</option>
+							<option value="a">스카시</option>
+							<option value="b" selected>루미</option>
 							<option value="c">구로</option>
 						</select>
 					</td>
 					<td id="pro_light" colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
 						조명 <input type="checkbox" id="light_on" onchange="preview_update()">
 					</td>
-					<td colspan="4" bgcolor="#ffffff" align="left">
+					<td colspan="4" bgcolor="#ffffff">
 						<select id="back_option" onchange="preview_update()">
 						</select>
 					</td>
@@ -47,7 +47,7 @@
 					</td>
 				</tr>
 				<tr height="30">
-					<td colspan="2" bgcolor="#ffffff" align="left">
+					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
 								<span id="pro_color" style="margin-right:10px" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">색상</span><i class="arrow down"></i>
@@ -60,100 +60,124 @@
 						  </div>
 						</div>
 					</td>
-					<td colspan="1" bgcolor="#ffffff" align="left">
+					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
 								<span id="pro_font" style="margin-right:10px" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
-								<a data-value="A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
-								<a data-value="A02"  onclick="select_itm(pro_font,this);preview_update()">왕의 남자</a>
-								<a data-value="A03"  onclick="select_itm(pro_font,this);preview_update()">지구를 구해라</a>
-								<a data-value="A04"  onclick="select_itm(pro_font,this);preview_update()">시실리2km</a>
-								<a data-value="A05"  onclick="select_itm(pro_font,this);preview_update()">클래식</a>
-								<a data-value="A06"  onclick="select_itm(pro_font,this);preview_update()">건축학개론</a>
-								<a data-value="A07"  onclick="select_itm(pro_font,this);preview_update()">친절한금자씨</a>
-								<a data-value="A08"  onclick="select_itm(pro_font,this);preview_update()">시라노;연애조작단</a>
-								<a data-value="A09"  onclick="select_itm(pro_font,this);preview_update()">웰컴투동막골</a>
-								<a data-value="A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의 전쟁</a>
-								<a data-value="B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday(영)</a>
-								<a data-value="B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry(영)</a>
-								<a data-value="B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup(영)</a>
-								<a data-value="B04"  onclick="select_itm(pro_font,this);preview_update()">Antman(영)</a>
-								<a data-value="B05"  onclick="select_itm(pro_font,this);preview_update()">FOREST GUMP(영)</a>
-								<a data-value="B06"  onclick="select_itm(pro_font,this);preview_update()">GRAVITY(영)</a>
-								<a data-value="B07"  onclick="select_itm(pro_font,this);preview_update()">Schindler's List(영)</a>
-								<a data-value="B08"  onclick="select_itm(pro_font,this);preview_update()">MONSTER HUNTER(영)</a>
-								<a data-value="B09"  onclick="select_itm(pro_font,this);preview_update()">Hangover(영)</a>
-								<a data-value="B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO(영)</a>
+								<a data-value="A01" style="font-family:A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
+								<a data-value="A02" style="font-family:A02"  onclick="select_itm(pro_font,this);preview_update()">왕의 남자</a>
+								<a data-value="A03" style="font-family:A03"  onclick="select_itm(pro_font,this);preview_update()">지구를 구해라</a>
+								<a data-value="A04" style="font-family:A04"  onclick="select_itm(pro_font,this);preview_update()">시실리2km</a>
+								<a data-value="A05" style="font-family:A05"  onclick="select_itm(pro_font,this);preview_update()">클래식</a>
+								<a data-value="A06" style="font-family:A06"  onclick="select_itm(pro_font,this);preview_update()">건축학개론</a>
+								<a data-value="A07" style="font-family:A07"  onclick="select_itm(pro_font,this);preview_update()">친절한금자씨</a>
+								<a data-value="A08" style="font-family:A08"  onclick="select_itm(pro_font,this);preview_update()">시라노;연애조작단</a>
+								<a data-value="A09" style="font-family:A09"  onclick="select_itm(pro_font,this);preview_update()">웰컴투동막골</a>
+								<a data-value="A10" style="font-family:A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의 전쟁</a>
+								<a data-value="B01" style="font-family:B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday(영)</a>
+								<a data-value="B02" style="font-family:B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry(영)</a>
+								<a data-value="B03" style="font-family:B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup(영)</a>
+								<a data-value="B04" style="font-family:B04"  onclick="select_itm(pro_font,this);preview_update()">Antman(영)</a>
+								<a data-value="B05" style="font-family:B05"  onclick="select_itm(pro_font,this);preview_update()">FOREST GUMP(영)</a>
+								<a data-value="B06" style="font-family:B06"  onclick="select_itm(pro_font,this);preview_update()">GRAVITY(영)</a>
+								<a data-value="B07" style="font-family:B07"  onclick="select_itm(pro_font,this);preview_update()">Schindler's List(영)</a>
+								<a data-value="B08" style="font-family:B08"  onclick="select_itm(pro_font,this);preview_update()">MONSTER HUNTER(영)</a>
+								<a data-value="B09" style="font-family:B09"  onclick="select_itm(pro_font,this);preview_update()">Hangover(영)</a>
+								<a data-value="B10" style="font-family:B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO(영)</a>
 						  </div>
 						</div>
 					</td>
-					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
-					<td colspan="1" bgcolor="#ffffff" align="left">
-						<select id="pro_size" onchange="preview_update()">
-							<a data-value="20">4cm</a>
-							<a data-value="25">5cm</a>
-							<a data-value="30">6cm</a>
-							<a data-value="40">8cm</a>
-							<a data-value="50">10cm</a>
-							<a data-value="75">15cm</a>
-							<a data-value="100">20cm</a>
-						</select>
+					<td bgcolor="#ffffff">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="pro_size" style="margin-right:10px" data-value="20" data-select="5cm">글자 높이</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="20" onclick="select_itm(pro_size,this);preview_update()">4cm</a>
+								<a data-value="25" onclick="select_itm(pro_size,this);preview_update()">5cm</a>
+								<a data-value="30" onclick="select_itm(pro_size,this);preview_update()">6cm</a>
+								<a data-value="40" onclick="select_itm(pro_size,this);preview_update()">8cm</a>
+								<a data-value="50" onclick="select_itm(pro_size,this);preview_update()">10cm</a>
+								<a data-value="75" onclick="select_itm(pro_size,this);preview_update()">15cm</a>
+								<a data-value="100" onclick="select_itm(pro_size,this);preview_update()">20cm</a>
+							</div>
+						</div>
 					</td>
-					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">정렬</td>
-					<td colspan="1" bgcolor="#ffffff" align="left">
-						<select id="pro_align" onchange="preview_update()">
-							<a data-value="left">왼쪽</a>
-							<a data-value="center">가운데</a>
-							<a data-value="right">오른쪽</a>
-						</select>
+					<td bgcolor="#ffffff">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="pro_align" style="margin-right:10px" data-value="center" data-select="중">정렬</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="left" onclick="select_itm(pro_align,this);preview_update()">좌</a>
+								<a data-value="center" onclick="select_itm(pro_align,this);preview_update()">중</a>
+								<a data-value="right" onclick="select_itm(pro_align,this);preview_update()">우</a>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<tr height="30">
-					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
-					<td width="100" bgcolor="#ffffff" align="left">
-						<select id="pro_color_LED" style="font-size:12;" onchange="preview_update()">
-							<a data-value="ffffff"="">백색</a>
-							<a data-value="ffd400">노랑</a>
-							<a data-value="ff0000">적색</a>
-							<a data-value="0067a3">청색</a>
-							<a data-value="008000">녹색</a>
-							<a data-value="ee2b6e">핑크</a>
-						</select>
+					<td bgcolor="#ffffff">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="pro_color_LED" style="margin-right:10px" data-value="ffffff" data-select="백색">LED</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
+								<a data-value="ffd400" onclick="select_itm(pro_color_LED,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(pro_color_LED,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(pro_color_LED,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(pro_color_LED,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(pro_color_LED,this);preview_update()">핑크</a>
+							</div>
+						</div>
 					</td>
-					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
-						측면 투광 <input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
+					<td style="font-size:14px;font-weight:bold;">
+						측면 투광<input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
 					</td>
-					<td width="100" bgcolor="#ffffff" align="left">
-						<select id="side_color_on" style="font-size:12;" onchange="preview_update()">
-							<a data-value="ffffff"="">백색</a>
-							<a data-value="ffd400">노랑</a>
-							<a data-value="ff0000">적색</a>
-							<a data-value="0067a3">청색</a>
-							<a data-value="008000">녹색</a>
-							<a data-value="ee2b6e">핑크</a>
-							<a data-value="660099">자주</a>
-							<a data-value="ff7f00">주황</a>
-						</select>
-						<select id="side_color_off" style="font-size:12;" onchange="preview_update()">
-							<a data-value="ffffff"="">흰색</a>
-							<a data-value="000000">검정색</a>
-						</select>
+					<td bgcolor="#ffffff">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="side_color_on" style="margin-right:10px" data-value="ffffff" data-select="ffffff">투명</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">백색</a>
+								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(side_color_on,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(side_color_on,this);preview_update()">핑크</a>
+								<a data-value="660099" onclick="select_itm(side_color_on,this);preview_update()">자주</a>
+								<a data-value="ff7f00" onclick="select_itm(side_color_on,this);preview_update()">주황</a>
+							</div>
+						</div>
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="side_color_off" style="margin-right:10px" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
+								<a data-value="000000" onclick="select_itm(side_color_off,this);preview_update()">검정색</a>
+							</div>
+						</div>
 					</td>
-					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
-						추가효과
-					</td>
-					<td width="100" bgcolor="#ffffff" align="left">
-						<select id="side_deco" style="font-size:12;" onchange="preview_update()">
-							<a data-value="none">미적용</a>
-							<a data-value="underL">밑줄</a>
-							<a data-value="borderL">테두리</a>
-						</select>
+					<td width="100" bgcolor="#ffffff">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="side_deco" style="margin-right:10px" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
+								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
+								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<tr height="40px">
-					<td align="center">
+					<td>
 						<font class="drcnt" color="black">제작 문구</font>
 					</td>
 					<td colspan="10">
@@ -162,7 +186,7 @@
 						</td>
 				</tr>
 				<tr height="40px">
-					<td align="center">
+					<td>
 					<font class="drcnt" color="black">제작 옵션</font>
 				</td>
 				<td colspan="10">
