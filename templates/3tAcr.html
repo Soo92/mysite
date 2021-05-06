@@ -10,7 +10,7 @@
 		<script src="static/main.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
-	<body topmargin="0" leftmargin="0" onload="preview_update();">
+	<body topmargin="0" leftmargin="0" onload="change_font('A',this);preview_update();">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
 		<div id="pre_text" class="preload_box">		</div>
 		<div id="pre_img" class="preload_box">		</div>
@@ -66,6 +66,10 @@
 								<span id="pro_font" style="margin-right:10px" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
+								<div id="font_list">
+									<button class="dropbtn_clicked" onclick="change_font('A',this)" style="text-align:center">한글</button>
+									<button class="dropbtn" onclick="change_font('B',this)" style="text-align:center">영문</button>
+								</div>
 								<a data-value="A01" style="font-family:A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
 								<a data-value="A02" style="font-family:A02"  onclick="select_itm(pro_font,this);preview_update()">왕의 남자</a>
 								<a data-value="A03" style="font-family:A03"  onclick="select_itm(pro_font,this);preview_update()">지구를 구해라</a>
@@ -76,23 +80,23 @@
 								<a data-value="A08" style="font-family:A08"  onclick="select_itm(pro_font,this);preview_update()">시라노;연애조작단</a>
 								<a data-value="A09" style="font-family:A09"  onclick="select_itm(pro_font,this);preview_update()">웰컴투동막골</a>
 								<a data-value="A10" style="font-family:A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의 전쟁</a>
-								<a data-value="B01" style="font-family:B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday(영)</a>
-								<a data-value="B02" style="font-family:B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry(영)</a>
-								<a data-value="B03" style="font-family:B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup(영)</a>
-								<a data-value="B04" style="font-family:B04"  onclick="select_itm(pro_font,this);preview_update()">Antman(영)</a>
-								<a data-value="B05" style="font-family:B05"  onclick="select_itm(pro_font,this);preview_update()">FOREST GUMP(영)</a>
-								<a data-value="B06" style="font-family:B06"  onclick="select_itm(pro_font,this);preview_update()">GRAVITY(영)</a>
-								<a data-value="B07" style="font-family:B07"  onclick="select_itm(pro_font,this);preview_update()">Schindler's List(영)</a>
-								<a data-value="B08" style="font-family:B08"  onclick="select_itm(pro_font,this);preview_update()">MONSTER HUNTER(영)</a>
-								<a data-value="B09" style="font-family:B09"  onclick="select_itm(pro_font,this);preview_update()">Hangover(영)</a>
-								<a data-value="B10" style="font-family:B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO(영)</a>
+								<a data-value="B01" style="font-family:B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday</a>
+								<a data-value="B02" style="font-family:B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry</a>
+								<a data-value="B03" style="font-family:B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup</a>
+								<a data-value="B04" style="font-family:B04"  onclick="select_itm(pro_font,this);preview_update()">Antman</a>
+								<a data-value="B05" style="font-family:B05"  onclick="select_itm(pro_font,this);preview_update()">FOREST GUMP</a>
+								<a data-value="B06" style="font-family:B06"  onclick="select_itm(pro_font,this);preview_update()">GRAVITY</a>
+								<a data-value="B07" style="font-family:B07"  onclick="select_itm(pro_font,this);preview_update()">Schindler's List</a>
+								<a data-value="B08" style="font-family:B08"  onclick="select_itm(pro_font,this);preview_update()">MONSTER HUNTER</a>
+								<a data-value="B09" style="font-family:B09"  onclick="select_itm(pro_font,this);preview_update()">Hangover</a>
+								<a data-value="B10" style="font-family:B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO</a>
 						  </div>
 						</div>
 					</td>
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_size" style="margin-right:10px" data-value="20" data-select="5cm">글자 높이</span><i class="arrow down"></i>
+								<span id="pro_size" style="margin-right:10px" data-value="40" data-select="8cm">글자 높이</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
 								<a data-value="20" onclick="select_itm(pro_size,this);preview_update()">4cm</a>
@@ -107,14 +111,10 @@
 					</td>
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="pro_align" style="margin-right:10px" data-value="center" data-select="중">정렬</span><i class="arrow down"></i>
-							</button>
-						  <div id="myDropdown" class="dropdown-content">
-								<a data-value="left" onclick="select_itm(pro_align,this);preview_update()">좌</a>
-								<a data-value="center" onclick="select_itm(pro_align,this);preview_update()">중</a>
-								<a data-value="right" onclick="select_itm(pro_align,this);preview_update()">우</a>
-							</div>
+								<span hidden id="pro_align" style="margin-right:10px" data-value="center" data-select="중">정렬</span>
+								<a data-value="left" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_left.jpg"> </img></a>
+								<a data-value="center" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_centor.jpg"> </img></a>
+								<a data-value="right" onclick="select_itm(pro_align,this);preview_update()"><img class="align" src="static/background/align_right.jpg"> </img></a>
 						</div>
 					</td>
 				</tr>
@@ -134,16 +134,14 @@
 							</div>
 						</div>
 					</td>
-					<td style="font-size:14px;font-weight:bold;">
-						측면 투광<input type="checkbox" id="side_on" name="side_on" onchange="preview_update()" checked="true">
-					</td>
 					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="side_color_on" style="margin-right:10px" data-value="ffffff" data-select="ffffff">투명</span><i class="arrow down"></i>
+								<span id="side_color_on" style="margin-right:10px" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
 							</button>
 						  <div id="myDropdown" class="dropdown-content">
-								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">백색</a>
+								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
+								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">투명</a>
 								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
 								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
 								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>

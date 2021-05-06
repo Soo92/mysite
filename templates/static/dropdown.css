@@ -35,7 +35,17 @@
   position: relative;
   display: inline-block;
 }
-
+.dropbtn_clicked {
+  margin: 4px 2px;
+  background-color: #ffffff;
+  border: solid 2px #008CBA;
+  color: #008CBA;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: max-content;
+  transition-duration: 0.4s;
+}
 .dropbtn:hover .arrow, .dropbtn:focus .arrow {
   border-color: #008CBA;
   transition-duration: 0.4s;
@@ -87,4 +97,11 @@
 .button1:hover {
   background-color: #008CBA;
   color: white;
+}
+
+.align{
+  width:20px;
+}
+.align:hover{
+  width:30px;
 }
