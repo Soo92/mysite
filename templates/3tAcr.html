@@ -6,6 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
 		<title> 제작상품 미리보기 | 알리네 간판 </title>
 		<link rel="stylesheet" href="static/style.css">
+		<link rel="stylesheet" href="static/dropdown.css">
 		<script src="static/main.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
@@ -14,14 +15,14 @@
 		<div id="pre_text" class="preload_box">		</div>
 		<div id="pre_img" class="preload_box">		</div>
 		<div id="toast"></div>
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#aaaaaa" align="center">
+		<table border="0" cellpadding="1" cellspacing="1" align="center">
 			<tbody>
 				<tr id="back_view" bgcolor="#ffffff" height="30">
 					<td colspan="5">
 						종류
 						<select id="pro_wh" onchange="preview_update()">
-							<option value="a">스카시</option>
-							<option value="b" selected>루미</option>
+							<option value="a" selected>스카시</option>
+							<option value="b">루미</option>
 							<option value="c">구로</option>
 						</select>
 					</td>
@@ -46,61 +47,66 @@
 					</td>
 				</tr>
 				<tr height="30">
-					<td colspan="1" width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">소재 색상</td>
-					<td colspan="1" bgcolor="#ffffff" align="left">
-						<span id="pro_color_span">
-							<select id="pro_color" onchange="preview_update()">
-								// 메인,밝음,어두움
-								<option value="EDEAC9,F6F3EC,D4D1CA" selected>백색 아크릴</option>
-								<option value="000000,383C46,1F1B23">흑색 아크릴</option>
-								<option value="E6E1DD,EDE8E4,8C8D8F">실버미러 아크릴</option>
-								<option value="FCE587,FDF2BA,D8B245">골드미러 아크릴</option>
-							</select>
-						</span>
+					<td colspan="2" bgcolor="#ffffff" align="left">
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="pro_color" style="margin-right:10px" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">색상</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color,this);preview_update()">흑색 아크릴</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
+						  </div>
+						</div>
 					</td>
-					<td colspan="1"bgcolor="#f0f0f0" align="center" style="font-weight:bold;">서체</td>
 					<td colspan="1" bgcolor="#ffffff" align="left">
-						<select id="pro_font" onchange="preview_update()">
-							<option value="A01" selected>라이터를 켜라</option>
-							<option value="A02">왕의 남자</option>
-							<option value="A03">지구를 구해라</option>
-							<option value="A04">시실리2km</option>
-							<option value="A05">클래식</option>
-							<option value="A06">건축학개론</option>
-							<option value="A07">친절한금자씨</option>
-							<option value="A08">시라노;연애조작단</option>
-							<option value="A09">웰컴투동막골</option>
-							<option value="A10">범죄와의 전쟁</option>
-							<option value="B01">Roman Holiday(영)</option>
-							<option value="B02">Tom and Jerry(영)</option>
-							<option value="B03">Fight Clup(영)</option>
-							<option value="B04">Antman(영)</option>
-							<option value="B05">FOREST GUMP(영)</option>
-							<option value="B06">GRAVITY(영)</option>
-							<option value="B07">Schindler's List(영)</option>
-							<option value="B08">MONSTER HUNTER(영)</option>
-							<option value="B09">Hangover(영)</option>
-							<option value="B10">MEMENTO(영)</option>
-						</select>
+						<div class="dropdown">
+						  <button class="dropbtn">
+								<span id="pro_font" style="margin-right:10px" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
+							</button>
+						  <div id="myDropdown" class="dropdown-content">
+								<a data-value="A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
+								<a data-value="A02"  onclick="select_itm(pro_font,this);preview_update()">왕의 남자</a>
+								<a data-value="A03"  onclick="select_itm(pro_font,this);preview_update()">지구를 구해라</a>
+								<a data-value="A04"  onclick="select_itm(pro_font,this);preview_update()">시실리2km</a>
+								<a data-value="A05"  onclick="select_itm(pro_font,this);preview_update()">클래식</a>
+								<a data-value="A06"  onclick="select_itm(pro_font,this);preview_update()">건축학개론</a>
+								<a data-value="A07"  onclick="select_itm(pro_font,this);preview_update()">친절한금자씨</a>
+								<a data-value="A08"  onclick="select_itm(pro_font,this);preview_update()">시라노;연애조작단</a>
+								<a data-value="A09"  onclick="select_itm(pro_font,this);preview_update()">웰컴투동막골</a>
+								<a data-value="A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의 전쟁</a>
+								<a data-value="B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday(영)</a>
+								<a data-value="B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry(영)</a>
+								<a data-value="B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup(영)</a>
+								<a data-value="B04"  onclick="select_itm(pro_font,this);preview_update()">Antman(영)</a>
+								<a data-value="B05"  onclick="select_itm(pro_font,this);preview_update()">FOREST GUMP(영)</a>
+								<a data-value="B06"  onclick="select_itm(pro_font,this);preview_update()">GRAVITY(영)</a>
+								<a data-value="B07"  onclick="select_itm(pro_font,this);preview_update()">Schindler's List(영)</a>
+								<a data-value="B08"  onclick="select_itm(pro_font,this);preview_update()">MONSTER HUNTER(영)</a>
+								<a data-value="B09"  onclick="select_itm(pro_font,this);preview_update()">Hangover(영)</a>
+								<a data-value="B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO(영)</a>
+						  </div>
+						</div>
 					</td>
 					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">글자 높이</td>
 					<td colspan="1" bgcolor="#ffffff" align="left">
 						<select id="pro_size" onchange="preview_update()">
-							<option value="20">4cm</option>
-							<option value="25" selected>5cm</option>
-							<option value="30">6cm</option>
-							<option value="40">8cm</option>
-							<option value="50">10cm</option>
-							<option value="75">15cm</option>
-							<option value="100">20cm</option>
+							<a data-value="20">4cm</a>
+							<a data-value="25">5cm</a>
+							<a data-value="30">6cm</a>
+							<a data-value="40">8cm</a>
+							<a data-value="50">10cm</a>
+							<a data-value="75">15cm</a>
+							<a data-value="100">20cm</a>
 						</select>
 					</td>
 					<td colspan="1" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">정렬</td>
 					<td colspan="1" bgcolor="#ffffff" align="left">
 						<select id="pro_align" onchange="preview_update()">
-							<option value="left">왼쪽</option>
-							<option value="center" selected>가운데</option>
-							<option value="right">오른쪽</option>
+							<a data-value="left">왼쪽</a>
+							<a data-value="center">가운데</a>
+							<a data-value="right">오른쪽</a>
 						</select>
 					</td>
 				</tr>
@@ -108,12 +114,12 @@
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">LED</td>
 					<td width="100" bgcolor="#ffffff" align="left">
 						<select id="pro_color_LED" style="font-size:12;" onchange="preview_update()">
-							<option value="ffffff" selected="">백색</option>
-							<option value="ffd400">노랑</option>
-							<option value="ff0000">적색</option>
-							<option value="0067a3">청색</option>
-							<option value="008000">녹색</option>
-							<option value="ee2b6e">핑크</option>
+							<a data-value="ffffff"="">백색</a>
+							<a data-value="ffd400">노랑</a>
+							<a data-value="ff0000">적색</a>
+							<a data-value="0067a3">청색</a>
+							<a data-value="008000">녹색</a>
+							<a data-value="ee2b6e">핑크</a>
 						</select>
 					</td>
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
@@ -121,18 +127,18 @@
 					</td>
 					<td width="100" bgcolor="#ffffff" align="left">
 						<select id="side_color_on" style="font-size:12;" onchange="preview_update()">
-							<option value="ffffff" selected="">백색</option>
-							<option value="ffd400">노랑</option>
-							<option value="ff0000">적색</option>
-							<option value="0067a3">청색</option>
-							<option value="008000">녹색</option>
-							<option value="ee2b6e">핑크</option>
-							<option value="660099">자주</option>
-							<option value="ff7f00">주황</option>
+							<a data-value="ffffff"="">백색</a>
+							<a data-value="ffd400">노랑</a>
+							<a data-value="ff0000">적색</a>
+							<a data-value="0067a3">청색</a>
+							<a data-value="008000">녹색</a>
+							<a data-value="ee2b6e">핑크</a>
+							<a data-value="660099">자주</a>
+							<a data-value="ff7f00">주황</a>
 						</select>
 						<select id="side_color_off" style="font-size:12;" onchange="preview_update()">
-							<option value="ffffff" selected="">흰색</option>
-							<option value="000000">검정색</option>
+							<a data-value="ffffff"="">흰색</a>
+							<a data-value="000000">검정색</a>
 						</select>
 					</td>
 					<td width="100" bgcolor="#f0f0f0" align="center" style="font-weight:bold;">
@@ -140,30 +146,49 @@
 					</td>
 					<td width="100" bgcolor="#ffffff" align="left">
 						<select id="side_deco" style="font-size:12;" onchange="preview_update()">
-							<option value="none" selected="">미적용</option>
-							<option value="underL">밑줄</option>
-							<option value="borderL">테두리</option>
+							<a data-value="none">미적용</a>
+							<a data-value="underL">밑줄</a>
+							<a data-value="borderL">테두리</a>
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td align="center" colspan="10" height="100" bgcolor="#686868" style="font-size:18px;">
-						<font color="#FFFFFF">합계 : &nbsp;<span id="btotal">0</span>&nbsp; 원</font>
-						<br>
-						<br> <font class="drcnt" size="2" color="white">제작 문구에 </font>
-						<font color="yellow"><span id="btext">문구</font><font class="drcnt" size="2" color="white">를 입력하시고</font>
-							<input type="button" value="복사하기" onclick="copyIt('btext')">
-						<br class="drcnt"> <font class="drcnt" size="2" color="white">제작 옵션에 </font>
-						<font color="yellow"><span id="boption">색/서체/크기</font><font class="drcnt" size="2" color="white">를 입력해주세요</font>
-							<input type="button" value="복사하기" onclick="copyIt('boption')">
-						<br class="drcnt">
-						<font class="drcnt" size="2" color="white">견적금액에 맞춰</font>
-						<font class="drcnt" size="2" color="white">구매수량 (</font>
-						<font color="yellow"><span id="bcount">0</span></font>
-						<font class="drcnt" size="2" color="white"><span> )개</span></font><font class="drcnt" size="2" color="white">로 결제해주세요.</font>
-							<input type="button" value="복사하기" onclick="copyIt('bcount')">
+				<tr height="40px">
+					<td align="center">
+						<font class="drcnt" color="black">제작 문구</font>
 					</td>
-					</tr>
+					<td colspan="10">
+						<span id="btext" style="font-weight:bold;">문구</span>
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('btext')">
+						</td>
+				</tr>
+				<tr height="40px">
+					<td align="center">
+					<font class="drcnt" color="black">제작 옵션</font>
+				</td>
+				<td colspan="10">
+					<span id="boption" style="font-weight:bold;">색/서체/크기</span>
+						<input class="button button1" type="button" value="복사하기" onclick="copyIt('boption')">
+					</td>
+				</tr>
+				<tr height="60px" style="font-size:20px;">
+					<td colspan="2">
+						<font class="drcnt" style="font-weight:bold;">수량 </font><font class="drcnt">( 견적금액 )</font>
+					</td>
+					<td align="right" colspan="10">
+
+						<input class="button button1" type="button" value="복사하기" onclick="copyIt('bcount')">
+						<font style="font-weight:bold;"><span id="bcount">0</span></font>
+						<font class="drcnt" style="font-weight:bold;"> 개 </font>
+						<font> ( <span id="btotal">0</span> 원 )</font>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="10">
+					<font class="drcnt" color="black">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
+					<br>
+					<font class="drcnt" color="black">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
+					</td>
+				</tr>
 				</tbody></table>
 			</body>
 		</html>

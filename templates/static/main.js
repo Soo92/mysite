@@ -20,6 +20,7 @@ price_ETC["15cm"]=8000
 price_ETC["20cm"]=10000
 
 
+
 function createRange(node, chars, range) {
     if (!range) {
         range = document.createRange()
@@ -118,6 +119,11 @@ function first_enter(){
   }
 }
 
+function select_itm(t,e) {
+  $(t).data("value",$(e).data("value"));
+  $(t).data("select",e.text);
+  $(t).text(e.text);
+}
 
 function preview_update(){
   pro_w = document.getElementById('pro_wh').value;
@@ -173,17 +179,17 @@ function preview_update(){
     document.getElementById("preview_text").innerText=sel_text
   }
 
-  var sel_clr = document.getElementById("pro_color");
-  var sel_font = document.getElementById("pro_font");
-  var sel_size = document.getElementById("pro_size");
-  var sel_back = document.getElementById('back_option');
-  var sel_align = document.getElementById('pro_align');
-  var sel_deco = document.getElementById('side_deco');
+  var sel_clr = $("#pro_color")
+  var sel_font = $("pro_font");
+  var sel_size = $("pro_size");
+  var sel_back = $('back_option');
+  var sel_align = $('pro_align');
+  var sel_deco = $('side_deco');
 
-  var t_clr = sel_clr.options[sel_clr.selectedIndex].text
-  var t_font = sel_font.options[sel_font.selectedIndex].text
-  var t_size = sel_size.options[sel_size.selectedIndex].text
-  var t_align = sel_align.options[sel_align.selectedIndex].text
+  var t_clr = sel_clr.data("select")
+  var t_font = sel_font.data("select")
+  var t_size = sel_size.data("select")
+  var t_align = sel_align.data("select")
 
   var f_w = sel_font.value
   var f_h = sel_size.value
@@ -238,7 +244,7 @@ function preview_update(){
   document.getElementById("pro_back").style=pre_back
 
   if (pro_w=="a") {
-    arr_clr = sel_clr.value.split(",")
+    arr_clr = sel_clr.data("value").split(",")
   } else if (pro_w="b") {
     if (f_side) {
       arr_clr=[f_main_LED,f_side_LED,f_side_back]
@@ -261,7 +267,11 @@ function preview_update(){
           +"-webkit-background-clip:text;"
           +"-webkit-text-fill-color:transparent;"
         } else if (pro_w="b") {
-          f_shwd="text-shadow:0.5px 0.5px #D9D9D9;"
+          f_shwd="text-shadow:0.5px 0.5px gray"
+          if (f_light) {
+            f_shwd=f_shwd+",0px 0px 5px #"+f_clr
+          }
+          f_shwd=f_shwd+";"
         }
     } else {
       if (pro_w=="a") {
@@ -271,27 +281,27 @@ function preview_update(){
           f_clr=arr_clr[2]
         }
       } else if (pro_w="b") {
-        if (step<=(f_cnt*7/20) || (f_cnt*15/20)<=step ) {
-          f_clr=arr_clr[2]
-        } else {
-          f_clr=arr_clr[1]
-        }
         if (step<=(f_cnt*15/20)) {
           taper=taper+(1/3)
           // /*f_h/100
         }
+
         f_shwd="text-shadow:"
+        if (step<=(f_cnt*7/20) || (f_cnt*15/20)<=step ) {
+          f_clr=arr_clr[2]
+        } else {
+          f_clr=arr_clr[1]
+          if (f_light) {
+            f_shwd=f_shwd+"0px 0px "+taper+5+"px #"+f_clr+","
+          }
+        }
         for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
           f_shwd=f_shwd+t_v+"px "+taper+"px #"+f_clr+","
                         +t_v+"px "+-taper+"px #"+f_clr+","
                         +taper+"px "+t_v+"px #"+f_clr+","
-                        +-taper+"px "+t_v+"px #"+f_clr
-          if(t_v+0.05>=taper) {
-            f_shwd=f_shwd+";"
-          } else {
-            f_shwd=f_shwd+","
-          }
+                        +-taper+"px "+t_v+"px #"+f_clr+","
         }
+        f_shwd=f_shwd+taper+"px "+taper+"px red;"
       }
       tmpid="side"+(step);
       tmp=document.getElementById(tmpid)
