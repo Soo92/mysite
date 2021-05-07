@@ -21,6 +21,7 @@ price_ETC["20cm"]=10000
 
 
 document.fonts.ready.then(function () {
+  preview_init();
   preview_update();
 });
 
@@ -218,6 +219,24 @@ function change_font(wh,e) {
 }
 
 function preview_init(){
+  f_w=$('.dropdown > .dropbtn > span')
+  f_w.each(function () {
+    init=$(this).text()
+    m_h=$(this).parent().height();
+    m_w=$(this).parent().width();
+    tmp=$(this).parent().siblings('.dropdown-content').children('a');
+    for (var i = 0; i < tmp.length; i++) {
+      if (tmp[i].innerText==$(this).data("select") && ($(tmp[i]).attr("class")==undefined||$(tmp[i]).attr("class").indexOf("clicked")<1)) {
+        $(tmp[i]).addClass("clicked")
+      }
+      $(this).text(tmp[i].innerText);
+      if(m_h<$(this).parent().height()) {        m_h=$(this).parent().height();      }
+      if(m_w<$(this).parent().width()) {        m_w=$(this).parent().width();      }
+    }
+    $(this).text(init);
+    $(this).parent().height(m_h);
+    $(this).parent().width(m_w);
+  });
   pro_w = document.getElementById('pro_wh').value;
   f_w=$('.for')
   f_w.each(function () {
@@ -232,7 +251,6 @@ function preview_init(){
       }
     };
   });
-
   aa = document.getElementById('back_dr');
   element=back_optin_list.split("/")[0];
   bb = document.getElementById('back_img');
@@ -461,9 +479,8 @@ function preview_update(){
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+max_w+"px;max-height:"+max_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+(f_h*f_scale*back_scale)+"px;text-align:"+f_align+";"
-      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;position:absolute"
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;position:absolute;"
     if (f_deco=="underL") {
-//      pre_style=pre_style+"border-bottom:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
       pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"

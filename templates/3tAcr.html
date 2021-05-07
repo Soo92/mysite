@@ -15,10 +15,10 @@
 		<div id="pre_text" class="preload_box"></div>
 		<div id="pre_img" class="preload_box"></div>
 		<div id="toast"></div>
-		<table border="0" cellpadding="1" cellspacing="1" align="center">
+		<table border="0" align="center">
 			<tbody>
 				<tr>
-					<td id="pro_back" bgcolor="#ffffff" width="1020" height="500">
+					<td id="pro_back" bgcolor="#ffffff" width="860" height="500">
 						<div id="preview_list" style="position:relative;height:inherit;">
 							<div style="position:absolute;">
 								<select id="pro_wh" onchange="preview_init();preview_update()">
@@ -57,7 +57,9 @@
 						</div>
 					</td>
 				</tr>
-				<tr height="60px">
+				<tr height="10px">
+				</tr>
+				<tr>
 					<td bgcolor="#ffffff" style="position:relative;">
 						<div class="dropdown for a">
 						  <button class="dropbtn">
@@ -69,54 +71,6 @@
 								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
 								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
 						  </div>
-						</div>
-						<div class="dropdown for b">
-						  <button class="dropbtn">
-								<span id="pro_color_LED" data-value="ffffff" data-select="백색">메인 LED</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
-								<a data-value="ffd400" onclick="select_itm(pro_color_LED,this);preview_update()">노랑</a>
-								<a data-value="ff0000" onclick="select_itm(pro_color_LED,this);preview_update()">적색</a>
-								<a data-value="0067a3" onclick="select_itm(pro_color_LED,this);preview_update()">청색</a>
-								<a data-value="008000" onclick="select_itm(pro_color_LED,this);preview_update()">녹색</a>
-								<a data-value="ee2b6e" onclick="select_itm(pro_color_LED,this);preview_update()">핑크</a>
-							</div>
-						</div>
-						<div class="dropdown for b">
-						  <button class="dropbtn">
-								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
-								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">투명</a>
-								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
-								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
-								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>
-								<a data-value="008000" onclick="select_itm(side_color_on,this);preview_update()">녹색</a>
-								<a data-value="ee2b6e" onclick="select_itm(side_color_on,this);preview_update()">핑크</a>
-								<a data-value="660099" onclick="select_itm(side_color_on,this);preview_update()">자주</a>
-								<a data-value="ff7f00" onclick="select_itm(side_color_on,this);preview_update()">주황</a>
-							</div>
-						</div>
-						<div class="dropdown for b">
-						  <button class="dropbtn">
-								<span id="side_color_off" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
-								<a data-value="000000" onclick="select_itm(side_color_off,this);preview_update()">검정색</a>
-							</div>
-						</div>
-						<div class="dropdown for a">
-						  <button class="dropbtn">
-								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
-								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
-								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
-							</div>
 						</div>
 						<div class="dropdown">
 						  <button class="dropbtn">
@@ -163,13 +117,67 @@
 								<a data-value="100" onclick="select_itm(pro_size,this);preview_update()">20cm</a>
 							</div>
 						</div>
+						<div class="dropdown for b c">
+						  <button class="dropbtn">
+								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content">
+								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
+								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
+								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
+							</div>
+						</div>
 						<div class="dropdown drcnt" style="float:right;">
 							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
 							<a class="dropalign" data-value="left" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_left.jpg');">좌</a>
-							<a class="dropalign" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_center.jpg');">중</a>
+							<a class="dropalign clicked" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_center.jpg');">중</a>
 							<a class="dropalign" data-value="right" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_right.jpg');">우</a>
 						</div>
 					</td>
+				</tr>
+				<tr class="for b">
+					<td bgcolor="#ffffff" style="position:relative;">
+						<div class="dropdown">
+							<button class="dropbtn">
+								<span id="pro_color_LED" data-value="ffffff" data-select="백색">조명</span><i class="arrow down"></i>
+							</button>
+							<div class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
+								<a data-value="ffd400" onclick="select_itm(pro_color_LED,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(pro_color_LED,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(pro_color_LED,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(pro_color_LED,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(pro_color_LED,this);preview_update()">핑크</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="dropbtn">
+								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
+							</button>
+							<div class="dropdown-content">
+								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
+								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">투명</a>
+								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(side_color_on,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(side_color_on,this);preview_update()">핑크</a>
+								<a data-value="660099" onclick="select_itm(side_color_on,this);preview_update()">자주</a>
+								<a data-value="ff7f00" onclick="select_itm(side_color_on,this);preview_update()">주황</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="dropbtn">
+								<span id="side_color_off" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
+							</button>
+							<div class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
+								<a data-value="000000" onclick="select_itm(side_color_off,this);preview_update()">검정색</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr height="10px">
 				</tr>
 				<tr height="40px">
 					<td>
@@ -199,6 +207,8 @@
 							<font> ( <span id="btotal">0</span> 원 )</font>
 						</div>
 					</td>
+				</tr>
+				<tr height="5px">
 				</tr>
 				<tr>
 					<td style="font-size:15px;line-height:25px;">
