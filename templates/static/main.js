@@ -121,41 +121,89 @@ function first_enter(){
   }
 }
 
+function select_prev() {
+  tmp=$('#back_dr').children();
+  tmp2=$('#back_img');
+  flag=false;
+  $(tmp.get().reverse()).each(function (index) {
+    if(flag) {
+      tmp2.data("value",$(this).data("value"));
+      tmp2.data("select",$(this).text());
+      tmp2.text($(this).text());
+      select_clicked(tmp2,this);
+      return false;
+    }
+    if ($(this).text()==$(tmp2).text()) {
+      flag=true;
+      if(index==tmp.length-1){
+        tmp2.data("value",tmp.last().data("value"));
+        tmp2.data("select",tmp.last().text());
+        tmp2.text(tmp.last().text());
+        select_clicked(tmp2,tmp.last());
+      }
+    }
+  })
+}
+
+function select_next() {
+  tmp=$('#back_dr').children();
+  tmp2=$('#back_img');
+  flag=false;
+  tmp.each(function (index) {
+    if(flag) {
+      tmp2.data("value",$(this).data("value"));
+      tmp2.data("select",$(this).text());
+      tmp2.text($(this).text());
+      select_clicked(tmp2,this);
+      return false;
+    }
+    if ($(this).text()==$(tmp2).text()) {
+      flag=true;
+      if(index==tmp.length-1){
+        tmp2.data("value",tmp.first().data("value"));
+        tmp2.data("select",tmp.first().text());
+        tmp2.text(tmp.first().text());
+        select_clicked(tmp2,tmp.first());
+      }
+    }
+  })
+}
+
 function select_itm(t,e) {
   $(t).data("value",$(e).data("value"));
   $(t).data("select",e.text);
   $(t).text(e.text);
+  select_clicked(t,e);
+}
 
-//여기 마우스 드래그
-  var clicked = false, clickY;
-  $(e).on({
-      'mousemove': function(e) {
-          clicked && updateScrollPos(e);
-      },
-      'mousedown': function(e) {
-          clicked = true;
-          console.log(t.pageY)
-          console.log(e.pageY)
-          clickY = t.pageY;
-      },
-      'mouseup': function() {
-          clicked = false;
-          $('html').css('cursor', 'auto');
-      }
-  });
-  var updateScrollPos = function(e) {
-      $(t).css('cursor', 'row-resize');
-      $(t).scrollTop($(t).scrollTop() + (clickY - e.pageY));
+function select_clicked(t,e){
+  if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
+     $(e).addClass("clicked")
+   }
+   tmp=$(e).siblings()
+   tmp.each(function () {
+     if ($(this).attr("class")!=undefined&&$(this).attr('class').indexOf("clicked")>-1) {
+       $(this).removeClass('clicked')
+     }
+   });
+}
+
+function change_light(e) {
+  if ($(e).text().indexOf("OFF")<0) {
+    $(e).text('조명 OFF');
+  } else {
+    $(e).text('조명 ON');
   }
 }
 
-
 function change_font(wh,e) {
-  $(e).attr('class',"dropbtn_clicked")
+  if ($(e).attr("class").indexOf("clicked")<1) {
+    $(e).addClass("clicked")
+  }
   tmp=$(e).siblings()
   tmp.each(function () {
-    if ($(this).attr('class').indexOf("clicked")>0) {
-      $(this).attr('class',"dropbtn")
+    if ($(this).attr('class').indexOf("clicked")>-1) {
+      $(this).removeClass('clicked')
     }
   });
 
@@ -172,24 +220,35 @@ function change_font(wh,e) {
 function preview_update(){
   pro_w = document.getElementById('pro_wh').value;
 
-  select = document.getElementById('back_option');
-  if(select.length<1) {
+  aa = document.getElementById('back_dr');
+
+  if($(aa).children().length<1) {
+    element=back_optin_list.split("/")[0];
+    bb = document.getElementById('back_img');
+    bb.innerText=element.split(".")[0];
+    bb.setAttribute("data-value",element);
+    bb.setAttribute("data-select",element.split(".")[0]);
     for (const element of back_optin_list.split("/")) {
-      var opt = document.createElement('option');
-      opt.value = element;
-      opt.innerHTML = element.split(".")[0];
-      select.appendChild(opt);
       var tmp = document.createElement('img');
       tmp.src="static/background/"+element;
       pre_img = document.getElementById('pre_img');
       pre_img.appendChild(tmp);
+
+      var aac = document.createElement('a');
+      aac.innerText=element.split(".")[0];
+      console.log("url(static/background/"+element+");");
+      aac.setAttribute("class","dropbtn");
+      aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');width:56px;height:33px;font-size:0px;");
+      aac.setAttribute("data-value",element);
+      aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
+      aa.appendChild(aac);
     }
     pre_text = document.getElementById('pre_text');
     for (const element of font_list.split("/")) {
       var opt = document.createElement('p');
       opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
       opt.innerText = element+":ㄱ가간agfG";
-      opt.id = "font"+element
+      opt.id = "font"+element;
       pre_text.appendChild(opt);
     }
   }
@@ -226,7 +285,7 @@ function preview_update(){
   var sel_clr = $("#pro_color")
   var sel_font = $("#pro_font");
   var sel_size = $("#pro_size");
-  var sel_back = document.getElementById('back_option');
+  var sel_back = $('#back_img');
   var sel_align = $('#pro_align');
   var sel_deco = $('#side_deco');
   var sel_main_LED = $("#pro_color_LED");
@@ -238,12 +297,13 @@ function preview_update(){
   var t_align = sel_align.data("select")
   var t_deco = sel_deco.data("select")
 
+  var f_b = sel_back.data("value")
   var f_w = sel_font.data("value")
   var f_h = sel_size.data("value")
   var f_align = sel_align.data("value")
   var f_deco = sel_deco.data("value");
 
-  var f_light = document.getElementById("light_on").checked
+  var f_light = $("#pro_light").text().indexOf("OFF")>0
   var f_main_LED = $("#pro_color_LED").data("value")
   var f_side_LED = $("#side_color_on").data("value");
   var f_side_back = $("#side_color_off").data("value");
@@ -297,10 +357,10 @@ function preview_update(){
   f_scale=parseInt(aa)/bb
 
   if(f_light) {
-    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+sel_back.value+"');"
+    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"');"
       +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
   } else {
-    pre_back="background:url('static/background/"+sel_back.value+"');"
+    pre_back="background:url('static/background/"+f_b+"');"
       +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
     f_main_LED="ffffff"
   }
@@ -390,7 +450,7 @@ function preview_update(){
     }
     pre_style=pre_style+"width:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;max-width:"+max_w+"px;max-height:"+max_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+(f_h*f_scale*back_scale)+"px;text-align:"+f_align+";"
-      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;"
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;position:absolute"
     if (f_deco=="underL") {
 //      pre_style=pre_style+"border-bottom:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
       pre_style=pre_style+"text-decoration: underline;"
