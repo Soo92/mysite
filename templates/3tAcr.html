@@ -10,7 +10,7 @@
 		<script src="static/main.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
-	<body topmargin="0" leftmargin="0" onload="change_font('A',kor);preview_update();">
+	<body topmargin="0" leftmargin="0" onload="preview_init();change_font('A',kor);preview_update();">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
 		<div id="pre_text" class="preload_box"></div>
 		<div id="pre_img" class="preload_box"></div>
@@ -18,28 +18,27 @@
 		<table border="0" cellpadding="1" cellspacing="1" align="center">
 			<tbody>
 				<tr>
-					<td id="pro_back" colspan="5" bgcolor="#ffffff" width="1020" height="490">
+					<td id="pro_back" bgcolor="#ffffff" width="1020" height="500">
 						<div id="preview_list" style="position:relative;height:inherit;">
 							<div style="position:absolute;">
-								<select id="pro_wh" onchange="preview_update()">
+								<select id="pro_wh" onchange="preview_init();preview_update()">
 									<option value="a" selected>스카시</option>
 									<option value="b">루미</option>
 									<option value="c">구로</option>
 								</select>
 							</div>
 							<div style="position:absolute;top:45%;width:100%;" bgcolor="#ffffff">
-								<button class="dropbtn transparent" style="float:left;margin:5px;padding-right:0px;" onclick="select_prev();preview_update();">
+								<button class="dropbtn transparent" style="float:left;margin:5px;padding-left:10px;" onclick="select_prev();preview_update();">
 									<i class="arrow left"></i>
 								</button>
-								<button class="dropbtn transparent" style="float:right;margin:5px;padding-left:0px;" onclick="select_next();preview_update();">
+								<button class="dropbtn transparent" style="float:right;margin:5px;padding-right:10px;" onclick="select_next();preview_update();">
 									<i class="arrow right"></i>
 								</button>
 							</div>
-							<div style="position:absolute;width:96%;bottom:2%;right:2%;" bgcolor="#ffffff">
-								<button id="pro_light" class="dropbtn" id="side_color_on" data-value="ffffff" data-select="백색" onclick="change_light(this);preview_update();">조명 ON
-<!--
-									<img class="align" src="static/background/align_centor.jpg"></img>
--->
+							<div style="position:absolute;width:98%;bottom:2%;right:1%;" bgcolor="#ffffff">
+								<button id="alarm" class="dropbtn" style="float:left;" data-value="ffffff" data-select="백색" onclick=";preview_update();">!
+								</button>
+								<button id="pro_light" class="dropbtn for b c" onclick="change_light(this);preview_update();">조명 ON
 								</button>
 								<div class="dropdown">
 								  <button class="dropbtn" style="width:300px">
@@ -58,9 +57,9 @@
 						</div>
 					</td>
 				</tr>
-				<tr height="50px">
-					<td bgcolor="#ffffff">
-						<div class="dropdown">
+				<tr height="60px">
+					<td bgcolor="#ffffff" style="position:relative;">
+						<div class="dropdown for a">
 						  <button class="dropbtn">
 								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">색상</span><i class="arrow down"></i>
 							</button>
@@ -71,8 +70,54 @@
 								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
 						  </div>
 						</div>
-					</td>
-					<td bgcolor="#ffffff">
+						<div class="dropdown for b">
+						  <button class="dropbtn">
+								<span id="pro_color_LED" data-value="ffffff" data-select="백색">메인 LED</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
+								<a data-value="ffd400" onclick="select_itm(pro_color_LED,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(pro_color_LED,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(pro_color_LED,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(pro_color_LED,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(pro_color_LED,this);preview_update()">핑크</a>
+							</div>
+						</div>
+						<div class="dropdown for b">
+						  <button class="dropbtn">
+								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content">
+								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
+								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">투명</a>
+								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
+								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
+								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>
+								<a data-value="008000" onclick="select_itm(side_color_on,this);preview_update()">녹색</a>
+								<a data-value="ee2b6e" onclick="select_itm(side_color_on,this);preview_update()">핑크</a>
+								<a data-value="660099" onclick="select_itm(side_color_on,this);preview_update()">자주</a>
+								<a data-value="ff7f00" onclick="select_itm(side_color_on,this);preview_update()">주황</a>
+							</div>
+						</div>
+						<div class="dropdown for b">
+						  <button class="dropbtn">
+								<span id="side_color_off" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content">
+								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
+								<a data-value="000000" onclick="select_itm(side_color_off,this);preview_update()">검정색</a>
+							</div>
+						</div>
+						<div class="dropdown for a">
+						  <button class="dropbtn">
+								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content">
+								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
+								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
+								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
+							</div>
+						</div>
 						<div class="dropdown">
 						  <button class="dropbtn">
 								<span id="pro_font" data-value="A01" data-select="라이터를 켜라">서체</span><i class="arrow down"></i>
@@ -104,8 +149,6 @@
 								<a data-value="B10" style="font-family:B10"  onclick="select_itm(pro_font,this);preview_update()">MEMENTO</a>
 						  </div>
 						</div>
-					</td>
-					<td bgcolor="#ffffff">
 						<div class="dropdown">
 						  <button class="dropbtn">
 								<span id="pro_size" data-value="40" data-select="8cm">글자 높이</span><i class="arrow down"></i>
@@ -120,106 +163,48 @@
 								<a data-value="100" onclick="select_itm(pro_size,this);preview_update()">20cm</a>
 							</div>
 						</div>
-					</td>
-					<td bgcolor="#ffffff">
-						<div class="dropdown">
-								<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
-								<a class="drcnt" data-value="left" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_left.jpg');background-size:cover;background-repeat:no-repeat;color:rgb(0,0,0,0);">좌</a>
-								<a class="drcnt" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_centor.jpg');background-size:cover;background-repeat:no-repeat;color:rgb(0,0,0,0);">중</a>
-								<a class="drcnt" data-value="right" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_right.jpg');background-size:cover;background-repeat:no-repeat;color:rgb(0,0,0,0);">우</a>
+						<div class="dropdown drcnt" style="float:right;">
+							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
+							<a class="dropalign" data-value="left" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_left.jpg');">좌</a>
+							<a class="dropalign" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_center.jpg');">중</a>
+							<a class="dropalign" data-value="right" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_right.jpg');">우</a>
 						</div>
 					</td>
 				</tr>
-				<tr height="50px">
-					<td bgcolor="#ffffff">
-						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="pro_color_LED" data-value="ffffff" data-select="백색">LED</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="ffffff" onclick="select_itm(pro_color_LED,this);preview_update()">백색</a>
-								<a data-value="ffd400" onclick="select_itm(pro_color_LED,this);preview_update()">노랑</a>
-								<a data-value="ff0000" onclick="select_itm(pro_color_LED,this);preview_update()">적색</a>
-								<a data-value="0067a3" onclick="select_itm(pro_color_LED,this);preview_update()">청색</a>
-								<a data-value="008000" onclick="select_itm(pro_color_LED,this);preview_update()">녹색</a>
-								<a data-value="ee2b6e" onclick="select_itm(pro_color_LED,this);preview_update()">핑크</a>
-							</div>
-						</div>
-					</td>
-					<td bgcolor="#ffffff">
-						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>
-								<a data-value="ffffff" onclick="select_itm(side_color_on,this);preview_update()">투명</a>
-								<a data-value="ffd400" onclick="select_itm(side_color_on,this);preview_update()">노랑</a>
-								<a data-value="ff0000" onclick="select_itm(side_color_on,this);preview_update()">적색</a>
-								<a data-value="0067a3" onclick="select_itm(side_color_on,this);preview_update()">청색</a>
-								<a data-value="008000" onclick="select_itm(side_color_on,this);preview_update()">녹색</a>
-								<a data-value="ee2b6e" onclick="select_itm(side_color_on,this);preview_update()">핑크</a>
-								<a data-value="660099" onclick="select_itm(side_color_on,this);preview_update()">자주</a>
-								<a data-value="ff7f00" onclick="select_itm(side_color_on,this);preview_update()">주황</a>
-							</div>
-						</div>
-						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="side_color_off" data-value="ffffff" data-select="흰색">불투명</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="ffffff" onclick="select_itm(side_color_off,this);preview_update()">흰색</a>
-								<a data-value="000000" onclick="select_itm(side_color_off,this);preview_update()">검정색</a>
-							</div>
-						</div>
-					</td>
-					<td width="100" bgcolor="#ffffff">
-						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
-								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
-								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr height="50px">
+				<tr height="40px">
 					<td>
-						<font class="drcnt" color="black"  style="font-weight:bold;">제작 문구</font>
-					</td>
-					<td colspan="10">
-						<span id="btext" style="font-weight:bold;">문구</span>
+						<font class="drcnt" style="float:left">제작 문구</font>
+						<div style="float:right;width:85%">
+							<span id="btext" style="font-weight:bold;">문구</span>
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('btext')">
-						</td>
+						</div>
+					</td>
 				</tr>
-				<tr height="50px">
+				<tr height="40px">
 					<td>
-					<font class="drcnt" color="black" style="font-weight:bold;">제작 옵션</font>
-				</td>
-				<td colspan="10">
-					<span id="boption" style="font-weight:bold;">색/서체/크기</span>
-						<input class="button button1" type="button" value="복사하기" onclick="copyIt('boption')">
+						<font class="drcnt" style="float:left">제작 옵션</font>
+						<div style="float:right;width:85%">
+							<span id="boption" style="font-weight:bold;">색/서체/크기</span>
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('boption')">
+						</div>
 					</td>
 				</tr>
-				<tr height="60px" style="font-size:20px;">
-					<td colspan="2">
-						<font class="drcnt" style="font-weight:bold;">수량 </font><font class="drcnt">( 견적금액 )</font>
-					</td>
-					<td align="right" colspan="3">
-						<input class="button button1" type="button" value="복사하기" onclick="copyIt('bcount')">
-						<font style="font-weight:bold;"><span id="bcount">0</span></font>
-						<font class="drcnt" style="font-weight:bold;"> 개 </font>
-						<font> ( <span id="btotal">0</span> 원 )</font>
+				<tr height="60px">
+					<td>
+						<font class="drcnt" style="font-weight:bold;font-size:25px;">수량 </font><font class="drcnt">( 견적금액 )</font>
+						<div style="float:right;">
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('bcount')">
+							<font style="font-weight:bold;font-size:25px;"><span id="bcount">0</span></font>
+							<font class="drcnt" style="font-weight:bold;"> 개 </font>
+							<font> ( <span id="btotal">0</span> 원 )</font>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="10">
-					<font class="drcnt" color="black">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
-					<br>
-					<font class="drcnt" color="black">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
+					<td style="font-size:15px;line-height:25px;">
+						<font class="drcnt" color="black">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
+						<br>
+						<font class="drcnt" color="black">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
 					</td>
 				</tr>
 				</tbody></table>

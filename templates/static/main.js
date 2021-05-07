@@ -217,42 +217,53 @@ function change_font(wh,e) {
   });
 }
 
-function preview_update(){
+function preview_init(){
   pro_w = document.getElementById('pro_wh').value;
+  f_w=$('.for')
+  f_w.each(function () {
+    if ($(this).attr('class').indexOf("hidden")<0) {
+      $(this).addClass("hidden")
+    }
+    tmp=$(this).attr('class').split(" ");
+    for (step = 0; step < tmp.length; step++) {
+      if (tmp[step].indexOf(pro_w)>-1 && $(this).attr('class').indexOf("hidden")>-1) {
+        $(this).removeClass("hidden")
+        break;
+      }
+    };
+  });
 
   aa = document.getElementById('back_dr');
+  element=back_optin_list.split("/")[0];
+  bb = document.getElementById('back_img');
+  bb.innerText=element.split(".")[0];
+  bb.setAttribute("data-value",element);
+  bb.setAttribute("data-select",element.split(".")[0]);
+  for (const element of back_optin_list.split("/")) {
+    var tmp = document.createElement('img');
+    tmp.src="static/background/"+element;
+    pre_img = document.getElementById('pre_img');
+    pre_img.appendChild(tmp);
 
-  if($(aa).children().length<1) {
-    element=back_optin_list.split("/")[0];
-    bb = document.getElementById('back_img');
-    bb.innerText=element.split(".")[0];
-    bb.setAttribute("data-value",element);
-    bb.setAttribute("data-select",element.split(".")[0]);
-    for (const element of back_optin_list.split("/")) {
-      var tmp = document.createElement('img');
-      tmp.src="static/background/"+element;
-      pre_img = document.getElementById('pre_img');
-      pre_img.appendChild(tmp);
-
-      var aac = document.createElement('a');
-      aac.innerText=element.split(".")[0];
-      console.log("url(static/background/"+element+");");
-      aac.setAttribute("class","dropbtn");
-      aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');width:56px;height:33px;font-size:0px;");
-      aac.setAttribute("data-value",element);
-      aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
-      aa.appendChild(aac);
-    }
-    pre_text = document.getElementById('pre_text');
-    for (const element of font_list.split("/")) {
-      var opt = document.createElement('p');
-      opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
-      opt.innerText = element+":ㄱ가간agfG";
-      opt.id = "font"+element;
-      pre_text.appendChild(opt);
-    }
+    var aac = document.createElement('a');
+    aac.innerText=element.split(".")[0];
+    aac.setAttribute("class","dropbtn");
+    aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');width:48px;height:30px;font-size:0px;");
+    aac.setAttribute("data-value",element);
+    aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
+    aa.appendChild(aac);
   }
+  pre_text = document.getElementById('pre_text');
+  for (const element of font_list.split("/")) {
+    var opt = document.createElement('p');
+    opt.style = "font-family:"+element+";font-size:20px;height:auto;margin:0 auto;";
+    opt.innerText = element+":ㄱ가간agfG";
+    opt.id = "font"+element;
+    pre_text.appendChild(opt);
+  }
+}
 
+function preview_update(){
   pre_width=document.getElementById("pro_back").width
   pre_height=document.getElementById("pro_back").height
 
