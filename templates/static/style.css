@@ -34,23 +34,6 @@ body {
   user-select: none;
 }
 
-#toast {
-    margin-left:10px;
-    float: left;
-    background-color: white;
-    border-color: rgba(255,255,255,0.8);
-    color: black;
-    transform: scaleX(0);
-    transform-origin: 0% 50%;
-    transition: transform 0.1s;
-    z-index: 10000;
-}
-
-#toast.reveal {
-    display: block;
-    transform: scaleX(1);
-}
-
 .goldtextcss {
 background: #fad56d; /*if no support for background-clip*/
 background: radial-gradient(farthest-corner at 40% -5%, #ce9f28 3%, #fad56d 5%, #d67b00 35%, #d67b00 65%, #fad56d 99%, #ce9f28 1000%);

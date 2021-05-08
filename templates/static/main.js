@@ -23,6 +23,7 @@ price_ETC["20cm"]=10000
 document.fonts.ready.then(function () {
   preview_init();
   preview_update();
+  toast("문구를 써보고\n제품을 미리 확인해보세요!")
 });
 
 function createRange(node, chars, range) {
@@ -103,7 +104,7 @@ function copyIt(title,bID) {
     document.execCommand("copy");
     tmp.remove();
   }
-  toast(title+" 복사했습니다! > " + copyText)
+  toast(title+" 복사했습니다!\n> " + copyText)
 }
 
 function paste_value(e){
@@ -118,7 +119,11 @@ function first_enter(){
     tmp.innerText=""
   } else if (tmp.innerText.trim()=="") {
     tmp.spellcheck=true
-    tmp.innerHTML="여기에<br>써보세요"
+    if(f_wh=="A") {
+      tmp.innerHTML="여기에<br>써보세요"
+    } else if (f_wh=="B") {
+      tmp.innerHTML="WRITE<br>HERE"
+    }
   }
 }
 
@@ -172,8 +177,8 @@ function select_next() {
 
 function select_itm(t,e) {
   $(t).data("value",$(e).data("value"));
-  $(t).data("select",e.text);
-  $(t).text(e.text);
+  $(t).data("select",$(e).text());
+  $(t).text($(e).text());
   select_clicked(t,e);
 }
 
@@ -181,7 +186,7 @@ function select_clicked(t,e){
   if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
      $(e).addClass("clicked")
    }
-   tmp=$(e).siblings()
+   tmp=$(e).siblings(":not([style*='display: none'])")
    tmp.each(function () {
      if ($(this).attr("class")!=undefined&&$(this).attr('class').indexOf("clicked")>-1) {
        $(this).removeClass('clicked')
@@ -198,7 +203,8 @@ function change_light(e) {
 }
 
 function change_font(wh,e) {
-  if ($(e).attr("class").indexOf("clicked")<1) {
+  f_wh=wh;
+  if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
     $(e).addClass("clicked")
   }
   tmp=$(e).siblings()
@@ -208,17 +214,37 @@ function change_font(wh,e) {
     }
   });
 
-  tmp=$("#font_list").siblings()
-  tmp.each(function () {
+  tmp=$("#font_list")
+  tmp.siblings("a").each(function () {
     if ($(this).data("value").indexOf(wh)==0) {
       $(this).show()
     } else {
       $(this).hide()
     }
   });
+
+  w=tmp.parent().width();
+  h=$("#font_dummy").height();
+  padding=5
+  tmp.css("padding",padding)
+  tmp.width(w-padding*2)
+  tmp.height(h-padding*2)
+
+  trg=tmp.siblings("a:visible");
+  if(trg.length>0) {
+    if (!trg.hasClass('clicked')) {
+      console.log("ddd")
+      select_itm('#pro_font',trg.first());
+    } else {
+      console.log("eee")
+      trg=tmp.siblings("a.clicked:visible");
+      select_itm('#pro_font',trg.first());
+    }
+  }
 }
 
 function preview_init(){
+  f_wh='A';
   f_w=$('.dropdown > .dropbtn > span')
   f_w.each(function () {
     init=$(this).text()
@@ -237,6 +263,7 @@ function preview_init(){
     $(this).parent().height(m_h);
     $(this).parent().width(m_w);
   });
+
   pro_w = document.getElementById('pro_wh').value;
   f_w=$('.for')
   f_w.each(function () {
@@ -282,6 +309,15 @@ function preview_init(){
 }
 
 function preview_update(){
+  tmp=document.getElementById("preview_text")
+  if (tmp.spellcheck) {
+    if(f_wh=="A") {
+      tmp.innerHTML="여기에<br>써보세요"
+    } else if (f_wh=="B") {
+      tmp.innerHTML="WRITE<br>HERE"
+    }
+  }
+
   pre_width=document.getElementById("pro_back").width
   pre_height=document.getElementById("pro_back").height
 
@@ -289,14 +325,14 @@ function preview_update(){
   var sel_text = document.getElementById("preview_text").innerText
   var sel_HTML = document.getElementById("preview_text").innerHTML
   if (sel_text.length>20) {
-    toast("20자씩 나눠서 입력해 주세요")
+    toast("20자씩 나눠서 입력해 주세요!")
     sel_text=sel_text.slice(0,20)
     document.getElementById("preview_text").innerText=sel_text
     console.log(setCurrentCursorPosition())
     setCurrentCursorPosition(20)
   }
   if (sel_text.indexOf("؊")>-1) {
-    toast("사용할 수 없는 문자입니다")
+    toast("사용할 수 없는 문자입니다!")
     sel_text=sel_text.replace("؊","")
     document.getElementById("preview_text").innerText=sel_text
   }
@@ -306,7 +342,7 @@ function preview_update(){
     document.getElementById("preview_text").innerText=sel_text
   }
   if (sel_text.search(/\n{2}/)==0) {
-    toast("줄바꿈은 한번만 가능합니다")
+    toast("줄바꿈은 한번만 가능합니다!")
     sel_text=sel_text.replace(/\n{2}/, "\n");
     document.getElementById("preview_text").innerText=sel_text
   }
@@ -321,6 +357,8 @@ function preview_update(){
 
   var t_clr = sel_clr.data("select")
   var t_main_LED = sel_main_LED.data("select")
+  var t_side_LED = $("#side_color_on").data("select");
+  var t_side_back = $("#side_color_off").data("select");
   var t_font = sel_font.data("select")
   var t_size = sel_size.data("select")
   var t_align = sel_align.data("select")
@@ -538,9 +576,16 @@ function preview_update(){
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
+  if(pro_w=="a") {
+    t_clr_slt=t_clr.split(" ")[0]
+  } else if (pro_w=="b") {
+    t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
+  } else if (pro_w=="c") {
+    t_clr_slt=t_clr
+  }
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
 /*.replace(/(^\s*)|(\s*$)/gi, "؉").replace(/(\s*)/g, "")*/
-  document.getElementById("boption").innerText=t_clr.split(" ")[0]+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
+  document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
 }

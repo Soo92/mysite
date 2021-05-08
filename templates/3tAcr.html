@@ -26,7 +26,7 @@
 									<option value="c">구로</option>
 								</select>
 							</div>
-							<div style="position:absolute;top:45%;width:100%;" bgcolor="#ffffff">
+							<div style="position:absolute;top:45%;width:98%;margin:1%;" bgcolor="#ffffff">
 								<button class="dropbtn transparent drcnt" style="float:left;font-size:35px;" onclick="select_prev();preview_update();">
 									<
 								</button>
@@ -34,11 +34,11 @@
 									>
 								</button>
 							</div>
-							<div style="position:absolute;width:98%;bottom:2%;right:1%;" bgcolor="#ffffff">
-								<button id="alarm" class="dropbtn" style="float:left;" data-value="ffffff" data-select="백색" onclick=";preview_update();">
+							<div style="position:absolute;width:98%;margin:1%;bottom:0%;" bgcolor="#ffffff">
+								<button id="alarm" class="dropbtn" style="position:absolute;left:0%;bottom:0%;">
 									!
 								</button>
-								<div id="toast">
+								<div id="toast" style="position:absolute;left:4%;bottom:0%;">
 									알람이 표출됩니다.
 								</div>
 								<button id="pro_light" class="dropbtn for b c" onclick="change_light(this);preview_update();">조명 ON
@@ -81,10 +81,11 @@
 							</button>
 						  <div class="dropdown-content">
 								<div id="font_list">
-									<button id="kor" class="dropbtn" onclick="change_font('A',this)" style="text-align:center">한글</button>
-									<button class="dropbtn" onclick="change_font('B',this)" style="text-align:center">영문</button>
+									<button id="kor" class="dropbtn clicked" onclick="change_font('A',this);preview_update();" style="text-align:center">한글</button>
+									<button class="dropbtn" onclick="change_font('B',this);preview_update();" style="text-align:center">영문</button>
 								</div>
-								<a data-value="A01" style="font-family:A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
+								<div id="font_dummy"></div>
+								<a class="clicked" data-value="A01" style="font-family:A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
 								<a data-value="A02" style="font-family:A02"  onclick="select_itm(pro_font,this);preview_update()">왕의 남자</a>
 								<a data-value="A03" style="font-family:A03"  onclick="select_itm(pro_font,this);preview_update()">지구를 구해라</a>
 								<a data-value="A04" style="font-family:A04"  onclick="select_itm(pro_font,this);preview_update()">시실리2km</a>
@@ -132,9 +133,9 @@
 						</div>
 						<div class="dropdown drcnt" style="float:right;">
 							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
-							<a class="dropalign" data-value="left" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_left.jpg');">좌</a>
-							<a class="dropalign clicked" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_center.jpg');">중</a>
-							<a class="dropalign" data-value="right" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_right.jpg');">우</a>
+							<a class="dropalign" data-value="left" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_left.png');">좌</a>
+							<a class="dropalign clicked" data-value="center" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_center.png');">중</a>
+							<a class="dropalign" data-value="right" onclick="select_itm(pro_align,this);preview_update()" style="background-image:url('static/background/align_right.png');color:">우</a>
 						</div>
 					</td>
 				</tr>
@@ -155,7 +156,7 @@
 						</div>
 						<div class="dropdown">
 							<button class="dropbtn">
-								<span id="side_color_on" data-value="ffffff" data-select="백색">투명</span><i class="arrow down"></i>
+								<span id="side_color_on" data-value="ffffff" data-select="투명">투명</span><i class="arrow down"></i>
 							</button>
 							<div class="dropdown-content">
 								<a data-value="none" onclick="select_itm(side_color_on,this);preview_update()">없음</a>

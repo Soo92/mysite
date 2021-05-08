@@ -33,8 +33,27 @@
   margin-top: 4px;
 }
 
+
+#toast {
+  text-align: left;
+  max-width: 400px;
+  background-color: white;
+  border: solid 5px white;
+  border-radius : 5px;
+  color: black;
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+  transition: transform 0.1s;
+  z-index: 10000;
+}
+
+#toast.reveal {
+  display: block;
+  transform: scaleX(1);
+}
+
+
 .dropbtn {
-  margin: 4px 2px;
   text-align: left;
   background-color: #ffffff;
   border: solid 5px white;
@@ -45,17 +64,15 @@
   cursor: pointer;
   width: max-content;
 }
-.clicked {
-  border: solid 5px #008CBA;
-  color: #008CBA;
-  border-radius: 5px;
-}
 
 .dropbtn span {
   margin-right: 20px;
 }
 
-.dropbtn:hover, .dropbtn:focus {
+.dropbtn:focus {
+  border: solid 5px #008CBA;
+}
+.dropbtn:hover{
   border: solid 5px #008CBA;
   color: #008CBA;
 }
@@ -64,7 +81,8 @@
   display: inline-block;
 }
 .dropalign{
-  background-size:cover;
+  border: solid 5px white;
+  background-size:contain;
   background-repeat:no-repeat;
   color:rgb(0,0,0,0);
   font-size:30px;
@@ -74,7 +92,6 @@
   border-color: #008CBA;
 }
 .dropbtn:hover + #toast, .dropbtn:focus + #toast {
-  border-color: #008CBA;
   display: block;
   transform: scaleX(1);
 }
@@ -140,8 +157,17 @@
   width:30px;
 }
 
+#font_list{
+  position: fixed;
+  width: 180px;
+  background: #f1f1f1;
+}
+#font_dummy{
+  height: 50px;
+}
+
 .transparent {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(0,0,0,0.3);
   border-color: rgba(255,255,255,0.8);
   color: rgba(255,255,255,0.8);
   text-align: center;
@@ -151,4 +177,8 @@
 
 .hidden {
   display: none;
+}
+.clicked {
+  border: solid 5px #008CBA;
+  border-radius: 5px;
 }
