@@ -14,7 +14,6 @@
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
 		<div id="pre_text" class="preload_box"></div>
 		<div id="pre_img" class="preload_box"></div>
-		<div id="toast"></div>
 		<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -28,16 +27,20 @@
 								</select>
 							</div>
 							<div style="position:absolute;top:45%;width:100%;" bgcolor="#ffffff">
-								<button class="dropbtn transparent" style="float:left;margin:5px;padding-left:10px;" onclick="select_prev();preview_update();">
-									<i class="arrow left"></i>
+								<button class="dropbtn transparent drcnt" style="float:left;font-size:35px;" onclick="select_prev();preview_update();">
+									<
 								</button>
-								<button class="dropbtn transparent" style="float:right;margin:5px;padding-right:10px;" onclick="select_next();preview_update();">
-									<i class="arrow right"></i>
+								<button class="dropbtn transparent drcnt" style="float:right;font-size:35px;" onclick="select_next();preview_update();">
+									>
 								</button>
 							</div>
 							<div style="position:absolute;width:98%;bottom:2%;right:1%;" bgcolor="#ffffff">
-								<button id="alarm" class="dropbtn" style="float:left;" data-value="ffffff" data-select="백색" onclick=";preview_update();">!
+								<button id="alarm" class="dropbtn" style="float:left;" data-value="ffffff" data-select="백색" onclick=";preview_update();">
+									!
 								</button>
+								<div id="toast">
+									알람이 표출됩니다.
+								</div>
 								<button id="pro_light" class="dropbtn for b c" onclick="change_light(this);preview_update();">조명 ON
 								</button>
 								<div class="dropdown">
@@ -184,7 +187,7 @@
 						<font class="drcnt" style="float:left">제작 문구</font>
 						<div style="float:right;width:85%">
 							<span id="btext" style="font-weight:bold;">문구</span>
-							<input class="button button1" type="button" value="복사하기" onclick="copyIt('btext')">
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('문구를','btext')">
 						</div>
 					</td>
 				</tr>
@@ -193,15 +196,15 @@
 						<font class="drcnt" style="float:left">제작 옵션</font>
 						<div style="float:right;width:85%">
 							<span id="boption" style="font-weight:bold;">색/서체/크기</span>
-							<input class="button button1" type="button" value="복사하기" onclick="copyIt('boption')">
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('옵션을','boption')">
 						</div>
 					</td>
 				</tr>
 				<tr height="60px">
 					<td>
-						<font class="drcnt" style="font-weight:bold;font-size:25px;">수량 </font><font class="drcnt">( 견적금액 )</font>
+						<font class="drcnt" style="font-weight:bold;font-size:25px;">수량</font><font class="drcnt"> ( 견적금액 )</font>
 						<div style="float:right;">
-							<input class="button button1" type="button" value="복사하기" onclick="copyIt('bcount')">
+							<input class="button button1" type="button" value="복사하기" onclick="copyIt('수량을','bcount')">
 							<font style="font-weight:bold;font-size:25px;"><span id="bcount">0</span></font>
 							<font class="drcnt" style="font-weight:bold;"> 개 </font>
 							<font> ( <span id="btotal">0</span> 원 )</font>

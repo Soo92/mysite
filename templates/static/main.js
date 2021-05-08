@@ -90,7 +90,7 @@ function showTextFile() {
   }
 }
 
-function copyIt(bID) {
+function copyIt(title,bID) {
   copied=document.getElementById(bID);
   copyText=document.getElementById(bID).innerText.trim();
   if (window.clipboardData) {
@@ -103,7 +103,7 @@ function copyIt(bID) {
     document.execCommand("copy");
     tmp.remove();
   }
-  toast("복사됨!")
+  toast(title+" 복사했습니다! > " + copyText)
 }
 
 function paste_value(e){
