@@ -10,9 +10,10 @@
 		<script src="static/main.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
-	<body topmargin="0" leftmargin="0" onload="preview_init();change_font('A',kor);preview_update();">
+	<body topmargin="0" leftmargin="0" onload="preview_init();change_font('A',kor);">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
 		<div id="pre_text" class="preload_box"></div>
+		<div id="pre_text2" class="preload_box"></div>
 		<div id="pre_img" class="preload_box"></div>
 		<table border="0" align="center">
 			<tbody>
@@ -52,11 +53,9 @@
 								</div>
 							</div>
 							<div id="preview_text" class="preview_3d_text" contenteditable="true" spellcheck="true"
-								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_update()" onkeyup="preview_update()" onpaste="paste_value()"
+								onblur="first_enter();preview_update();" onfocus="first_enter();preview_update();" onkeydown="preview_check(this,event,'aa')" onkeypress="preview_check(this,event,'dddd')" onkeyup="preview_update();preview_check(this,event,'ddedd')" onpaste="paste_value()"
 								style="font-family:a;font-size:100px;text-align:center;
-								position:absolute;transform:translate(-50%, -50%);z-index:50;left:50%;top:50%;">
-								여기에<br>써보세요
-							</div>
+								position:absolute;transform:translate(-50%, -50%);z-index:50;left:50%;top:50%;">여기에<br>써보세요</div>
 						</div>
 					</td>
 				</tr>
@@ -94,7 +93,7 @@
 								<a data-value="A07" style="font-family:A07"  onclick="select_itm(pro_font,this);preview_update()">친절한금자씨</a>
 								<a data-value="A08" style="font-family:A08"  onclick="select_itm(pro_font,this);preview_update()">시라노;연애조작단</a>
 								<a data-value="A09" style="font-family:A09"  onclick="select_itm(pro_font,this);preview_update()">웰컴투동막골</a>
-								<a data-value="A10" style="font-family:A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의 전쟁</a>
+								<a data-value="A10" style="font-family:A10"  onclick="select_itm(pro_font,this);preview_update()">범죄와의전쟁</a>
 								<a data-value="B01" style="font-family:B01"  onclick="select_itm(pro_font,this);preview_update()">Roman Holiday</a>
 								<a data-value="B02" style="font-family:B02"  onclick="select_itm(pro_font,this);preview_update()">Tom and Jerry</a>
 								<a data-value="B03" style="font-family:B03"  onclick="select_itm(pro_font,this);preview_update()">Fight Clup</a>
@@ -109,16 +108,16 @@
 						</div>
 						<div class="dropdown">
 						  <button class="dropbtn">
-								<span id="pro_size" data-value="40" data-select="8cm">글자 높이</span><i class="arrow down"></i>
+								<span id="pro_size" data-value="8" data-select="8cm">글자 높이</span><i class="arrow down"></i>
 							</button>
 						  <div class="dropdown-content">
-								<a data-value="20" onclick="select_itm(pro_size,this);preview_update()">4cm</a>
-								<a data-value="25" onclick="select_itm(pro_size,this);preview_update()">5cm</a>
-								<a data-value="30" onclick="select_itm(pro_size,this);preview_update()">6cm</a>
-								<a data-value="40" onclick="select_itm(pro_size,this);preview_update()">8cm</a>
-								<a data-value="50" onclick="select_itm(pro_size,this);preview_update()">10cm</a>
-								<a data-value="75" onclick="select_itm(pro_size,this);preview_update()">15cm</a>
-								<a data-value="100" onclick="select_itm(pro_size,this);preview_update()">20cm</a>
+								<a data-value="4" onclick="select_itm(pro_size,this);font_resize();preview_update();">4cm</a>
+								<a data-value="5" onclick="select_itm(pro_size,this);font_resize();preview_update();">5cm</a>
+								<a data-value="6" onclick="select_itm(pro_size,this);font_resize();preview_update();">6cm</a>
+								<a data-value="8" onclick="select_itm(pro_size,this);font_resize();preview_update();">8cm</a>
+								<a data-value="10" onclick="select_itm(pro_size,this);font_resize();preview_update();">10cm</a>
+								<a data-value="15" onclick="select_itm(pro_size,this);font_resize();preview_update();">15cm</a>
+								<a data-value="20" onclick="select_itm(pro_size,this);font_resize();preview_update();">20cm</a>
 							</div>
 						</div>
 						<div class="dropdown for b c">
