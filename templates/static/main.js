@@ -28,47 +28,40 @@ document.fonts.ready.then(function () {
   preview_init();
   preview_update();
   toast("문구를 써보고\n제품을 미리 확인해보세요!")
+
+  $('div[contenteditable]').keyup(function(e) {
+    x_pos=window.getSelection().getRangeAt(0).startOffset;
+    last_pos=window.getSelection().getRangeAt(0).endContainer.length;
+//    console.log(e.type,x_pos,last_pos);
+  })
+  $('div[contenteditable]').keydown(function(e) {
+//    console.log(e.keyCode)
+      // trap the return key being pressed
+      console.log("ddd")
+      x_pos=window.getSelection().getRangeAt(0).startOffset;
+      last_pos=window.getSelection().getRangeAt(0).endContainer.length;
+      if(x_pos==last_pos) {
+        console.log("ddd")
+      }
+//      console.log(e.type,x_pos,last_pos);
+//      console.log("aa"+e.type, window.getSelection().getRangeAt(0).endOffset);
+//      console.log("bb"+$(e.target).offset().top);
+//      console.log("bb"+$(e.target).offset().left);
+//      console.log("bb"+this.innerText);
+
+//      console.log("bb"+$(this).data('mousepos'));
+//      console.log("bb"+(this.selectionStart));
+//      console.log((e.keyCode===13))
+//      console.log((last_pos==undefined || x_pos!=last_pos))
+//      console.log(e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos))
+      if (e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos)) {
+          // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
+          document.execCommand('insertHTML', false, '<br/>');
+          // prevent the default behaviour of return key pressed
+          return false;
+      }
+  });
 });
-
-function createRange(node, chars, range) {
-    if (!range) {
-        range = document.createRange()
-        range.selectNode(node);
-        range.setStart(node, 0);
-    }
-    if (chars.count === 0) {
-        range.setEnd(node, chars.count);
-    } else if (node && chars.count >0) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            if (node.textContent.length < chars.count) {
-                chars.count -= node.textContent.length;
-            } else {
-                 range.setEnd(node, chars.count);
-                 chars.count = 0;
-            }
-        } else {
-            for (lp = 0; lp < node.childNodes.length; lp++) {
-                range = createRange(node.childNodes[lp], chars, range);
-                if (chars.count === 0) {
-                   break;
-                }
-            }
-        }
-   }
-   return range;
-}
-
-function setCurrentCursorPosition(chars) {
-    if (chars >= 0) {
-        selection = window.getSelection();
-        range = createRange(document.getElementById("preview_text").parentNode, { count: chars });
-        if (range) {
-            range.collapse(false);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-    }
-}
 
 function toast(string) {
     const toast = document.getElementById("toast");
@@ -242,21 +235,48 @@ function change_font(wh,e) {
   }
 }
 
+function align_change(){
+  aaadfb = document.getElementById('pro_aaa').value;
+  tmp=document.getElementById('preview_text')
+  $(tmp).css("white-space",aaadfb)
+  console.log("--------------------"+aaadfb);
+  console.log(tmp.innerText.split("\n"));
+  console.log(tmp.innerText);
+  console.log(tmp.innerText);
+  console.log(tmp.innerHTML);
+  console.log($(tmp).html());
+  console.log($(tmp).text());
+}
+function align2_change(){
+  aaadfb = document.getElementById('pro_bbb').value;
+  tmp=document.getElementById('preview_text')
+  $(tmp).css("word-wrap",aaadfb)
+  console.log("--------------------"+aaadfb);
+  console.log(tmp.innerText);
+  for (var i = 0; i < tmp.innerText.length; i++) {
+    console.log(tmp.innerText.charAt(i));
+  }
+  console.log(tmp.innerHTML);
+  console.log($(tmp).html());
+  console.log($(tmp).text());
+}
+
 function font_resize(){
   sel_size = $("#pro_size");
   f_s = sel_size.data("value")
   f_h = f_s*5
   $("#pre_text").children("p").each(function () {
+    $(this).css('font-size',f_h+"px");
     $(this).text($('#preview_text').text());
 
-    aa=parseInt($(this).css('font-size'));  bb=$(this).height();
+    bb=$(this).height();
     tmp_scale=f_h/bb;
 
     $(this).data("scale",tmp_scale)
-    $(this).css('font-size',aa*tmp_scale+"px");
+    $(this).css('font-size',f_h*tmp_scale+"px");
 
     sub=$("#sub"+$(this).attr('id'));
-    sub.css('font-size',aa*tmp_scale+"px");
+    sub.css('font-size',f_h*tmp_scale+"px");
   });
 }
 
@@ -264,6 +284,7 @@ function preview_init(){
   f_wh='A'; f_scale=1;
 
   pro_w = document.getElementById('pro_wh').value;
+document.getElementById('pro_aaa')
   pro_list=$('.for')
   pro_list.each(function () {
     if ($(this).attr('class').indexOf("hidden")<0) {
@@ -360,9 +381,6 @@ function preview_check(a,event,aa){
   }
 //  (f_h*f_scale*back_scale)
 
-  max_w = maxWH[pro_w][0]*back_scale/2
-  max_h = maxWH[pro_w][1]*back_scale/2
-
 //  console.log(back_scale+"/"+max_w)
 
   if (a.clientHeight>max_h) {
@@ -387,28 +405,17 @@ function preview_update(){
   pre_width=document.getElementById("pro_back").width
   pre_height=document.getElementById("pro_back").height
   sel_text_list = document.getElementById("preview_list")
-  sel_text = document.getElementById("preview_text").innerText
-  sel_HTML = document.getElementById("preview_text").innerHTML
+  sel_text = tmp.innerText
+  sel_HTML = tmp.innerHTML
   if (sel_text.length>20) {
     toast("20자씩 나눠서 입력해주세요!")
     sel_text=sel_text.slice(0,20)
     document.getElementById("preview_text").innerText=sel_text
     console.log(setCurrentCursorPosition())
-    setCurrentCursorPosition(20)
   }
   if (sel_text.indexOf("؊")>-1) {
     toast("사용할 수 없는 문자입니다!")
     sel_text=sel_text.replace("؊","")
-    document.getElementById("preview_text").innerText=sel_text
-  }
-  if (sel_text.search(/\n{3}/)>-1) {
-    toast("줄바꿈은 한번만 가능합니다!")
-    sel_text=sel_text.replace(/\n{3}/, "\n\n");
-    document.getElementById("preview_text").innerText=sel_text
-  }
-  if (sel_text.search(/\n{2}/)==0) {
-    toast("줄바꿈은 한번만 가능합니다!")
-    sel_text=sel_text.replace(/\n{2}/, "\n");
     document.getElementById("preview_text").innerText=sel_text
   }
 
@@ -441,7 +448,7 @@ function preview_update(){
   } else {    back_scale=1  }
 
   f_scale=$("#font"+f_w).data("scale")
-  console.log(f_scale)
+//   console.log(f_scale)
 
   font_size=(f_h*f_scale*back_scale)
 
@@ -577,9 +584,12 @@ function preview_update(){
         f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
         f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
     }
-    pre_style=pre_style+"width:fit-content;height:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;"
+    max_w = maxWH[pro_w][0]*back_scale/2
+    max_h = maxWH[pro_w][1]*back_scale/2
+    pre_style=pre_style+"width:fit-content;height:fit-content;max-width:"+max_w+"px;min-width:"+f_h+"px;max_height:"+max_h+"px;min-height:"+f_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
-      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;word-wrap:break-word;position:absolute;"
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;word-wrap:break-word;"
+//word-wrap:break-word;
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
