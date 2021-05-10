@@ -30,36 +30,58 @@ document.fonts.ready.then(function () {
   toast("문구를 써보고\n제품을 미리 확인해보세요!")
 
   $('div[contenteditable]').keyup(function(e) {
+    x_size=window.getSelection().rangeLength;
     x_pos=window.getSelection().getRangeAt(0).startOffset;
-    last_pos=window.getSelection().getRangeAt(0).endContainer.length;
-//    console.log(e.type,x_pos,last_pos);
+    last_pos=window.getSelection().getRangeAt(0).endOffset;
+    console.log(e.type,x_size,x_pos,last_pos);
+    preview_update();
   })
   $('div[contenteditable]').keydown(function(e) {
 //    console.log(e.keyCode)
       // trap the return key being pressed
-      console.log("ddd")
       x_pos=window.getSelection().getRangeAt(0).startOffset;
+      end_pos=window.getSelection().getRangeAt(0).endOffset;
       last_pos=window.getSelection().getRangeAt(0).endContainer.length;
-      if(x_pos==last_pos) {
-        console.log("ddd")
-      }
-//      console.log(e.type,x_pos,last_pos);
-//      console.log("aa"+e.type, window.getSelection().getRangeAt(0).endOffset);
-//      console.log("bb"+$(e.target).offset().top);
-//      console.log("bb"+$(e.target).offset().left);
-//      console.log("bb"+this.innerText);
+      last_pos1=window.getSelection().getRangeAt(0).startContainer.length;
+      y_height=this.clientHeight;
+      y_width=this.clientWidth;
+      y_left=this.clientLeft;
+      y_top=this.clientTop;
 
-//      console.log("bb"+$(this).data('mousepos'));
-//      console.log("bb"+(this.selectionStart));
-//      console.log((e.keyCode===13))
-//      console.log((last_pos==undefined || x_pos!=last_pos))
-//      console.log(e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos))
+      console.log(y_height,y_width,y_left,y_top)
+      console.log(x_pos,end_pos,last_pos,last_pos1)
+
+      console.log(window.getSelection().getRangeAt(0).startContainer)
+      var range = document.createRange();
+      range.setStart(this,0);
+      range.setEnd(this,0);
+//      console.log(range);
+//      console.log(range.getRangeAt(0).startContainer);
+//      console.log(range.getRangeAt(0).endContainer);
+
+      //      console.log(this)
+      console.log(this.innerText)
+      console.log(this.innerHTML)
+      console.log($(this).text())
+      console.log($(this).html())
+
+      if (this.innerText.indexOf("؊")>-1) {
+        toast("사용할 수 없는 문자입니다!")
+        sel_text=sel_text.replace("؊","")
+        document.getElementById("preview_text").innerText=sel_text
+      }
+      if (this.innerText.length>20) {
+        toast("20자씩 나눠서 입력해주세요!")
+        sel_text=sel_text.slice(0,20)
+        document.getElementById("preview_text").innerText=sel_text
+      }
       if (e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos)) {
           // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
           document.execCommand('insertHTML', false, '<br/>');
           // prevent the default behaviour of return key pressed
           return false;
       }
+      preview_update();
   });
 });
 
@@ -359,39 +381,16 @@ document.getElementById('pro_aaa')
   }
 }
 
-function preview_check(a,event,aa){
-//  event.preventDefault();
-  prevK=event.which || event.keyCode;
-
-//  console.log(aa);
-//  console.log(prevK)
-//  console.log($(a).text())
-//  console.log(a.innerText)
-//  console.log($(a).html())
-//  console.log(a.innerHTML)
-//  console.log($(a).height()+"/"+$(a).width())
-
-  sel_font = $("#pro_font");
-  f_w = sel_font.data("value")
-  tmp=document.getElementById("font2"+f_w);
-//  console.log("font"+f_w)
-//  console.log(tmp.innerText)
-  if(a.innerText!="") {
-//    tmp.innerText=a.innerText;
-  }
-//  (f_h*f_scale*back_scale)
-
-//  console.log(back_scale+"/"+max_w)
-
-  if (a.clientHeight>max_h) {
-//    console.log(a.innerText.split("\n").length)
-  }
-  if (a.clientWidth>max_w) {
-//    console.log("d"+a.innerText.split("\n").length)
-  }
-};
-
 function preview_update(){
+  if ( self !== top ) {
+    console.log("iframe");
+    alert(window.location.href);
+//    console.log(opener.document.getElementById("#tete"));
+//    console.log($(window.location).find("#tete").text());
+  } else {
+    console.log("nono")
+  }
+
   tmp=document.getElementById("preview_text")
   if (tmp.spellcheck) {
     if(f_wh=="A") {
@@ -407,17 +406,6 @@ function preview_update(){
   sel_text_list = document.getElementById("preview_list")
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
-  if (sel_text.length>20) {
-    toast("20자씩 나눠서 입력해주세요!")
-    sel_text=sel_text.slice(0,20)
-    document.getElementById("preview_text").innerText=sel_text
-    console.log(setCurrentCursorPosition())
-  }
-  if (sel_text.indexOf("؊")>-1) {
-    toast("사용할 수 없는 문자입니다!")
-    sel_text=sel_text.replace("؊","")
-    document.getElementById("preview_text").innerText=sel_text
-  }
 
   sel_clr = $("#pro_color");
   sel_font = $("#pro_font");
@@ -586,10 +574,10 @@ function preview_update(){
     }
     max_w = maxWH[pro_w][0]*back_scale/2
     max_h = maxWH[pro_w][1]*back_scale/2
-    pre_style=pre_style+"width:fit-content;height:fit-content;max-width:"+max_w+"px;min-width:"+f_h+"px;max_height:"+max_h+"px;min-height:"+f_h+"px;"
+    pre_style=pre_style+"width:fit-content;height:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
-      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;word-wrap:break-word;"
-//word-wrap:break-word;
+      +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;"
+      +"word-wrap:break-word;max_height:"+max_h+"px;max-width:"+max_w+"px;"
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
@@ -656,7 +644,6 @@ function preview_update(){
     t_clr_slt=t_clr
   }
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
-/*.replace(/(^\s*)|(\s*$)/gi, "؉").replace(/(\s*)/g, "")*/
   document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
