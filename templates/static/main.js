@@ -24,57 +24,100 @@ maxWH["a"]=[900,800]
 maxWH["b"]=[550,550]
 maxWH["C"]=[900,600]
 
+window.addEventListener('load', function() {
+  if ( self !== top ) {
+//    console.log("iframe");
+//    console.log(parent);
+  //    alert(window.location.href);
+  } else {
+//    console.log("nono")
+  }
+})
+
+function setCaretToEnd(target) {
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.selectNodeContents(target);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  target.focus();
+  range.detach(); // optimization
+
+  // set scroll to the end if multiline
+  target.scrollTop = target.scrollHeight;
+}
+
+function cut_line(){
+  tmp=document.getElementById("preview_text");
+  y_height=tmp.clientHeight;
+  y_width=tmp.clientWidth;
+  y_left=tmp.clientLeft;
+  y_top=tmp.clientTop;
+
+  document.getElementById('pre_text3').innerText=(tmp.innerText);
+  document.getElementById('pre_text4').innerText=(tmp.innerHTML);
+  document.getElementById('pre_text5').innerText=($(tmp).html());
+  document.getElementById('pre_text6').innerText=($(tmp).text());
+
+  if (window.getSelection) {
+    sel = window.getSelection();
+    if (sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      target_text=range.endContainer.nodeValue
+      x_pos=range.startOffset;
+      end_pos=range.endOffset;
+      last_pos=range.endContainer.length;
+      document.getElementById('pre_text2').innerText=target_text;
+      console.log(x_pos,end_pos,last_pos)
+//      range.deleteContents();
+//      range.insertNode(document.createElement("br"));
+    } else if (document.selection && document.selection.createRange) {
+      replacementText='\n'
+//      range = document.selection.createRange();
+//      range.text = replacementText
+    }
+  }
+}
+
 document.fonts.ready.then(function () {
   preview_init();
   preview_update();
   toast("문구를 써보고\n제품을 미리 확인해보세요!")
 
-  $('div[contenteditable]').keyup(function(e) {
+  $('#preview_text').keyup(function(e) {
     x_size=window.getSelection().rangeLength;
     x_pos=window.getSelection().getRangeAt(0).startOffset;
     last_pos=window.getSelection().getRangeAt(0).endOffset;
-    console.log(e.type,x_size,x_pos,last_pos);
-    preview_update();
+  //    console.log(e.type,x_size,x_pos,last_pos);
+    sel_text=document.getElementById("preview_text").innerText
+
+//    if (cut_line()) {    }
+    if (this.innerText.indexOf("؊")>-1) {
+      toast("사용할 수 없는 문자입니다!")
+      sel_text=sel_text.replace("؊","")
+      document.getElementById("preview_text").innerText=sel_text
+    }
+    if (this.innerText.length>20) {
+      toast("20자씩 나눠서 입력해주세요!")
+      sel_text=sel_text.slice(1,21)
+      document.getElementById("preview_text").innerText=sel_text
+      setCaretToEnd(this)
+    }
+
+      preview_update();
   })
-  $('div[contenteditable]').keydown(function(e) {
+  $('#preview_text').keydown(function(e) {
 //    console.log(e.keyCode)
-      // trap the return key being pressed
       x_pos=window.getSelection().getRangeAt(0).startOffset;
-      end_pos=window.getSelection().getRangeAt(0).endOffset;
       last_pos=window.getSelection().getRangeAt(0).endContainer.length;
+      end_pos=window.getSelection().getRangeAt(0).endOffset;
       last_pos1=window.getSelection().getRangeAt(0).startContainer.length;
       y_height=this.clientHeight;
       y_width=this.clientWidth;
       y_left=this.clientLeft;
       y_top=this.clientTop;
 
-      console.log(y_height,y_width,y_left,y_top)
-      console.log(x_pos,end_pos,last_pos,last_pos1)
-
-      console.log(window.getSelection().getRangeAt(0).startContainer)
-      var range = document.createRange();
-      range.setStart(this,0);
-      range.setEnd(this,0);
-//      console.log(range);
-//      console.log(range.getRangeAt(0).startContainer);
-//      console.log(range.getRangeAt(0).endContainer);
-
-      //      console.log(this)
-      console.log(this.innerText)
-      console.log(this.innerHTML)
-      console.log($(this).text())
-      console.log($(this).html())
-
-      if (this.innerText.indexOf("؊")>-1) {
-        toast("사용할 수 없는 문자입니다!")
-        sel_text=sel_text.replace("؊","")
-        document.getElementById("preview_text").innerText=sel_text
-      }
-      if (this.innerText.length>20) {
-        toast("20자씩 나눠서 입력해주세요!")
-        sel_text=sel_text.slice(0,20)
-        document.getElementById("preview_text").innerText=sel_text
-      }
       if (e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos)) {
           // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
           document.execCommand('insertHTML', false, '<br/>');
@@ -127,7 +170,7 @@ function copyIt(title,bID) {
 }
 
 function paste_value(e){
-  document.execCommand('insertHTML', false, event.clipboardData.getData('Text'));
+  document.execCommand('insertHTML', false, event.clipboardData.getData('Text').replace(/(\n|\r\n)/g, ''));
   event.preventDefault();
 }
 
@@ -264,7 +307,6 @@ function align_change(){
   console.log("--------------------"+aaadfb);
   console.log(tmp.innerText.split("\n"));
   console.log(tmp.innerText);
-  console.log(tmp.innerText);
   console.log(tmp.innerHTML);
   console.log($(tmp).html());
   console.log($(tmp).text());
@@ -363,7 +405,6 @@ document.getElementById('pro_aaa')
       aa.appendChild(aac);
     }
     pre1 = document.getElementById('pre_text');
-    pre2 = document.getElementById('pre_text2');
     for (const element of font_list.split("/")) {
       opt = document.createElement('p');
       opt.id = "font"+element;
@@ -371,26 +412,11 @@ document.getElementById('pro_aaa')
       opt.innerText = element+":ㄱ가간agfG";
       opt.setAttribute("data-scale",1);
       pre1.appendChild(opt);
-      opt = document.createElement('p');
-      opt.id = "subfont"+element;
-      opt.style = "font-family:"+element+";font-size:20px;height:auto;width:fit-content;margin:0;";
-      opt.innerText = element+":ㄱ가간agfG";
-      opt.setAttribute("data-scale",1);
-      pre2.appendChild(opt);
     }
   }
 }
 
 function preview_update(){
-  if ( self !== top ) {
-    console.log("iframe");
-    alert(window.location.href);
-//    console.log(opener.document.getElementById("#tete"));
-//    console.log($(window.location).find("#tete").text());
-  } else {
-    console.log("nono")
-  }
-
   tmp=document.getElementById("preview_text")
   if (tmp.spellcheck) {
     if(f_wh=="A") {
@@ -585,6 +611,10 @@ function preview_update(){
     }
     tmp.style=pre_style;
   }
+
+  pre_test = document.getElementById('pre_text2');
+  pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+//  +"word-wrap:break-word;max_height:"+max_h+"px;max-width:"+max_w+"px;"
 
 /*외부 수정 가능하게*/
   price_total = 0
