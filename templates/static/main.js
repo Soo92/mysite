@@ -34,48 +34,51 @@ window.addEventListener('load', function() {
   }
 })
 
-function setCaretToEnd(target) {
-  const range = document.createRange();
-  const sel = window.getSelection();
-  range.selectNodeContents(target);
-  range.collapse(false);
-  sel.removeAllRanges();
-  sel.addRange(range);
-  target.focus();
-  range.detach(); // optimization
-
-  // set scroll to the end if multiline
-  target.scrollTop = target.scrollHeight;
-}
-
 function cut_line(){
   tmp=document.getElementById("preview_text");
-  y_height=tmp.clientHeight;
-  y_width=tmp.clientWidth;
-  y_left=tmp.clientLeft;
-  y_top=tmp.clientTop;
-
-  document.getElementById('pre_text3').innerText=(tmp.innerText);
-  document.getElementById('pre_text4').innerText=(tmp.innerHTML);
-  document.getElementById('pre_text5').innerText=($(tmp).html());
-  document.getElementById('pre_text6').innerText=($(tmp).text());
-
-  if (window.getSelection) {
-    sel = window.getSelection();
-    if (sel.rangeCount) {
-      range = sel.getRangeAt(0);
-      target_text=range.endContainer.nodeValue
-      x_pos=range.startOffset;
-      end_pos=range.endOffset;
-      last_pos=range.endContainer.length;
-      document.getElementById('pre_text2').innerText=target_text;
-      console.log(x_pos,end_pos,last_pos)
-//      range.deleteContents();
-//      range.insertNode(document.createElement("br"));
-    } else if (document.selection && document.selection.createRange) {
-      replacementText='\n'
-//      range = document.selection.createRange();
-//      range.text = replacementText
+  sel_text=tmp.innerText
+  if (sel_text.indexOf("؊")>-1) {
+    toast("사용할 수 없는 문자입니다!")
+    sel_text=sel_text.replace("؊","")
+    tmp.innerText=sel_text
+  }
+  if (sel_text.length>20) {
+    toast("20자씩 나눠서 입력해주세요!")
+    sel_text=sel_text.slice(0,20)
+    tmp.innerText=sel_text
+  }
+  text_list=tmp.innerText.split('\n');
+  for (var y = text_list.length-1; y > -1; y--) {
+    pre_text=document.getElementById('pre_text2');
+    pre_text.innerText=text_list[y];
+    text_t=text_list[y];
+    pre_h=pre_text.clientHeight;
+    y_rec=[]
+    for (var i = text_t.length-1; i > 0; i--) {
+      pre_text.innerText=text_t.slice(0,i);
+      if (pre_text.clientHeight<pre_h) {
+        pre_h=pre_text.clientHeight;
+        y_rec.push(i);
+      }
+    }
+    if (y_rec.length>0) {
+      for (i=0; i<y_rec.length; i++) {
+        text_list[y]=insert(text_t, y_rec[i], '\n');
+      }
+      tmp.innerText=text_list.join('\n')
+    }
+  }
+  pre_text.innerText=tmp.innerText;
+  text_list=pre_text.innerText.split('\n');
+  pre_h=pre_text.clientHeight;
+  while (pre_h>max_h) {
+    text_list.splice(text_list.length-1, 1)
+    pre_text.innerText=text_list.join('\n')
+    pre_h=pre_text.clientHeight;
+    if (pre_h<=max_h) {
+      toast("자동 견적은 최대 "+max_h*2+"mm 까지 가능합니다!")
+      tmp.innerText=text_list.join('\n')
+      break;
     }
   }
 }
@@ -86,26 +89,18 @@ document.fonts.ready.then(function () {
   toast("문구를 써보고\n제품을 미리 확인해보세요!")
 
   $('#preview_text').keyup(function(e) {
-    x_size=window.getSelection().rangeLength;
-    x_pos=window.getSelection().getRangeAt(0).startOffset;
-    last_pos=window.getSelection().getRangeAt(0).endOffset;
-  //    console.log(e.type,x_size,x_pos,last_pos);
-    sel_text=document.getElementById("preview_text").innerText
+    sel=window.getSelection();
+    range=sel.getRangeAt(0);
+    x_size=sel.rangeLength;
+    x_pos=range.startOffset;
+    last_pos=range.endOffset;
 
-//    if (cut_line()) {    }
-    if (this.innerText.indexOf("؊")>-1) {
-      toast("사용할 수 없는 문자입니다!")
-      sel_text=sel_text.replace("؊","")
-      document.getElementById("preview_text").innerText=sel_text
-    }
-    if (this.innerText.length>20) {
-      toast("20자씩 나눠서 입력해주세요!")
-      sel_text=sel_text.slice(1,21)
-      document.getElementById("preview_text").innerText=sel_text
-      setCaretToEnd(this)
-    }
-
-      preview_update();
+    sel=window.getSelection();
+    range=sel.getRangeAt(0);
+    x_size=sel.rangeLength;
+    x_pos=range.startOffset;
+//      sel.setPosition(range.endContainer,19);
+    preview_update();
   })
   $('#preview_text').keydown(function(e) {
 //    console.log(e.keyCode)
@@ -118,6 +113,12 @@ document.fonts.ready.then(function () {
       y_left=this.clientLeft;
       y_top=this.clientTop;
 
+      // tmp=document.getElementById("preview_text");
+      // document.getElementById('pre_text3').innerText=(tmp.innerText);
+      // document.getElementById('pre_text4').innerText=(tmp.innerHTML);
+      // document.getElementById('pre_text5').innerText=($(tmp).html());
+      // document.getElementById('pre_text6').innerText=($(tmp).text());
+
       if (e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos)) {
           // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
           document.execCommand('insertHTML', false, '<br/>');
@@ -127,6 +128,10 @@ document.fonts.ready.then(function () {
       preview_update();
   });
 });
+
+function insert(str, index, value) {
+    return str.substring(0, index) + value + str.substring(index);
+}
 
 function toast(string) {
     const toast = document.getElementById("toast");
@@ -311,6 +316,7 @@ function align_change(){
   console.log($(tmp).html());
   console.log($(tmp).text());
 }
+
 function align2_change(){
   aaadfb = document.getElementById('pro_bbb').value;
   tmp=document.getElementById('preview_text')
@@ -462,9 +468,16 @@ function preview_update(){
   } else {    back_scale=1  }
 
   f_scale=$("#font"+f_w).data("scale")
-//   console.log(f_scale)
-
   font_size=(f_h*f_scale*back_scale)
+
+  max_w = maxWH[pro_w][0]*back_scale/2
+  max_h = maxWH[pro_w][1]*back_scale/2
+  pre_test = document.getElementById('pre_text2');
+  pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
+  cut_line();
+  sel_text = tmp.innerText
+  sel_HTML = tmp.innerHTML
 
   f_light = $("#pro_light").text().indexOf("OFF")>0
   f_main_LED = $("#pro_color_LED").data("value")
@@ -598,12 +611,10 @@ function preview_update(){
         f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
         f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
     }
-    max_w = maxWH[pro_w][0]*back_scale/2
-    max_h = maxWH[pro_w][1]*back_scale/2
     pre_style=pre_style+"width:fit-content;height:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;"
-      +"word-wrap:break-word;max_height:"+max_h+"px;max-width:"+max_w+"px;"
+      +"word-wrap:break-word;max-height:"+max_h+"px;max-width:"+max_w+"px;"
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
@@ -611,10 +622,6 @@ function preview_update(){
     }
     tmp.style=pre_style;
   }
-
-  pre_test = document.getElementById('pre_text2');
-  pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
-//  +"word-wrap:break-word;max_height:"+max_h+"px;max-width:"+max_w+"px;"
 
 /*외부 수정 가능하게*/
   price_total = 0
