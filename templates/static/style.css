@@ -20,6 +20,15 @@
 @font-face {  font-family:"B08";  src: url("fonts/B08.MONSTER HUNTER.eot"),      url("fonts/B08.MONSTER HUNTER.woff2") format("woff2"),      url("fonts/B08.MONSTER HUNTER.woff") format("woff"),      url("fonts/B08.MONSTER HUNTER.ttf") format("truetype");}
 @font-face {  font-family:"B09";  src: url("fonts/B09.MEMENTO.eot"),      url("fonts/B09.MEMENTO.woff2") format("woff2"),      url("fonts/B09.MEMENTO.woff") format("woff"),      url("fonts/B09.MEMENTO.ttf") format("truetype");}
 @font-face {  font-family:"B10";  src: url("fonts/B10.Hangover.eot"),      url("fonts/B10.Hangover.woff2") format("woff2"),      url("fonts/B10.Hangover.woff") format("woff"),      url("fonts/B10.Hangover.ttf") format("truetype");}
+@font-face {  font-family:"C01";  src: url("fonts/C01.さよならの夏.eot"),      url("fonts/C01.さよならの夏.woff2") format("woff2"),      url("fonts/C01.さよならの夏.woff") format("woff"),      url("fonts/C01.さよならの夏.ttf") format("truetype");}
+@font-face {  font-family:"C02";  src: url("fonts/C02.嫌われ松子の一生.eot"),      url("fonts/C02.嫌われ松子の一生.woff2") format("woff2"),      url("fonts/C02.嫌われ松子の一生.woff") format("woff"),      url("fonts/C02.嫌われ松子の一生.ttf") format("truetype");}
+@font-face {  font-family:"C03";  src: url("fonts/C03.ホタルノヒカリ.eot"),      url("fonts/C03.ホタルノヒカリ.woff2") format("woff2"),      url("fonts/C03.ホタルノヒカリ.woff") format("woff"),      url("fonts/C03.ホタルノヒカリ.ttf") format("truetype");}
+@font-face {  font-family:"C04";  src: url("fonts/C04.スウィングガールズ.eot"),      url("fonts/C04.スウィングガールズ.woff2") format("woff2"),      url("fonts/C04.スウィングガールズ.woff") format("woff"),      url("fonts/C04.スウィングガールズ.ttf") format("truetype");}
+@font-face {  font-family:"C05";  src: url("fonts/C05.のだめカンタービレ.eot"),      url("fonts/C05.のだめカンタービレ.woff2") format("woff2"),      url("fonts/C05.のだめカンタービレ.woff") format("woff"),      url("fonts/C05.のだめカンタービレ.ttf") format("truetype");}
+@font-face {  font-family:"C06";  src: url("fonts/C06.七人の侍.eot"),      url("fonts/C06.七人の侍.woff2") format("woff2"),      url("fonts/C06.七人の侍.woff") format("woff"),      url("fonts/C06.七人の侍.ttf") format("truetype");}
+@font-face {  font-family:"C07";  src: url("fonts/C07.ドラゴン桜 .eot"),      url("fonts/C07.ドラゴン桜 .woff2") format("woff2"),      url("fonts/C07.ドラゴン桜 .woff") format("woff"),      url("fonts/C07.ドラゴン桜 .ttf") format("truetype");}
+@font-face {  font-family:"D01";  src: url("fonts/D01.少林足球.eot"),      url("fonts/D01.少林足球.woff2") format("woff2"),      url("fonts/D01.少林足球.woff") format("woff"),      url("fonts/D01.少林足球.ttf") format("truetype");}
+@font-face {  font-family:"D02";  src: url("fonts/D02.千王之王.eot"),      url("fonts/D02.千王之王.woff2") format("woff2"),      url("fonts/D02.千王之王.woff") format("woff"),      url("fonts/D02.千王之王.ttf") format("truetype");}
 
 body {
   font-family:'A08';

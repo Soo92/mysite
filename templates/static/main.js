@@ -1,6 +1,6 @@
 let removeToast;
-back_optin_list="회벽, 마루.jpg/청색 대리석.jpg/갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰벽지,마루.jpg/흰색 나무결(2).jpg/흰색 나무결.jpg"
-font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10"
+back_optin_list="갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색 대리석.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결 (2).jpg/흰색 나무결.jpg"
+font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02"
 
 price_KE ={}
 price_KE["4cm"]=1200
@@ -156,6 +156,7 @@ function showTextFile() {
   for(const file of selectedFiles) {
     tmp=tmp+"/"+file.webkitRelativePath.split("/")[1]
   }
+  console.log(tmp)
 }
 
 function copyIt(title,bID) {
@@ -429,6 +430,10 @@ function preview_update(){
       tmp.innerHTML="여기에<br>써보세요"
     } else if (f_wh=="B") {
       tmp.innerHTML="WRITE<br>HERE"
+    } else if (f_wh=="C") {
+      tmp.innerHTML="ここで<br>書いてみましょう"
+    } else if (f_wh=="D") {
+      tmp.innerHTML="这里<br>尝试一下"
     }
     font_resize();
   }
