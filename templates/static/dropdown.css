@@ -1,3 +1,10 @@
+#pro_back{
+  background-position-y:center;
+  text-align:end;
+  margin:0 auto;
+  transition-duration:0.8s;
+}
+
 .arrow {
   border: solid gray;
   border-width: 0 5px 5px 0;
@@ -80,13 +87,23 @@
   position: relative;
   display: inline-block;
 }
+
+.a_left{  background-image:url('background/align_left.png');}
+.a_left:hover, .a_left:focus, .a_left.clicked{  background-image:url('background/align_left_on.png');}
+.a_center{  background-image:url('background/align_center.png');}
+.a_ceneter:hover, .a_ceneter:focus, .a_center.clicked{  background-image:url('background/align_center_on.png');}
+.a_right{  background-image:url('background/align_right.png');}
+.a_right:hover, .a_right:focus, .a_right.clicked{  background-image:url('background/align_right_on.png');}
+
 .dropalign{
+  display: inline-block;
+  height: 30px;
+  width: 30px;
   border: solid 5px white;
   background-size:contain;
   background-repeat:no-repeat;
   color:rgb(0,0,0,0);
-  font-size:30px;
-  margin:5px;
+  font-size:1px;
 }
 .dropbtn:hover .arrow, .dropbtn:focus .arrow {
   border-color: #008CBA;

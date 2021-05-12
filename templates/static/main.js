@@ -37,15 +37,25 @@ window.addEventListener('load', function() {
 function cut_line(){
   tmp=document.getElementById("preview_text");
   sel_text=tmp.innerText
+
+
   if (sel_text.indexOf("؊")>-1) {
     toast("사용할 수 없는 문자입니다!")
     sel_text=sel_text.replace("؊","")
     tmp.innerText=sel_text
   }
   if (sel_text.length>20) {
+    sel = window.getSelection()
+    cur_node=sel.focusNode;
+    cur_pos=sel.focusOffset;
+    // console.log("aaa",cur_node,cur_pos)
+
     toast("20자씩 나눠서 입력해주세요!")
     sel_text=sel_text.slice(0,20)
     tmp.innerText=sel_text
+
+    // console.log("nn",cur_node,cur_pos)
+//     sel_sel(cur_node,cur_pos-1)
   }
   text_list=tmp.innerText.split('\n');
   for (var y = text_list.length-1; y > -1; y--) {
@@ -65,7 +75,15 @@ function cut_line(){
       for (i=0; i<y_rec.length; i++) {
         text_list[y]=insert(text_t, y_rec[i], '\n');
       }
+      // console.log("before")
+      check_sel();
+
       tmp.innerText=text_list.join('\n')
+
+      // console.log("after")
+//      sel_last();
+//      sel_sel();
+      check_sel();
     }
   }
   pre_text.innerText=tmp.innerText;
@@ -76,11 +94,74 @@ function cut_line(){
     pre_text.innerText=text_list.join('\n')
     pre_h=pre_text.clientHeight;
     if (pre_h<=max_h) {
-      toast("자동 견적은 최대 "+max_h*2+"mm 까지 가능합니다!")
+      toast("자동 견적은 한번에 "+max_h*2/10+"cm 까지 가능합니다!")
       tmp.innerText=text_list.join('\n')
       break;
     }
   }
+}
+
+function sel_last(){
+contentEditableElement=document.getElementById("preview_text");
+var range,selection;
+if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+{
+  range = document.createRange();//Create a range (a range is a like the selection but invisible)
+  range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+  range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+  selection = window.getSelection();//get the selection object (allows you to change selection)
+  selection.removeAllRanges();//remove any selections already made
+  selection.addRange(range);//make the range you have just created the visible selection
+}
+else if(document.selection)//IE 8 and lower
+{
+  range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+  range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+  range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+  range.select();//Select the range (make it the visible selection
+}
+}
+
+function sel_sel(nod,x){
+  var sel = window.getSelection()
+  var rng = sel.getRangeAt(0)
+
+  // console.log(nod,x)
+  // console.log(rng,sel)
+  sel.collapse(nod,x)
+  sel = window.getSelection()
+  // range.collapse(true)
+  // rng = sel.getRangeAt(0)
+  // console.log(nod,x)
+  // console.log(rng,sel)
+  // rng.setStart(nod, x)
+  // rng.collapse(true)
+  //
+  // sel.removeAllRanges()
+  // sel.addRange(rng)
+}
+
+function check_sel(){
+  // sel=window.getSelection();
+  // range=sel.getRangeAt(0);
+  //
+  // x_size=sel.rangeLength;
+  // x_pos=range.startOffset;
+  // end_pos=range.endOffset;
+  // conten_s=range.startContainer;
+  // conten_l=range.endContainer;
+  // last_pos=range.endContainer.length;
+  // last_pos1=range.startContainer.length;
+  //
+  // cur_node=sel.focusNode;
+  // cur_pos=sel.focusOffset;
+
+  // console.log(x_pos,end_pos,conten_s,conten_l,last_pos,last_pos1)
+  // tmp=document.getElementById("preview_text");
+  // document.getElementById('pre_text3').innerText=(tmp.innerText);
+  // document.getElementById('pre_text4').innerText=(tmp.innerHTML);
+  // document.getElementById('pre_text5').innerText=($(tmp).html());
+  // document.getElementById('pre_text6').innerText=($(tmp).text());
 }
 
 document.fonts.ready.then(function () {
@@ -89,36 +170,19 @@ document.fonts.ready.then(function () {
   toast("문구를 써보고\n제품을 미리 확인해보세요!")
 
   $('#preview_text').keyup(function(e) {
-    sel=window.getSelection();
-    range=sel.getRangeAt(0);
-    x_size=sel.rangeLength;
-    x_pos=range.startOffset;
-    last_pos=range.endOffset;
 
-    sel=window.getSelection();
-    range=sel.getRangeAt(0);
-    x_size=sel.rangeLength;
-    x_pos=range.startOffset;
+    // check_sel
 //      sel.setPosition(range.endContainer,19);
+    check_sel();
     preview_update();
   })
   $('#preview_text').keydown(function(e) {
 //    console.log(e.keyCode)
-      x_pos=window.getSelection().getRangeAt(0).startOffset;
-      last_pos=window.getSelection().getRangeAt(0).endContainer.length;
-      end_pos=window.getSelection().getRangeAt(0).endOffset;
-      last_pos1=window.getSelection().getRangeAt(0).startContainer.length;
-      y_height=this.clientHeight;
-      y_width=this.clientWidth;
-      y_left=this.clientLeft;
-      y_top=this.clientTop;
 
-      // tmp=document.getElementById("preview_text");
-      // document.getElementById('pre_text3').innerText=(tmp.innerText);
-      // document.getElementById('pre_text4').innerText=(tmp.innerHTML);
-      // document.getElementById('pre_text5').innerText=($(tmp).html());
-      // document.getElementById('pre_text6').innerText=($(tmp).text());
-
+      sel=window.getSelection();
+      range=sel.getRangeAt(0);
+      x_pos=range.startOffset;
+      last_pos=range.endContainer.length;
       if (e.keyCode === 13 && (last_pos==undefined || x_pos!=last_pos)) {
           // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
           document.execCommand('insertHTML', false, '<br/>');
@@ -297,11 +361,9 @@ function change_font(wh,e) {
   if(trg.length>0) {
     if (!trg.hasClass('clicked')) {
       select_itm('#pro_font',trg.first());
-      console.log("dd")
     } else {
       trg=tmp.siblings("a.clicked:visible");
       select_itm('#pro_font',trg.first());
-      console.log("ddee")
     }
   }
 }
@@ -388,7 +450,6 @@ document.getElementById('pro_aaa')
     $(this).parent().height(m_h);
     $(this).parent().width(m_w);
   });
-
 
   aa = document.getElementById('back_dr');
   if($(aa).children().length==0) {
@@ -527,10 +588,10 @@ function preview_update(){
 
   if(f_light) {
     pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;"
   } else {
     pre_back="background:url('static/background/"+f_b+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;background-position-y:center;text-align:end;margin:0 auto;transition-duration:2s;"
+      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;"
     f_main_LED="ffffff"
   }
   document.getElementById("pro_back").style=pre_back
