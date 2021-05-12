@@ -1,5 +1,5 @@
 let removeToast;
-back_optin_list="검은색 목재.jpg/청색 대리석.jpg/갈색톤.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결 (2).jpg/흰색 나무결.jpg";
+back_optin_list="검은색 목재.jpg/청색 대리석.jpg/갈색톤.jpg/밝은 나무.jpg/밝은 벽돌.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽,소나무.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결.jpg/흰색 나무결2.jpg";
 font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02";
 
 flag_font=false;
@@ -267,6 +267,7 @@ function select_itm(t,e) {
 }
 
 function select_clicked(t,e){
+  console.log(t,e)
   if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
      $(e).addClass("clicked")
    }
@@ -316,8 +317,8 @@ function change_font(wh,e) {
 
   w=tmp.parent().width();
   h=$("#font_dummy").height();
-  padding_l=8
-  padding_t=6
+  padding_l=10
+  padding_t=4
   tmp.css("padding-left",padding_l)
   tmp.css("padding-top",padding_t)
   tmp.width(w-padding_l)
@@ -436,7 +437,10 @@ function preview_init(){
       aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
       aa.appendChild(aac);
     }
-    pre1 = document.getElementById('pre_text');
+  }
+
+  pre1 = document.getElementById('pre_text');
+  if($(pre1).children().length==0){
     for (const element of font_list.split("/")) {
       opt = document.createElement('p');
       opt.id = "font"+element;
@@ -499,6 +503,10 @@ function preview_update(){
   } else if (f_s<15) {  back_scale=1.2
   } else {    back_scale=1  }
 
+  font_s = document.getElementById('pre_text');
+  if($(font_s).children().length==0) {
+    preview_init();
+  }
   f_scale=$("#font"+f_w).data("scale")
   font_size=(f_h*f_scale*back_scale)
 
