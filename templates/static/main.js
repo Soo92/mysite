@@ -541,7 +541,7 @@ function preview_update(){
   pre_test = document.getElementById('pre_text2');
   pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
-  cut_line();
+//  cut_line();
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
 
