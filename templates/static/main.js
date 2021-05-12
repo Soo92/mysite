@@ -320,7 +320,7 @@ function change_font(wh,e) {
   padding_t=6
   tmp.css("padding-left",padding_l)
   tmp.css("padding-top",padding_t)
-  tmp.width(w-padding)
+  tmp.width(w-padding_l)
   tmp.height(h-padding_u)
 
   trg=tmp.siblings("a:visible");
