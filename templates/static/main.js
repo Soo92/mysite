@@ -23,6 +23,7 @@ maxWH = {}
 maxWH["a"]=[900,800]
 maxWH["b"]=[550,550]
 maxWH["C"]=[900,600]
+max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
   if ( self !== top ) {
@@ -36,27 +37,6 @@ window.addEventListener('load', function() {
 
 function cut_line(){
   tmp=document.getElementById("preview_text");
-  sel_text=tmp.innerText
-
-
-  if (sel_text.indexOf("؊")>-1) {
-    toast("사용할 수 없는 문자입니다!")
-    sel_text=sel_text.replace("؊","")
-    tmp.innerText=sel_text
-  }
-  if (sel_text.length>20) {
-    sel = window.getSelection()
-    cur_node=sel.focusNode;
-    cur_pos=sel.focusOffset;
-    // console.log("aaa",cur_node,cur_pos)
-
-    toast("20자씩 나눠서 입력해주세요!")
-    sel_text=sel_text.slice(0,20)
-    tmp.innerText=sel_text
-
-    // console.log("nn",cur_node,cur_pos)
-//     sel_sel(cur_node,cur_pos-1)
-  }
   text_list=tmp.innerText.split('\n');
   for (var y = text_list.length-1; y > -1; y--) {
     pre_text=document.getElementById('pre_text2');
@@ -79,7 +59,7 @@ function cut_line(){
       check_sel();
 
       tmp.innerText=text_list.join('\n')
-
+      tmp.innerText=tmp.innerText.trim()
       // console.log("after")
 //      sel_last();
 //      sel_sel();
@@ -89,6 +69,8 @@ function cut_line(){
   pre_text.innerText=tmp.innerText;
   text_list=pre_text.innerText.split('\n');
   pre_h=pre_text.clientHeight;
+
+  // console.log(max_h)
   while (pre_h>max_h) {
     text_list.splice(text_list.length-1, 1)
     pre_text.innerText=text_list.join('\n')
@@ -96,6 +78,7 @@ function cut_line(){
     if (pre_h<=max_h) {
       toast("자동 견적은 한번에 "+max_h*2/10+"cm 까지 가능합니다!")
       tmp.innerText=text_list.join('\n')
+      tmp.innerText=tmp.innerText.trim()
       break;
     }
   }
@@ -435,7 +418,7 @@ document.getElementById('pro_aaa')
   f_list=$('.dropdown > .dropbtn > span')
   f_list.each(function () {
     init=$(this).text()
-    m_h=$(this).parent().height();
+    m_h=45;
     m_w=$(this).parent().width();
     tmp=$(this).parent().siblings('.dropdown-content').children('a');
     for (i = 0; i < tmp.length; i++) {
@@ -486,6 +469,20 @@ document.getElementById('pro_aaa')
 
 function preview_update(){
   tmp=document.getElementById("preview_text")
+  sel_text=tmp.innerText
+
+  if (sel_text.indexOf("؊")>-1) {
+    toast("사용할 수 없는 문자입니다!")
+    sel_text=sel_text.replace("؊","")
+    tmp.innerText=sel_text.trim()
+  }
+  if (sel_text.length>20) {
+    toast("20자씩 나눠서 입력해주세요!")
+    sel_text=sel_text.slice(0,20)
+    tmp.innerText=sel_text.trim()
+  }
+  tmp=document.getElementById("preview_text");
+
   if (tmp.spellcheck) {
     if(f_wh=="A") {
       tmp.innerHTML="여기에<br>써보세요"
