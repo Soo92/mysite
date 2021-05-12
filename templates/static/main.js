@@ -37,35 +37,6 @@ window.addEventListener('load', function() {
 
 function cut_line(){
   tmp=document.getElementById("preview_text");
-  text_list=tmp.innerText.split('\n');
-  for (var y = text_list.length-1; y > -1; y--) {
-    pre_text=document.getElementById('pre_text2');
-    pre_text.innerText=text_list[y];
-    text_t=text_list[y];
-    pre_h=pre_text.clientHeight;
-    y_rec=[]
-    for (var i = text_t.length-1; i > 0; i--) {
-      pre_text.innerText=text_t.slice(0,i);
-      if (pre_text.clientHeight<pre_h) {
-        pre_h=pre_text.clientHeight;
-        y_rec.push(i);
-      }
-    }
-    if (y_rec.length>0) {
-      for (i=0; i<y_rec.length; i++) {
-        text_list[y]=insert(text_t, y_rec[i], '\n');
-      }
-      // console.log("before")
-      check_sel();
-
-      tmp.innerText=text_list.join('\n')
-      tmp.innerText=tmp.innerText.trim()
-      // console.log("after")
-//      sel_last();
-//      sel_sel();
-      check_sel();
-    }
-  }
   pre_text.innerText=tmp.innerText;
   text_list=pre_text.innerText.split('\n');
   pre_h=pre_text.clientHeight;
@@ -471,18 +442,6 @@ function preview_update(){
   tmp=document.getElementById("preview_text")
   sel_text=tmp.innerText
 
-  if (sel_text.indexOf("؊")>-1) {
-    toast("사용할 수 없는 문자입니다!")
-    sel_text=sel_text.replace("؊","")
-    tmp.innerText=sel_text.trim()
-  }
-  if (sel_text.length>20) {
-    toast("20자씩 나눠서 입력해주세요!")
-    sel_text=sel_text.slice(0,20)
-    tmp.innerText=sel_text.trim()
-  }
-  tmp=document.getElementById("preview_text");
-
   if (tmp.spellcheck) {
     if(f_wh=="A") {
       tmp.innerHTML="여기에<br>써보세요"
@@ -538,7 +497,43 @@ function preview_update(){
   pre_test = document.getElementById('pre_text2');
   pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
-//  cut_line();
+
+  tmp=document.getElementById("preview_text");
+  text_list=tmp.innerText.split('\n');
+  for (var y = text_list.length-1; y > -1; y--) {
+    pre_text=document.getElementById('pre_text2');
+    pre_text.innerText=text_list[y];
+    text_t=text_list[y];
+    pre_h=pre_text.clientHeight;
+    y_rec=[]
+    for (var i = text_t.length-1; i > 0; i--) {
+      pre_text.innerText=text_t.slice(0,i);
+      if (pre_text.clientHeight<pre_h) {
+        pre_h=pre_text.clientHeight;
+        y_rec.push(i);
+      }
+    }
+    if (y_rec.length>0) {
+      for (i=0; i<y_rec.length; i++) {
+        text_list[y]=insert(text_list[y], y_rec[i], '\n');
+      }
+      sel_text=text_list.join('\n')
+      sel_text=sel_text.trim()
+    }
+  }
+  if (sel_text.indexOf("؊")>-1) {
+    toast("사용할 수 없는 문자입니다!")
+    sel_text=sel_text.replace("؊","")
+    tmp.innerText=sel_text.trim()
+  }
+  if (sel_text.length>20) {
+    toast("20자씩 나눠서 입력해주세요!")
+    sel_text=sel_text.slice(0,20)
+    tmp.innerText=sel_text.trim()
+  }
+  tmp=document.getElementById("preview_text");
+
+
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
 
@@ -743,6 +738,7 @@ function preview_update(){
   } else if (pro_w=="c") {
     t_clr_slt=t_clr
   }
+
   document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
   document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
