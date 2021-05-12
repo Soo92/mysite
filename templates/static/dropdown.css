@@ -131,6 +131,7 @@ td > .dropdown > .dropbtn {
   border-color: #0088C3;
 }
 .dropbtn:hover{
+  color:#0088C3;
   border-color: #0088C3;
 }
 .dropdown {
