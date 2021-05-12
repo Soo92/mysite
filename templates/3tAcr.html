@@ -23,8 +23,8 @@
 			<tbody>
 				<tr>
 					<td id="pro_back" bgcolor="#ffffff" width="860" height="420">
-						<div id="preview_list" style="position:relative;height:inherit;">
-							<div style="position:absolute;">
+						<div id="preview_list" style="position:relative;height:inherit;" ㅗㅑㅇㅇㄷ>
+							<div style="position:absolute;" hidden>
 								<select id="pro_wh" onchange="preview_init();preview_update()">
 									<option value="a" selected>스카시</option>
 									<option value="b">루미</option>
@@ -49,15 +49,15 @@
 								</select>
 							</div>
 							<div style="position:absolute;top:45%;width:98%;margin:1%;" bgcolor="#ffffff">
-								<button class="dropbtn transparent drcnt" style="float:left;font-size:35px;" onclick="select_prev();preview_update();">
+								<button class="dropbtn transparent drcnt" style="float:left;font-size:35px;width:50px;height:50px;" onclick="select_prev();preview_update();">
 									<
 								</button>
-								<button class="dropbtn transparent drcnt" style="float:right;font-size:35px;" onclick="select_next();preview_update();">
+								<button class="dropbtn transparent drcnt" style="float:right;font-size:35px;width:50px;height:50px;" onclick="select_next();preview_update();">
 									>
 								</button>
 							</div>
 							<div style="position:absolute;width:98%;margin:1%;bottom:0%;" bgcolor="#ffffff">
-								<button id="alarm" class="dropbtn" style="position:absolute;left:0%;bottom:0%;">
+								<button id="alarm" class="dropbtn transparent" style="position:absolute;left:0%;bottom:0%;display:inline-block;width:30px;height:30px;text-align:center;font-size:18px;">
 									!
 								</button>
 								<div id="toast" style="position:absolute;left:4%;bottom:0%;">
@@ -66,7 +66,7 @@
 								<button id="pro_light" class="dropbtn for b c" onclick="change_light(this);preview_update();">조명 ON
 								</button>
 								<div class="dropdown">
-								  <button class="dropbtn" style="width:300px">
+								  <button class="dropbtn transparent" style="width:300px;text-align:left;">
 										<span id="back_img" data-value="ffffff" data-select="백색"></span><i class="arrow down"></i>
 									</button>
 								  <div id="back_dr" class="dropdown-content">
@@ -235,6 +235,9 @@
 				<tr height="60px">
 					<td>
 						<font class="drcnt" style="font-weight:bold;font-size:25px;">수량</font><font class="drcnt"> ( 견적금액 )</font>
+						<div class="tooltip drcnt">?
+						  <span class="tooltiptext">제작 문구/옵션/수량을 참고하여 선택해주세요!</span>
+						</div>
 						<div style="float:right;">
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('수량을','bcount')">
 							<font style="font-weight:bold;font-size:25px;"><span id="bcount">0</span></font><font class="drcnt" style="font-weight:bold;"> 개 ( <span class="drcnt" id="btotal">0</span> 원 )</font>

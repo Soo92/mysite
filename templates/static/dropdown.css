@@ -1,3 +1,47 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border: gray solid 3px;
+  border-radius: 50%;
+  width:18px;
+  height:18px;
+  color: gray;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  left: 150%;
+  font-weight: normal;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip:hover {
+  border-color: #008CBA;
+  color: #008CBA;
+}
+
 #pro_back{
   background-position-y:center;
   text-align:end;
@@ -184,12 +228,15 @@
 }
 
 .transparent {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(140,157,173,0.9);
+  border-color: rgba(140,157,173,0.9);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+.transparent > .arrow{
   border-color: rgba(255,255,255,0.8);
   color: rgba(255,255,255,0.8);
   text-align: center;
-  width: 50px;
-  height: 50px;
 }
 
 .hidden {
