@@ -234,9 +234,9 @@ td > .dropdown > .dropbtn {
 }
 #font_list > button{
   padding: 5px 0px 0px 11px;
-  font-size: 19px;
+  font-size: 17px;
   height: auto;
-  padding: 0 3px;
+  padding: 4px 6px;
   border-radius: 5px;
   border-width: 2px;
 }

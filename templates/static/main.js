@@ -316,8 +316,8 @@ function change_font(wh,e) {
 
   w=tmp.parent().width();
   h=$("#font_dummy").height();
-  padding_l=9
-  padding_t=9
+  padding_l=8
+  padding_t=6
   tmp.css("padding-left",padding_l)
   tmp.css("padding-top",padding_t)
   tmp.width(w-padding)
