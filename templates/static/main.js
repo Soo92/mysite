@@ -1,28 +1,30 @@
 let removeToast;
-back_optin_list="갈색톤.jpg/검은색 목재.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색 대리석.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결 (2).jpg/흰색 나무결.jpg"
-font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02"
+back_optin_list="검은색 목재.jpg/청색 대리석.jpg/갈색톤.jpg/밝은 나무.jpg/밝은 벽돌 콘크리트.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽, 소나무 원목.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결 (2).jpg/흰색 나무결.jpg";
+font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02";
 
-price_KE ={}
-price_KE["4cm"]=1200
-price_KE["5cm"]=1500
-price_KE["6cm"]=2000
-price_KE["8cm"]=3500
-price_KE["10cm"]=4500
-price_KE["15cm"]=7000
-price_KE["20cm"]=9500
-price_ETC ={}
-price_ETC["4cm"]=2000
-price_ETC["5cm"]=2200
-price_ETC["6cm"]=3000
-price_ETC["8cm"]=4000
-price_ETC["10cm"]=5000
-price_ETC["15cm"]=8000
-price_ETC["20cm"]=10000
+flag_font=false;
 
-maxWH = {}
-maxWH["a"]=[900,800]
-maxWH["b"]=[550,550]
-maxWH["C"]=[900,600]
+price_KE ={};
+price_KE["4cm"]=1200;
+price_KE["5cm"]=1500;
+price_KE["6cm"]=2000;
+price_KE["8cm"]=3500;
+price_KE["10cm"]=4500;
+price_KE["15cm"]=7000;
+price_KE["20cm"]=9500;
+price_ETC ={};
+price_ETC["4cm"]=2000;
+price_ETC["5cm"]=2200;
+price_ETC["6cm"]=3000;
+price_ETC["8cm"]=4000;
+price_ETC["10cm"]=5000;
+price_ETC["15cm"]=8000;
+price_ETC["20cm"]=10000;
+
+maxWH = {};
+maxWH["a"]=[900,800];
+maxWH["b"]=[550,550];
+maxWH["C"]=[900,600];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
@@ -33,7 +35,7 @@ window.addEventListener('load', function() {
   } else {
 //    console.log("nono")
   }
-})
+});
 
 function cut_line(){
   tmp=document.getElementById("preview_text");
@@ -121,7 +123,8 @@ function check_sel(){
 document.fonts.ready.then(function () {
   preview_init();
   preview_update();
-  toast("문구를 써보고\n제품을 미리 확인해보세요!")
+  toast("문구와 옵션을 변경해\n미리 제품을 확인해 보세요!")
+  flag_font=true;
 
   $('#preview_text').keyup(function(e) {
 
@@ -283,6 +286,13 @@ function change_light(e) {
   }
 }
 
+function font_pop(){
+  if (flag_font) {
+    toast("일부 특수문자는 지원하지 않을 수 있습니다.")
+    flag_font=false;
+  }
+}
+
 function change_font(wh,e) {
   f_wh=wh;
   if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
@@ -306,10 +316,12 @@ function change_font(wh,e) {
 
   w=tmp.parent().width();
   h=$("#font_dummy").height();
-  padding=5
-  tmp.css("padding",padding)
-  tmp.width(w-padding*2)
-  tmp.height(h-padding*2)
+  padding_l=9
+  padding_t=9
+  tmp.css("padding-left",padding_l)
+  tmp.css("padding-top",padding_t)
+  tmp.width(w-padding)
+  tmp.height(h-padding_u)
 
   trg=tmp.siblings("a:visible");
   if(trg.length>0) {
@@ -370,8 +382,25 @@ function font_resize(){
 function preview_init(){
   f_wh='A'; f_scale=1;
 
+  f_list=$('.dropdown > .dropbtn > span')
+  f_list.each(function () {
+    init=$(this).text()
+    m_w=$(this).parent().width();
+    tmp=$(this).parent().siblings('.dropdown-content').children('a');
+    for (i = 0; i < tmp.length; i++) {
+      if (tmp[i].innerText==$(this).data("select") && ($(tmp[i]).attr("class")==undefined||$(tmp[i]).attr("class").indexOf("clicked")<1)) {
+        $(tmp[i]).addClass("clicked")
+      }
+      $(this).text(tmp[i].innerText);
+      // console.log($(this).text(),$(this).height());
+      if(m_w<$(this).parent().width()) {        m_w=$(this).parent().width();      }
+    }
+    $(this).text(init);
+    $(this).parent().width(m_w);
+  });
+
   pro_w = document.getElementById('pro_wh').value;
-document.getElementById('pro_aaa')
+  document.getElementById('pro_aaa')
   pro_list=$('.for')
   pro_list.each(function () {
     if ($(this).attr('class').indexOf("hidden")<0) {
@@ -384,25 +413,6 @@ document.getElementById('pro_aaa')
         break;
       }
     };
-  });
-
-  f_list=$('.dropdown > .dropbtn > span')
-  f_list.each(function () {
-    init=$(this).text()
-    m_h=45;
-    m_w=$(this).parent().width();
-    tmp=$(this).parent().siblings('.dropdown-content').children('a');
-    for (i = 0; i < tmp.length; i++) {
-      if (tmp[i].innerText==$(this).data("select") && ($(tmp[i]).attr("class")==undefined||$(tmp[i]).attr("class").indexOf("clicked")<1)) {
-        $(tmp[i]).addClass("clicked")
-      }
-      $(this).text(tmp[i].innerText);
-      if(m_h<$(this).parent().height()) {        m_h=$(this).parent().height();      }
-      if(m_w<$(this).parent().width()) {        m_w=$(this).parent().width();      }
-    }
-    $(this).text(init);
-    $(this).parent().height(m_h);
-    $(this).parent().width(m_w);
   });
 
   aa = document.getElementById('back_dr');
@@ -421,7 +431,7 @@ document.getElementById('pro_aaa')
       aac = document.createElement('a');
       aac.innerText=element.split(".")[0];
       aac.setAttribute("class","dropbtn");
-      aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');width:48px;height:30px;font-size:0px;");
+      aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');background-size:200%;background-position:bottom;width:48px;height:30px;font-size:0px;");
       aac.setAttribute("data-value",element);
       aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
       aa.appendChild(aac);
@@ -495,6 +505,7 @@ function preview_update(){
   max_w = maxWH[pro_w][0]*back_scale/2
   max_h = maxWH[pro_w][1]*back_scale/2
   pre_test = document.getElementById('pre_text2');
+  show_text=sel_text;
   pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
 
@@ -517,8 +528,11 @@ function preview_update(){
       for (i=0; i<y_rec.length; i++) {
         text_list[y]=insert(text_list[y], y_rec[i], '\n');
       }
-      sel_text=text_list.join('\n')
-      sel_text=sel_text.trim()
+      show_text=text_list.join('\n');
+      show_text=show_text.trim();
+      if (show_text.length>20) {
+        sel_text=show_text;
+      }
     }
   }
   if (sel_text.indexOf("؊")>-1) {
@@ -579,11 +593,11 @@ function preview_update(){
   f_cnt = 20
 
   if(f_light) {
-    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;"
+    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"') 50% 50%;"
+      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
   } else {
-    pre_back="background:url('static/background/"+f_b+"');"
-      +"background-size:"+pre_width*back_scale+"px "+pre_height*back_scale+"px;"
+    pre_back="background:url('static/background/"+f_b+"') 50% 50%;"
+      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
     f_main_LED="ffffff"
   }
   document.getElementById("pro_back").style=pre_back
@@ -739,7 +753,7 @@ function preview_update(){
     t_clr_slt=t_clr
   }
 
-  document.getElementById("btext").innerText=sel_text.replace(/(\n|\r\n)/g, '؊')
+  document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
   document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200

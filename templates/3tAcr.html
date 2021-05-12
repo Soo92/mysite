@@ -5,10 +5,20 @@
 		<meta http-equiv="imagetoolbar" content="no">
 		<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
 		<title> 제작상품 미리보기 | 알리네 간판 </title>
+		<script>
+			// console.log(parent.document.location.href)
+		  if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+				// alert("IE는 지원하지 않습니다!")
+		    window.location = 'microsoft-edge:' + parent.document.location.href;
+		    setTimeout(function() {
+		      window.location = 'https://go.microsoft.com/fwlink/?linkid=2135547';
+		    }, 1);
+		  }
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="static/style.css">
 		<link rel="stylesheet" href="static/dropdown.css">
 		<script src="static/main.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	<body topmargin="0" leftmargin="0" onload="preview_init();change_font('A',kor);">
 		<input id="ssa" type="file" id="directory_upload" webkitdirectory onchange="showTextFile()" hidden=true>
@@ -23,7 +33,7 @@
 			<tbody>
 				<tr>
 					<td id="pro_back" bgcolor="#ffffff" width="860" height="420">
-						<div id="preview_list" style="position:relative;height:inherit;" ㅗㅑㅇㅇㄷ>
+						<div id="preview_list" style="position:relative;height:inherit;">
 							<div style="position:absolute;" hidden>
 								<select id="pro_wh" onchange="preview_init();preview_update()">
 									<option value="a" selected>스카시</option>
@@ -48,26 +58,26 @@
 									<option value="inherit">inherit</option>
 								</select>
 							</div>
-							<div style="position:absolute;top:45%;width:98%;margin:1%;" bgcolor="#ffffff">
-								<button class="dropbtn transparent drcnt" style="float:left;font-size:35px;width:50px;height:50px;" onclick="select_prev();preview_update();">
-									<
+							<div style="position:absolute;top:42%;width:98%;margin:1%;" bgcolor="#ffffff">
+								<button class="dropbtn transparent drcnt" style="float:left;" onclick="select_prev();preview_update();">
+									<i class="arrow left"></i>
 								</button>
-								<button class="dropbtn transparent drcnt" style="float:right;font-size:35px;width:50px;height:50px;" onclick="select_next();preview_update();">
-									>
+								<button class="dropbtn transparent drcnt" style="float:right;" onclick="select_next();preview_update();">
+									<i class="arrow right"></i>
 								</button>
 							</div>
 							<div style="position:absolute;width:98%;margin:1%;bottom:0%;" bgcolor="#ffffff">
-								<button id="alarm" class="dropbtn transparent" style="position:absolute;left:0%;bottom:0%;display:inline-block;width:30px;height:30px;text-align:center;font-size:18px;">
+								<button id="alarm" class="dropbtn transparent" style="position:absolute;left:0%;bottom:0%;display:inline-block;">
 									!
 								</button>
-								<div id="toast" style="position:absolute;left:4%;bottom:0%;">
+								<div id="toast">
 									알람이 표출됩니다.
 								</div>
 								<button id="pro_light" class="dropbtn for b c" onclick="change_light(this);preview_update();">조명 ON
 								</button>
 								<div class="dropdown">
-								  <button class="dropbtn transparent" style="width:300px;text-align:left;">
-										<span id="back_img" data-value="ffffff" data-select="백색"></span><i class="arrow down"></i>
+								  <button class="dropbtn transparent box" style="height:fit-content;width:300px;padding:10px 10px 10px 20px;text-align:left;">
+										<span id="back_img" data-value="ffffff" data-select="백색">배경 변경</span><i class="arrow down"></i>
 									</button>
 								  <div id="back_dr" class="dropdown-content">
 									</div>
@@ -84,27 +94,16 @@
 				</tr>
 				<tr>
 					<td bgcolor="#ffffff" style="position:relative;">
-						<div class="dropdown for a">
-						  <button class="dropbtn">
-								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">백색 아크릴</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color,this);preview_update()">흑색 아크릴</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
-						  </div>
-						</div>
 						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="pro_font" data-value="A01" data-select="라이터를 켜라">라이터를 켜라</span><i class="arrow down"></i>
+						  <button class="dropbtn" style="width:290px;" onclick="font_pop()">
+								<span id="pro_font" data-value="A01" data-select="라이터를 켜라">사용 서체</span><i class="arrow down"></i>
 							</button>
-						  <div class="dropdown-content"  style="width:245px;">
+						  <div class="dropdown-content" style="width:290px;">
 								<div id="font_list">
-									<button id="kor" class="dropbtn clicked" onclick="change_font('A',this);preview_update();" style="text-align:center;">한</button>
-									<button class="dropbtn" onclick="change_font('B',this);preview_update();" style="text-align:center">영</button>
-									<button class="dropbtn" onclick="change_font('C',this);preview_update();" style="text-align:center">일</button>
-									<button class="dropbtn" onclick="change_font('D',this);preview_update();" style="text-align:center">중</button>
+									<button id="kor" class="dropbtn clicked" onclick="change_font('A',this);preview_update();" style="text-align:center;">한 글</button>
+									<button class="dropbtn" onclick="change_font('B',this);preview_update();" style="text-align:center">영 문</button>
+									<button class="dropbtn" onclick="change_font('C',this);preview_update();" style="text-align:center">일본어</button>
+									<button class="dropbtn" onclick="change_font('D',this);preview_update();" style="text-align:center">중국어</button>
 								</div>
 								<div id="font_dummy"></div>
 								<a class="clicked" data-value="A01" style="font-family:A01"  onclick="select_itm(pro_font,this);preview_update()">라이터를 켜라</a>
@@ -138,11 +137,22 @@
 								<a data-value="D02" style="font-family:D02"  onclick="select_itm(pro_font,this);preview_update()">千王之王</a>
 						  </div>
 						</div>
-						<div class="dropdown">
-						  <button class="dropbtn">
-								<span id="pro_size" data-value="8" data-select="8cm">글자 높이</span><i class="arrow down"></i>
+						<div class="dropdown for a">
+						  <button class="dropbtn" style="width:225px;">
+								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">백색 아크릴</span><i class="arrow down"></i>
 							</button>
-						  <div class="dropdown-content" onclick="cut_line();preview_update();">
+						  <div class="dropdown-content" style="width:225px;">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color,this);preview_update()">흑색 아크릴</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
+						  </div>
+						</div>
+						<div class="dropdown">
+						  <button class="dropbtn" style="width:125px;">
+								<span id="pro_size" data-value="8" data-select="8cm">8cm</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:125px;" onclick="cut_line();preview_update();">
 								<a data-value="4" onclick="select_itm(pro_size,this);font_resize();preview_update();">4cm</a>
 								<a data-value="5" onclick="select_itm(pro_size,this);font_resize();preview_update();">5cm</a>
 								<a data-value="6" onclick="select_itm(pro_size,this);font_resize();preview_update();">6cm</a>
@@ -164,8 +174,9 @@
 						</div>
 						<div class="dropdown drcnt" style="float:right;">
 							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
+							<a class="dropalign a_normal clicked" data-value="justify" onclick="select_itm(pro_align,this);preview_update()">평</a>
 							<a class="dropalign a_left" data-value="left" onclick="select_itm(pro_align,this);preview_update()">좌</a>
-							<a class="dropalign a_center clicked" data-value="center" onclick="select_itm(pro_align,this);preview_update()">중</a>
+							<a class="dropalign a_center" data-value="center" onclick="select_itm(pro_align,this);preview_update()">중</a>
 							<a class="dropalign a_right" data-value="right" onclick="select_itm(pro_align,this);preview_update()">우</a>
 						</div>
 					</td>
@@ -214,43 +225,48 @@
 				</tr>
 				<tr height="10px">
 				</tr>
-				<tr height="40px">
+				<tr class="opt_text">
 					<td>
-						<font class="drcnt" style="float:left">제작 문구</font>
-						<div style="float:right;width:85%">
-							<span id="btext" style="font-weight:bold;">문구</span>
+						<font class="drcnt">제작 문구</font>
+						<div>
+							<span id="btext">문구</span>
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('문구를','btext')">
 						</div>
 					</td>
 				</tr>
-				<tr height="40px">
+				<tr class="opt_text">
 					<td>
-						<font class="drcnt" style="float:left">제작 옵션</font>
-						<div style="float:right;width:85%">
-							<span id="boption" style="font-weight:bold;">색/서체/크기</span>
+						<font class="drcnt">제작 옵션</font>
+						<div>
+							<span id="boption">색/서체/크기</span>
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('옵션을','boption')">
 						</div>
 					</td>
 				</tr>
-				<tr height="60px">
-					<td>
-						<font class="drcnt" style="font-weight:bold;font-size:25px;">수량</font><font class="drcnt"> ( 견적금액 )</font>
-						<div class="tooltip drcnt">?
-						  <span class="tooltiptext">제작 문구/옵션/수량을 참고하여 선택해주세요!</span>
-						</div>
-						<div style="float:right;">
+				<tr style="height:80px;">
+					<td style="position:relative;vertical-align: bottom;">
+						<font style="font-size:30px;position:absolute;left: 2%;">
+							<font class="drcnt" style="font-weight:bold;">수량</font><font class="drcnt"> ( 견적금액 )</font>
+							<div class="tooltip drcnt">?
+							  <span class="tooltiptext">제작 문구와 옵션을 옮겨 적으신 후에,<br>수량을 붙여 넣어주세요!</span>
+							</div>
+						</font>
+						<div style="position:relative;float:right;left:0%;">
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('수량을','bcount')">
-							<font style="font-weight:bold;font-size:25px;"><span id="bcount">0</span></font><font class="drcnt" style="font-weight:bold;"> 개 ( <span class="drcnt" id="btotal">0</span> 원 )</font>
+							<font style="font-size:30px;"><span id="bcount" style="font-weight:bold;">0</span><font class="drcnt" style="font-weight:bold;"> 개 </font>
+							<span class="drcnt">( </span><span class="drcnt" id="btotal">0</span><span class="drcnt"> 원 )</span></font>
 						</div>
 					</td>
 				</tr>
-				<tr height="5px">
-				</tr>
-				<tr>
-					<td style="font-size:15px;line-height:25px;">
-						<font class="drcnt" color="black">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
+				<tr style="height:20px;vertical-align:bottom;">
+			    <td style="border-bottom:#DDDDDD 1px solid;">
+					</td>
+			  </tr>
+				<tr style="height:45px;vertical-align:bottom;">
+					<td style="font-size:18px;line-height:25px;position:relative;">
+						<font class="drcnt" color="black" style="left:2%;position:absolute;">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
 						<br>
-						<font class="drcnt" color="black">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
+						<font class="drcnt" color="black" style="left:2%;position:absolute;">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
 					</td>
 				</tr>
 				</tbody></table>
