@@ -3,16 +3,11 @@
 
 from flask import Flask,render_template
 
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return 'Hello from Flask!'
-
-@app.route('/home')
-def home():
-    return render_template('index.html',title='자동견적')
+app = Flask(__name__,static_url_path='/templates/')
 
 @app.route('/t2')
 def t2():
-    return render_template('3tAcr.html',title='3t 아크릴')
+    return render_template('3tAcr.html',title='견적미리보기')
+
+if __name__ == '__main__':
+    app.run()
