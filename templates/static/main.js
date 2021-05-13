@@ -28,12 +28,18 @@ maxWH["C"]=[900,600];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
+  console.log(self);
+  console.log(self.parent);
   if ( self !== top ) {
-//    console.log("iframe");
-//    console.log(parent);
+    console.log("iframe");
+    console.log(self.opener);
+    console.log(parent);
+    opener.parent.Msg();
+    parent.Msg();
+  //    console.log(parent);
   //    alert(window.location.href);
   } else {
-//    console.log("nono")
+    console.log("nono")
   }
 });
 
