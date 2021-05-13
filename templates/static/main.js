@@ -267,7 +267,6 @@ function select_itm(t,e) {
 }
 
 function select_clicked(t,e){
-  console.log(t,e)
   if ($(e).attr("class")==undefined||$(e).attr("class").indexOf("clicked")<1) {
      $(e).addClass("clicked")
    }
@@ -289,7 +288,7 @@ function change_light(e) {
 
 function font_pop(){
   if (flag_font) {
-    toast("일부 특수문자는 지원하지 않을 수 있습니다.")
+    toast("일부 특수문자는\n지원하지 않을 수 있습니다.")
     flag_font=false;
   }
 }
