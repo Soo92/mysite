@@ -203,7 +203,7 @@ function copyIt(title,bID) {
 }
 
 function paste_value(e){
-  document.execCommand('insertHTML', false, event.clipboardData.getData('Text').replace(/(\n|\r\n)/g, ''));
+  document.execCommand('insertHTML', false, event.clipboardData.getData('Text').replace(/(\n|\r\n)/g, '').replaceAll('؊', '<br>'));
   event.preventDefault();
 }
 

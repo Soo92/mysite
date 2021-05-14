@@ -9,6 +9,7 @@
   font-size: 27px;
   font-weight: bold;
   text-align: center;
+  z-index: 9999;
 }
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -42,6 +43,19 @@
 .tooltip:hover {
   border-color: #0088C3;
   color: #0088C3;
+}
+#exp_img {
+  position: absolute;
+  bottom: 0%;
+  right: -260%;
+  z-index: 5555;
+  width: 640px;
+  height: 525px;
+  background-image: none;
+  background-size: cover;
+}
+.tooltip:hover + #exp_img {
+  background-image: url(background/exp_sys.gif);
 }
 
 #pro_back{
