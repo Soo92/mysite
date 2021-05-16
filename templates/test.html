@@ -1,0 +1,22 @@
+<script>
+function loadURL()
+{
+ var url = document.all.url;
+ if(url.value == "") {
+  alert("url 을 입력해야합니다.");
+  url.focus();
+  return;
+ }
+
+ var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+ xmlhttp.open("GET", url.value, "false");
+ xmlhttp.send();
+ document.all.output.innerText = xmlhttp.responseText;
+}
+</script>
+
+
+
+<input type=text name=url>
+<input type=button value="url 로드" onclick="loadURL()">
+<div id=output></div>
