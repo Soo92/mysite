@@ -34,6 +34,8 @@ window.addEventListener('load', function() {
     console.log("iframe");
     console.log(self.opener);
     console.log(parent);
+    // console.log(self.opener);
+    // console.log(parent);
     opener.parent.Msg();
     parent.Msg();
   //    console.log(parent);
