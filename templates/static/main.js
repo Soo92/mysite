@@ -32,8 +32,8 @@ window.addEventListener('load', function() {
   console.log(self.parent);
   if ( self !== top ) {
     console.log("iframe");
-    console.log(self.opener);
-    console.log(parent);
+    // console.log(self.opener);
+    // console.log(parent);
     // console.log(self.opener);
     // console.log(parent);
     opener.parent.Msg();
@@ -424,8 +424,11 @@ function preview_init(){
   });
 
   aa = document.getElementById('back_dr');
+  pre_img = document.getElementById('pre_img');
   if($(aa).children().length==0) {
     element=back_optin_list.split("/")[0];
+    document.getElementById('pro_back').setAttribute("style","background:url('static/background/"+element+"') 50% 50%;");
+
     bb = document.getElementById('back_img');
     bb.innerText=element.split(".")[0];
     bb.setAttribute("data-value",element);
@@ -433,7 +436,6 @@ function preview_init(){
     for (const element of back_optin_list.split("/")) {
       tmp = document.createElement('img');
       tmp.src="static/background/"+element;
-      pre_img = document.getElementById('pre_img');
       pre_img.appendChild(tmp);
 
       aac = document.createElement('a');
@@ -444,6 +446,10 @@ function preview_init(){
       aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
       aa.appendChild(aac);
     }
+    tmp.src="static/background/sys_1.gif";
+    pre_img.appendChild(tmp);
+    tmp.src="static/background/sys_2.gif";
+    pre_img.appendChild(tmp);
   }
 
   pre1 = document.getElementById('pre_text');
