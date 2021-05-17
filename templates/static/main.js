@@ -2,6 +2,9 @@ let removeToast;
 back_optin_list="검은색 목재.jpg/청색 대리석.jpg/갈색톤.jpg/밝은 나무.jpg/밝은 벽돌.jpg/밝은 콘크리트.jpg/밝은 회색, 마루.jpg/분홍 벽지.jpg/블루 원단.jpg/살구벽지,마루.jpg/살색 원단.jpg/어두운 콘크리트.jpg/자홍색벽지.jpg/청색벽,소나무.jpg/한지 텍스쳐.jpg/흰벽,밝은마루.jpg/흰색 나무결.jpg/흰색 나무결2.jpg";
 font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02";
 
+r = document.querySelector(':root');
+rs = getComputedStyle(r);
+
 flag_font=false;
 
 price_KE ={};
@@ -32,8 +35,8 @@ window.addEventListener('load', function() {
   console.log(self.parent);
   if ( self !== top ) {
     console.log("iframe");
-    console.log(self.opener);
-    console.log(parent);
+    // console.log(self.opener);
+    // console.log(parent);
     opener.parent.Msg();
     parent.Msg();
   //    console.log(parent);
@@ -429,15 +432,10 @@ function preview_init(){
     bb.setAttribute("data-value",element);
     bb.setAttribute("data-select",element.split(".")[0]);
     for (const element of back_optin_list.split("/")) {
-      tmp = document.createElement('img');
-      tmp.src="static/background/"+element;
-      pre_img = document.getElementById('pre_img');
-      pre_img.appendChild(tmp);
-
       aac = document.createElement('a');
       aac.innerText=element.split(".")[0];
       aac.setAttribute("class","dropbtn");
-      aac.setAttribute("style","float:left;background-image:url('static/background/"+element+"');background-size:200%;background-position:bottom;width:48px;height:30px;font-size:0px;");
+      aac.setAttribute("style","float:left;background-image:"+rs.getPropertyValue("--"+element.split(".")[0].replaceAll(" ","").replaceAll(",",""))+"url('static/background/"+element+"');background-size:200%;background-position:bottom;width:48px;height:30px;font-size:0px;");
       aac.setAttribute("data-value",element);
       aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
       aa.appendChild(aac);

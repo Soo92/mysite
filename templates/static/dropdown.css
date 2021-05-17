@@ -61,10 +61,10 @@
   transition: transform 10s ease-in;
 }
 .play:hover + #exp_right{
-  background-image:url('background/sys_1.gif');
+  background-image:var(--sys_1)url('background/sys_1.gif');
 }
 .play:hover + #exp_left{
-  background-image:url('background/sys_2.gif');
+  background-image:var(--sys_1)url('background/sys_2.gif');
 }
 
 .tooltip {
