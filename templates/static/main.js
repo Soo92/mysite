@@ -604,10 +604,10 @@ function preview_update(){
   f_cnt = 20
 
   if(f_light) {
-    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"') 50% 50%;"
+    pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), "+rs.getPropertyValue("--"+f_b.split(".")[0].replaceAll(" ","").replaceAll(",",""))+"url('static/background/"+f_b+"') 50% 50%;"
       +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
   } else {
-    pre_back="background:url('static/background/"+f_b+"') 50% 50%;"
+    pre_back="background:"+rs.getPropertyValue("--"+f_b.split(".")[0].replaceAll(" ","").replaceAll(",",""))+"url('static/background/"+f_b+"') 50% 50%;"
       +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
     f_main_LED="ffffff"
   }
