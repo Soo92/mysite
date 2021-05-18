@@ -24,7 +24,8 @@ price_ETC["20cm"]=10000;
 maxWH = {};
 maxWH["a"]=[900,800];
 maxWH["b"]=[550,550];
-maxWH["C"]=[900,600];
+maxWH["c"]=[900,600];
+maxWH["d"]=[900,800];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
@@ -489,7 +490,13 @@ function preview_update(){
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
 
-  sel_clr = $("#pro_color");
+  if (pro_w=="a") {
+    sel_clr = $("#pro_color");
+  } else if (pro_w=="b") {
+  } else if (pro_w=="c") {
+  } else if (pro_w=="d") {
+    sel_clr = $("#pro_color2");
+  }
   sel_font = $("#pro_font");
   sel_size = $("#pro_size");
   sel_back = $('#back_img');
@@ -607,10 +614,12 @@ function preview_update(){
 
   if (pro_w=="a") {
     f_thi = 2
-  } else if (pro_w="b") {
+  } else if (pro_w=="b") {
     f_thi = 10
-  } else if (pro_w="c") {
+  } else if (pro_w=="c") {
 
+  } else if (pro_w=="d") {
+    f_thi = 5
   }
   f_cnt = 20
 
@@ -626,14 +635,16 @@ function preview_update(){
 
   if (pro_w=="a") {
     arr_clr = sel_clr.data("value").split(",")
-  } else if (pro_w="b") {
+  } else if (pro_w=="b") {
     if (f_side) {
       arr_clr=[f_main_LED,f_side_LED,f_side_back]
     } else {
       arr_clr=[f_main_LED,f_side_back,f_side_back]
     }
-  } else if (pro_w="c") {
-
+  } else if (pro_w=="c") {
+  } else if (pro_w=="d") {
+    arr_clr = sel_clr.data("value").split(",")
+    arr_clr[2]="#000000"
   }
   taper=0
   for (step = 0; step <= f_cnt; step++) {
@@ -642,18 +653,18 @@ function preview_update(){
     if(step==0) {
       tmp=document.getElementById("preview_text")
       f_clr=arr_clr[0]
-      if (pro_w=="a") {
+      if (pro_w=="a" || pro_w=="d") {
         pre_style="background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
                   +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
           +"-webkit-background-clip:text;"
           +"-webkit-text-fill-color:transparent;"
-        } else if (pro_w="b") {
-          f_shwd="text-shadow:0.5px 0.5px gray"
-          if (f_light) {
-            f_shwd=f_shwd+",0px 0px 5px #"+f_clr
-          }
-          f_shwd=f_shwd+";"
+      } else if (pro_w=="b") {
+        f_shwd="text-shadow:0.5px 0.5px gray"
+        if (f_light) {
+          f_shwd=f_shwd+",0px 0px 5px #"+f_clr
         }
+        f_shwd=f_shwd+";"
+      }
     } else {
       tmpid="side"+(step);
       tmp=document.getElementById(tmpid)
@@ -664,13 +675,13 @@ function preview_update(){
         sel_text_list.appendChild(tmp);
       }
       tmp.innerText=sel_text;
-      if (pro_w=="a") {
+      if (pro_w=="a" || pro_w=="d") {
         if (step==1) {
           f_clr=arr_clr[1]
         } else {
           f_clr=arr_clr[2]
         }
-      } else if (pro_w="b") {
+      } else if (pro_w=="b") {
         if (step<=(f_cnt*15/20)) {
           taper=taper+(1/3)
         }
@@ -767,7 +778,7 @@ function preview_update(){
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
-  if(pro_w=="a") {
+  if(pro_w=="a" || pro_w=="d") {
     t_clr_slt=t_clr.split(" ")[0]
   } else if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]

@@ -40,11 +40,13 @@
 					<td id="pro_back" width="860" height="420">
 						<div id="preview_list" style="position:relative;height:inherit;">
 							<div style="position:absolute;" hidden>
+								<!-- hidden -->
 								<select id="pro_wh" onchange="preview_init();preview_update()">
 									<option value="{{title}}">{{title}}</option>
 									<option value="a" selected>스카시</option>
 									<option value="b">루미</option>
 									<option value="c">구로</option>
+									<option value="d">고무</option>
 								</select>
 								<select id="pro_aaa" onchange="align_change()">
 									<option value="normal" selected>normal</option>
@@ -79,13 +81,13 @@
 								<div id="toast">
 									알람이 표출됩니다.
 								</div>
-								<button id="pro_light" class="dropbtn transparent box for b c hidden" onclick="change_light(this);preview_update();" style="height:fit-content;width:140px;padding:10px;text-align:center;">조명 ON
+								<button id="pro_light" class="dropbtn transparent box for b c hidden" onclick="change_light(this);preview_update();" style="width:140px;text-align:center;margin-right:-15px;">조명 ON
 								</button>
 									<div class="dropdown">
-								  <button class="dropbtn transparent box" style="width:246px;padding-left:15px;text-align:left;">
+								  <button class="dropbtn transparent box" style="width:222px;padding-left:15px;text-align:left;">
 										<span id="back_img" data-value="ffffff" data-select="백색">배경 변경</span><i class="arrow down"></i>
 									</button>
-								  <div id="back_dr" class="dropdown-content" style="width:246px;left:15px;">
+								  <div id="back_dr" class="dropdown-content" style="width:222px;left:14px;">
 									</div>
 								</div>
 							</div>
@@ -154,6 +156,17 @@
 								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
 						  </div>
 						</div>
+						<div class="dropdown for d">
+						  <button class="dropbtn" style="width:190px;">
+								<span id="pro_color2" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:190px;">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color2,this);preview_update()">백색 판</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color2,this);preview_update()">흑색 판</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color2,this);preview_update()">실버미러 판</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color2,this);preview_update()">골드미러 판</a>
+						  </div>
+						</div>
 						<div class="dropdown">
 						  <button class="dropbtn" style="width:110px;">
 								<span id="pro_size" data-value="8" data-select="8cm">8cm</span><i class="arrow down"></i>
@@ -169,16 +182,16 @@
 							</div>
 						</div>
 						<div class="dropdown for b c">
-						  <button class="dropbtn">
+						  <button class="dropbtn" style="width:130px;">
 								<span id="side_deco" data-value="none" data-select="없음">부가 효과</span><i class="arrow down"></i>
 							</button>
-						  <div class="dropdown-content">
+						  <div class="dropdown-content" style="width:130px;">
 								<a data-value="none" onclick="select_itm(side_deco,this);preview_update()">없음</a>
 								<a data-value="underL" onclick="select_itm(side_deco,this);preview_update()">밑줄</a>
 								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
 							</div>
 						</div>
-						<div class="dropdown drcnt" style="position:absolute;margin-left:21px;margin-right:25px;width:fit-content;">
+						<div class="dropdown drcnt" style="float: right;margin-left:21px;width:fit-content;">
 							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
 							<a class="dropalign a_normal clicked" data-value="justify" onclick="select_itm(pro_align,this);preview_update()">평</a>
 							<a class="dropalign a_left" data-value="left" onclick="select_itm(pro_align,this);preview_update()">좌</a>
@@ -188,7 +201,7 @@
 					</td>
 				</tr>
 				<tr class="for b">
-					<td bgcolor="#ffffff" style="position:relative;">
+					<td bgcolor="#ffffff" style="position:relative;padding-left:14px;">
 						<div class="dropdown">
 							<button class="dropbtn" style="width:100px;">
 								<span id="pro_color_LED" data-value="ffffff" data-select="백색">LED</span><i class="arrow down"></i>
@@ -273,7 +286,7 @@
 				<tr style="height:10px;vertical-align:bottom;">
 					<td style="font-size:18px;line-height:25px;position:relative;">
 						<font class="drcnt" color="black" style="left:30px;position:absolute;">제작 문구와 옵션을 구매 입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.
-						<br/> 자세한 사용 방법은 아래 설명란을 참고하세요.</font>
+						<br/> 자세한 사용 방법은 아래 사용안내를 참고하세요.</font>
 					</td>
 				</tr>
 				</tbody>
