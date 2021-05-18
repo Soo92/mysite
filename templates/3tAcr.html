@@ -64,7 +64,7 @@
 									<option value="inherit">inherit</option>
 								</select>
 							</div>
-							<div style="position:absolute;top:42%;width:98%;margin:1%;" bgcolor="#ffffff">
+							<div style="position:absolute;top:42%;width:100%;" bgcolor="#ffffff">
 								<button class="dropbtn transparent drcnt" style="float:left;" onclick="select_prev();preview_update();">
 									<i class="arrow left"></i>
 								</button>
@@ -72,8 +72,8 @@
 									<i class="arrow right"></i>
 								</button>
 							</div>
-							<div style="position:absolute;width:98%;margin:1%;bottom:0%;" bgcolor="#ffffff">
-								<button id="alarm" class="dropbtn transparent" style="position:absolute;left:0%;bottom:11%;display:inline-block;font-size:28px;">
+							<div style="position:absolute;width:100%;bottom:2%;" bgcolor="#ffffff">
+								<button id="alarm" class="dropbtn transparent" style="position:absolute;left:0%;display:inline-block;font-size:28px;">
 									!
 								</button>
 								<div id="toast">
@@ -82,10 +82,10 @@
 								<button id="pro_light" class="dropbtn transparent box for b c hidden" onclick="change_light(this);preview_update();" style="height:fit-content;width:140px;padding:10px;text-align:center;">조명 ON
 								</button>
 									<div class="dropdown">
-								  <button class="dropbtn transparent box" style="height:fit-content;width:260px;padding:10px 10px 10px 20px;text-align:left;">
+								  <button class="dropbtn transparent box" style="width:246px;padding-left:15px;text-align:left;">
 										<span id="back_img" data-value="ffffff" data-select="백색">배경 변경</span><i class="arrow down"></i>
 									</button>
-								  <div id="back_dr" class="dropdown-content">
+								  <div id="back_dr" class="dropdown-content" style="width:246px;left:15px;">
 									</div>
 								</div>
 							</div>
@@ -99,7 +99,7 @@
 				<tr height="10px">
 				</tr>
 				<tr>
-					<td bgcolor="#ffffff" style="position:relative;">
+					<td bgcolor="#ffffff" style="position:relative;padding-left:14px;">
 						<div class="dropdown">
 						  <button class="dropbtn" style="width:290px;" onclick="font_pop()">
 								<span id="pro_font" data-value="A01" data-select="라이터를 켜라">사용 서체</span><i class="arrow down"></i>
@@ -144,10 +144,10 @@
 						  </div>
 						</div>
 						<div class="dropdown for a">
-						  <button class="dropbtn" style="width:200px;">
+						  <button class="dropbtn" style="width:190px;">
 								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">백색 아크릴</span><i class="arrow down"></i>
 							</button>
-						  <div class="dropdown-content" style="width:200px;">
+						  <div class="dropdown-content" style="width:190px;">
 								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
 								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color,this);preview_update()">흑색 아크릴</a>
 								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
@@ -155,10 +155,10 @@
 						  </div>
 						</div>
 						<div class="dropdown">
-						  <button class="dropbtn" style="width:125px;">
+						  <button class="dropbtn" style="width:110px;">
 								<span id="pro_size" data-value="8" data-select="8cm">8cm</span><i class="arrow down"></i>
 							</button>
-						  <div class="dropdown-content" style="width:125px;" onclick="cut_line();preview_update();">
+						  <div class="dropdown-content" style="width:110px;" onclick="cut_line();preview_update();">
 								<a data-value="4" onclick="select_itm(pro_size,this);font_resize();preview_update();">4cm</a>
 								<a data-value="5" onclick="select_itm(pro_size,this);font_resize();preview_update();">5cm</a>
 								<a data-value="6" onclick="select_itm(pro_size,this);font_resize();preview_update();">6cm</a>
@@ -178,9 +178,9 @@
 								<a data-value="borderL" onclick="select_itm(side_deco,this);preview_update()">테두리</a>
 							</div>
 						</div>
-						<div class="dropdown drcnt" style="position: absolute;top: 10%;right: 2%;">
+						<div class="dropdown drcnt" style="position:absolute;margin-left:21px;margin-right:25px;width:fit-content;">
 							<span hidden id="pro_align" data-value="center" data-select="중">정렬</span>
-							<a class="dropalign a_normal clicked" style="margin-right:12px;" data-value="justify" onclick="select_itm(pro_align,this);preview_update()">평</a>
+							<a class="dropalign a_normal clicked" data-value="justify" onclick="select_itm(pro_align,this);preview_update()">평</a>
 							<a class="dropalign a_left" data-value="left" onclick="select_itm(pro_align,this);preview_update()">좌</a>
 							<a class="dropalign a_center" data-value="center" onclick="select_itm(pro_align,this);preview_update()">중</a>
 							<a class="dropalign a_right" data-value="right" onclick="select_itm(pro_align,this);preview_update()">우</a>
@@ -251,7 +251,7 @@
 				</tr>
 				<tr style="height:80px;">
 					<td style="position:relative;vertical-align: bottom;">
-						<font style="font-size:30px;position:absolute;left: 2%;">
+						<font style="font-size:25px;position:absolute;left:30px;">
 							<font class="drcnt" style="font-weight:bold;">수량</font><font class="drcnt"> ( 견적금액 )</font>
 							<div class="tooltip drcnt">?
 							  <span class="tooltiptext">제작 문구와 옵션을 옮겨 적으시고<br>수량을 붙여 넣어주세요!</span>
@@ -259,25 +259,26 @@
 						</font>
 						<div style="position:relative;float:right;left:0%;">
 							<input class="button button1" type="button" value="복사하기" onclick="copyIt('수량을','bcount')">
-							<font style="font-size:30px;"><span id="bcount" style="font-weight:bold;">0</span><font class="drcnt" style="font-weight:bold;"> 개 </font>
+							<font style="font-size:25px;"><span id="bcount" style="font-weight:bold;">0</span><font class="drcnt" style="font-weight:bold;"> 개 </font>
 							<span class="drcnt">( </span><span class="drcnt" id="btotal">0</span><span class="drcnt"> 원 )</span></font>
 						</div>
 					</td>
 				</tr>
 				<tr style="height:20px;vertical-align:bottom;">
-			    <td style="border-bottom:#DDDDDD 1px solid;">
+			    <td>
+						<div style="margin-left:30px;border-bottom:#DDDDDD 1px solid;">
+						</div>
 					</td>
 			  </tr>
-				<tr style="height:45px;vertical-align:bottom;">
+				<tr style="height:10px;vertical-align:bottom;">
 					<td style="font-size:18px;line-height:25px;position:relative;">
-						<font class="drcnt" color="black" style="left:2%;position:absolute;">제작 문구와 제작 옵션을 상품입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.</font>
-						<br>
-						<font class="drcnt" color="black" style="left:2%;position:absolute;">자세한 사용 방법은 아래 설명란을 참고하세요.</font>
+						<font class="drcnt" color="black" style="left:30px;position:absolute;">제작 문구와 옵션을 구매 입력란에 기재하시고, 수량을 맞추어 주문하시면 설정하신 상품을 결제할 수 있습니다.
+						<br/> 자세한 사용 방법은 아래 설명란을 참고하세요.</font>
 					</td>
 				</tr>
 				</tbody>
 			</table>
-			<table align="center" style="margin-top:150px;position:relative;width:860px">
+			<table align="center" style="margin-top:250px;position:relative;width:860px">
 				<tbody>
 					<tr>
 						<td colspan="2">

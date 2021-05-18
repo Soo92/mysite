@@ -413,7 +413,6 @@ function preview_init(){
     if ($(this).attr('class').indexOf("hidden")<0) {
       $(this).addClass("hidden")
     }
-    console.log($(this).attr('id'),$(this).attr('class'))
     tmp=$(this).attr('class').split(" ");
     for (step = 0; step < tmp.length; step++) {
       if (tmp[step]==(pro_w) && $(this).attr('class').indexOf("hidden")>-1) {

@@ -29,7 +29,7 @@
   width: 60%;
   height: 19px;
   font-size: 18px;
-  border: 3px solid #DDDDDD;
+  border: 1px solid #DDDDDD;
   border-radius: 10px;
   transform: translate(50%, 0);
   -webkit-transform: translate(50%, 0);
@@ -72,13 +72,12 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border: #DDDDDD solid 3px;
+  border: #DDDDDD solid 1px;
   border-radius: 50%;
   width:27px;
   height:27px;
-  color: #979697;
+  color: #919296;
   font-size: 27px;
-  font-weight: bold;
   text-align: center;
 }
 .tooltip .tooltiptext {
@@ -125,8 +124,8 @@
 }
 
 .arrow {
-  border: solid #DDDDDD;
-  border-width: 0 3px 3px 0;
+  border: solid #919296;
+  border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3.5px
 }
@@ -154,7 +153,7 @@
 
 #toast {
   position:absolute;
-  left:5%;
+  left:6.5%;
   bottom:0%;
   text-align: left;
   line-height: 30px;
@@ -177,7 +176,7 @@
 .dropbtn {
   text-align: left;
   background-color: #ffffff;
-  border: solid 3px #DDDDDD;
+  border: solid 1px #D4D5D6;
   color: black;
   font-size:15pt;
   border-radius: 10px;
@@ -187,16 +186,13 @@
 }
 td > .dropdown {
   float: left;
-  padding: 2px;
 }
 td > .dropdown > .dropbtn {
-  padding: 2px 15px;
+  padding: 2px 8px 2px 15px;
   font-family: 'A08';
+  margin-right: 12px;
   font-size: 20px;
-}
-
-.dropbtn span {
-  margin-right: 10px;
+  height: 36px;
 }
 
 .dropbtn:focus {
@@ -220,6 +216,8 @@ td > .dropdown > .dropbtn {
   background-repeat:no-repeat;
   color:rgb(0,0,0,0);
   border-radius: 10px;
+  margin: 0 7px;
+  float: left;
 }
 .a_normal{  background-image:url('background/align_none.png');}
 .a_normal:hover, .a_normal:focus, .a_normal.clicked{  background-image:url('background/align_none_on.png');}
@@ -267,7 +265,7 @@ td > .dropdown > .dropbtn {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
-  border: solid 3px white;
+  border: solid 1px white;
   border-radius: 5px;
   display: block;
 }
@@ -294,10 +292,13 @@ td > .dropdown > .dropbtn {
   text-align: center;
   cursor: pointer;
   background-color: white;
-  color: #0088C3;
+  color: #0088BE;
   border-radius: 10px;
-  border: 2px solid #0088C3;
-  font-weight: bold;
+  border: 1px solid #46B2B6;
+  font-size: 16px;
+  height: 28px;
+  width: 90px;
+  margin: 0 10px;
 }
 
 .button1 {
@@ -305,7 +306,8 @@ td > .dropdown > .dropbtn {
 }
 
 .button1:hover {
-  background-color: #0088C3;
+  border: 1px solid #0088BE;
+  background-color: #0088BE;
   color: white;
 }
 
@@ -341,6 +343,7 @@ td > .dropdown > .dropbtn {
   height: 40px;
   border: 0;
   color:white;
+  margin: 0 14px;
   text-align:center;
 }
 .transparent > .arrow{
@@ -352,19 +355,20 @@ td > .dropdown > .dropbtn {
 }
 
 .opt_text{
-   height:50px;
+   height:40px;
 }
 .opt_text > td{
   position:relative;
 }
 .opt_text > td > font{
   position:absolute;
-  font-size:22px;
-  left:2%;
+  font-size:18px;
+  left: 30px;
+  top: 26px;
 }
 .opt_text > td > div{
   position:absolute;
-  font-size:22px;
+  font-size:18px;
   font-weight:bold;
-  left:20%;
+  left:130px;
 }
