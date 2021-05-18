@@ -408,12 +408,12 @@ function preview_init(){
   });
 
   pro_w = document.getElementById('pro_wh').value;
-  document.getElementById('pro_aaa')
   pro_list=$('.for')
   pro_list.each(function () {
     if ($(this).attr('class').indexOf("hidden")<0) {
       $(this).addClass("hidden")
     }
+    console.log($(this).attr('id'),$(this).attr('class'))
     tmp=$(this).attr('class').split(" ");
     for (step = 0; step < tmp.length; step++) {
       if (tmp[step]==(pro_w) && $(this).attr('class').indexOf("hidden")>-1) {
