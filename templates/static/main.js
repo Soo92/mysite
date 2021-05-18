@@ -416,7 +416,7 @@ function preview_init(){
     }
     tmp=$(this).attr('class').split(" ");
     for (step = 0; step < tmp.length; step++) {
-      if (tmp[step].indexOf(pro_w)>-1 && $(this).attr('class').indexOf("hidden")>-1) {
+      if (tmp[step]==(pro_w) && $(this).attr('class').indexOf("hidden")>-1) {
         $(this).removeClass("hidden")
         break;
       }
