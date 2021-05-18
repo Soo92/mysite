@@ -5,9 +5,15 @@ from flask import Flask,render_template
 
 app = Flask(__name__,static_url_path='/templates/')
 
+@app.route('/t1')
+def t1():
+    return render_template('3tAcr.html',title='a')
 @app.route('/t2')
 def t2():
-    return render_template('3tAcr.html',title='견적미리보기')
+    return render_template('3tAcr.html',title='b')
+@app.route('/t3')
+def t3():
+    return render_template('3tAcr.html',title='c')
 
 if __name__ == '__main__':
     app.run()

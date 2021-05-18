@@ -28,20 +28,20 @@ maxWH["C"]=[900,600];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
-  console.log(self);
-  console.log(self.parent);
+  // console.log(self);
+  // console.log(self.parent);
   if ( self !== top ) {
-    console.log("iframe");
+    // console.log("iframe");
     // console.log(self.opener);
     // console.log(parent);
     // console.log(self.opener);
     // console.log(parent);
-    opener.parent.Msg();
-    parent.Msg();
+    // opener.parent.Msg();
+    // parent.Msg();
   //    console.log(parent);
   //    alert(window.location.href);
   } else {
-    console.log("nono")
+    // console.log("nono")
   }
 });
 
@@ -407,7 +407,11 @@ function preview_init(){
     $(this).parent().width(m_w);
   });
 
-  pro_w = document.getElementById('pro_wh').value;
+  if ('{{title}}'=="") {
+    pro_w = document.getElementById('pro_wh').value;
+  } else {
+    pro_w = '{{title}}';
+  }
   document.getElementById('pro_aaa')
   pro_list=$('.for')
   pro_list.each(function () {
@@ -446,8 +450,10 @@ function preview_init(){
       aac.setAttribute("onclick","select_itm(back_img,this);preview_update()");
       aa.appendChild(aac);
     }
+    tmp = document.createElement('img');
     tmp.src="static/background/sys_1.gif";
     pre_img.appendChild(tmp);
+    tmp = document.createElement('img');
     tmp.src="static/background/sys_2.gif";
     pre_img.appendChild(tmp);
   }
