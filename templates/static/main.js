@@ -407,7 +407,9 @@ function preview_init(){
     $(this).parent().width(m_w);
   });
 
-  if ('{{title}}'=="") {
+  pro_w='{{title}}';
+  console.log(pro_w);
+  if (pro_w=="") {
     pro_w = document.getElementById('pro_wh').value;
   } else {
     pro_w = '{{title}}';
