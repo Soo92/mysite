@@ -28,6 +28,8 @@ maxWH["C"]=[900,600];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
+  pro_w='{{title}}';
+  console.log(pro_w);
   // console.log(self);
   // console.log(self.parent);
   if ( self !== top ) {
@@ -407,8 +409,6 @@ function preview_init(){
     $(this).parent().width(m_w);
   });
 
-  pro_w='{{title}}';
-  console.log(pro_w);
   if (pro_w=="") {
     pro_w = document.getElementById('pro_wh').value;
   } else {
