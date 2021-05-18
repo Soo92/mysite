@@ -5,6 +5,7 @@
 		<meta http-equiv="imagetoolbar" content="no">
 		<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
 		<title> 제작상품 미리보기 | 알리네 간판 </title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script>
 			// console.log(parent.document.location.href)
 		  if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
@@ -15,7 +16,6 @@
 		    }, 1);
 		  }
 		</script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="static/style.css">
 		<link rel="stylesheet" href="static/dropdown.css">
 		<script src="static/main.js"></script>
@@ -39,12 +39,9 @@
 				<tr>
 					<td id="pro_back" width="860" height="420">
 						<div id="preview_list" style="position:relative;height:inherit;">
-							{{title}}
 							<div style="position:absolute;" hidden>
 								<select id="pro_wh" onchange="preview_init();preview_update()">
-									<option value="a" selected>스카시</option>
-									<option value="b">루미</option>
-									<option value="c">구로</option>
+									<option value="{{title}}" selected>{{title}}</option>
 								</select>
 								<select id="pro_aaa" onchange="align_change()">
 									<option value="normal" selected>normal</option>

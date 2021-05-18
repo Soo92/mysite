@@ -27,9 +27,6 @@ maxWH["b"]=[550,550];
 maxWH["C"]=[900,600];
 max_h=0;max_w=0;
 
-pro_w='{{title}}';
-console.log(pro_w)
-
 window.addEventListener('load', function() {
   // console.log(self);
   // console.log(self.parent);
@@ -410,11 +407,7 @@ function preview_init(){
     $(this).parent().width(m_w);
   });
 
-  if (pro_w=="") {
-    pro_w = document.getElementById('pro_wh').value;
-  } else {
-    pro_w = '{{title}}';
-  }
+  pro_w = document.getElementById('pro_wh').value;
   document.getElementById('pro_aaa')
   pro_list=$('.for')
   pro_list.each(function () {
