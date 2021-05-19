@@ -48,6 +48,7 @@
 									<option value="b">루미</option>
 									<option value="c">구로</option>
 									<option value="d">고무</option>
+									<option value="e">레터링</option>
 								</select>
 								<select id="pro_aaa" onchange="align_change()">
 									<option value="normal" selected>normal</option>
@@ -148,24 +149,35 @@
 						</div>
 						<div class="dropdown for a">
 						  <button class="dropbtn" style="width:190px;">
-								<span id="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">백색 아크릴</span><i class="arrow down"></i>
+								<span id="acr" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 아크릴">백색 아크릴</span><i class="arrow down"></i>
 							</button>
 						  <div class="dropdown-content" style="width:190px;">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color,this);preview_update()">백색 아크릴</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color,this);preview_update()">흑색 아크릴</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color,this);preview_update()">실버미러 아크릴</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color,this);preview_update()">골드미러 아크릴</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(acr,this);preview_update()">백색 아크릴</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(acr,this);preview_update()">흑색 아크릴</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(acr,this);preview_update()">실버미러 아크릴</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(acr,this);preview_update()">골드미러 아크릴</a>
 						  </div>
 						</div>
 						<div class="dropdown for d">
 						  <button class="dropbtn" style="width:190px;">
-								<span id="pro_color2" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
+								<span id="gomu" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
 							</button>
 						  <div class="dropdown-content" style="width:190px;">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color2,this);preview_update()">백색 판</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color2,this);preview_update()">흑색 판</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color2,this);preview_update()">실버미러 판</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color2,this);preview_update()">골드미러 판</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu,this);preview_update()">백색 판</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu,this);preview_update()">흑색 판</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(gomu,this);preview_update()">실버미러 판</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(gomu,this);preview_update()">골드미러 판</a>
+						  </div>
+						</div>
+						<div class="dropdown for e">
+						  <button class="dropbtn" style="width:190px;">
+								<span id="ltr" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색">백색</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:190px;">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(ltr,this);preview_update()">백색</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(ltr,this);preview_update()">흑색</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(ltr,this);preview_update()">실버</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(ltr,this);preview_update()">골드</a>
 						  </div>
 						</div>
 						<div class="dropdown">
@@ -174,13 +186,13 @@
 							</button>
 						  <div class="dropdown-content" style="width:110px;" onclick="cut_line();preview_update();">
 								<a class="dropdown for e" data-value="2" onclick="select_itm(pro_size,this);font_resize();preview_update();">2cm</a>
-								<a class="dropdown for a d" data-value="4" onclick="select_itm(pro_size,this);font_resize();preview_update();">4cm</a>
+								<a class="dropdown for a d e" data-value="4" onclick="select_itm(pro_size,this);font_resize();preview_update();">4cm</a>
 								<a class="dropdown for a b d" data-value="5" onclick="select_itm(pro_size,this);font_resize();preview_update();">5cm</a>
-								<a class="dropdown for a d" data-value="6" onclick="select_itm(pro_size,this);font_resize();preview_update();">6cm</a>
-								<a class="dropdown for a d" data-value="8" onclick="select_itm(pro_size,this);font_resize();preview_update();">8cm</a>
-								<a class="dropdown for a b c d" data-value="10" onclick="select_itm(pro_size,this);font_resize();preview_update();">10cm</a>
-								<a class="dropdown for a b d" data-value="15" onclick="select_itm(pro_size,this);font_resize();preview_update();">15cm</a>
-								<a class="dropdown for a b c d" data-value="20" onclick="select_itm(pro_size,this);font_resize();preview_update();">20cm</a>
+								<a class="dropdown for a d e" data-value="6" onclick="select_itm(pro_size,this);font_resize();preview_update();">6cm</a>
+								<a class="dropdown for a d e" data-value="8" onclick="select_itm(pro_size,this);font_resize();preview_update();">8cm</a>
+								<a class="dropdown for a b c d e" data-value="10" onclick="select_itm(pro_size,this);font_resize();preview_update();">10cm</a>
+								<a class="dropdown for a b d e" data-value="15" onclick="select_itm(pro_size,this);font_resize();preview_update();">15cm</a>
+								<a class="dropdown for a b c d e" data-value="20" onclick="select_itm(pro_size,this);font_resize();preview_update();">20cm</a>
 								<a class="dropdown for c" data-value="30" onclick="select_itm(pro_size,this);font_resize();preview_update();">30cm</a>
 							</div>
 						</div>
@@ -207,13 +219,13 @@
 					<td bgcolor="#ffffff" style="position:relative;padding-left:14px;">
 						<div class="dropdown for c">
 						  <button class="dropbtn" style="width:190px;">
-								<span id="pro_color2" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
+								<span id="guro" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
 							</button>
 						  <div class="dropdown-content" style="width:190px;">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(pro_color2,this);preview_update()">백색 판</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(pro_color2,this);preview_update()">흑색 판</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(pro_color2,this);preview_update()">실버미러 판</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(pro_color2,this);preview_update()">골드미러 판</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(guro,this);preview_update()">백색 판</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(guro,this);preview_update()">흑색 판</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(guro,this);preview_update()">실버미러 판</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(guro,this);preview_update()">골드미러 판</a>
 						  </div>
 						</div>
 						<div class="dropdown for b">

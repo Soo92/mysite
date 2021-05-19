@@ -120,8 +120,6 @@
 
 #pro_back{
   background-size: 100%;
-  background-position-x:center;
-  background-position-y:bottom;
   text-align:end;
   margin:0 auto;
   transition-duration:0.8s;

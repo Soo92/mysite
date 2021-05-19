@@ -27,6 +27,7 @@ maxWH["a"]=[900,800];
 maxWH["b"]=[550,550];
 maxWH["c"]=[900,600];
 maxWH["d"]=[900,800];
+maxWH["e"]=[900,800];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
@@ -418,6 +419,10 @@ function preview_init(){
   });
 
   pro_w = document.getElementById('pro_wh').value;
+  if (pro_w.length>1) {
+    pro_w="a"
+    $("#dev_down").show()
+  }
   pro_list=$('.for')
   pro_list.each(function () {
     if ($(this).attr('class').indexOf("hidden")<0) {
@@ -499,13 +504,7 @@ function preview_update(){
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
 
-  if (pro_w=="a") {
-    sel_clr = $("#pro_color");
-  } else if (pro_w=="b") {
-  } else if (pro_w=="c") {
-  } else if (pro_w=="d") {
-    sel_clr = $("#pro_color2");
-  }
+  sel_clr = $(".pro_color:visible");
   sel_font = $("#pro_font");
   sel_size = $("#pro_size");
   sel_back = $('#back_img');
@@ -514,6 +513,7 @@ function preview_update(){
   sel_main_LED = $("#pro_color_LED");
 
   t_clr = sel_clr.data("select")
+  if (t_clr==undefined) {t_clr=""}
   t_main_LED = sel_main_LED.data("select")
   t_side_LED = $("#side_color_on").data("select");
   t_side_back = $("#side_color_off").data("select");
@@ -529,7 +529,8 @@ function preview_update(){
   f_align = sel_align.data("value")
   f_deco = sel_deco.data("value");
 
-  if (f_s<8) {    back_scale=1.4
+  if (f_s<6) {    back_scale=1.6
+  } else if (f_s<8) {  back_scale=1.4
   } else if (f_s<15) {  back_scale=1.2
   } else {    back_scale=1  }
 
@@ -626,18 +627,20 @@ function preview_update(){
   } else if (pro_w=="b") {
     f_thi = 10
   } else if (pro_w=="c") {
-
+    f_thi = 5
   } else if (pro_w=="d") {
     f_thi = 5
+  } else if (pro_w=="e") {
+    f_thi = 0
   }
   f_cnt = 20
 
   if(f_light) {
     pre_back="background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25)), url('static/background/"+f_b+"') 50% 50%;"
-      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
+      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;  background-position-x:center;background-position-y:bottom;"
   } else {
     pre_back="background:url('static/background/"+f_b+"') 50% 50%;"
-      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;"
+      +"background-size:"+100*back_scale+"% "+100*back_scale+"%;background-position-x:center;background-position-y:bottom;"
     f_main_LED="ffffff"
   }
   document.getElementById("pro_back").style=pre_back
@@ -651,9 +654,12 @@ function preview_update(){
       arr_clr=[f_main_LED,f_side_back,f_side_back]
     }
   } else if (pro_w=="c") {
+    arr_clr = sel_clr.data("value").split(",")
   } else if (pro_w=="d") {
     arr_clr = sel_clr.data("value").split(",")
     arr_clr[2]="#000000"
+  } else if (pro_w=="e") {
+    arr_clr = sel_clr.data("value").split(",")
   }
   taper=0
   for (step = 0; step <= f_cnt; step++) {
