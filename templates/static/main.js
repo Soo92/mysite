@@ -810,12 +810,10 @@ function preview_update(){
     price_total=price_total+(1200-price_total%1200)
   }
 
-  if(pro_w=="a" || pro_w=="d") {
-    t_clr_slt=t_clr.split(" ")[0]
-  } else if (pro_w=="b") {
+  if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
-  } else if (pro_w=="c") {
-    t_clr_slt=t_clr
+  } else {
+    t_clr_slt=t_clr.split(" ")[0]
   }
   document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
   document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
