@@ -3,6 +3,7 @@ back_optin_list="검은색 목재.jpg/청색 대리석.jpg/갈색톤.jpg/밝은 
 font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B08/B09/B10/C01/C02/C03/C04/C05/C06/C07/D01/D02";
 
 flag_font=false;
+dbg_cnt=0;
 
 price_KE ={};
 price_KE["4cm"]=1200;
@@ -45,6 +46,14 @@ window.addEventListener('load', function() {
     // console.log("nono")
   }
 });
+
+function show_debug(){
+  dbg_cnt=dbg_cnt+1;
+  if (dbg_cnt>10) {
+    tmp=document.getElementById("dev_down");
+    tmp.hidden=false;
+  }
+}
 
 function cut_line(){
   tmp=document.getElementById("preview_text");
