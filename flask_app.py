@@ -14,6 +14,12 @@ def t2():
 @app.route('/t3')
 def t3():
     return render_template('3tAcr.html',title='c')
+@app.route('/t4')
+def t4():
+    return render_template('3tAcr.html',title='d')
+@app.route('/t5')
+def t5():
+    return render_template('3tAcr.html',title='e')
 
 if __name__ == '__main__':
     app.run()

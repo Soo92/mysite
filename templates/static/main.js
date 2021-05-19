@@ -5,22 +5,49 @@ font_list="A01/A02/A03/A04/A05/A06/A07/A08/A09/A10/B01/B02/B03/B04/B05/B06/B07/B
 flag_font=false;
 dbg_cnt=0;
 
-price_KE ={};
-price_KE["4cm"]=1200;
-price_KE["5cm"]=1500;
-price_KE["6cm"]=2000;
-price_KE["8cm"]=3500;
-price_KE["10cm"]=4500;
-price_KE["15cm"]=7000;
-price_KE["20cm"]=9500;
-price_ETC ={};
-price_ETC["4cm"]=2000;
-price_ETC["5cm"]=2200;
-price_ETC["6cm"]=3000;
-price_ETC["8cm"]=4000;
-price_ETC["10cm"]=5000;
-price_ETC["15cm"]=8000;
-price_ETC["20cm"]=10000;
+price_arr={};
+
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["4cm"]=1200;    price_E["4cm"]=1200;    price_ETC["4cm"]=2000;        price_mirror["4cm"]=800;          price_line["4cm"]=0;    price_border["4cm"]=0;
+price_K["5cm"]=1500;    price_E["5cm"]=1500;    price_ETC["5cm"]=2200;        price_mirror["5cm"]=700;          price_line["5cm"]=0;    price_border["5cm"]=0;
+price_K["6cm"]=2000;    price_E["6cm"]=2000;    price_ETC["6cm"]=3000;        price_mirror["6cm"]=1000;         price_line["6cm"]=0;    price_border["6cm"]=0;
+price_K["8cm"]=3500;    price_E["8cm"]=3500;    price_ETC["8cm"]=4000;        price_mirror["8cm"]=500;          price_line["8cm"]=0;    price_border["8cm"]=0;
+price_K["10cm"]=4500;   price_E["10cm"]=4500;   price_ETC["10cm"]=5000;       price_mirror["10cm"]=500;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=7000;   price_E["15cm"]=7000;   price_ETC["15cm"]=8000;       price_mirror["15cm"]=1000;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=9500;   price_E["20cm"]=9500;   price_ETC["20cm"]=10000;      price_mirror["20cm"]=500;         price_line["20cm"]=0;   price_border["20cm"]=0;
+price_arr["a"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["10cm"]=30000;   price_E["10cm"]=25000;   price_ETC["10cm"]=30000;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=35000;   price_E["15cm"]=30000;   price_ETC["15cm"]=35000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=45000;   price_E["20cm"]=40000;   price_ETC["20cm"]=45000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
+price_arr["b"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["15cm"]=35000;   price_E["15cm"]=35000;   price_ETC["15cm"]=45000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=-5000;
+price_K["20cm"]=45000;   price_E["20cm"]=45000;   price_ETC["20cm"]=50000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=-10000;
+price_K["30cm"]=50000;   price_E["30cm"]=50000;   price_ETC["30cm"]=60000;      price_mirror["30cm"]=0;         price_line["30cm"]=0;   price_border["30cm"]=-10000;
+price_arr["c"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["4cm"]=0;    price_E["4cm"]=0;    price_ETC["4cm"]=0;        price_mirror["4cm"]=0;          price_line["4cm"]=0;    price_border["4cm"]=0;
+price_K["5cm"]=0;    price_E["5cm"]=0;    price_ETC["5cm"]=0;        price_mirror["5cm"]=0;          price_line["5cm"]=0;    price_border["5cm"]=0;
+price_K["6cm"]=0;    price_E["6cm"]=0;    price_ETC["6cm"]=0;        price_mirror["6cm"]=0;         price_line["6cm"]=0;    price_border["6cm"]=0;
+price_K["8cm"]=0;    price_E["8cm"]=0;    price_ETC["8cm"]=0;        price_mirror["8cm"]=0;          price_line["8cm"]=0;    price_border["8cm"]=0;
+price_K["10cm"]=0;   price_E["10cm"]=0;   price_ETC["10cm"]=0;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=0;   price_E["15cm"]=0;   price_ETC["15cm"]=0;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
+price_arr["d"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["2cm"]=300;     price_E["2cm"]=300;      price_ETC["2cm"]=500;        price_mirror["2cm"]=0;          price_line["2cm"]=0;    price_border["2cm"]=0;
+price_K["4cm"]=400;     price_E["4cm"]=400;      price_ETC["4cm"]=800;        price_mirror["4cm"]=0;          price_line["4cm"]=0;    price_border["4cm"]=0;
+price_K["6cm"]=500;     price_E["6cm"]=500;      price_ETC["6cm"]=1000;        price_mirror["6cm"]=0;         price_line["6cm"]=0;    price_border["6cm"]=0;
+price_K["8cm"]=500;     price_E["8cm"]=500;      price_ETC["8cm"]=1000;        price_mirror["8cm"]=0;          price_line["8cm"]=0;    price_border["8cm"]=0;
+price_K["10cm"]=700;    price_E["10cm"]=700;     price_ETC["10cm"]=1400;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=1000;     price_E["15cm"]=1000;     price_ETC["15cm"]=2000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=1500;     price_E["20cm"]=1500;     price_ETC["20cm"]=3000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
+price_arr["e"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
 maxWH = {};
 maxWH["a"]=[900,800];
@@ -529,7 +556,7 @@ function preview_update(){
   f_align = sel_align.data("value")
   f_deco = sel_deco.data("value");
 
-  if (f_s<6) {    back_scale=1.6
+  if (f_s<6) {    back_scale=1.8
   } else if (f_s<8) {  back_scale=1.4
   } else if (f_s<15) {  back_scale=1.2
   } else {    back_scale=1  }
@@ -757,42 +784,32 @@ function preview_update(){
   n_cnt=0;s_cnt=0;
   for (i = 0; i < sel_text.length; i++) {
     tmp=sel_text.charAt(i)
-    tmp_price=0
     if (check_kor.test(tmp)){
-      k_cnt=k_cnt+1
-      tmp_price=price_KE[t_size]
+      k_cnt=k_cnt+1;f_cnt=f_cnt+1;
     } else if (check_eng.test(tmp)){
-      e_cnt=e_cnt+1
-      tmp_price=price_KE[t_size]
+      e_cnt=e_cnt+1;f_cnt=f_cnt+1;
     } else if (check_n.test(tmp)) {
-      n_cnt=n_cnt+1
-      tmp_price=price_KE[t_size]
+      n_cnt=n_cnt+1;f_cnt=f_cnt+1;
     } else if (check_s.test(tmp)) {
-      s_cnt=s_cnt+1
-      if (s_cnt%3==0) {
-        tmp_price=price_KE[t_size]
-      }
+      s_cnt=s_cnt+1;f_cnt=f_cnt+1;
     } else if (check_num.test(tmp) || check_spc.test(tmp) || tmp.trim()!=""){
-      o_cnt=o_cnt+1
-      tmp_price=price_ETC[t_size]
+      o_cnt=o_cnt+1;f_cnt=f_cnt+1;
     }
+  }
+  s_cnt=parseInt(s_cnt/3)
 
-    if (t_clr.search("미러")>-1) {
-      if (tmp_price<=2000) {
-        tmp_price=tmp_price+200
-      } else if (tmp_price<5000) {
-        tmp_price=tmp_price+300
-      } else if (tmp_price<8000) {
-        tmp_price=tmp_price+400
-      } else {
-        tmp_price=tmp_price+500
-      }
-    }
-    price_total=price_total+tmp_price
+  price_total=
+    price_arr[pro_w]["price_K"][t_size] *   (k_cnt+s_cnt+n_cnt) +
+    price_arr[pro_w]["price_E"][t_size] *   e_cnt +
+    price_arr[pro_w]["price_ETC"][t_size] * o_cnt
+
+  if (t_clr.search("미러")>-1) {
+    price_total=price_total + price_arr[pro_w]["price_mirror"][t_size]*f_cnt
   }
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
   }
+
   if(pro_w=="a" || pro_w=="d") {
     t_clr_slt=t_clr.split(" ")[0]
   } else if (pro_w=="b") {
@@ -800,7 +817,6 @@ function preview_update(){
   } else if (pro_w=="c") {
     t_clr_slt=t_clr
   }
-
   document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
   document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
