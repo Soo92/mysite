@@ -15,7 +15,9 @@ price_K["8cm"]=3500;    price_E["8cm"]=3500;    price_ETC["8cm"]=4000;        pr
 price_K["10cm"]=4500;   price_E["10cm"]=4500;   price_ETC["10cm"]=5000;       price_mirror["10cm"]=500;         price_line["10cm"]=0;   price_border["10cm"]=0;
 price_K["15cm"]=7000;   price_E["15cm"]=7000;   price_ETC["15cm"]=8000;       price_mirror["15cm"]=1000;        price_line["15cm"]=0;   price_border["15cm"]=0;
 price_K["20cm"]=9500;   price_E["20cm"]=9500;   price_ETC["20cm"]=10000;      price_mirror["20cm"]=500;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["a"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_arr["a3t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_arr["a5t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
 price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
 price_K["10cm"]=30000;   price_E["10cm"]=25000;   price_ETC["10cm"]=30000;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
@@ -37,7 +39,7 @@ price_K["8cm"]=0;    price_E["8cm"]=0;    price_ETC["8cm"]=0;        price_mirro
 price_K["10cm"]=0;   price_E["10cm"]=0;   price_ETC["10cm"]=0;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
 price_K["15cm"]=0;   price_E["15cm"]=0;   price_ETC["15cm"]=0;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
 price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["d"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_arr["d10t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
 price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
 price_K["2cm"]=300;     price_E["2cm"]=300;      price_ETC["2cm"]=500;        price_mirror["2cm"]=0;          price_line["2cm"]=0;    price_border["2cm"]=0;
@@ -531,6 +533,7 @@ function preview_update(){
   sel_text = tmp.innerText
   sel_HTML = tmp.innerHTML
 
+  sel_thk = $(".thi:visible");
   sel_clr = $(".pro_color:visible");
   sel_font = $("#pro_font");
   sel_size = $("#pro_size");
@@ -539,6 +542,9 @@ function preview_update(){
   sel_deco = $('#side_deco');
   sel_main_LED = $("#pro_color_LED");
 
+  t_thk = sel_thk.data("value")
+  if (t_thk==undefined) {t_thk=""}
+  t_side_gomu = $("#gomu").data("select");
   t_clr = sel_clr.data("select")
   if (t_clr==undefined) {t_clr=""}
   t_main_LED = sel_main_LED.data("select")
@@ -621,6 +627,7 @@ function preview_update(){
   f_main_LED = $("#pro_color_LED").data("value")
   f_side_LED = $("#side_color_on").data("value");
   f_side_back = $("#side_color_off").data("value");
+  f_side_gomu = $("#gomu").data("value");
 
   if (f_side_LED =="none") {
     f_side = false
@@ -649,16 +656,20 @@ function preview_update(){
     });
   }
 
-  if (pro_w=="a") {
-    f_thi = 2
-  } else if (pro_w=="b") {
-    f_thi = 10
-  } else if (pro_w=="c") {
-    f_thi = 5
-  } else if (pro_w=="d") {
-    f_thi = 5
-  } else if (pro_w=="e") {
-    f_thi = 0
+  if (t_thk=="") {
+    if (pro_w=="a") {
+      f_thi = 2
+    } else if (pro_w=="b") {
+      f_thi = 10
+    } else if (pro_w=="c") {
+      f_thi = 5
+    } else if (pro_w=="d") {
+      f_thi = 5
+    } else if (pro_w=="e") {
+      f_thi = 0
+    }
+  } else {
+    f_thi=t_thk.replaceAll("t","")*2/6
   }
   f_cnt = 20
 
@@ -684,7 +695,7 @@ function preview_update(){
     arr_clr = sel_clr.data("value").split(",")
   } else if (pro_w=="d") {
     arr_clr = sel_clr.data("value").split(",")
-    arr_clr[2]="#000000"
+    arr_clr[3]=f_side_gomu
   } else if (pro_w=="e") {
     arr_clr = sel_clr.data("value").split(",")
   }
@@ -721,7 +732,7 @@ function preview_update(){
         if (step==1) {
           f_clr=arr_clr[1]
         } else {
-          f_clr=arr_clr[2]
+          f_clr=arr_clr[arr_clr.length-1]
         }
       } else if (pro_w=="b") {
         if (step<=(f_cnt*15/20)) {
@@ -798,13 +809,14 @@ function preview_update(){
   }
   s_cnt=parseInt(s_cnt/3)
 
+  tmp_w=pro_w+t_thk
   price_total=
-    price_arr[pro_w]["price_K"][t_size] *   (k_cnt+s_cnt+n_cnt) +
-    price_arr[pro_w]["price_E"][t_size] *   e_cnt +
-    price_arr[pro_w]["price_ETC"][t_size] * o_cnt
+    price_arr[tmp_w]["price_K"][t_size] *   (k_cnt+s_cnt+n_cnt) +
+    price_arr[tmp_w]["price_E"][t_size] *   e_cnt +
+    price_arr[tmp_w]["price_ETC"][t_size] * o_cnt
 
   if (t_clr.search("미러")>-1) {
-    price_total=price_total + price_arr[pro_w]["price_mirror"][t_size]*f_cnt
+    price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
   if (price_total%1200!=0) {
     price_total=price_total+(1200-price_total%1200)
@@ -812,11 +824,14 @@ function preview_update(){
 
   if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
+  } else if(pro_w=="d") {
+    console.log(t_clr)
+    t_clr_slt=t_clr.charAt(0)+t_clr.split("(")[1].split(")")[0]+t_side_gomu.charAt(0)
   } else {
     t_clr_slt=t_clr.split(" ")[0]
   }
   document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
-  document.getElementById("boption").innerText=t_clr_slt+"/" +f_w+"/" +t_size+"/"+t_align+"/"+t_deco
+  document.getElementById("boption").innerText=f_w+"/" +t_clr_slt+"/" +t_size+"/"+t_align+"/"+t_deco+"/"+t_thk
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
 }

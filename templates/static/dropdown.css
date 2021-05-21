@@ -220,7 +220,7 @@ td > .dropdown > .dropbtn {
   background-repeat:no-repeat;
   color:rgb(0,0,0,0);
   border-radius: 10px;
-  margin: 0 7px;
+  margin: 0 5px;
   float: left;
 }
 .a_normal{  background-image:url('background/align_none.png');}
@@ -321,7 +321,7 @@ td > .dropdown > .dropbtn {
 }
 
 #font_list{
-  position: absolute;
+  position: fixed;
   background: #f1f1f1;
 }
 #font_dummy{
@@ -365,14 +365,14 @@ td > .dropdown > .dropbtn {
 .opt_text > td > font{
   position:absolute;
   font-size:20px;
-  left: 30px;
+  left: 20px;
   top: 23px;
 }
 .opt_text > td > div{
   position:absolute;
   font-size:22px;
   font-weight:bold;
-  left:145px;
+  left:120px;
 }
 .hidden {
   display: none !important;
