@@ -24,25 +24,27 @@
   height: 320px;
 }
 .play {
+  cursor: pointer;
   position: absolute;
   bottom: 0%;
   right: 50%;
   width: 60%;
-  height: 19px;
-  font-size: 18px;
-  border: 3px solid #DDDDDD;
+  height: 22px;
+  font-size: 20px;
+  color: #0088BE;
+  border: 2px solid #0088BE;
   border-radius: 5px;
   transform: translate(50%, 0);
   -webkit-transform: translate(50%, 0);
 }
 .exp {
   position: absolute;
-  top: 0%;
-  left: -1%;
-  width: 101%;
-  height: 100%;
+  top: 1%;
+  left: 0%;
+  width: 99.5%;
+  height: 81%;
   background-color: #0088C3;
-  border: 1px solid #0088C3;
+  border: 2px solid #0088C3;
   border-radius: 3px;
   transform: scaleX(0);
 }
@@ -76,7 +78,7 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border: #DDDDDD solid 1px;
+  border: #DDDDDD solid 2px;
   border-radius: 50%;
   width:27px;
   height:27px;
@@ -127,7 +129,7 @@
 
 .arrow {
   border: solid #919296;
-  border-width: 0 2px 2px 0;
+  border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3.5px
 }
@@ -178,7 +180,7 @@
 .dropbtn {
   text-align: left;
   background-color: #ffffff;
-  border: solid 1px #D4D5D6;
+  border: solid 2px #D4D5D6;
   color: black;
   font-size:15pt;
   border-radius: 10px;
@@ -267,7 +269,7 @@ td > .dropdown > .dropbtn {
   color: black;
   padding: 8px 12px;
   text-decoration: none;
-  border: solid 1px white;
+  border: solid 2px white;
   border-radius: 5px;
   display: block;
 }
@@ -287,13 +289,15 @@ td > .dropdown > .dropbtn {
 .button {
   display: inline-block;
   position: absolute;
+  top: -1px;
   text-align: center;
   cursor: pointer;
   background-color: white;
   color: #0088BE;
   border-radius: 10px;
-  border: 1px solid #46B2B6;
+  border: 2px solid #0088BE;
   font-size: 16px;
+  font-weight: bold;
   height: 28px;
   width: 90px;
   margin: 0 10px;
@@ -304,7 +308,7 @@ td > .dropdown > .dropbtn {
 }
 
 .button1:hover {
-  border: 1px solid #0088BE;
+  border: 2px solid #0088BE;
   background-color: #0088BE;
   color: white;
 }
@@ -346,7 +350,7 @@ td > .dropdown > .dropbtn {
 }
 .transparent > .arrow{
   border-color: white;
-  margin: 1px;
+  margin: 2px;
 }
 .transparent > .arrow.down{
   margin: 5px;
@@ -360,15 +364,15 @@ td > .dropdown > .dropbtn {
 }
 .opt_text > td > font{
   position:absolute;
-  font-size:18px;
+  font-size:20px;
   left: 30px;
-  top: 26px;
+  top: 23px;
 }
 .opt_text > td > div{
   position:absolute;
-  font-size:18px;
+  font-size:22px;
   font-weight:bold;
-  left:130px;
+  left:145px;
 }
 .hidden {
   display: none !important;
