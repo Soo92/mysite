@@ -574,12 +574,20 @@ function preview_update(){
   f_scale=$("#font"+f_w).data("scale")
   font_size=(f_h*f_scale*back_scale)
 
+  show_text=sel_text;
   max_w = maxWH[pro_w][0]*back_scale/2
   max_h = maxWH[pro_w][1]*back_scale/2
+
   pre_test = document.getElementById('pre_text2');
-  show_text=sel_text;
   pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
+
+  pre_test2 = document.getElementById('pre_text3');
+  pre_test2.innerHTML=sel_HTML;
+  pre_test2.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
+  console.log(tmp.clientWidth,tmp.clientHeight)
+  console.log(pre_width,pre_height)
 
   tmp=document.getElementById("preview_text");
   text_list=tmp.innerText.split('\n');
