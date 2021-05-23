@@ -54,9 +54,9 @@ price_arr["e"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 maxWH = {};
 maxWH["a"]=[900,800];
 maxWH["b"]=[550,550];
-maxWH["c"]=[900,600];
-maxWH["d"]=[900,800];
-maxWH["e"]=[900,800];
+maxWH["c"]=[99999,99999];
+maxWH["d"]=[99999,99999];
+maxWH["e"]=[99999,99999];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
@@ -831,7 +831,7 @@ function preview_update(){
     t_clr_slt=t_clr.split(" ")[0]
   }
   document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
-  document.getElementById("boption").innerText=f_w+"/" +t_clr_slt+"/" +t_size+"/"+t_align+"/"+t_deco+"/"+t_thk
+  document.getElementById("boption").innerText=f_w+"/" +t_clr_slt+"/" +t_size+"/"+t_align+"/"+t_deco.charAt(0)+"/"+t_thk
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   document.getElementById("bcount").innerText=price_total/1200
 }
