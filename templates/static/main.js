@@ -131,15 +131,17 @@ function cut_line(){
   pre_test2.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
   pre_scale=1
-  pre_scale_h=pre_height/pre_test2.clientHeight;
-  pre_scale_w=pre_width/pre_test2.clientWidth;
-  if(pre_height<pre_test2.clientHeight && tmp_scale>pre_scale_h) {
+  pre_scale_h=pre_height/(pre_test2.clientHeight*1.1);
+  pre_scale_w=pre_width/(pre_test2.clientWidth*1.1);
+  console.log(pre_scale_h,pre_scale_w)
+  if(pre_height<pre_test2.clientHeight && pre_scale>pre_scale_h) {
     pre_scale=pre_scale_h
   }
-  if(pre_width<pre_test2.clientWidth && tmp_scale>pre_scale_w) {
+  if(pre_width<pre_test2.clientWidth && pre_scale>pre_scale_w) {
     pre_scale=pre_scale_w
   }
   back_scale=back_scale*pre_scale
+  console.log(pre_scale)
 }
 
 function sel_last(){
@@ -639,18 +641,18 @@ function preview_update(){
     }
     if (y_rec.length>0) {
       for (i=0; i<y_rec.length; i++) {
-        text_list[y]=insert(text_list[y], y_rec[i], '\n');
+        text_list[y]=insert(text_list[y], y_rec[i], '؉');
       }
       show_text=text_list.join('\n');
       show_text=show_text.trim();
       if (show_text.length>20) {
-        sel_text=show_text;
+        sel_text=show_text.replaceAll("؉","\n");
       }
     }
   }
   if (sel_text.indexOf("؊")>-1) {
     toast("사용할 수 없는 문자입니다!")
-    sel_text=sel_text.replace("؊","")
+    sel_text=sel_text.replaceAll("؊","")
     tmp.innerText=sel_text.trim()
   }
   if (sel_text.length>20) {
@@ -843,9 +845,9 @@ function preview_update(){
       k_cnt=k_cnt+1;f_cnt=f_cnt+1;
     } else if (check_eng.test(tmp)){
       e_cnt=e_cnt+1;f_cnt=f_cnt+1;
-    } else if (check_n.test(tmp)) {
+    } else if (pro_w!="c" && pro_w!="d" && check_n.test(tmp)) {
       n_cnt=n_cnt+1;f_cnt=f_cnt+1;
-    } else if (check_s.test(tmp)) {
+    } else if (pro_w!="c" && pro_w!="d" && check_s.test(tmp)) {
       s_cnt=s_cnt+1;f_cnt=f_cnt+1;
     } else if (check_num.test(tmp) || check_spc.test(tmp) || tmp.trim()!=""){
       o_cnt=o_cnt+1;f_cnt=f_cnt+1;
@@ -876,5 +878,5 @@ function preview_update(){
   document.getElementById("btext").innerText=show_text.replace(/(\n|\r\n)/g, '؊')
   document.getElementById("boption").innerText=f_w+"/" +t_clr_slt+"/" +t_size+"/"+t_align+"/"+t_deco.charAt(0)+"/"+t_thk
   document.getElementById("btotal").innerText=price_total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  document.getElementById("bcount").innerText=price_total/1200
+  document.getElementById("bcount").innerText=price_total/price_wh[tmp_w]
 }
