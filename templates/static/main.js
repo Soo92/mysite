@@ -133,7 +133,6 @@ function cut_line(){
   pre_scale=1
   pre_scale_h=pre_height/(pre_test2.clientHeight*1.1);
   pre_scale_w=pre_width/(pre_test2.clientWidth*1.1);
-  console.log(pre_scale_h,pre_scale_w)
   if(pre_height<pre_test2.clientHeight && pre_scale>pre_scale_h) {
     pre_scale=pre_scale_h
   }
@@ -141,7 +140,6 @@ function cut_line(){
     pre_scale=pre_scale_w
   }
   back_scale=back_scale*pre_scale
-  console.log(pre_scale)
 }
 
 function sel_last(){
@@ -284,7 +282,7 @@ function copyIt(title,bID) {
 }
 
 function paste_value(e){
-  document.execCommand('insertHTML', false, event.clipboardData.getData('Text').replace(/(\n|\r\n)/g, '').replaceAll('؊', '<br>'));
+  document.execCommand('insertHTML', false, event.clipboardData.getData('Text').replace(/(\n|\r\n)/g, '').replaceAll('؊', '<br>').replaceAll('؉', '<br>'));
   event.preventDefault();
 }
 
@@ -645,19 +643,20 @@ function preview_update(){
       }
       show_text=text_list.join('\n');
       show_text=show_text.trim();
-      if (show_text.length>20) {
-        sel_text=show_text.replaceAll("؉","\n");
+      if (show_text.length>19) {
+        sel_text=sel_text.slice(0,show_text.length-(show_text.match(/؉/g) || []).length)
+        show_text=show_text.slice(0,20)
       }
     }
   }
-  if (sel_text.indexOf("؊")>-1) {
+  if (sel_text.indexOf("؊")>-1 || sel_text.indexOf("؉")>-1) {
     toast("사용할 수 없는 문자입니다!")
-    sel_text=sel_text.replaceAll("؊","")
+    sel_text=sel_text.replaceAll("؊","").replaceAll("؉","")
     tmp.innerText=sel_text.trim()
   }
-  if (sel_text.length>20) {
+  if (show_text.length>19) {
     toast("20자씩 나눠서 입력해주세요!")
-    sel_text=sel_text.slice(0,20)
+    sel_text=sel_text.slice(0,20-(show_text.match(/؉/g) || []).length)
     tmp.innerText=sel_text.trim()
   }
   tmp=document.getElementById("preview_text");
@@ -871,7 +870,7 @@ function preview_update(){
   if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
   } else if(pro_w=="d") {
-    t_clr_slt=t_clr.charAt(0)+t_clr.split("(")[1].split(")")[0]+t_side_gomu.charAt(0)
+    t_clr_slt=t_clr.charAt(0)+t_clr.split("(")[1].charAt(0)+t_side_gomu.charAt(0)
   } else {
     t_clr_slt=t_clr.split(" ")[0]
   }
