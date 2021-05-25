@@ -8,15 +8,23 @@ dbg_cnt=0;
 price_arr={};
 
 price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["4cm"]=1200;    price_E["4cm"]=1200;    price_ETC["4cm"]=2000;        price_mirror["4cm"]=800;          price_line["4cm"]=0;    price_border["4cm"]=0;
-price_K["5cm"]=1500;    price_E["5cm"]=1500;    price_ETC["5cm"]=2200;        price_mirror["5cm"]=700;          price_line["5cm"]=0;    price_border["5cm"]=0;
+price_K["4cm"]=1200;    price_E["4cm"]=1200;    price_ETC["4cm"]=2000;        price_mirror["4cm"]=1000;          price_line["4cm"]=0;    price_border["4cm"]=0;
+price_K["5cm"]=1500;    price_E["5cm"]=1500;    price_ETC["5cm"]=2200;        price_mirror["5cm"]=1000;          price_line["5cm"]=0;    price_border["5cm"]=0;
 price_K["6cm"]=2000;    price_E["6cm"]=2000;    price_ETC["6cm"]=3000;        price_mirror["6cm"]=1000;         price_line["6cm"]=0;    price_border["6cm"]=0;
-price_K["8cm"]=3500;    price_E["8cm"]=3500;    price_ETC["8cm"]=4000;        price_mirror["8cm"]=500;          price_line["8cm"]=0;    price_border["8cm"]=0;
-price_K["10cm"]=4500;   price_E["10cm"]=4500;   price_ETC["10cm"]=5000;       price_mirror["10cm"]=500;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=7000;   price_E["15cm"]=7000;   price_ETC["15cm"]=8000;       price_mirror["15cm"]=1000;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=9500;   price_E["20cm"]=9500;   price_ETC["20cm"]=10000;      price_mirror["20cm"]=500;         price_line["20cm"]=0;   price_border["20cm"]=0;
+price_K["8cm"]=2500;    price_E["8cm"]=2500;    price_ETC["8cm"]=4000;        price_mirror["8cm"]=1000;          price_line["8cm"]=0;    price_border["8cm"]=0;
+price_K["10cm"]=3500;   price_E["10cm"]=3500;   price_ETC["10cm"]=5000;       price_mirror["10cm"]=1000;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=4500;   price_E["15cm"]=4500;   price_ETC["15cm"]=8000;       price_mirror["15cm"]=1500;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=7000;   price_E["20cm"]=7000;   price_ETC["20cm"]=10000;      price_mirror["20cm"]=2000;         price_line["20cm"]=0;   price_border["20cm"]=0;
 price_arr["a3t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
+price_K["4cm"]=2500;    price_E["4cm"]=2500;    price_ETC["4cm"]=3000;        price_mirror["4cm"]=1000;          price_line["4cm"]=0;    price_border["4cm"]=0;
+price_K["5cm"]=2500;    price_E["5cm"]=2500;    price_ETC["5cm"]=3500;        price_mirror["5cm"]=1000;          price_line["5cm"]=0;    price_border["5cm"]=0;
+price_K["6cm"]=3000;    price_E["6cm"]=3000;    price_ETC["6cm"]=5000;        price_mirror["6cm"]=1000;         price_line["6cm"]=0;    price_border["6cm"]=0;
+price_K["8cm"]=4000;    price_E["8cm"]=4000;    price_ETC["8cm"]=5500;        price_mirror["8cm"]=1000;          price_line["8cm"]=0;    price_border["8cm"]=0;
+price_K["10cm"]=4500;   price_E["10cm"]=4500;   price_ETC["10cm"]=6000;       price_mirror["10cm"]=1000;         price_line["10cm"]=0;   price_border["10cm"]=0;
+price_K["15cm"]=6500;   price_E["15cm"]=6500;   price_ETC["15cm"]=9500;       price_mirror["15cm"]=1500;        price_line["15cm"]=0;   price_border["15cm"]=0;
+price_K["20cm"]=9000;   price_E["20cm"]=9000;   price_ETC["20cm"]=12000;      price_mirror["20cm"]=2000;         price_line["20cm"]=0;   price_border["20cm"]=0;
 price_arr["a5t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
 price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
@@ -42,7 +50,6 @@ price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror
 price_arr["d10t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
 price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["2cm"]=300;     price_E["2cm"]=300;      price_ETC["2cm"]=500;        price_mirror["2cm"]=0;          price_line["2cm"]=0;    price_border["2cm"]=0;
 price_K["4cm"]=400;     price_E["4cm"]=400;      price_ETC["4cm"]=800;        price_mirror["4cm"]=0;          price_line["4cm"]=0;    price_border["4cm"]=0;
 price_K["6cm"]=500;     price_E["6cm"]=500;      price_ETC["6cm"]=1000;        price_mirror["6cm"]=0;         price_line["6cm"]=0;    price_border["6cm"]=0;
 price_K["8cm"]=500;     price_E["8cm"]=500;      price_ETC["8cm"]=1000;        price_mirror["8cm"]=0;          price_line["8cm"]=0;    price_border["8cm"]=0;
@@ -51,12 +58,24 @@ price_K["15cm"]=1000;     price_E["15cm"]=1000;     price_ETC["15cm"]=2000;     
 price_K["20cm"]=1500;     price_E["20cm"]=1500;     price_ETC["20cm"]=3000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
 price_arr["e"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
 
+price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};           price_color={};
+price_K["10cm"]=0;   price_E["10cm"]=0;   price_ETC["10cm"]=0;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;                price_color["10cm"]=1000;
+price_K["15cm"]=0;   price_E["15cm"]=0;   price_ETC["15cm"]=0;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;                 price_color["15cm"]=1000;
+price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;                 price_color["20cm"]=1000;
+price_K["25cm"]=0;    price_E["25cm"]=0;    price_ETC["25cm"]=0;        price_mirror["25cm"]=0;          price_line["25cm"]=0;    price_border["25cm"]=0;           price_color["25cm"]=1000;
+price_K["30cm"]=0;    price_E["30cm"]=0;    price_ETC["30cm"]=0;        price_mirror["30cm"]=0;          price_line["30cm"]=0;    price_border["30cm"]=0;           price_color["30cm"]=1000;
+price_K["35cm"]=0;    price_E["35cm"]=0;    price_ETC["35cm"]=0;        price_mirror["35cm"]=0;         price_line["35cm"]=0;    price_border["35cm"]=0;            price_color["35cm"]=1500;
+price_K["40cm"]=0;    price_E["40cm"]=0;    price_ETC["40cm"]=0;        price_mirror["40cm"]=0;          price_line["40cm"]=0;    price_border["40cm"]=0;           price_color["40cm"]=2000;
+price_K["45cm"]=0;    price_E["45cm"]=0;    price_ETC["45cm"]=0;        price_mirror["45cm"]=0;          price_line["45cm"]=0;    price_border["45cm"]=0;           price_color["45cm"]=2000;
+price_K["50cm"]=0;    price_E["50cm"]=0;    price_ETC["50cm"]=0;        price_mirror["50cm"]=0;          price_line["50cm"]=0;    price_border["50cm"]=0;           price_color["50cm"]=2000;
+price_arr["f10t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+
+price_wh = {};
+price_wh["a3t"]=1200;price_wh["a5t"]=1200;price_wh["b"]=5000;price_wh["c"]=5000;price_wh["e"]=500;
+price_wh["d10t"]=1200;price_wh["d20t"]=1200;price_wh["d30t"]=1200;
+price_wh["f10t"]=1200;price_wh["f20t"]=1200;price_wh["f30t"]=1200;
 maxWH = {};
-maxWH["a"]=[900,800];
-maxWH["b"]=[550,550];
-maxWH["c"]=[99999,99999];
-maxWH["d"]=[99999,99999];
-maxWH["e"]=[99999,99999];
+maxWH["a"]=[900,800]; maxWH["b"]=[550,550]; maxWH["c"]=[99999,99999]; maxWH["d"]=[99999,99999]; maxWH["e"]=[99999,99999]; maxWH["f"]=[99999,99999];
 max_h=0;max_w=0;
 
 window.addEventListener('load', function() {
@@ -87,6 +106,9 @@ function show_debug(){
 
 function cut_line(){
   tmp=document.getElementById("preview_text");
+  pre_test = document.getElementById('pre_text2');
+  pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
   pre_text.innerText=tmp.innerText;
   text_list=pre_text.innerText.split('\n');
   pre_h=pre_text.clientHeight;
@@ -97,12 +119,27 @@ function cut_line(){
     pre_text.innerText=text_list.join('\n')
     pre_h=pre_text.clientHeight;
     if (pre_h<=max_h) {
-      toast("자동 견적은 한번에 "+max_h*2/10+"cm 까지 가능합니다!")
+      toast("자동 견적은 한번에 "+maxWH[pro_w][1]*0.1+"cm 까지 가능합니다!")
       tmp.innerText=text_list.join('\n')
       tmp.innerText=tmp.innerText.trim()
       break;
     }
   }
+
+  pre_test2 = document.getElementById('pre_text3');
+  pre_test2.innerHTML=sel_HTML;
+  pre_test2.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
+  pre_scale=1
+  pre_scale_h=pre_height/pre_test2.clientHeight;
+  pre_scale_w=pre_width/pre_test2.clientWidth;
+  if(pre_height<pre_test2.clientHeight && tmp_scale>pre_scale_h) {
+    pre_scale=pre_scale_h
+  }
+  if(pre_width<pre_test2.clientWidth && tmp_scale>pre_scale_w) {
+    pre_scale=pre_scale_w
+  }
+  back_scale=back_scale*pre_scale
 }
 
 function sel_last(){
@@ -498,8 +535,9 @@ function preview_init(){
   }
 
   pre1 = document.getElementById('pre_text');
-  if($(pre1).children().length==0){
-    for (const element of font_list.split("/")) {
+  for (const element of font_list.split("/")) {
+    opt=document.getElementById("font"+element)
+    if(!opt) {
       opt = document.createElement('p');
       opt.id = "font"+element;
       opt.style = "font-family:"+element+";font-size:20px;height:auto;width:fit-content;margin:0;";
@@ -567,27 +605,22 @@ function preview_update(){
   } else if (f_s<15) {  back_scale=1.2
   } else {    back_scale=1  }
 
+  show_text=sel_text;
+  max_w = maxWH[pro_w][0]*back_scale/2
+  max_h = maxWH[pro_w][1]*back_scale/2
+
   font_s = document.getElementById('pre_text');
   if($(font_s).children().length==0) {
     preview_init();
   }
   f_scale=$("#font"+f_w).data("scale")
+  if(f_scale==undefined) {
+    preview_init();
+  }
   font_size=(f_h*f_scale*back_scale)
+  cut_line();
 
-  show_text=sel_text;
-  max_w = maxWH[pro_w][0]*back_scale/2
-  max_h = maxWH[pro_w][1]*back_scale/2
-
-  pre_test = document.getElementById('pre_text2');
-  pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
-                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
-
-  pre_test2 = document.getElementById('pre_text3');
-  pre_test2.innerHTML=sel_HTML;
-  pre_test2.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
-                +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
-  console.log(tmp.clientWidth,tmp.clientHeight)
-  console.log(pre_width,pre_height)
+  font_size=(f_h*f_scale*back_scale)
 
   tmp=document.getElementById("preview_text");
   text_list=tmp.innerText.split('\n');
@@ -706,6 +739,9 @@ function preview_update(){
     arr_clr[3]=f_side_gomu
   } else if (pro_w=="e") {
     arr_clr = sel_clr.data("value").split(",")
+  } else if (pro_w=="f") {
+    arr_clr = sel_clr.data("value").split(",")
+    arr_clr[3]=f_side_gomu
   }
   taper=0
   for (step = 0; step <= f_cnt; step++) {
@@ -714,7 +750,7 @@ function preview_update(){
     if(step==0) {
       tmp=document.getElementById("preview_text")
       f_clr=arr_clr[0]
-      if (pro_w=="a" || pro_w=="d") {
+      if (pro_w=="a" || pro_w=="d" || pro_w=="f") {
         pre_style="background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
                   +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
           +"-webkit-background-clip:text;"
@@ -736,7 +772,7 @@ function preview_update(){
         sel_text_list.appendChild(tmp);
       }
       tmp.innerText=sel_text;
-      if (pro_w=="a" || pro_w=="d") {
+      if (pro_w=="a" || pro_w=="d" || pro_w=="f") {
         if (step==1) {
           f_clr=arr_clr[1]
         } else {
@@ -826,14 +862,13 @@ function preview_update(){
   if (t_clr.search("미러")>-1) {
     price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
-  if (price_total%1200!=0) {
-    price_total=price_total+(1200-price_total%1200)
+  if (price_total%price_wh[tmp_w]!=0) {
+    price_total=price_total+(price_wh[tmp_w]-price_total%price_wh[tmp_w])
   }
 
   if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
   } else if(pro_w=="d") {
-    console.log(t_clr)
     t_clr_slt=t_clr.charAt(0)+t_clr.split("(")[1].split(")")[0]+t_side_gomu.charAt(0)
   } else {
     t_clr_slt=t_clr.split(" ")[0]
