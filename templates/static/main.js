@@ -783,7 +783,6 @@ function preview_update(){
         if (step<=(f_cnt*15/20)) {
           taper=taper+(1/3)
         }
-
         f_shwd="text-shadow:"
         if (step<=(f_cnt*7/20) || (f_cnt*15/20)<=step ) {
           f_clr=arr_clr[2]
@@ -797,12 +796,27 @@ function preview_update(){
             f_shwd=f_shwd+"0px 0px "+taper+5+"px #"+f_clr+","
           }
         }
+        if (!f_light && arr_clr[1]=="ffffff") {
+          f_sub_clr="dddddd"
+        } else {
+          f_sub_clr=f_clr
+        }
         for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
-          f_shwd=f_shwd+t_v+"px "+taper+"px #"+f_clr+","
+          f_shwd=f_shwd
+                        +t_v+"px "+taper+"px #"+f_sub_clr+","
                         +t_v+"px "+-taper+"px #"+f_clr+","
                         +taper+"px "+t_v+"px #"+f_clr+","
                         +-taper+"px "+t_v+"px #"+f_clr+","
         }
+        f_shwd=f_shwd+taper+"px "+taper+"px red;"
+      } else if (pro_w=="c") {
+        taper=taper+(1/10)
+        f_shwd="text-shadow:"
+        f_clr=arr_clr[0]
+        f_shwd=f_shwd
+                      +(taper+3)+"px "+0+"px rgba(60, 60, 60, 0.7),"
+                      +0+"px "+(taper+3)+"px rgba(60, 60, 60, 0.8),"
+                      +taper+"px "+taper+"px #"+f_clr+","
         f_shwd=f_shwd+taper+"px "+taper+"px red;"
       }
     }
@@ -821,7 +835,12 @@ function preview_update(){
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
-      pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";"
+      if (pro_w=="b" && step >0 && !f_light && arr_clr[1]=="ffffff") {
+        f_sub_clr="dddddd"
+      } else {
+        f_sub_clr=f_clr
+      }
+      pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";border-color:#"+f_clr+";border-bottom:solid "+(f_h/6+taper)+"px #"+f_sub_clr+";"
     }
     tmp.style=pre_style;
   }
