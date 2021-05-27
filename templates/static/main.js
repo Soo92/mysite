@@ -7,68 +7,76 @@ dbg_cnt=0;
 
 price_arr={};
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["4cm"]=1200;    price_E["4cm"]=1200;    price_ETC["4cm"]=2000;        price_mirror["4cm"]=1000;          price_line["4cm"]=0;    price_border["4cm"]=0;
-price_K["5cm"]=1500;    price_E["5cm"]=1500;    price_ETC["5cm"]=2200;        price_mirror["5cm"]=1000;          price_line["5cm"]=0;    price_border["5cm"]=0;
-price_K["6cm"]=2000;    price_E["6cm"]=2000;    price_ETC["6cm"]=3000;        price_mirror["6cm"]=1000;         price_line["6cm"]=0;    price_border["6cm"]=0;
-price_K["8cm"]=2500;    price_E["8cm"]=2500;    price_ETC["8cm"]=4000;        price_mirror["8cm"]=1000;          price_line["8cm"]=0;    price_border["8cm"]=0;
-price_K["10cm"]=3500;   price_E["10cm"]=3500;   price_ETC["10cm"]=5000;       price_mirror["10cm"]=1000;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=4500;   price_E["15cm"]=4500;   price_ETC["15cm"]=8000;       price_mirror["15cm"]=1500;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=7000;   price_E["20cm"]=7000;   price_ETC["20cm"]=10000;      price_mirror["20cm"]=2000;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["a3t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['10cm']=35000;	price_E['10cm']=35000;	price_ETC['10cm']=45000;	price_s['10cm']=0;	price_n['10cm']=0;	price_border['10cm']='-';	price_line['10cm']=-5000;	price_mirror['10cm']='-';	price_color['10cm']='-';
+price_K['20cm']=45000;	price_E['20cm']=45000;	price_ETC['20cm']=50000;	price_s['20cm']=0;	price_n['20cm']=0;	price_border['20cm']='-';	price_line['20cm']=-10000;	price_mirror['20cm']='-';	price_color['20cm']='-';
+price_K['30cm']=50000;	price_E['30cm']=50000;	price_ETC['30cm']=60000;	price_s['30cm']=0;	price_n['30cm']=0;	price_border['30cm']='-';	price_line['30cm']=-10000;	price_mirror['30cm']='-';	price_color['30cm']='-';
+price_arr['c']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["4cm"]=2500;    price_E["4cm"]=2500;    price_ETC["4cm"]=3000;        price_mirror["4cm"]=1000;          price_line["4cm"]=0;    price_border["4cm"]=0;
-price_K["5cm"]=2500;    price_E["5cm"]=2500;    price_ETC["5cm"]=3500;        price_mirror["5cm"]=1000;          price_line["5cm"]=0;    price_border["5cm"]=0;
-price_K["6cm"]=3000;    price_E["6cm"]=3000;    price_ETC["6cm"]=5000;        price_mirror["6cm"]=1000;         price_line["6cm"]=0;    price_border["6cm"]=0;
-price_K["8cm"]=4000;    price_E["8cm"]=4000;    price_ETC["8cm"]=5500;        price_mirror["8cm"]=1000;          price_line["8cm"]=0;    price_border["8cm"]=0;
-price_K["10cm"]=4500;   price_E["10cm"]=4500;   price_ETC["10cm"]=6000;       price_mirror["10cm"]=1000;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=6500;   price_E["15cm"]=6500;   price_ETC["15cm"]=9500;       price_mirror["15cm"]=1500;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=9000;   price_E["20cm"]=9000;   price_ETC["20cm"]=12000;      price_mirror["20cm"]=2000;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["a5t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['4cm']=400;	price_E['4cm']=400;	price_ETC['4cm']=800;	price_s['4cm']=400;	price_n['4cm']=400;	price_border['4cm']='-';	price_line['4cm']='-';	price_mirror['4cm']='-';	price_color['4cm']='-';
+price_K['6cm']=500;	price_E['6cm']=500;	price_ETC['6cm']=1000;	price_s['6cm']=500;	price_n['6cm']=500;	price_border['6cm']='-';	price_line['6cm']='-';	price_mirror['6cm']='-';	price_color['6cm']='-';
+price_K['8cm']=500;	price_E['8cm']=500;	price_ETC['8cm']=1000;	price_s['8cm']=500;	price_n['8cm']=500;	price_border['8cm']='-';	price_line['8cm']='-';	price_mirror['8cm']='-';	price_color['8cm']='-';
+price_K['10cm']=700;	price_E['10cm']=700;	price_ETC['10cm']=1400;	price_s['10cm']=700;	price_n['10cm']=700;	price_border['10cm']='-';	price_line['10cm']='-';	price_mirror['10cm']='-';	price_color['10cm']='-';
+price_K['15cm']=1000;	price_E['15cm']=1000;	price_ETC['15cm']=2000;	price_s['15cm']=1000;	price_n['15cm']=1000;	price_border['15cm']='-';	price_line['15cm']='-';	price_mirror['15cm']='-';	price_color['15cm']='-';
+price_K['20cm']=1500;	price_E['20cm']=1500;	price_ETC['20cm']=3000;	price_s['20cm']=1500;	price_n['20cm']=1500;	price_border['20cm']='-';	price_line['20cm']='-';	price_mirror['20cm']='-';	price_color['20cm']='-';
+price_arr['e']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["10cm"]=30000;   price_E["10cm"]=25000;   price_ETC["10cm"]=30000;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=35000;   price_E["15cm"]=30000;   price_ETC["15cm"]=35000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=45000;   price_E["20cm"]=40000;   price_ETC["20cm"]=45000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["b"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['4cm']=1200;	price_E['4cm']=1200;	price_ETC['4cm']=2000;	price_s['4cm']=1200;	price_n['4cm']=1200;	price_border['4cm']='-';	price_line['4cm']='-';	price_mirror['4cm']=1000;	price_color['4cm']='-';
+price_K['5cm']=1500;	price_E['5cm']=1500;	price_ETC['5cm']=2200;	price_s['5cm']=1500;	price_n['5cm']=1500;	price_border['5cm']='-';	price_line['5cm']='-';	price_mirror['5cm']=1000;	price_color['5cm']='-';
+price_K['6cm']=2000;	price_E['6cm']=2000;	price_ETC['6cm']=3000;	price_s['6cm']=2000;	price_n['6cm']=2000;	price_border['6cm']='-';	price_line['6cm']='-';	price_mirror['6cm']=1000;	price_color['6cm']='-';
+price_K['8cm']=2500;	price_E['8cm']=2500;	price_ETC['8cm']=4000;	price_s['8cm']=2500;	price_n['8cm']=2500;	price_border['8cm']='-';	price_line['8cm']='-';	price_mirror['8cm']=1000;	price_color['8cm']='-';
+price_K['10cm']=3500;	price_E['10cm']=3500;	price_ETC['10cm']=5000;	price_s['10cm']=3500;	price_n['10cm']=3500;	price_border['10cm']='-';	price_line['10cm']='-';	price_mirror['10cm']=1000;	price_color['10cm']='-';
+price_K['15cm']=4500;	price_E['15cm']=4500;	price_ETC['15cm']=8000;	price_s['15cm']=4500;	price_n['15cm']=4500;	price_border['15cm']='-';	price_line['15cm']='-';	price_mirror['15cm']=1500;	price_color['15cm']='-';
+price_K['20cm']=7000;	price_E['20cm']=7000;	price_ETC['20cm']=10000;	price_s['20cm']=7000;	price_n['20cm']=7000;	price_border['20cm']='-';	price_line['20cm']='-';	price_mirror['20cm']=2000;	price_color['20cm']='-';
+price_arr['a3t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["15cm"]=35000;   price_E["15cm"]=35000;   price_ETC["15cm"]=45000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=-5000;
-price_K["20cm"]=45000;   price_E["20cm"]=45000;   price_ETC["20cm"]=50000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=-10000;
-price_K["30cm"]=50000;   price_E["30cm"]=50000;   price_ETC["30cm"]=60000;      price_mirror["30cm"]=0;         price_line["30cm"]=0;   price_border["30cm"]=-10000;
-price_arr["c"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['4cm']=2500;	price_E['4cm']=2500;	price_ETC['4cm']=3000;	price_s['4cm']=2500;	price_n['4cm']=2500;	price_border['4cm']='-';	price_line['4cm']='-';	price_mirror['4cm']=1000;	price_color['4cm']='-';
+price_K['5cm']=2500;	price_E['5cm']=2500;	price_ETC['5cm']=3500;	price_s['5cm']=2500;	price_n['5cm']=2500;	price_border['5cm']='-';	price_line['5cm']='-';	price_mirror['5cm']=1000;	price_color['5cm']='-';
+price_K['6cm']=3000;	price_E['6cm']=3000;	price_ETC['6cm']=5000;	price_s['6cm']=3000;	price_n['6cm']=3000;	price_border['6cm']='-';	price_line['6cm']='-';	price_mirror['6cm']=1000;	price_color['6cm']='-';
+price_K['8cm']=4000;	price_E['8cm']=4000;	price_ETC['8cm']=5500;	price_s['8cm']=4000;	price_n['8cm']=4000;	price_border['8cm']='-';	price_line['8cm']='-';	price_mirror['8cm']=1000;	price_color['8cm']='-';
+price_K['10cm']=4500;	price_E['10cm']=4500;	price_ETC['10cm']=6000;	price_s['10cm']=4500;	price_n['10cm']=4500;	price_border['10cm']='-';	price_line['10cm']='-';	price_mirror['10cm']=1000;	price_color['10cm']='-';
+price_K['15cm']=6500;	price_E['15cm']=6500;	price_ETC['15cm']=9500;	price_s['15cm']=6500;	price_n['15cm']=6500;	price_border['15cm']='-';	price_line['15cm']='-';	price_mirror['15cm']=1500;	price_color['15cm']='-';
+price_K['20cm']=9000;	price_E['20cm']=9000;	price_ETC['20cm']=12000;	price_s['20cm']=9000;	price_n['20cm']=9000;	price_border['20cm']='-';	price_line['20cm']='-';	price_mirror['20cm']=2000;	price_color['20cm']='-';
+price_arr['a5t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["4cm"]=0;    price_E["4cm"]=0;    price_ETC["4cm"]=0;        price_mirror["4cm"]=0;          price_line["4cm"]=0;    price_border["4cm"]=0;
-price_K["5cm"]=0;    price_E["5cm"]=0;    price_ETC["5cm"]=0;        price_mirror["5cm"]=0;          price_line["5cm"]=0;    price_border["5cm"]=0;
-price_K["6cm"]=0;    price_E["6cm"]=0;    price_ETC["6cm"]=0;        price_mirror["6cm"]=0;         price_line["6cm"]=0;    price_border["6cm"]=0;
-price_K["8cm"]=0;    price_E["8cm"]=0;    price_ETC["8cm"]=0;        price_mirror["8cm"]=0;          price_line["8cm"]=0;    price_border["8cm"]=0;
-price_K["10cm"]=0;   price_E["10cm"]=0;   price_ETC["10cm"]=0;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=0;   price_E["15cm"]=0;   price_ETC["15cm"]=0;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["d10t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['10cm']=30000;	price_E['10cm']=25000;	price_ETC['10cm']=30000;	price_s['10cm']=0;	price_n['10cm']=25000;	price_border['10cm']='??';	price_line['10cm']='??';	price_mirror['10cm']='-';	price_color['10cm']='-';
+price_K['15cm']=35000;	price_E['15cm']=30000;	price_ETC['15cm']=35000;	price_s['15cm']=0;	price_n['15cm']=30000;	price_border['15cm']='??';	price_line['15cm']='??';	price_mirror['15cm']='-';	price_color['15cm']='-';
+price_K['20cm']=45000;	price_E['20cm']=40000;	price_ETC['20cm']=45000;	price_s['20cm']=0;	price_n['20cm']=40000;	price_border['20cm']='??';	price_line['20cm']='??';	price_mirror['20cm']='-';	price_color['20cm']='-';
+price_arr['b']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};
-price_K["4cm"]=400;     price_E["4cm"]=400;      price_ETC["4cm"]=800;        price_mirror["4cm"]=0;          price_line["4cm"]=0;    price_border["4cm"]=0;
-price_K["6cm"]=500;     price_E["6cm"]=500;      price_ETC["6cm"]=1000;        price_mirror["6cm"]=0;         price_line["6cm"]=0;    price_border["6cm"]=0;
-price_K["8cm"]=500;     price_E["8cm"]=500;      price_ETC["8cm"]=1000;        price_mirror["8cm"]=0;          price_line["8cm"]=0;    price_border["8cm"]=0;
-price_K["10cm"]=700;    price_E["10cm"]=700;     price_ETC["10cm"]=1400;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;
-price_K["15cm"]=1000;     price_E["15cm"]=1000;     price_ETC["15cm"]=2000;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;
-price_K["20cm"]=1500;     price_E["20cm"]=1500;     price_ETC["20cm"]=3000;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;
-price_arr["e"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['10cm']=4000;	price_E['10cm']=4000;	price_ETC['10cm']=5000;	price_s['10cm']='-';	price_n['10cm']='-';	price_border['10cm']='-';	price_line['10cm']='-';	price_mirror['10cm']='-';	price_color['10cm']=1000;
+price_K['15cm']=4500;	price_E['15cm']=4500;	price_ETC['15cm']=5300;	price_s['15cm']='-';	price_n['15cm']='-';	price_border['15cm']='-';	price_line['15cm']='-';	price_mirror['15cm']='-';	price_color['15cm']=1000;
+price_K['20cm']=4800;	price_E['20cm']=4800;	price_ETC['20cm']=5800;	price_s['20cm']='-';	price_n['20cm']='-';	price_border['20cm']='-';	price_line['20cm']='-';	price_mirror['20cm']='-';	price_color['20cm']=1000;
+price_K['25cm']=5000;	price_E['25cm']=5000;	price_ETC['25cm']=5900;	price_s['25cm']='-';	price_n['25cm']='-';	price_border['25cm']='-';	price_line['25cm']='-';	price_mirror['25cm']='-';	price_color['25cm']=1000;
+price_K['30cm']=5400;	price_E['30cm']=5400;	price_ETC['30cm']=6000;	price_s['30cm']='-';	price_n['30cm']='-';	price_border['30cm']='-';	price_line['30cm']='-';	price_mirror['30cm']='-';	price_color['30cm']=1000;
+price_K['35cm']=8000;	price_E['35cm']=8000;	price_ETC['35cm']=8000;	price_s['35cm']='-';	price_n['35cm']='-';	price_border['35cm']='-';	price_line['35cm']='-';	price_mirror['35cm']='-';	price_color['35cm']=1500;
+price_K['40cm']=8500;	price_E['40cm']=8500;	price_ETC['40cm']=11000;	price_s['40cm']='-';	price_n['40cm']='-';	price_border['40cm']='-';	price_line['40cm']='-';	price_mirror['40cm']='-';	price_color['40cm']=2000;
+price_K['45cm']=11000;	price_E['45cm']=11000;	price_ETC['45cm']=13000;	price_s['45cm']='-';	price_n['45cm']='-';	price_border['45cm']='-';	price_line['45cm']='-';	price_mirror['45cm']='-';	price_color['45cm']=2000;
+price_K['50cm']=15000;	price_E['50cm']=15000;	price_ETC['50cm']=18000;	price_s['50cm']='-';	price_n['50cm']='-';	price_border['50cm']='-';	price_line['50cm']='-';	price_mirror['50cm']='-';	price_color['50cm']=2000;
+price_arr['d10t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
-price_K ={};            price_E ={};            price_ETC ={};                price_mirror ={};                 price_line ={};         price_border ={};           price_color={};
-price_K["10cm"]=0;   price_E["10cm"]=0;   price_ETC["10cm"]=0;       price_mirror["10cm"]=0;         price_line["10cm"]=0;   price_border["10cm"]=0;                price_color["10cm"]=1000;
-price_K["15cm"]=0;   price_E["15cm"]=0;   price_ETC["15cm"]=0;       price_mirror["15cm"]=0;        price_line["15cm"]=0;   price_border["15cm"]=0;                 price_color["15cm"]=1000;
-price_K["20cm"]=0;   price_E["20cm"]=0;   price_ETC["20cm"]=0;      price_mirror["20cm"]=0;         price_line["20cm"]=0;   price_border["20cm"]=0;                 price_color["20cm"]=1000;
-price_K["25cm"]=0;    price_E["25cm"]=0;    price_ETC["25cm"]=0;        price_mirror["25cm"]=0;          price_line["25cm"]=0;    price_border["25cm"]=0;           price_color["25cm"]=1000;
-price_K["30cm"]=0;    price_E["30cm"]=0;    price_ETC["30cm"]=0;        price_mirror["30cm"]=0;          price_line["30cm"]=0;    price_border["30cm"]=0;           price_color["30cm"]=1000;
-price_K["35cm"]=0;    price_E["35cm"]=0;    price_ETC["35cm"]=0;        price_mirror["35cm"]=0;         price_line["35cm"]=0;    price_border["35cm"]=0;            price_color["35cm"]=1500;
-price_K["40cm"]=0;    price_E["40cm"]=0;    price_ETC["40cm"]=0;        price_mirror["40cm"]=0;          price_line["40cm"]=0;    price_border["40cm"]=0;           price_color["40cm"]=2000;
-price_K["45cm"]=0;    price_E["45cm"]=0;    price_ETC["45cm"]=0;        price_mirror["45cm"]=0;          price_line["45cm"]=0;    price_border["45cm"]=0;           price_color["45cm"]=2000;
-price_K["50cm"]=0;    price_E["50cm"]=0;    price_ETC["50cm"]=0;        price_mirror["50cm"]=0;          price_line["50cm"]=0;    price_border["50cm"]=0;           price_color["50cm"]=2000;
-price_arr["f10t"]={price_K,price_E,price_ETC,price_mirror,price_line,price_border}
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['20cm']=5000;	price_E['20cm']=5000;	price_ETC['20cm']=5800;	price_s['20cm']='-';	price_n['20cm']='-';	price_border['20cm']='-';	price_line['20cm']='-';	price_mirror['20cm']='-';	price_color['20cm']=1000;
+price_K['25cm']=6000;	price_E['25cm']=6000;	price_ETC['25cm']=6200;	price_s['25cm']='-';	price_n['25cm']='-';	price_border['25cm']='-';	price_line['25cm']='-';	price_mirror['25cm']='-';	price_color['25cm']=1000;
+price_K['30cm']=7000;	price_E['30cm']=7000;	price_ETC['30cm']=6800;	price_s['30cm']='-';	price_n['30cm']='-';	price_border['30cm']='-';	price_line['30cm']='-';	price_mirror['30cm']='-';	price_color['30cm']=1000;
+price_K['35cm']=8000;	price_E['35cm']=8000;	price_ETC['35cm']=8500;	price_s['35cm']='-';	price_n['35cm']='-';	price_border['35cm']='-';	price_line['35cm']='-';	price_mirror['35cm']='-';	price_color['35cm']=1500;
+price_K['40cm']=11000;	price_E['40cm']=11000;	price_ETC['40cm']=11000;	price_s['40cm']='-';	price_n['40cm']='-';	price_border['40cm']='-';	price_line['40cm']='-';	price_mirror['40cm']='-';	price_color['40cm']=2000;
+price_K['45cm']=14000;	price_E['45cm']=14000;	price_ETC['45cm']=14000;	price_s['45cm']='-';	price_n['45cm']='-';	price_border['45cm']='-';	price_line['45cm']='-';	price_mirror['45cm']='-';	price_color['45cm']=2000;
+price_K['50cm']=17000;	price_E['50cm']=17000;	price_ETC['50cm']=18500;	price_s['50cm']='-';	price_n['50cm']='-';	price_border['50cm']='-';	price_line['50cm']='-';	price_mirror['50cm']='-';	price_color['50cm']=2000;
+price_arr['d20t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
+
+price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
+price_K['30cm']=6000;	price_E['30cm']=5000;	price_ETC['30cm']=7500;	price_s['30cm']='-';	price_n['30cm']='-';	price_border['30cm']='-';	price_line['30cm']='-';	price_mirror['30cm']='-';	price_color['30cm']=1000;
+price_K['35cm']=8000;	price_E['35cm']=6000;	price_ETC['35cm']=9500;	price_s['35cm']='-';	price_n['35cm']='-';	price_border['35cm']='-';	price_line['35cm']='-';	price_mirror['35cm']='-';	price_color['35cm']=1500;
+price_K['40cm']=9000;	price_E['40cm']=7000;	price_ETC['40cm']=11000;	price_s['40cm']='-';	price_n['40cm']='-';	price_border['40cm']='-';	price_line['40cm']='-';	price_mirror['40cm']='-';	price_color['40cm']=2000;
+price_K['45cm']=11500;	price_E['45cm']=8000;	price_ETC['45cm']=13000;	price_s['45cm']='-';	price_n['45cm']='-';	price_border['45cm']='-';	price_line['45cm']='-';	price_mirror['45cm']='-';	price_color['45cm']=2000;
+price_K['50cm']=16000;	price_E['50cm']=11000;	price_ETC['50cm']=18000;	price_s['50cm']='-';	price_n['50cm']='-';	price_border['50cm']='-';	price_line['50cm']='-';	price_mirror['50cm']='-';	price_color['50cm']=2000;
+price_arr['d30t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_wh = {};
 price_wh["a3t"]=1200;price_wh["a5t"]=1200;price_wh["b"]=5000;price_wh["c"]=5000;price_wh["e"]=500;
@@ -564,6 +572,30 @@ function preview_update(){
     }
     font_resize();
   }
+  if (pro_w=="d") {
+    tmp_flag=true;
+    tmp_size=$("#pro_size").data("select");
+    pro_list=$('#size_list').children()
+    t_thk = $(".thi:visible").data("value")
+    pro_list.each(function () {
+      if ($(this).attr('class').indexOf("hidden")<0) {
+        $(this).addClass("hidden")
+      }
+      tmpc=$(this).attr('class').split(" ");
+      for (step = 0; step < tmpc.length; step++) {
+        if (tmpc[step]==(pro_w+t_thk) && $(this).attr('class').indexOf("hidden")>-1) {
+          if($(this).text()==tmp_size) {
+            tmp_flag=false;
+          }
+          $(this).removeClass("hidden")
+          break;
+        }
+      };
+    });
+    if(tmp_flag) {
+      "a",$('#size_list').children(':not(.hidden)').first().click();
+    }
+  }
 
   pre_width=document.getElementById("pro_back").width
   pre_height=document.getElementById("pro_back").height
@@ -814,15 +846,21 @@ function preview_update(){
         f_shwd="text-shadow:"
         f_clr=arr_clr[0]
         f_shwd=f_shwd
-                      +(taper+3)+"px "+0+"px rgba(60, 60, 60, 0.7),"
-                      +0+"px "+(taper+3)+"px rgba(60, 60, 60, 0.8),"
-                      +taper+"px "+taper+"px #"+f_clr+","
-        f_shwd=f_shwd+taper+"px "+taper+"px red;"
+                    +(taper)+"px "+(taper+3)+"px rgba(60, 60, 60, 0.9),"
+                    +(taper-3)+"px "+(taper)+"px rgba(60, 60, 60, 0.9),"
+                    +(taper+3)+"px "+(taper)+"px rgba(60, 60, 60, 0.9),"
+                    +(taper-1-taper)+"px "+(taper+1)+"px #"+f_clr+","
+                    +(taper+1)+"px "+(taper+1)+"px #"+f_clr+";"
       }
     }
 //6 10 35 60
     if (step == f_cnt) {
-      f_shwd="text-shadow:"+
+      if (f_shwd=="") {
+        f_shwd="text-shadow:"
+      } else {
+        f_shwd=f_shwd.replaceAll(";",",")
+      }
+      f_shwd=f_shwd+
         f_thi/4+"px "+0.5*f_thi/4+"px "+f_thi*1.1+"px rgba(16,16,16,0.4),"+
         f_thi*2/4+"px "+0.5*f_thi*2/4+"px "+f_thi*1.2+"px rgba(16,16,16,0.2),"+
         f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
@@ -863,9 +901,9 @@ function preview_update(){
       k_cnt=k_cnt+1;f_cnt=f_cnt+1;
     } else if (check_eng.test(tmp)){
       e_cnt=e_cnt+1;f_cnt=f_cnt+1;
-    } else if (pro_w!="c" && pro_w!="d" && check_n.test(tmp)) {
+    } else if (check_n.test(tmp)) {
       n_cnt=n_cnt+1;f_cnt=f_cnt+1;
-    } else if (pro_w!="c" && pro_w!="d" && check_s.test(tmp)) {
+    } else if (check_s.test(tmp)) {
       s_cnt=s_cnt+1;f_cnt=f_cnt+1;
     } else if (check_num.test(tmp) || check_spc.test(tmp) || tmp.trim()!=""){
       o_cnt=o_cnt+1;f_cnt=f_cnt+1;
@@ -875,10 +913,11 @@ function preview_update(){
 
   tmp_w=pro_w+t_thk
   price_total=
-    price_arr[tmp_w]["price_K"][t_size] *   (k_cnt+s_cnt+n_cnt) +
-    price_arr[tmp_w]["price_E"][t_size] *   e_cnt +
-    price_arr[tmp_w]["price_ETC"][t_size] * o_cnt
-
+    price_arr[tmp_w]["price_K"][t_size]   *   k_cnt +
+    price_arr[tmp_w]["price_E"][t_size]   *   e_cnt +
+    price_arr[tmp_w]["price_ETC"][t_size] *   o_cnt +
+    price_arr[tmp_w]["price_s"][t_size]   *   parseInt(s_cnt/3) +
+    price_arr[tmp_w]["price_n"][t_size]   *   n_cnt
   if (t_clr.search("미러")>-1) {
     price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
