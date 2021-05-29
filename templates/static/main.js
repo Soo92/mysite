@@ -632,6 +632,10 @@ function preview_update(){
   f_align = sel_align.data("value")
   f_deco = sel_deco.data("value");
 
+  border_side=""
+  pre_w="fit-content";
+  pre_h="fit-content";
+
   if (f_s<6) {    back_scale=1.8
   } else if (f_s<8) {  back_scale=1.4
   } else if (f_s<15) {  back_scale=1.2
@@ -842,15 +846,12 @@ function preview_update(){
         }
         f_shwd=f_shwd+taper+"px "+taper+"px red;"
       } else if (pro_w=="c") {
+        tmp.innerText="";
         taper=taper+(1/10)
-        f_shwd="text-shadow:"
-        f_clr=arr_clr[0]
-        f_shwd=f_shwd
-                    +(taper)+"px "+(taper+3)+"px rgba(60, 60, 60, 0.9),"
-                    +(taper-3)+"px "+(taper)+"px rgba(60, 60, 60, 0.9),"
-                    +(taper+3)+"px "+(taper)+"px rgba(60, 60, 60, 0.9),"
-                    +(taper-1-taper)+"px "+(taper+1)+"px #"+f_clr+","
-                    +(taper+1)+"px "+(taper+1)+"px #"+f_clr+";"
+        pre_w="100px";
+        pre_h="5px";
+        f_h="0px";
+        border_side="border-left:solid 2px;border-right:solid 2px;"
       }
     }
 //6 10 35 60
@@ -866,10 +867,10 @@ function preview_update(){
         f_thi*3/4+"px "+0.5*f_thi*3/4+"px "+f_thi*1.4+"px rgba(16,16,16,0.2),"+
         f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
     }
-    pre_style=pre_style+"width:fit-content;height:fit-content;min-width:"+f_h+"px;min-height:"+f_h+"px;"
+    pre_style=pre_style+"width:"+pre_w+";height:"+pre_h+";min-width:"+f_h+"px;min-height:"+f_h+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;"
-      +"word-wrap:break-word;max-height:"+max_h+"px;max-width:"+max_w+"px;"
+      +"word-wrap:break-word;max-height:"+max_h+"px;max-width:"+max_w+"px;overflow:hidden;"
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
@@ -880,6 +881,8 @@ function preview_update(){
       }
       pre_style=pre_style+"border-style:solid;border-width:"+(f_h/6+taper)+"px;border-radius:"+f_h/6+"px;border-color:#"+f_clr+";border-color:#"+f_clr+";border-bottom:solid "+(f_h/6+taper)+"px #"+f_sub_clr+";"
     }
+    pre_style=pre_style+border_side;
+    console.log(border_side);
     tmp.style=pre_style;
   }
 
