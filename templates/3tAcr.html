@@ -177,6 +177,16 @@
 								<a data-value="5t" onclick="select_itm(pro_thick,this);font_resize();preview_update();">5t</a>
 							</div>
 						</div>
+						<div class="dropdown for d f">
+						  <button class="dropbtn" style="width:110px;">
+								<span id="pro_thick2" class="thi" data-value="10t" data-select="10t">두께</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:110px;" onclick="preview_update();">
+								<a data-value="10t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">10t</a>
+								<a data-value="20t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">20t</a>
+								<a data-value="30t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">30t</a>
+							</div>
+						</div>
 						<div class="dropdown for c">
 						  <button class="dropbtn" style="width:135px;">
 								<span id="guro" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색 판">백색 판</span><i class="arrow down"></i>
@@ -195,19 +205,6 @@
 						  <div class="dropdown-content" style="width:190px;">
 								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">수지(백)</a>
 								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">수지(흑)</a>
-						  </div>
-						</div>
-						<div class="dropdown for d">
-						  <button class="dropbtn" style="width:160px;">
-								<span id="gomu_p" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색(무도장)">도장 색상</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content" style="width:190px;">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(무도장)</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(무도장)</a>
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(도장)</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(도장)</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(gomu_p,this);preview_update()">금색(도장)</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(gomu_p,this);preview_update()">은색(도장)</a>
 						  </div>
 						</div>
 						<div class="dropdown">
@@ -252,7 +249,20 @@
 				</tr>
 				<tr>
 					<td bgcolor="#ffffff" style="position:relative;padding:0px 5px;">
-						<div class="dropdown for d f">
+						<div class="dropdown for d">
+						  <button class="dropbtn" style="width:160px;">
+									<span id="gomu_p" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색(무도장)">도장 색상</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:190px;">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(무도장)</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(무도장)</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(도장)</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(도장)</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(gomu_p,this);preview_update()">금색(도장)</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(gomu_p,this);preview_update()">은색(도장)</a>
+						  </div>
+						</div>
+						<div class="dropdown for d gomu_menu">
 						  <button class="dropbtn" style="width:135px;">
 								<span id="gomu" class="pro_color" data-value="000000" data-select="흑색">고무 색상</span><i class="arrow down"></i>
 							</button>
@@ -260,16 +270,6 @@
 								<a data-value="000000" onclick="select_itm(gomu,this);preview_update()">흑색</a>
 								<a data-value="ffffff" onclick="select_itm(gomu,this);preview_update()">백색</a>
 						  </div>
-						</div>
-						<div class="dropdown for d f">
-						  <button class="dropbtn" style="width:110px;">
-								<span id="pro_thick2" class="thi" data-value="10t" data-select="10t">두께</span><i class="arrow down"></i>
-							</button>
-						  <div class="dropdown-content" style="width:110px;" onclick="preview_update();">
-								<a data-value="10t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">10t</a>
-								<a data-value="20t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">20t</a>
-								<a data-value="30t" onclick="select_itm(pro_thick2,this);font_resize();preview_update();">30t</a>
-							</div>
 						</div>
 						<div class="dropdown for b">
 							<button class="dropbtn" style="width:100px;">

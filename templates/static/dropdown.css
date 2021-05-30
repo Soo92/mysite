@@ -1,3 +1,63 @@
+:root {
+  --bclr: 0px;
+  --bopa: 1;
+}
+
+div.foot {
+  width: fit-content;
+  height:fit-content;
+  position: relative;
+  color:rgba(0,0,0,0);
+  display:inline-block;
+}
+div.foot:before {
+  content: '';
+  width: 2px;
+  height: 2px;
+  background: var(--bclr);
+  position: absolute;
+  right:7%;
+  bottom:70%;
+  opacity:var(--bopa);
+}
+div.foot:after {
+  content: '';
+  width: 2px;
+  height: 2px;
+  background: var(--bclr);
+  position: absolute;
+  right:70%;
+  bottom:36%;
+  opacity:var(--bopa);
+}
+
+div.foote {
+  width: fit-content;
+  height:fit-content;
+  position: relative;
+  color:rgba(0,0,0,0);
+  display:inline-block;
+}
+div.foote:before {
+  content: '';
+  width: 5px;
+  height: 3px;
+  background: var(--bclr);
+  position: absolute;
+  right:0%;
+  bottom:73%;
+  opacity:var(--bopa);
+}
+div.foote:after {
+  content: '';
+  width: 3px;
+  height: 5px;
+  background: var(--bclr);
+  position: absolute;
+  right:70%;
+  bottom:33%;
+  opacity:var(--bopa);
+}
 
 .exp_case{
   position: relative;
