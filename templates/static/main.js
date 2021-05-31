@@ -560,6 +560,13 @@ function preview_update(){
   tmp=document.getElementById("preview_text")
   sel_text=tmp.innerText
 
+  check_num = /[0-9]/;
+  check_eng = /[a-zA-Z]/;
+  check_spc = /[~!@#$%^&*()_+|<>?:{}]/;
+  check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  check_n = /\n/;
+  check_s = /\s/;
+
   if (tmp.spellcheck) {
     if(f_wh=="A") {
       tmp.innerHTML="여기에<br>써보세요"
@@ -856,8 +863,11 @@ function preview_update(){
       } else if (pro_w=="c") {
         tmp_text=""
         for (i = sel_text.length-1; i >-1; i--) {
-          if(sel_text.charAt(i)=='\n') {
+          sel_prt=sel_text.charAt(i);
+          if(check_n.test(sel_prt)) {
             tmp_text="<br/>"+tmp_text
+          } else if(check_s.test(sel_prt)) {
+            tmp_text="<div class='footN'>&nbsp;</div>"+tmp_text
           } else if (step==f_cnt) {
             tmp_text="<div class='foote'>"+sel_text.charAt(i)+"</div>"+tmp_text
           } else {
@@ -910,13 +920,6 @@ function preview_update(){
 
 /*외부 수정 가능하게*/
   price_total = 0
-
-  check_num = /[0-9]/;
-  check_eng = /[a-zA-Z]/;
-  check_spc = /[~!@#$%^&*()_+|<>?:{}]/;
-  check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-  check_n = /\n/;
-  check_s = /\s/;
 
   o_cnt=0;e_cnt=0;k_cnt=0;f_cnt=0;
   n_cnt=0;s_cnt=0;

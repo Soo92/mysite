@@ -1,8 +1,20 @@
 :root {
   --bclr: 0px;
   --bopa: 1;
+  --bsize: 2px;
+  --bR1: 7%;
+  --bB1: 70%;
+  --bR2: 70%;
+  --bB2: 36%;
 }
 
+div.footN {
+  width: fit-content;
+  height:fit-content;
+  position: relative;
+  color:rgba(0,0,0,0);
+  display:inline-block;
+}
 div.foot {
   width: fit-content;
   height:fit-content;
