@@ -622,6 +622,7 @@ function preview_update(){
   t_thk = sel_thk.data("value")
   if (t_thk==undefined) {t_thk=""}
   t_side_gomu = $("#gomu").data("select");
+  t_side_gomu_c = $("#gomu2").data("select");
   t_clr = sel_clr.data("select")
   if (t_clr==undefined) {t_clr=""}
   t_main_LED = sel_main_LED.data("select")
@@ -936,9 +937,9 @@ function preview_update(){
     } else if (check_n.test(tmp)) {
       n_cnt=n_cnt+1;f_cnt=f_cnt+1;
     } else if (check_s.test(tmp)) {
-      s_cnt=s_cnt+1;f_cnt=f_cnt+1;
+      s_cnt=s_cnt+1;
     } else if (check_num.test(tmp) || check_spc.test(tmp) || tmp.trim()!=""){
-      o_cnt=o_cnt+1;f_cnt=f_cnt+1;
+      o_cnt=o_cnt+1;
     }
   }
   s_cnt=parseInt(s_cnt/3)
@@ -953,6 +954,9 @@ function preview_update(){
   if (t_clr.search("미러")>-1) {
     price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
+  if (pro_w=="d" && t_clr.search("무도장")<0) {
+    price_total=price_total+price_arr[tmp_w]["price_color"][t_size]*f_cnt
+  }
   if (price_total%price_wh[tmp_w]!=0) {
     price_total=price_total+(price_wh[tmp_w]-price_total%price_wh[tmp_w])
   }
@@ -960,7 +964,12 @@ function preview_update(){
   if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
   } else if(pro_w=="d") {
-    t_clr_slt=t_clr.charAt(0)+t_clr.split("(")[1].charAt(0)+t_side_gomu.charAt(0)
+    t_clr_slt=t_clr.charAt(0)
+    if(t_clr.search("무도장")<0) {
+      t_clr_slt=t_clr_slt+t_side_gomu_c.charAt(0)
+    } else {
+      t_clr_slt=t_clr_slt+t_clr.split("(")[1].charAt(0)+t_side_gomu.charAt(0)
+    }
   } else {
     t_clr_slt=t_clr.split(" ")[0]
   }
