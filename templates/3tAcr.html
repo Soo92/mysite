@@ -84,7 +84,7 @@
 								<div id="toast">
 									알람이 표출됩니다.
 								</div>
-								<button id="pro_light" class="dropbtn transparent box for b c hidden" onclick="change_light(this);preview_update();" style="width:140px;text-align:center;margin-right:-15px;">조명 ON
+								<button id="pro_light" class="dropbtn transparent box for b" onclick="change_light(this);preview_update();" style="width:140px;text-align:center;margin-right:-15px;">조명 ON
 								</button>
 									<div class="dropdown">
 								  <button class="dropbtn transparent box" style="width:228px;padding-left:15px;text-align:left;">
@@ -254,12 +254,9 @@
 									<span id="gomu_p" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색(무도장)">도장 색상</span><i class="arrow down"></i>
 							</button>
 						  <div class="dropdown-content" style="width:190px;">
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(무도장)</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(무도장)</a>
-								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">백색(도장)</a>
-								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">흑색(도장)</a>
-								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(gomu_p,this);preview_update()">금색(도장)</a>
-								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(gomu_p,this);preview_update()">은색(도장)</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">무도장(백색)</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu_p,this);preview_update()">무도장(흑색)</a>
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu_p,this);preview_update()">도장</a>
 						  </div>
 						</div>
 						<div class="dropdown for d gomu_menu">
@@ -269,6 +266,17 @@
 						  <div class="dropdown-content" style="width:190px;">
 								<a data-value="000000" onclick="select_itm(gomu,this);preview_update()">흑색</a>
 								<a data-value="ffffff" onclick="select_itm(gomu,this);preview_update()">백색</a>
+						  </div>
+						</div>
+						<div class="dropdown for d gomu2_menu">
+						  <button class="dropbtn" style="width:135px;">
+								<span id="gomu2" class="pro_color" data-value="EDEAC9,F6F3EC,D4D1CA" data-select="백색(도장)">도장 색상</span><i class="arrow down"></i>
+							</button>
+						  <div class="dropdown-content" style="width:190px;">
+								<a data-value="EDEAC9,F6F3EC,D4D1CA" onclick="select_itm(gomu2,this);preview_update()">백색(도장)</a>
+								<a data-value="000000,383C46,1F1B23" onclick="select_itm(gomu2,this);preview_update()">흑색(도장)</a>
+								<a data-value="FCE587,FDF2BA,D8B245" onclick="select_itm(gomu2,this);preview_update()">금색(도장)</a>
+								<a data-value="E6E1DD,EDE8E4,8C8D8F" onclick="select_itm(gomu2,this);preview_update()">은색(도장)</a>
 						  </div>
 						</div>
 						<div class="dropdown for b">
