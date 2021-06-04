@@ -43,9 +43,9 @@ price_K['20cm']=9000;	price_E['20cm']=9000;	price_ETC['20cm']=12000;	price_s['20
 price_arr['a5t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
-price_K['10cm']=30000;	price_E['10cm']=25000;	price_ETC['10cm']=30000;	price_s['10cm']=0;	price_n['10cm']=25000;	price_border['10cm']='??';	price_line['10cm']='??';	price_mirror['10cm']=0;	price_color['10cm']=0;
-price_K['15cm']=35000;	price_E['15cm']=30000;	price_ETC['15cm']=35000;	price_s['15cm']=0;	price_n['15cm']=30000;	price_border['15cm']='??';	price_line['15cm']='??';	price_mirror['15cm']=0;	price_color['15cm']=0;
-price_K['20cm']=45000;	price_E['20cm']=40000;	price_ETC['20cm']=45000;	price_s['20cm']=0;	price_n['20cm']=40000;	price_border['20cm']='??';	price_line['20cm']='??';	price_mirror['20cm']=0;	price_color['20cm']=0;
+price_K['10cm']=30000;	price_E['10cm']=25000;	price_ETC['10cm']=30000;	price_s['10cm']=0;	price_n['10cm']=25000;	price_border['10cm']=25000;	price_line['10cm']='??';	price_mirror['10cm']='??';	price_color['10cm']=0;
+price_K['15cm']=35000;	price_E['15cm']=30000;	price_ETC['15cm']=35000;	price_s['15cm']=0;	price_n['15cm']=30000;	price_border['15cm']=30000;	price_line['15cm']='??';	price_mirror['15cm']='??';	price_color['15cm']=0;
+price_K['20cm']=45000;	price_E['20cm']=40000;	price_ETC['20cm']=45000;	price_s['20cm']=0;	price_n['20cm']=40000;	price_border['20cm']=40000;	price_line['20cm']='??';	price_mirror['20cm']='??';	price_color['20cm']=0;
 price_arr['b']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
@@ -118,18 +118,18 @@ function cut_line(){
   pre_test.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
                 +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
   pre_text.innerText=tmp.innerText;
-  text_list=pre_text.innerText.split('\n');
+  text_list=show_text.split(/؊|؉|\n/);
   pre_h=pre_text.clientHeight;
 
-  // console.log(max_h)
   while (pre_h>max_h) {
     text_list.splice(text_list.length-1, 1)
-    pre_text.innerText=text_list.join('\n')
+    pre_text.innerText=text_list.join('\n').trim()
     pre_h=pre_text.clientHeight;
+    console.log(pre_text.innerText)
     if (pre_h<=max_h) {
       toast("자동 견적은 한번에 "+maxWH[pro_w][1]*0.1+"cm 까지 가능합니다!")
-      tmp.innerText=text_list.join('\n')
-      tmp.innerText=tmp.innerText.trim()
+      tmp.innerText=pre_text.innerText;
+      show_text=tmp.innerText;
       break;
     }
   }
@@ -296,11 +296,12 @@ function paste_value(e){
 
 function first_enter(){
   tmp=document.getElementById("preview_text")
-  if (tmp.spellcheck) {
+  if (tmp.innerText.trim()=="") {
+    tmp.spellcheck=true
+  } else if (tmp.spellcheck) {
     tmp.spellcheck=false
     tmp.innerText=""
-  } else if (tmp.innerText.trim()=="") {
-    tmp.spellcheck=true
+    sel_text=""
   }
 }
 
@@ -648,6 +649,10 @@ function preview_update(){
   } else if (f_s<15) {  back_scale=1.2
   } else {    back_scale=1  }
 
+  if(pro_w=="b") {
+    back_scale=back_scale*1.4
+  }
+
   show_text=sel_text;
   max_w = maxWH[pro_w][0]*back_scale/2
   max_h = maxWH[pro_w][1]*back_scale/2
@@ -659,39 +664,17 @@ function preview_update(){
   f_scale=$("#font"+f_w).data("scale")
   if(f_scale==undefined) {
     preview_init();
+    f_scale=$("#font"+f_w).data("scale")
   }
   font_size=(f_h*f_scale*back_scale)
+  cut_text();
   cut_line();
 
   font_size=(f_h*f_scale*back_scale)
 
-  tmp=document.getElementById("preview_text");
-  text_list=tmp.innerText.split('\n');
-  for (var y = text_list.length-1; y > -1; y--) {
-    pre_text=document.getElementById('pre_text2');
-    pre_text.innerText=text_list[y];
-    text_t=text_list[y];
-    pre_h=pre_text.clientHeight;
-    y_rec=[]
-    for (var i = text_t.length-1; i > 0; i--) {
-      pre_text.innerText=text_t.slice(0,i);
-      if (pre_text.clientHeight<pre_h) {
-        pre_h=pre_text.clientHeight;
-        y_rec.push(i);
-      }
-    }
-    if (y_rec.length>0) {
-      for (i=0; i<y_rec.length; i++) {
-        text_list[y]=insert(text_list[y], y_rec[i], '؉');
-      }
-      show_text=text_list.join('\n');
-      show_text=show_text.trim();
-      if (show_text.length>19) {
-        sel_text=sel_text.slice(0,show_text.length-(show_text.match(/؉/g) || []).length)
-        show_text=show_text.slice(0,20)
-      }
-    }
-  }
+  sel_text=tmp.innerText
+  cut_text();
+
   if (sel_text.indexOf("؊")>-1 || sel_text.indexOf("؉")>-1) {
     toast("사용할 수 없는 문자입니다!")
     sel_text=sel_text.replaceAll("؊","").replaceAll("؉","")
@@ -700,6 +683,7 @@ function preview_update(){
   if (show_text.length>19) {
     toast("20자씩 나눠서 입력해주세요!")
     sel_text=sel_text.slice(0,20-(show_text.match(/؉/g) || []).length)
+    show_text=show_text.slice(0,20)
     tmp.innerText=sel_text.trim()
   }
   tmp=document.getElementById("preview_text");
@@ -851,14 +835,23 @@ function preview_update(){
             if(f_main_LED=="ffffff") {
               f_clr=arr_clr[1]
             }
-            f_shwd=f_shwd+"0px 0px "+taper+5+"px #"+f_clr+","
+          } else if(!f_light&&f_side_LED=="ffffff") {
+            f_clr="fcfcfc"
           }
         }
         f_clr=f_clr+""
-        f_sub_clr=f_light_down(f_clr,1.5)
-        if (f_light) {
-          f_sub_clr=f_light_down(f_clr,3)
-          f_clr=f_light_down(f_clr,2)
+        if(f_light){
+          dep_tmp=f_cnt/2-Math.abs(step-f_cnt/2)
+          if (f_side_LED=="ffffff") {
+            f_shwd=f_shwd+"0px 0px "+dep_tmp/4+5+"px #"+arr_clr[0]+","
+            f_sub_clr=f_light_down(f_clr,2)
+            f_clr=f_light_down(f_clr,1.5)
+          } else {
+            f_sub_clr=f_light_down(f_clr,3)
+            f_clr=f_light_down(f_clr,2)
+          }
+        } else {
+          f_sub_clr=f_light_down(f_clr,1.5)
         }
         for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
           f_shwd=f_shwd
@@ -930,7 +923,7 @@ function preview_update(){
   price_total = 0
 
   o_cnt=0;e_cnt=0;k_cnt=0;f_cnt=0;
-  n_cnt=0;s_cnt=0;
+  n_cnt=0;s_cnt=0;bx_cnt=0;by_cnt=0;
   for (i = 0; i < sel_text.length; i++) {
     tmp=sel_text.charAt(i)
     if (check_kor.test(tmp)){
@@ -945,6 +938,19 @@ function preview_update(){
       o_cnt=o_cnt+1;
     }
   }
+  if(pro_w=="b" && f_deco=="borderL") {
+    y_sel_text=show_text.split(/؊|؉|\n/)
+    by_cnt=y_sel_text.length;
+    for (y=0; y<y_sel_text.length; y++) {
+      tmp_y=y_sel_text[y]
+      tmp_x_cnt=parseInt((y_sel_text[y].split(" ").length-1)/2)
+      tmp_x_cnt2=y_sel_text[y].replaceAll(/\s+/g,"").length
+      if((tmp_x_cnt+tmp_x_cnt2)>bx_cnt) {
+        bx_cnt=tmp_x_cnt+tmp_x_cnt2;
+      }
+    }
+    n_cnt=parseInt(n_cnt/2)
+  }
   s_cnt=parseInt(s_cnt/3)
 
   tmp_w=pro_w+t_thk
@@ -952,8 +958,9 @@ function preview_update(){
     price_arr[tmp_w]["price_K"][t_size]   *   k_cnt +
     price_arr[tmp_w]["price_E"][t_size]   *   e_cnt +
     price_arr[tmp_w]["price_ETC"][t_size] *   o_cnt +
-    price_arr[tmp_w]["price_s"][t_size]   *   parseInt(s_cnt/3) +
-    price_arr[tmp_w]["price_n"][t_size]   *   n_cnt
+    price_arr[tmp_w]["price_s"][t_size]   *   s_cnt +
+    price_arr[tmp_w]["price_n"][t_size]   *   n_cnt +
+    price_arr[tmp_w]["price_border"][t_size]   *   (bx_cnt*2+by_cnt*2)/4
   if (t_clr.search("미러")>-1) {
     price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
@@ -986,4 +993,36 @@ function f_light_down(clrz,valz){
   return (parseInt(parseInt(clrz.slice(0,1),16)/valz)).toString(16)
     +(parseInt(parseInt(clrz.slice(2,3),16)/valz)).toString(16)
     +(parseInt(parseInt(clrz.slice(4,5),16)/valz)).toString(16)
+}
+
+function cut_text(){
+  tmp=document.getElementById("preview_text");
+  text_list=tmp.innerText.split('\n');
+  for (var y = text_list.length-1; y > -1; y--) {
+    pre_text=document.getElementById('pre_text2');
+    pre_text.style="width:fit-content;height:fit-content;font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
+                  +"word-wrap:break-word;max-width:"+max_w+"px;"// +"max-height:"+max_h+"px;"
+    pre_text.innerText=text_list[y];
+    text_t=text_list[y];
+    pre_h=pre_text.clientHeight;
+    y_rec=[]
+    for (var i = text_t.length-1; i > 0; i--) {
+      pre_text.innerText=text_t.slice(0,i);
+      if (pre_text.clientHeight<pre_h) {
+        pre_h=pre_text.clientHeight;
+        y_rec.push(i);
+      }
+    }
+    if (y_rec.length>0) {
+      for (i=0; i<y_rec.length; i++) {
+        text_list[y]=insert(text_list[y], y_rec[i], '؉');
+      }
+      show_text=text_list.join('\n');
+      show_text=show_text.trim();
+      if (show_text.length>19) {
+        sel_text=sel_text.slice(0,show_text.length-(show_text.match(/؉/g) || []).length)
+        show_text=show_text.slice(0,20)
+      }
+    }
+  }
 }
