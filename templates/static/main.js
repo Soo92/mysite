@@ -667,6 +667,7 @@ function preview_update(){
     f_scale=$("#font"+f_w).data("scale")
   }
   font_size=(f_h*f_scale*back_scale)
+  pre_scale=1;
   cut_text();
   cut_line();
 
@@ -776,6 +777,7 @@ function preview_update(){
       $(".gomu2_menu").hide()
     } else {
       arr_clr = $("#gomu2").data("value").split(",")
+      arr_clr[1]=f_light_down(arr_clr[1],2)
       $(".gomu_menu").hide()
       $(".gomu2_menu").show()
     }
@@ -791,7 +793,7 @@ function preview_update(){
     if(step==0) {
       tmp=document.getElementById("preview_text")
       f_clr=arr_clr[0]
-      if (pro_w=="a" || pro_w=="d" || pro_w=="f") {
+      if (pro_w=="a" || pro_w=="f") {
         pre_style="background:radial-gradient(farthest-corner at 40% -5%, #"+arr_clr[0]+" 3%, #"+arr_clr[1]+" 5%, #"+arr_clr[2]+" 35%, #"
                   +arr_clr[2]+" 65%, #"+arr_clr[1]+" 99%, #"+arr_clr[0]+" 1000%);"
           +"-webkit-background-clip:text;"
@@ -804,6 +806,8 @@ function preview_update(){
           f_clr="fcfcfc"
         }
         f_shwd=f_shwd+";"
+      } else if (pro_w=="d") {
+
       }
     } else {
       tmpid="side"+(step);
@@ -902,7 +906,7 @@ function preview_update(){
         f_thi*4/4+"px "+0.5*f_thi*4/4+"px "+f_thi*2+"px rgba(16,16,16,0.4);"
       }
     }
-    pre_style=pre_style+"width:"+pre_w+";height:"+pre_h+";min-width:"+f_h+"px;min-height:"+f_h+"px;"
+    pre_style=pre_style+"width:"+pre_w+";height:"+pre_h+";min-width:"+f_h+"px;min-height:"+f_h*pre_scale+"px;"
       +""+f_shwd+"color:#"+ f_clr +";font-family:"+f_w+";font-size:"+font_size+"px;text-align:"+f_align+";"
       +"z-index:"+(f_cnt-step)+";left:"+(pre_width/2+step*0.5*f_thi/f_cnt)+"px;top:"+(pre_height/2+step*f_thi/f_cnt)+"px;position:absolute;"
       +"word-wrap:break-word;max-height:"+max_h+"px;max-width:"+max_w+"px;overflow:hidden;"
@@ -974,11 +978,10 @@ function preview_update(){
   if (pro_w=="b") {
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
   } else if(pro_w=="d") {
-    t_clr_slt=t_clr.charAt(0)
     if(t_clr.search("도장")>-1) {
-      t_clr_slt=t_clr_slt+t_side_gomu_c.charAt(0)
+      t_clr_slt=t_clr.split(" ")[1].charAt(0)+t_side_gomu_c.charAt(0)
     } else {
-      t_clr_slt=t_clr_slt+t_clr.split("(")[1].charAt(0)+t_side_gomu.charAt(0)
+      t_clr_slt=t_clr.split(" ")[1].charAt(0)+t_side_gomu.charAt(0)
     }
   } else {
     t_clr_slt=t_clr.split(" ")[0]
