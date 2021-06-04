@@ -913,8 +913,12 @@ function preview_update(){
     if (f_deco=="underL") {
       pre_style=pre_style+"text-decoration: underline;"
     } else if (f_deco=="borderL") {
-      if (pro_w=="b" && step >0 && !f_light && arr_clr[1]=="ffffff") {
-        f_sub_clr="dddddd"
+      if (step >0) {
+        if(f_light) {
+          f_sub_clr=f_light_down(f_clr,1.2)
+        } else {
+          f_sub_clr=f_light_down(f_clr,1.5)
+        }
       } else {
         f_sub_clr=f_clr
       }
