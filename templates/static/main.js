@@ -23,23 +23,23 @@ price_K['20cm']=1500;	price_E['20cm']=1500;	price_ETC['20cm']=3000;	price_s['20c
 price_arr['e']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
-price_K['4cm']=1200;	price_E['4cm']=1200;	price_ETC['4cm']=2000;	price_s['4cm']=1200;	price_n['4cm']=1200;	price_border['4cm']=0;	price_line['4cm']=0;	price_mirror['4cm']=1000;	price_color['4cm']=0;
-price_K['5cm']=1500;	price_E['5cm']=1500;	price_ETC['5cm']=2200;	price_s['5cm']=1500;	price_n['5cm']=1500;	price_border['5cm']=0;	price_line['5cm']=0;	price_mirror['5cm']=1000;	price_color['5cm']=0;
-price_K['6cm']=2000;	price_E['6cm']=2000;	price_ETC['6cm']=3000;	price_s['6cm']=2000;	price_n['6cm']=2000;	price_border['6cm']=0;	price_line['6cm']=0;	price_mirror['6cm']=1000;	price_color['6cm']=0;
-price_K['8cm']=2500;	price_E['8cm']=2500;	price_ETC['8cm']=4000;	price_s['8cm']=2500;	price_n['8cm']=2500;	price_border['8cm']=0;	price_line['8cm']=0;	price_mirror['8cm']=1000;	price_color['8cm']=0;
-price_K['10cm']=3500;	price_E['10cm']=3500;	price_ETC['10cm']=5000;	price_s['10cm']=3500;	price_n['10cm']=3500;	price_border['10cm']=0;	price_line['10cm']=0;	price_mirror['10cm']=1000;	price_color['10cm']=0;
-price_K['15cm']=4500;	price_E['15cm']=4500;	price_ETC['15cm']=8000;	price_s['15cm']=4500;	price_n['15cm']=4500;	price_border['15cm']=0;	price_line['15cm']=0;	price_mirror['15cm']=1500;	price_color['15cm']=0;
-price_K['20cm']=7000;	price_E['20cm']=7000;	price_ETC['20cm']=10000;	price_s['20cm']=7000;	price_n['20cm']=7000;	price_border['20cm']=0;	price_line['20cm']=0;	price_mirror['20cm']=2000;	price_color['20cm']=0;
+price_K['4cm']=1200;	price_E['4cm']=1200;	price_ETC['4cm']=2000;	price_s['4cm']=1200;	price_n['4cm']=1200;	price_border['4cm']=0;	price_line['4cm']=0;	price_mirror['4cm']=500;	price_color['4cm']=0;
+price_K['5cm']=1500;	price_E['5cm']=1500;	price_ETC['5cm']=2200;	price_s['5cm']=1500;	price_n['5cm']=1500;	price_border['5cm']=0;	price_line['5cm']=0;	price_mirror['5cm']=500;	price_color['5cm']=0;
+price_K['6cm']=2000;	price_E['6cm']=2000;	price_ETC['6cm']=3000;	price_s['6cm']=2000;	price_n['6cm']=2000;	price_border['6cm']=0;	price_line['6cm']=0;	price_mirror['6cm']=500;	price_color['6cm']=0;
+price_K['8cm']=2500;	price_E['8cm']=2500;	price_ETC['8cm']=4000;	price_s['8cm']=2500;	price_n['8cm']=2500;	price_border['8cm']=0;	price_line['8cm']=0;	price_mirror['8cm']=500;	price_color['8cm']=0;
+price_K['10cm']=3500;	price_E['10cm']=3500;	price_ETC['10cm']=5000;	price_s['10cm']=3500;	price_n['10cm']=3500;	price_border['10cm']=0;	price_line['10cm']=0;	price_mirror['10cm']=500;	price_color['10cm']=0;
+price_K['15cm']=4500;	price_E['15cm']=4500;	price_ETC['15cm']=8000;	price_s['15cm']=4500;	price_n['15cm']=4500;	price_border['15cm']=0;	price_line['15cm']=0;	price_mirror['15cm']=1000;	price_color['15cm']=0;
+price_K['20cm']=7000;	price_E['20cm']=7000;	price_ETC['20cm']=10000;	price_s['20cm']=7000;	price_n['20cm']=7000;	price_border['20cm']=0;	price_line['20cm']=0;	price_mirror['20cm']=1000;	price_color['20cm']=0;
 price_arr['a3t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
-price_K['4cm']=2500;	price_E['4cm']=2500;	price_ETC['4cm']=3000;	price_s['4cm']=2500;	price_n['4cm']=2500;	price_border['4cm']=0;	price_line['4cm']=0;	price_mirror['4cm']=1000;	price_color['4cm']=0;
-price_K['5cm']=2500;	price_E['5cm']=2500;	price_ETC['5cm']=3500;	price_s['5cm']=2500;	price_n['5cm']=2500;	price_border['5cm']=0;	price_line['5cm']=0;	price_mirror['5cm']=1000;	price_color['5cm']=0;
-price_K['6cm']=3000;	price_E['6cm']=3000;	price_ETC['6cm']=5000;	price_s['6cm']=3000;	price_n['6cm']=3000;	price_border['6cm']=0;	price_line['6cm']=0;	price_mirror['6cm']=1000;	price_color['6cm']=0;
-price_K['8cm']=4000;	price_E['8cm']=4000;	price_ETC['8cm']=5500;	price_s['8cm']=4000;	price_n['8cm']=4000;	price_border['8cm']=0;	price_line['8cm']=0;	price_mirror['8cm']=1000;	price_color['8cm']=0;
-price_K['10cm']=4500;	price_E['10cm']=4500;	price_ETC['10cm']=6000;	price_s['10cm']=4500;	price_n['10cm']=4500;	price_border['10cm']=0;	price_line['10cm']=0;	price_mirror['10cm']=1000;	price_color['10cm']=0;
-price_K['15cm']=6500;	price_E['15cm']=6500;	price_ETC['15cm']=9500;	price_s['15cm']=6500;	price_n['15cm']=6500;	price_border['15cm']=0;	price_line['15cm']=0;	price_mirror['15cm']=1500;	price_color['15cm']=0;
-price_K['20cm']=9000;	price_E['20cm']=9000;	price_ETC['20cm']=12000;	price_s['20cm']=9000;	price_n['20cm']=9000;	price_border['20cm']=0;	price_line['20cm']=0;	price_mirror['20cm']=2000;	price_color['20cm']=0;
+price_K['4cm']=2500;	price_E['4cm']=2500;	price_ETC['4cm']=3000;	price_s['4cm']=2500;	price_n['4cm']=2500;	price_border['4cm']=0;	price_line['4cm']=0;	price_mirror['4cm']=500;	price_color['4cm']=0;
+price_K['5cm']=2500;	price_E['5cm']=2500;	price_ETC['5cm']=3500;	price_s['5cm']=2500;	price_n['5cm']=2500;	price_border['5cm']=0;	price_line['5cm']=0;	price_mirror['5cm']=500;	price_color['5cm']=0;
+price_K['6cm']=3000;	price_E['6cm']=3000;	price_ETC['6cm']=5000;	price_s['6cm']=3000;	price_n['6cm']=3000;	price_border['6cm']=0;	price_line['6cm']=0;	price_mirror['6cm']=500;	price_color['6cm']=0;
+price_K['8cm']=4000;	price_E['8cm']=4000;	price_ETC['8cm']=5500;	price_s['8cm']=4000;	price_n['8cm']=4000;	price_border['8cm']=0;	price_line['8cm']=0;	price_mirror['8cm']=500;	price_color['8cm']=0;
+price_K['10cm']=4500;	price_E['10cm']=4500;	price_ETC['10cm']=6000;	price_s['10cm']=4500;	price_n['10cm']=4500;	price_border['10cm']=0;	price_line['10cm']=0;	price_mirror['10cm']=500;	price_color['10cm']=0;
+price_K['15cm']=6500;	price_E['15cm']=6500;	price_ETC['15cm']=9500;	price_s['15cm']=6500;	price_n['15cm']=6500;	price_border['15cm']=0;	price_line['15cm']=0;	price_mirror['15cm']=1000;	price_color['15cm']=0;
+price_K['20cm']=9000;	price_E['20cm']=9000;	price_ETC['20cm']=12000;	price_s['20cm']=9000;	price_n['20cm']=9000;	price_border['20cm']=0;	price_line['20cm']=0;	price_mirror['20cm']=1000;	price_color['20cm']=0;
 price_arr['a5t']={price_K,price_E,price_ETC,price_s,price_n,price_border,price_line,price_mirror,price_color}
 
 price_K={};	price_E={};	price_ETC={};	price_s={};	price_n={};	price_border={};	price_line={};	price_mirror={};	price_color={};
@@ -785,7 +785,7 @@ function preview_update(){
   } else if (pro_w=="c") {
     arr_clr = sel_clr.data("value").split(",")
   } else if (pro_w=="d") {
-    if(t_clr.indexOf("무도장")>-1) {
+    if(t_clr.indexOf("도장")<0) {
       arr_clr = sel_clr.data("value").split(",")
       arr_clr[3]=f_side_gomu
       $(".gomu_menu").show()
@@ -816,6 +816,8 @@ function preview_update(){
         f_shwd="text-shadow:0.5px 0.5px gray"
         if (f_light) {
           f_shwd=f_shwd+",0px 0px 5px #"+f_clr
+        } else if (f_clr=="ffffff") {
+          f_clr="fcfcfc"
         }
         f_shwd=f_shwd+";"
       }
@@ -837,7 +839,7 @@ function preview_update(){
         }
       } else if (pro_w=="b") {
         if (step<=(f_cnt*15/20)) {
-          taper=taper+(1/3)
+          taper=taper+(1/6)
         }
         f_shwd="text-shadow:"
         if (step<=(f_cnt*7/20) || (f_cnt*15/20)<=step ) {
@@ -855,7 +857,8 @@ function preview_update(){
         f_clr=f_clr+""
         f_sub_clr=f_light_down(f_clr,1.5)
         if (f_light) {
-          f_clr=f_light_down(f_clr,1.5)
+          f_sub_clr=f_light_down(f_clr,3)
+          f_clr=f_light_down(f_clr,2)
         }
         for (t_v = -taper; t_v<=taper; t_v=t_v+0.1) {
           f_shwd=f_shwd
@@ -954,7 +957,7 @@ function preview_update(){
   if (t_clr.search("미러")>-1) {
     price_total=price_total + price_arr[tmp_w]["price_mirror"][t_size]*f_cnt
   }
-  if (pro_w=="d" && t_clr.search("무도장")<0) {
+  if (pro_w=="d" && t_clr.search("도장")>-1) {
     price_total=price_total+price_arr[tmp_w]["price_color"][t_size]*f_cnt
   }
   if (price_total%price_wh[tmp_w]!=0) {
@@ -965,7 +968,7 @@ function preview_update(){
     t_clr_slt=t_main_LED[0]+t_side_LED[0]+t_side_back[0]
   } else if(pro_w=="d") {
     t_clr_slt=t_clr.charAt(0)
-    if(t_clr.search("무도장")<0) {
+    if(t_clr.search("도장")>-1) {
       t_clr_slt=t_clr_slt+t_side_gomu_c.charAt(0)
     } else {
       t_clr_slt=t_clr_slt+t_clr.split("(")[1].charAt(0)+t_side_gomu.charAt(0)
