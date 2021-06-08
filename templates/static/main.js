@@ -801,7 +801,7 @@ function preview_update(){
       } else if (pro_w=="b") {
         f_shwd="text-shadow:0.5px 0.5px #fefefe"
         if (f_light) {
-          f_shwd=f_shwd+",0px 0px 5px #"+f_clr
+          f_shwd=f_shwd+",0px 0px 10px #"+f_clr
         } else if (f_clr=="ffffff") {
           f_clr="fcfcfc"
         }
@@ -846,7 +846,7 @@ function preview_update(){
         f_clr=f_clr+""
         if(f_light){
           dep_tmp=f_cnt/2-Math.abs(step-f_cnt/2)
-          if (f_side_LED=="ffffff") {
+          if (f_side_LED!="none") {
             f_shwd=f_shwd+"0px 0px "+dep_tmp/4+5+"px #"+arr_clr[0]+","
             f_sub_clr=f_light_down(f_clr,1.25-(dep_tmp/40))
             f_clr=f_light_down(f_clr,1.3-(dep_tmp/40))
