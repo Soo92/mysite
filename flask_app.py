@@ -20,6 +20,9 @@ def t4():
 @app.route('/t5')
 def t5():
     return render_template('3tAcr.html',title='e')
+@app.route('/search')
+def t5():
+    return render_template('3tAcr.html',title='e')
 
 if __name__ == '__main__':
     app.run()
