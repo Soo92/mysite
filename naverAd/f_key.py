@@ -24,13 +24,13 @@ driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
 # 조회하기 클릭
 driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
 time.sleep(1)
-keyword_list = []
+keyword_list = ["키워드"]
 
 for p in range(0, 25):
     # 인기검색어 가져오기
     for i in range(1, 21):
         keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
-        keyword_list.append(driver.find_element_by_xpath(keyword_path).text)
+        keyword_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
     # 다음 페이지 넘기기
     driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
     time.sleep(0.5)
@@ -38,13 +38,18 @@ for p in range(0, 25):
 
 driver.close()
 
-f = open('keyw.csv','r')
+f_name='keyw.csv'
+added_list=[]
+f = open(f_name,'r')
 rdr = csv.reader(f)
 for line in rdr:
-    print(line)
-f.close()
+    if not(line[0] in keyword_list) and not(line[0] in added_list):
+        added_list.append(line[0])
 
-f = open("keyw.csv", "w")
+f = open(f_name, "w")
 for i in range(len(keyword_list)):
-    f.write(keyword_list[i].split("\n")[0] + ',' + keyword_list[i].split("\n")[1] + '\n')
+    f.write(keyword_list[i]+"\n")
+for i in range(len(added_list)):
+    f.write(added_list[i]+"\n")
+
 f.close()
