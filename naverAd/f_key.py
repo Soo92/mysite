@@ -6,6 +6,12 @@ from selenium import webdriver
 import hashlib, hmac, base64, requests, time
 import pandas as pd
 
+from datetime import datetime
+
+f_name='keyw.csv'
+r_name="rel.csv"
+today=datetime.today().strftime("%y%m%d")
+
 # 네이버 강고 API 키
 BASE_URL = 'https://api.naver.com'
 CUSTOMER_ID = '392590'
@@ -37,50 +43,63 @@ def call_RelKwdStat(_kwds_string):
     r_data = r.json()
     return r_data
 
-driver = webdriver.Chrome('./chromedriver')
-# 쇼핑인사이트 이동
-path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
-driver.get(path)
-# 기기별 전체 선택
-driver.find_element_by_xpath('//*[@id="18_device_0"]').click()
-# 성별 전체 선택
-driver.find_element_by_xpath('//*[@id="19_gender_0"]').click()
-# 연령별 전체 선택
-driver.find_element_by_xpath('//*[@id="20_age_0"]').click()
-# 분류 & 기간 선택
-driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
-driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
-time.sleep(0.2)
-driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
-driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
-time.sleep(0.2)
-driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
-driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
-# 조회하기 클릭
-driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
-time.sleep(1)
-row_list = [",키워드"]
-keyword_list = ["연관키워드"]
+f = open(f_name,'r')
+rdr = csv.reader(f)
+row_list = []
+keyword_list = []
+r_i=0
+for line in rdr:
+    if r_i==0 and line[0]!=today:
+        driver = webdriver.Chrome('./chromedriver')
+        # 쇼핑인사이트 이동
+        path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
+        driver.get(path)
+        # 기기별 전체 선택
+        driver.find_element_by_xpath('//*[@id="18_device_0"]').click()
+        # 성별 전체 선택
+        driver.find_element_by_xpath('//*[@id="19_gender_0"]').click()
+        # 연령별 전체 선택
+        driver.find_element_by_xpath('//*[@id="20_age_0"]').click()
+        # 분류 & 기간 선택
+        driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
+        driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
+        time.sleep(0.2)
+        driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
+        driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
+        time.sleep(0.2)
+        driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
+        driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
+        # 조회하기 클릭
+        driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
+        time.sleep(1)
+        row_list = [",키워드"]
+        keyword_list = ["연관키워드"]
+        for p in range(0, 25):
+            # 인기검색어 가져오기
+            for i in range(1, 21):
+                keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
+                row_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[0]+","+driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
+                keyword_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
+            # 다음 페이지 넘기기
+            driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
+            time.sleep(0.2)
+            # print(keyword_list)
+        driver.close()
+        break
+    elif line[0]==today:
+        row_list.append(line[0]+","+line[1])
+        keyword_list.append(line[1])
+    r_i+=1
+f.close()
 
-for p in range(0, 25):
-    # 인기검색어 가져오기
-    for i in range(1, 21):
-        keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
-        row_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[0]+","+driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
-        keyword_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
-    # 다음 페이지 넘기기
-    driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
-    time.sleep(0.2)
-    # print(keyword_list)
-
-driver.close()
-
-f_name='keyw.csv'
-r_name="rel.csv"
+keyword_list_lower=list(map(lambda x: x.lower(), keyword_list))
+arr=np.array(keyword_list_lower)
 f = open(f_name,'r')
 rdr = csv.reader(f)
 for line in rdr:
-    if not(line[1].lower() in list(map(lambda x: x.lower(), keyword_list))) and line[1]!="relKeyword":
+    result = np.where(arr == line[1].lower())
+    if (len(result[0])==0):
+        print(line[1].lower()+"/")
         row_list.append("기존,"+line[1])
         keyword_list.append(line[1])
 f.close()
@@ -93,6 +112,7 @@ i=0
 while i < 120:
     kwds_string = ','.join(keyword_list[i*5+1:(i*5+6)])
     returnData = call_RelKwdStat(kwds_string)
+    print(str(i)+"/"+kwds_string)
     df = pd.DataFrame(returnData['keywordList'])
     df.rename({'compIdx':'경쟁정도',
        'monthlyAveMobileClkCnt':'월평균클릭수_모바일',
@@ -106,20 +126,19 @@ while i < 120:
     df.to_csv(r_name,encoding='euc-kr')
     r = open(r_name,'r')
     rdr2 = csv.reader(r)
-    arr=np.array(list(map(lambda x: x.lower(), keyword_list)))
+    arr=np.array(keyword_list_lower)
     r_i=0
     for line in rdr2:
         if r_i==0:
             r_i=r_i+1
             row_list[0]=",".join(line)
         result = np.where(arr == line[1].lower())
-        if (result[0][0]>-1):
-            row_list[result[0][0]]=row_list[result[0][0]].split(",")[0]+","+",".join(line[1:])
+        if (len(result[0])!=0 and result[0][0]>-1):
+            row_list[result[0][0]]=today+","+",".join(line[1:])
         else:
             row_list.append("연관"+",".join(line))
             keyword_list.append(line[1])
     r.close()
-    time.sleep(0.01)
     i=i+1
 
 # csv 파일 생성

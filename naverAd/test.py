@@ -1,3 +1,4 @@
+from datetime import datetime
 import numpy as np
 import csv
 
@@ -13,5 +14,7 @@ kwd_list.append("qgw")
 kwd_list.append("qgwasAASd")
 
 print(".".join(kwd_list[0:3]))
+print(datetime.today().strftime("%Y%m%d"))
+print(datetime.today().strftime("%y%m%d"))
 print("ASD".lower())
 print(list(map(lambda x: x.lower(), kwd_list)))
