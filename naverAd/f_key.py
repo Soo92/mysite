@@ -47,9 +47,12 @@ f = open(f_name,'r')
 rdr = csv.reader(f)
 row_list = []
 keyword_list = []
-r_i=0
+
 for line in rdr:
-    if r_i==0 and line[0]!=today:
+    # print(line)
+    # print(line[0]+"/"+today)
+    # print(line[0]==today)
+    if False and line[0]!=today:
         driver = webdriver.Chrome('./chromedriver')
         # 쇼핑인사이트 이동
         path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
@@ -78,43 +81,57 @@ for line in rdr:
             # 인기검색어 가져오기
             for i in range(1, 21):
                 keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
-                row_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[0]+","+driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
-                keyword_list.append(driver.find_element_by_xpath(keyword_path).text.split("\n")[1])
+                key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
+                key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
+                while(key_num==p*20+i):
+                    time.sleep(0.1)
+                    keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
+                    key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
+                    key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
+                row_list.append(key_num+","+key_word)
+                keyword_list.append(key_word)
             # 다음 페이지 넘기기
             driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
-            time.sleep(0.2)
             # print(keyword_list)
         driver.close()
-        break
-    elif line[0]==today:
-        row_list.append(line[0]+","+line[1])
-        keyword_list.append(line[1])
-    r_i+=1
-f.close()
+    break
 
 keyword_list_lower=list(map(lambda x: x.lower(), keyword_list))
 arr=np.array(keyword_list_lower)
-f = open(f_name,'r')
-rdr = csv.reader(f)
+maxc=600
+i=0
 for line in rdr:
+    if i==maxc:
+        break
     result = np.where(arr == line[1].lower())
+    # print("dd")
+    # print(len(result[0]))
+    # print(result)
+    # print(line[1].lower())
     if (len(result[0])==0 and line[1]!=""):
         print(line[1].lower()+"/")
-        row_list.append("기존,"+line[1])
+        row_list.append("기존"+",".join(line))
         keyword_list.append(line[1])
+    i=i+1
 f.close()
 
 # https://hanshuginn.blogspot.com/2020/02/?m=0
 # return된 결과 길이 확인
 # print(len(call_RelKwdStat('원피스')['keywordList']))
+arr=np.array(keyword_list_lower)
 # 최대 5개의 키워드 입력 가능
 i=0
-while i < 120:
+while i < maxc/5:
     if "" in keyword_list[i*5+1:(i*5+6)]:
         break
-    time.sleep(0.1)
     kwds_string = ','.join(keyword_list[i*5+1:(i*5+6)])
-    returnData = call_RelKwdStat(kwds_string)
+    try:
+        returnData = call_RelKwdStat(kwds_string)
+        df = pd.DataFrame(returnData['keywordList'])
+    except:
+        time.sleep(0.1)
+        returnData = call_RelKwdStat(kwds_string)
+        df = pd.DataFrame(returnData['keywordList'])
     print(str(i)+"/"+kwds_string)
     df = pd.DataFrame(returnData['keywordList'])
     df.rename({'compIdx':'경쟁정도',
@@ -127,20 +144,21 @@ while i < 120:
        'plAvgDepth':'월평균노출광고수',
        'relKeyword':'연관키워드'},axis=1,inplace=True)
     df.to_csv(r_name,encoding='euc-kr')
+    r_i=0
     r = open(r_name,'r')
     rdr2 = csv.reader(r)
-    arr=np.array(keyword_list_lower)
-    r_i=0
     for line in rdr2:
         if r_i==0:
             r_i=r_i+1
             row_list[0]=",".join(line)
         result = np.where(arr == line[1].lower())
         if (len(result[0])!=0 and result[0][0]>-1):
-            row_list[result[0][0]]=",".join(line)
+            row_list[result[0][0]]=row_list[result[0][0]].split(",")[0]+",".join(line[1:])
         else:
             row_list.append("연관"+",".join(line))
             keyword_list.append(line[1])
+            keyword_list_lower=list(map(lambda x: x.lower(), keyword_list))
+            arr=np.array(keyword_list_lower)
     r.close()
     i=i+1
 
