@@ -72,7 +72,7 @@ for line in rdr:
         # 조회하기 클릭
         driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
         time.sleep(1)
-        row_list = [",키워드"]
+        row_list = [today+",키워드"]
         keyword_list = ["연관키워드"]
         for p in range(0, 25):
             # 인기검색어 가져오기
@@ -98,7 +98,7 @@ f = open(f_name,'r')
 rdr = csv.reader(f)
 for line in rdr:
     result = np.where(arr == line[1].lower())
-    if (len(result[0])==0):
+    if (len(result[0])==0 and line[1]!=""):
         print(line[1].lower()+"/")
         row_list.append("기존,"+line[1])
         keyword_list.append(line[1])
@@ -110,6 +110,9 @@ f.close()
 # 최대 5개의 키워드 입력 가능
 i=0
 while i < 120:
+    if "" in keyword_list[i*5+1:(i*5+6)]:
+        break
+    time.sleep(0.1)
     kwds_string = ','.join(keyword_list[i*5+1:(i*5+6)])
     returnData = call_RelKwdStat(kwds_string)
     print(str(i)+"/"+kwds_string)
@@ -134,7 +137,7 @@ while i < 120:
             row_list[0]=",".join(line)
         result = np.where(arr == line[1].lower())
         if (len(result[0])!=0 and result[0][0]>-1):
-            row_list[result[0][0]]=today+","+",".join(line[1:])
+            row_list[result[0][0]]=",".join(line)
         else:
             row_list.append("연관"+",".join(line))
             keyword_list.append(line[1])
