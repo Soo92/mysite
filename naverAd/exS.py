@@ -3,6 +3,8 @@
 import os
 import sys
 import urllib.request
+import json
+
 client_id = "IEu9KZec1kqGvGkpeZg8"
 client_secret = "ynbWZ12hy6"
 encText = urllib.parse.quote("간판")
@@ -15,6 +17,8 @@ response = urllib.request.urlopen(request)
 rescode = response.getcode()
 if(rescode==200):
     response_body = response.read()
-    print(response_body.decode('utf-8'))
+    j_data = json.loads(response_body)
+    # print(response_body.decode('utf-8'))
+    print(j_data['total'])
 else:
     print("Error Code:" + rescode)

@@ -6,7 +6,7 @@ from selenium import webdriver
 import hashlib, hmac, base64, requests, time, os
 import pandas as pd
 
-import urllib.request
+import urllib.request, json
 
 from datetime import datetime
 
@@ -19,7 +19,7 @@ today=datetime.today().strftime("%y%m%d")
 client_id = "IEu9KZec1kqGvGkpeZg8"
 client_secret = "ynbWZ12hy6"
 
-def type_check(type,idx,max):
+def cnt_check(type,idx,max):
     print(type+":"+str(idx)+"/"+str(max))
 
 def test_print(txt):
@@ -37,9 +37,12 @@ def sel_api(keyw):
     rescode = response.getcode()
     if(rescode==200):
         response_body = response.read()
-        print(response_body.decode('utf-8'))
+        j_data = json.loads(response_body)
+        # print(response_body.decode('utf-8'))
+        return(j_data['total'])
     else:
-        print("Error Code:" + rescode)
+        # print("Error Code:" + rescode)
+        return("Err" + rescode)
 
 # 네이버 광고 API 키
 BASE_URL = 'https://api.naver.com'
@@ -75,7 +78,7 @@ for it in (f_name,m_name,r_name):
     if (not os.path.isfile(it)):
         print("dd")
         f = open(it, "w")
-        f.close
+        f.close()
 
 row_list = [today+",키워드"]
 keyword_list = ["연관키워드"]
@@ -145,31 +148,39 @@ if not today_file:
 # 기존 키워드
 f = open(f_name,'r')
 rdr = csv.reader(f)
-row_count = sum(1 for row in rdr)
+row_count = sum(1 for row in rdr)-1
+f.close()
+f = open(f_name,'r')
+rdr = csv.reader(f)
 i=0
 for line in rdr:
     i+=1
-    type_check("기존검색",i,row_count)
+    cnt_check("기존검색",i,row_count)
     line_exist=line[1].lower() in keyword_list_lower
     if (not line_exist):
-        line[0]="기존"
+        if not "기존" in line[0]:
+            line[0]="기존"+line[0]
         if today_file and len(line)>10:
             row_list.append(",".join(line))
         else:
-            row_list.append(",".join(line[:9]))
+            row_list.append(",".join(line[:10]))
         keyword_list.append(line[1])
         keyword_list_lower.append(line[1].lower())
 f.close()
+
 
 # 내가 지정한 키워드
 arr=np.array(keyword_list_lower)
 m = open(m_name,'r')
 rdr = csv.reader(m)
 row_count = sum(1 for row in rdr)
+m.close()
+m = open(m_name,'r')
+rdr = csv.reader(m)
 i=0
 for line in rdr:
     i+=1
-    type_check("지정검색",i,row_count)
+    cnt_check("지정검색",i,row_count)
     result = np.where(arr == line[0].lower())
     if (len(result[0])==0 and line[0]!=""):
         row_list.append("지정,"+line[0])
@@ -186,7 +197,7 @@ m.close()
 i=0
 maxi=120
 while i < maxi:
-    type_check("연관검색",i,maxi)
+    cnt_check("연관검색",i,maxi)
     if len(keyword_list[(i*5):(i*5+5)])==0:
         break
     kwds_string = ','.join(keyword_list[i*5+1:(i*5+6)])
@@ -237,8 +248,18 @@ while i < maxi:
 # csv 파일 생성
 f = open(f_name, "w")
 for i in range(len(row_list)):
-    if i!=0:
-        type_check("상품수검색",i,len(row_list)-1)
-        # sel_api(keyword_list[i])
+    row_si=row_list[i].split(",")
+    if i==0:
+        if len(row_si)==10:
+            row_list[i]=row_list[i]+",전체조회수,전체클릭수,상품수"
+    else:
+        cnt_check("상품수검색",i,len(row_list)-1)
+        if len(row_si)==10:
+            row_si[2]=(row_si[2].replace("< 10","5")
+            row_si[3]=(row_si[2].replace("< 10","5")
+            row_si.append(str(int(row_si[2])+int(row_si[3])))
+            row_si.append(str(int(float(row_si[4])+float(row_si[5]))))
+            row_si.append(str(sel_api(keyword_list[i])))
+            row_list[i]=",".join(row_si)
     f.write(row_list[i]+"\n")
 f.close()
