@@ -73,6 +73,7 @@ def call_RelKwdStat(_kwds_string):
 
 for it in (f_name,m_name,r_name):
     if (not os.path.isfile(it)):
+        print("dd")
         f = open(it, "w")
         f.close
 
@@ -237,7 +238,7 @@ while i < maxi:
 f = open(f_name, "w")
 for i in range(len(row_list)):
     if i!=0:
-        type_check("상품수검색",i,len(row_list))
+        type_check("상품수검색",i,len(row_list)-1)
         # sel_api(keyword_list[i])
     f.write(row_list[i]+"\n")
 f.close()
