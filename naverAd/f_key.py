@@ -33,16 +33,27 @@ def sel_api(keyw):
     request = urllib.request.Request(url)
     request.add_header("X-Naver-Client-Id",client_id)
     request.add_header("X-Naver-Client-Secret",client_secret)
-    response = urllib.request.urlopen(request)
-    rescode = response.getcode()
-    if(rescode==200):
-        response_body = response.read()
-        j_data = json.loads(response_body)
-        # print(response_body.decode('utf-8'))
-        return(j_data['total'])
-    else:
-        # print("Error Code:" + rescode)
-        return("Err" + rescode)
+    try:
+        response = urllib.request.urlopen(request)
+        rescode = response.getcode()
+        if(rescode==200):
+            response_body = response.read()
+            j_data = json.loads(response_body)
+            return_D=""
+            # print(response_body.decode('utf-8'))
+            maxcc=len(j_data['items'])
+            if len(j_data['items'])>3:
+                maxcc=3
+            for cc in range(0,maxcc):
+                return_D=return_D+" "+j_data['items'][cc]['link']
+            if return_D=="":
+                return_D="상품없음"
+            return(str(j_data['total'])+","+return_D)
+        else:
+            # print("Error Code:" + rescode)
+            return("Err:" + rescode)
+    except Exception as e:
+        return("Err:"+str(e))
 
 # 네이버 광고 API 키
 BASE_URL = 'https://api.naver.com'
@@ -76,8 +87,9 @@ def call_RelKwdStat(_kwds_string):
 
 for it in (f_name,m_name,r_name):
     if (not os.path.isfile(it)):
-        print("dd")
         f = open(it, "w")
+        if it==m_name:
+            f.write("지정,제외\n")
         f.close()
 
 row_list = [today+",키워드"]
@@ -148,50 +160,59 @@ if not today_file:
 # 기존 키워드
 f = open(f_name,'r')
 rdr = csv.reader(f)
-row_count = sum(1 for row in rdr)-1
+row_count_p = sum(1 for row in rdr)-1
 f.close()
 f = open(f_name,'r')
 rdr = csv.reader(f)
 i=0
 for line in rdr:
+    if i!=0:
+        cnt_check("기존검색",i,row_count_p)
+        line_exist=line[1].lower() in keyword_list_lower
+        if (not line_exist):
+            if not "기존" in line[0]:
+                line[0]="기존"+line[0]
+            if today_file and len(line)>10 and line[10]!="":
+                row_list.append(",".join(line))
+            else:
+                row_list.append(",".join(line[:10]))
+            keyword_list.append(line[1])
+            keyword_list_lower.append(line[1].lower())
     i+=1
-    cnt_check("기존검색",i,row_count)
-    line_exist=line[1].lower() in keyword_list_lower
-    if (not line_exist):
-        if not "기존" in line[0]:
-            line[0]="기존"+line[0]
-        if today_file and len(line)>10:
-            row_list.append(",".join(line))
-        else:
-            row_list.append(",".join(line[:10]))
-        keyword_list.append(line[1])
-        keyword_list_lower.append(line[1].lower())
 f.close()
-
 
 # 내가 지정한 키워드
 arr=np.array(keyword_list_lower)
 m = open(m_name,'r')
 rdr = csv.reader(m)
-row_count = sum(1 for row in rdr)
+row_count_m = sum(1 for row in rdr)
 m.close()
 m = open(m_name,'r')
 rdr = csv.reader(m)
 i=0
 for line in rdr:
+    if i!=0:
+        cnt_check("지정검색",i,row_count_m)
+# 지정 키워드 추가
+        result = np.where(arr == line[0].lower())
+        if (len(result[0])==0 and line[0]!=""):
+            row_list.insert(1,"지정,"+line[0])
+            keyword_list.insert(1,line[0])
+            keyword_list_lower.insert(1,line[0].lower())
+            arr=np.array(keyword_list_lower)
+        elif (len(result[0])!=0 and result[0][0]>-1):
+            cur_row=row_list[result[0][0]].split(",")
+            if not "지정" in cur_row[0]:
+                cur_row[0]="지정"+cur_row[0]
+            row_list[result[0][0]]=",".join(cur_row)
+# 제외 키워드 삭제
+        result2 = np.where(arr == line[1].lower())
+        if (line[1]!="" and len(result2[0])!=0 and result2[0][0]>-1):
+            row_list.pop(result2[0][0])
+            keyword_list.pop(result2[0][0])
+            keyword_list_lower.pop(result2[0][0])
+            arr=np.array(keyword_list_lower)
     i+=1
-    cnt_check("지정검색",i,row_count)
-    result = np.where(arr == line[0].lower())
-    if (len(result[0])==0 and line[0]!=""):
-        row_list.append("지정,"+line[0])
-        keyword_list.append(line[0])
-        keyword_list_lower.append(line[0].lower())
-        arr=np.array(keyword_list_lower)
-    elif (len(result[0])!=0 and result[0][0]>-1):
-        cur_row=row_list[result[0][0]].split(",")
-        if not "지정" in cur_row[0]:
-            cur_row[0]="지정"+cur_row[0]
-        row_list[result[0][0]]=",".join(cur_row)
 m.close()
 
 i=0
@@ -201,14 +222,16 @@ while i < maxi:
     if len(keyword_list[(i*5):(i*5+5)])==0:
         break
     kwds_string = ','.join(keyword_list[i*5+1:(i*5+6)])
-    try:
-        returnData = call_RelKwdStat(kwds_string)
-        df = pd.DataFrame(returnData['keywordList'])
-    except:
-        time.sleep(0.1)
-        returnData = call_RelKwdStat(kwds_string)
-        df = pd.DataFrame(returnData['keywordList'])
-    df = pd.DataFrame(returnData['keywordList'])
+    returnData = None
+    while returnData is None:
+        try:
+            returnData = call_RelKwdStat(kwds_string)
+            df = pd.DataFrame(returnData['keywordList'])
+        except:
+            time.sleep(0.1)
+            returnData = call_RelKwdStat(kwds_string)
+            df = pd.DataFrame(returnData['keywordList'])
+            pass
     df.rename({'compIdx':'경쟁정도',
        'monthlyAveMobileClkCnt':'월평균클릭수_모바일',
        'monthlyAveMobileCtr':'월평균클릭률_모바일',
@@ -217,7 +240,7 @@ while i < maxi:
        'monthlyMobileQcCnt':'월간검색수_모바일',
        'monthlyPcQcCnt': '월간검색수_PC',
        'plAvgDepth':'월평균노출광고수',
-       'relKeyword':'연관키워드'},axis=1,inplace=True)
+       'relKeyword':'키워드'},axis=1,inplace=True)
     df.to_csv(r_name,encoding='euc-kr')
     r = open(r_name,'r')
     rdr = csv.reader(r)
@@ -246,20 +269,31 @@ while i < maxi:
     i=i+1
 
 # csv 파일 생성
+# 상품수 검색 제한 : 최대 25000제한이라;;
+maxs=500+row_count_m
 f = open(f_name, "w")
 for i in range(len(row_list)):
     row_si=row_list[i].split(",")
     if i==0:
         if len(row_si)==10:
-            row_list[i]=row_list[i]+",전체조회수,전체클릭수,상품수"
+            row_list[i]=row_list[i]+",전체조회수,전체클릭수,상품수,상위링크,비율(조회),비율(클릭)"
     else:
         cnt_check("상품수검색",i,len(row_list)-1)
         if len(row_si)==10:
-            row_si[2]=(row_si[2].replace("< 10","5")
-            row_si[3]=(row_si[2].replace("< 10","5")
+            row_si[2]=(row_si[2].replace("< 10","5"))
+            row_si[3]=(row_si[3].replace("< 10","5"))
             row_si.append(str(int(row_si[2])+int(row_si[3])))
             row_si.append(str(int(float(row_si[4])+float(row_si[5]))))
-            row_si.append(str(sel_api(keyword_list[i])))
-            row_list[i]=",".join(row_si)
+            if i<=maxs:
+                cnt_lnk=str(sel_api(keyword_list[i]))
+                row_si.append(cnt_lnk)
+                if float(cnt_lnk.split(",")[0]):
+                    row_si.append(str(int(float(cnt_lnk.split(",")[0])/(int(row_si[2])+int(row_si[3])+1))))
+                    row_si.append(str(int(float(cnt_lnk.split(",")[0])/(float(row_si[4])+float(row_si[5])+1))))
+                else:
+                    row_si.append("-,-")
+            else:
+                row_si.append("연관검색어,미확인,-,-")
+        row_list[i]=",".join(row_si)
     f.write(row_list[i]+"\n")
 f.close()
