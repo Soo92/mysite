@@ -297,3 +297,12 @@ for i in range(len(row_list)):
         row_list[i]=",".join(row_si)
     f.write(row_list[i]+"\n")
 f.close()
+
+f2html = pd.read_csv(f_name)
+# to save as html file
+# named as "Table"
+f2html.to_html("Table.htm")
+# assign it to a
+# variable (string)
+html_file = f2html.to_html()
+print(html_file)
