@@ -20,9 +20,10 @@ def t4():
 @app.route('/t5')
 def t5():
     return render_template('3tAcr.html',title='e')
-@app.route('/search')
+
+@app.route('/admin')
 def t5():
-    return render_template('3tAcr.html',title='e')
+    return render_template('ad_1.html',title='e')
 
 if __name__ == '__main__':
     app.run()

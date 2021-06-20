@@ -12,6 +12,7 @@ from datetime import datetime
 
 f_name='keyw.csv'
 m_name="my.csv"
+d_name="del.csv"
 r_name="rel.csv"
 today=datetime.today().strftime("%y%m%d")
 
@@ -85,11 +86,13 @@ def call_RelKwdStat(_kwds_string):
     r_data = r.json()
     return r_data
 
-for it in (f_name,m_name,r_name):
+for it in (f_name,m_name,d_name,r_name):
     if (not os.path.isfile(it)):
         f = open(it, "w")
         if it==m_name:
-            f.write("지정,제외\n")
+            f.write("지정\n")
+        elif it==d_name:
+            f.write("제외\n")
         f.close()
 
 row_list = [today+",키워드"]
@@ -205,15 +208,30 @@ for line in rdr:
             if not "지정" in cur_row[0]:
                 cur_row[0]="지정"+cur_row[0]
             row_list[result[0][0]]=",".join(cur_row)
+    i+=1
+m.close()
+# 내가 제외한 키워드
+arr=np.array(keyword_list_lower)
+m = open(d_name,'r')
+rdr = csv.reader(m)
+row_count_m = sum(1 for row in rdr)
+m.close()
+m = open(m_name,'r')
+rdr = csv.reader(m)
+i=0
+for line in rdr:
+    if i!=0:
+        cnt_check("제외검색",i,row_count_m)
 # 제외 키워드 삭제
-        result2 = np.where(arr == line[1].lower())
-        if (line[1]!="" and len(result2[0])!=0 and result2[0][0]>-1):
+        result2 = np.where(arr == line[0].lower())
+        if (line[0]!="" and len(result2[0])!=0 and result2[0][0]>-1):
             row_list.pop(result2[0][0])
             keyword_list.pop(result2[0][0])
             keyword_list_lower.pop(result2[0][0])
             arr=np.array(keyword_list_lower)
     i+=1
 m.close()
+
 
 i=0
 maxi=120
@@ -298,11 +316,11 @@ for i in range(len(row_list)):
     f.write(row_list[i]+"\n")
 f.close()
 
-f2html = pd.read_csv(f_name)
+# f2html = pd.read_csv(f_name, engine='python')
 # to save as html file
 # named as "Table"
-f2html.to_html("Table.htm")
+# f2html.to_html("Table.html")
 # assign it to a
 # variable (string)
-html_file = f2html.to_html()
-print(html_file)
+# html_file = f2html.to_html(table_id = "csv_table")
+# print(html_file)
