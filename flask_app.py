@@ -3,7 +3,6 @@
 
 from flask import Flask,render_template
 import pandas as pd
-import static.f_key as ff
 
 app = Flask(__name__,static_url_path='/templates/')
 
@@ -25,7 +24,8 @@ def t5():
 
 @app.route('/admin')
 def admin():
-    data=ff.my_table()
+    f2html = pd.read_csv("/static/my.csv", engine='python')
+    html_file = f2html.to_html(table_id = "csv_table")
     return render_template('ad_1.html',data=html_file)
 
 if __name__ == '__main__':
