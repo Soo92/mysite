@@ -95,8 +95,7 @@
     url: 'static/my.csv',
     dataType: 'html',
     contentType: 'application/x-www-form-urlencoded; charset=euc-kr'
-  }).done(successFunction);
-  function successFunction(data) {
+  }).done(function(data) {
     var allRows = data.split(/\r?\n|\r/);
     var table = '<table id="csv_table" class="display">';
     for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
@@ -130,6 +129,23 @@
     table += '</table>';
     $('body').append(table);
   }
+  $.ajax({
+    url: 'static/my.csv',
+    dataType: 'text',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+  }).done(function(data) {
+    var allRows = data.split(/\r?\n|\r/);
+    var table = '<table id="csv_table" class="display">';
+    for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+      if (singleRow === 0) {
+        table += '<thead>';
+        table += '<tr>';
+      } else {
+        table += '<tr>';
+      }
+    }
+  }
+
 </script>
 <style>
   body {margin:2em;}
