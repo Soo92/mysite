@@ -17,39 +17,74 @@
   	//Normally set in the title tag of your page.
   	document.title='알리네_키워드 생성';
   	// DataTable initialisation
-    var table = $('.display').DataTable( {
-      dom: 'Bfrtip',
-      colReorder: true,
-      select: {          toggleable: false      },
-      buttons: [
-        {   action: function ( e, dt, button, config ) {                location.reload();            },
-            text: '키워드 재확인'        },
-        {          extend: 'colvis',          text: '열 선택',        },
-        {          extend: 'colvisRestore',          text: '열 복구',        },
+    var table_arr = {"each":[
+      $('#csv_table').DataTable( {
+        dom: 'Bfrtip',
+        colReorder: true,
+        select: {toggleable: true},
+        buttons: [
+        {   action: function ( e, dt, button, config ) {location.reload();},
+        text: '키워드 재확인'},
+        {extend: 'colvis',text: '열 선택',},
+        {extend: 'colvisRestore',text: '열 복구',},
         'csv',
-        {text: '키워드 추가',          attr:{            id:'addRow'          }        },
-        {text: '키워드 삭제',          attr:{            id:'delRow'          }        },
-        {text: '키워드 지정',          attr:{            id:'keepRow'          }        },
-      ]
-    } );
+        {text: '키워드 추가',attr:{id:'addRow'}},
+        {text: '키워드 삭제',attr:{id:'delRow'}     },
+        {text: '키워드 지정',attr:{id:'keepRow'}},
+        ]
+      })
+      ,$('#add_table').DataTable( {
+        dom: 'Bfrtip',
+        select: {toggleable: true},
+        buttons: [
+          {   action: function ( e, dt, button, config ) {location.reload();},
+              text: '키워드 재확인'},
+          'csv',
+          {text: '키워드 지정제외',attr:{id:'delRow_m'}},
+        ]
+      })
+      ,$('#del_table').DataTable( {
+        dom: 'Bfrtip',
+        colReorder: true,
+        select: {toggleable: true},
+        buttons: [
+          {   action: function ( e, dt, button, config ) {location.reload();},
+              text: '키워드 재확인'},
+          'csv',
+          {text: '키워드 복구',attr:{id:'delRow_d'}},
+        ]
+      })
+    ]}
 
+    var table=table_arr.each[0];
+    var table_m=table_arr.each[1];
+    var table_d=table_arr.each[2];
     $('#addRow').on( 'click', function () {
-      var new_key = $('input[type="search"]:visible').val();
+      var new_key = $('input[type="search"]').val();
       var flag_key = table.column(1).data().indexOf(new_key)<0;
-      if (flag_key) {        table.row.add( [        '지정',new_key,'','',''        ] ).draw( false );
-      } else {        alert("이미 있는 키워드입니다")      }    } );
+      if (new_key=="") {alert("값이 비어있습니다")
+      } else if (flag_key) {  table.row.add( ['지정',new_key,'','',''] ).draw( false );
+      } else {alert("이미 있는 키워드입니다")}} );
     $('#delRow').on( 'click', function () {
-      var rows = table.rows( '.selected:visible' ).remove().draw();} );
-  });
+      var rows = table.rows( '.selected' ).remove().draw();} );
+
+    $('#delRow_m').on( 'click', function () {
+      var rows = table_m.rows( '.selected' ).remove().draw();} );
+
+    $('#delRow_d').on( 'click', function () {
+      var rows = table_d.rows( '.selected' ).remove().draw();} );
+  })
 
   function toggleDiv(idx) {
     var x = document.getElementsByClassName('t_key');
-    for (i = 0; i < x.length; i++) {
-      if (i==idx) {
-        x[i].style.display = "block";
-      } else {
-        x[i].style.display = "none";
-      }
+    if (idx==0) {
+      x[0].style.display = "block";
+      x[1].style.display = "none";
+      x[2].style.display = "none";
+    } else {
+      x[0].style.display = "none";
+      x[1].style.display = "block";
+      x[2].style.display = "block";
     }
   }
 
@@ -60,11 +95,10 @@
 
 <div>
   <button onclick="toggleDiv(0)">전체</button>
-  <button onclick="toggleDiv(1)">지정</button>
-  <button onclick="toggleDiv(2)">제외</button>
+  <button onclick="toggleDiv(1)">지정/제외</button>
 </div>
 <div class="t_key" style="display:block">키워드 확인
-  <table id="csv_table" class="display" cellspacing="0" width="100%">
+  <table id="csv_table" class="display">
   	<thead>
   		<tr>
   			<th>Order</th>
@@ -136,7 +170,7 @@
 </div>
 
 <div class="t_key" style="display:none">지정 키워드
-  <table id="add_table" class="display" cellspacing="0" width="100%">
+  <table id="add_table" class="display">
   	<thead>
   		<tr>
   			<th>Order</th>
@@ -208,7 +242,7 @@
 </div>
 
 <div class="t_key" style="display:none">제외 키워드
-  <table id="del_table" class="display" cellspacing="0" width="100%">
+  <table id="del_table" class="display">
   	<thead>
   		<tr>
   			<th>Order</th>
