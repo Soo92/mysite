@@ -17,6 +17,7 @@
   	//Normally set in the title tag of your page.
   	document.title='알리네_키워드 생성';
   	// DataTable initialisation
+
     var table_arr = {"each":[
       $('#csv_table').DataTable( {
         dom: 'Bfrtip',
@@ -75,16 +76,19 @@
       var rows = table_d.rows( '.selected' ).remove().draw();} );
   })
 
-  function toggleDiv(idx) {
+  function toggleDiv(e) {
     var x = document.getElementsByClassName('t_key');
-    if (idx==0) {
+    txt=$(e).prop('value')
+    if (txt=="전체") {
       x[0].style.display = "block";
       x[1].style.display = "none";
       x[2].style.display = "none";
+      $(e).prop('value',"지정/제외")
     } else {
       x[0].style.display = "none";
       x[1].style.display = "block";
       x[2].style.display = "block";
+      $(e).prop('value',"전체")
     }
   }
 
@@ -94,8 +98,7 @@
 </style>
 
 <div>
-  <button onclick="toggleDiv(0)">전체</button>
-  <button onclick="toggleDiv(1)">지정/제외</button>
+  <input type="button" value="지정/제외" onclick="toggleDiv(this)">
 </div>
 <div class="t_key" style="display:block">키워드 확인
   <table id="csv_table" class="display">
@@ -169,6 +172,7 @@
   </table>
 </div>
 
+<table id="example" class="display"></table>
 <div class="t_key" style="display:none">지정 키워드
   <table id="add_table" class="display">
   	<thead>

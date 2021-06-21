@@ -316,11 +316,10 @@ for i in range(len(row_list)):
     f.write(row_list[i]+"\n")
 f.close()
 
-# f2html = pd.read_csv(f_name, engine='python')
 # to save as html file
 # named as "Table"
-# f2html.to_html("Table.html")
 # assign it to a
 # variable (string)
-# html_file = f2html.to_html(table_id = "csv_table")
-# print(html_file)
+f2html = pd.read_csv(f_name, engine='python')
+f2html.to_html("Table.html")
+html_file = f2html.to_html(table_id = "csv_table")
