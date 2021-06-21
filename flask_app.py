@@ -22,7 +22,7 @@ def t5():
     return render_template('3tAcr.html',title='e')
 
 @app.route('/admin')
-def t5():
+def admin():
     return render_template('ad_1.html',title='e')
 
 if __name__ == '__main__':
