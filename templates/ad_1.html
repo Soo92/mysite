@@ -7,7 +7,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-
 <script>
   $(document).ready(function() {
     document.cookie = "safeCookie1=foo; SameSite=Lax";
@@ -93,7 +92,7 @@
   }
 
   $.ajax({
-    url: 'my.csv',
+    url: 'static/my.csv',
     dataType: 'text',
   }).done(successFunction);
   function successFunction(data) {
@@ -130,7 +129,6 @@
     table += '</table>';
     $('body').append(table);
   }
-
 </script>
 <style>
   body {margin:2em;}
