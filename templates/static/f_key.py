@@ -88,7 +88,7 @@ def call_RelKwdStat(_kwds_string):
 
 for it in (f_name,m_name,d_name,r_name):
     if (not os.path.isfile(it)):
-        f = open(it, "w")
+        f = open(it, "w", encoding='euc-kr')
         if it==m_name:
             f.write("지정\n")
         elif it==d_name:

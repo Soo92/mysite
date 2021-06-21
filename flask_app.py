@@ -2,6 +2,7 @@
 # A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask,render_template
+import pandas as pd
 
 app = Flask(__name__,static_url_path='/templates/')
 
@@ -23,7 +24,10 @@ def t5():
 
 @app.route('/admin')
 def admin():
-    return render_template('ad_1.html',title='e')
+    a = pd.read_csv("my.csv")
+    f2html = pd.read_csv("my.csv", engine='python')
+    html_file = f2html.to_html(table_id = "csv_table")
+    return render_template('ad_1.html',data=html_file)
 
 if __name__ == '__main__':
     app.run()
