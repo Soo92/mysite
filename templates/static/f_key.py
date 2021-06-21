@@ -20,6 +20,11 @@ today=datetime.today().strftime("%y%m%d")
 client_id = "IEu9KZec1kqGvGkpeZg8"
 client_secret = "ynbWZ12hy6"
 
+def my_table():
+    f2html = pd.read_csv("/static/my.csv", engine='python')
+    html_file = f2html.to_html(table_id = "csv_table")
+    return html_file
+
 def cnt_check(type,idx,max):
     print(type+":"+str(idx)+"/"+str(max))
 
