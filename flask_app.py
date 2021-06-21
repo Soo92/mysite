@@ -3,7 +3,7 @@
 
 from flask import Flask,render_template
 import pandas as pd
-import f_key as ff
+import static.f_key as ff
 
 app = Flask(__name__,static_url_path='/templates/')
 
