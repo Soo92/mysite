@@ -5,9 +5,10 @@ from flask import Flask,render_template
 import pandas as pd
 import sys
 sys.path.append("templates/static/")
+sys.path.append("/home/SeongSuLee/mysite/")
+sys.path.append("/home/SeongSuLee/mysite/templates/static/")
 for p in sys.path:
     print( p )
-
 import f_key as ff
 
 app = Flask(__name__,static_url_path='/templates/static/')
