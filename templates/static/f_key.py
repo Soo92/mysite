@@ -302,7 +302,6 @@ def reload():
         break
     r.close()
 
-
     # csv 파일 생성
     # 상품수 검색 제한 : 최대 25000제한이라;;
     # maxs=500+row_count_m
