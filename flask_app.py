@@ -9,7 +9,7 @@ sys.path.append("/home/SeongSuLee/mysite")
 sys.path.append("/home/SeongSuLee/mysite/templates/static")
 for p in sys.path:
     print( p )
-import f_key as ff
+# import f_key as ff
 
 app = Flask(__name__,static_url_path='/templates/static/')
 
@@ -38,7 +38,7 @@ def admin():
 
 @app.route('/reload')
 def reload():
-    ff.reload()
+    # ff.reload()
     return "hello"
 
 if __name__ == '__main__':
