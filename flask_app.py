@@ -4,9 +4,9 @@
 from flask import Flask,render_template
 import pandas as pd
 import sys
-sys.path.append("templates/static/")
-sys.path.append("/home/SeongSuLee/mysite/")
-sys.path.append("/home/SeongSuLee/mysite/templates/static/")
+sys.path.append("templates/static")
+sys.path.append("/home/SeongSuLee/mysite")
+sys.path.append("/home/SeongSuLee/mysite/templates/static")
 for p in sys.path:
     print( p )
 import f_key as ff
