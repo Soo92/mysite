@@ -9,12 +9,15 @@ import pandas as pd
 import urllib.request, json
 
 from datetime import datetime
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
-f_name='templates/static/keyw.csv'
-m_name="templates/static/my.csv"
-d_name="templates/static/del.csv"
-r_name="templates/static/rel.csv"
+f_name=os.path.join(THIS_FOLDER,"keyw.csv")
+m_name=os.path.join(THIS_FOLDER,"my.csv")
+d_name=os.path.join(THIS_FOLDER,"del.csv")
+r_name=os.path.join(THIS_FOLDER,"rel.csv")
 today=datetime.today().strftime("%y%m%d")
+
+g_name=os.path.join(THIS_FOLDER,"chromedriver")
 
 # 검색 API 계정
 client_id = "IEu9KZec1kqGvGkpeZg8"
@@ -115,7 +118,7 @@ def reload():
         f.close()
 
     if not today_file:
-        driver = webdriver.Chrome('templates/static/chromedriver')
+        driver = webdriver.Chrome(g_name)
         # 쇼핑인사이트 이동
         path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
         driver.get(path)
