@@ -3,6 +3,11 @@
 
 from flask import Flask,render_template
 import pandas as pd
+import templates.static.f_key as ff
+import sys
+
+for p in sys.path:
+    print( p )
 
 app = Flask(__name__,static_url_path='/templates/')
 
@@ -24,9 +29,15 @@ def t5():
 
 @app.route('/admin')
 def admin():
-    f2html = pd.read_csv("/static/my.csv", engine='python')
-    html_file = f2html.to_html(table_id = "csv_table")
-    return render_template('ad_1.html',data=html_file)
+    html_all = pd.read_csv("templates/static/keyw.csv", engine='python').to_html(table_id = "csv_table",classes="display compact")
+    html_add = pd.read_csv("templates/static/my.csv", engine='python').to_html(table_id = "add_table",classes="display compact")
+    html_del = pd.read_csv("templates/static/del.csv", engine='python').to_html(table_id = "del_table",classes="display compact")
+    return render_template('ad_1.html',data_key=html_all,data_add=html_add,data_del=html_del)
+
+@app.route('/reload')
+def reload():
+    ff.reload()
+    return "hello"
 
 if __name__ == '__main__':
     app.run()

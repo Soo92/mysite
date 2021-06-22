@@ -23,15 +23,50 @@
         colReorder: true,
         select: {toggleable: true},
         buttons: [
-        {   action: function ( e, dt, button, config ) {location.reload();},
-        text: '키워드 재확인'},
-        {extend: 'colvis',text: '열 선택',},
-        {extend: 'colvisRestore',text: '열 복구',},
-        'csv',
-        {text: '키워드 추가',attr:{id:'addRow'}},
-        {text: '키워드 삭제',attr:{id:'delRow'}     },
-        {text: '키워드 지정',attr:{id:'keepRow'}},
-        ]
+          {action: function ( e, dt, button, config ) {location.reload();},
+            text: '키워드 재확인'},
+          {extend: 'colvis',text: '열 선택',},
+          {extend: 'colvisRestore',text: '열 복구',},
+          'csv',
+          {text: '키워드 추가',attr:{id:'addRow'}},
+          {text: '키워드 삭제',attr:{id:'delRow'}     },
+          {text: '키워드 지정',attr:{id:'keepRow'}},
+        ],
+          "columnDefs": [
+            {"targets": [3,4,5,6,7,8,9,11,12,13,15,16],"type": "num"},
+            {"targets": 1,
+              "render": function ( data, type, full, meta ) {
+                if (full[1].indexOf("지정")>-1) {
+                  data='<a href="#" onclick="toggleCustom(this)">★'+full[1]+'</a>'
+                } else {
+                  data='<a href="#" onclick="toggleCustom(this)">☆'+full[1]+'</a>'
+                }
+                return data;
+              }
+            },
+            {"targets": 14,
+            "render": function ( data, type, full, meta ) {
+              tmp_html=""
+              tmp=data.split("val!")
+              for (i=1;i<tmp.length;i++) {
+                  if (i!=1) {
+                    tmp_html=tmp_html+"</br>";
+                  }
+                  tmp2=tmp[i].split("lnk!")
+                  if (tmp2.length>1) {
+                    link_title=tmp2[0]
+                    link_href=tmp2[1]
+                  } else {
+                    link_href=tmp2[0]
+                    link_title=tmp2[0]
+                  }
+                  tmp_html=tmp_html+'<a href="https://search.shopping.naver.com/gate.nhn?id='+link_href+'" target="_blank" rel="noopener noreferrer">'+link_title+'</a>';
+                }
+                return tmp_html;
+              }
+            },
+            {"targets": [3,4,5,6,7,8,10], visible:false }
+          ]
       })
       ,$('#add_table').DataTable( {
         dom: 'Bfrtip',
@@ -90,306 +125,22 @@
       $(e).prop('value',"전체")
     }
   }
-
-  $.ajax({
-    url: 'static/my.csv',
-    dataType: 'html',
-    contentType: 'application/x-www-form-urlencoded; charset=euc-kr'
-  }).done(function(data) {
-    var allRows = data.split(/\r?\n|\r/);
-    var table = '<table id="csv_table" class="display">';
-    for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
-      if (singleRow === 0) {
-        table += '<thead>';
-        table += '<tr>';
-      } else {
-        table += '<tr>';
-      }
-      var rowCells = allRows[singleRow].split(',');
-      for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
-        if (singleRow === 0) {
-          table += '<th>';
-          table += rowCells[rowCell];
-          table += '</th>';
-        } else {
-          table += '<td>';
-          table += rowCells[rowCell];
-          table += '</td>';
-        }
-      }
-      if (singleRow === 0) {
-        table += '</tr>';
-        table += '</thead>';
-        table += '<tbody>';
-      } else {
-        table += '</tr>';
-      }
-    }
-    table += '</tbody>';
-    table += '</table>';
-    $('body').append(table);
-  })
-
-  $.ajax({
-    url: 'static/my.csv',
-    dataType: 'text',
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-  }).done(function(data) {
-    var allRows = data.split(/\r?\n|\r/);
-    var table = '<table id="csv_table" class="display">';
-    for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
-      if (singleRow === 0) {
-        table += '<thead>';
-        table += '<tr>';
-      } else {
-        table += '<tr>';
-      }
-      var rowCells = allRows[singleRow].split(',');
-      for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
-        if (singleRow === 0) {
-          table += '<th>';
-          table += rowCells[rowCell];
-          table += '</th>';
-        } else {
-          table += '<td>';
-          table += rowCells[rowCell];
-          table += '</td>';
-        }
-      }
-      if (singleRow === 0) {
-        table += '</tr>';
-        table += '</thead>';
-        table += '<tbody>';
-      } else {
-        table += '</tr>';
-      }
-    }
-    table += '</tbody>';
-    table += '</table>';
-    $('body').append(table);
-  })
-
 </script>
 <style>
   body {margin:2em;}
 </style>
-{{ data | safe }}
 <div>
   <input type="button" value="지정/제외" onclick="toggleDiv(this)">
 </div>
 <div class="t_key" style="display:block">키워드 확인
-  <table id="csv_table" class="display">
-  	<thead>
-  		<tr>
-  			<th>Order</th>
-  			<th>Description</th>
-  			<th>Deadline</th>
-  			<th>Status</th>
-  			<th>Amount</th>
-  		</tr>
-  	</thead>
-  	<tbody>
-  		<tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>2</td>
-  			<td>Layout for poster</td>
-        <td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>3</td>
-  			<td>Image creation</td>
-  			<td>2016/01/23</td>
-  			<td>asdas</td>
-  			<td>€1.500,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  		<tr>
-  			<td>5</td>
-  			<td>Sticker production</td>
-  			<td>2016/02/18</td>
-  			<td>Planned</td>
-  			<td>€2.100,00</td>
-  		</tr>
-  		<tr>
-  			<td>6</td>
-  			<td>Glossy poster</td>
-  			<td>2016/03/17</td>
-  			<td>To Do</td>
-  			<td>€899,00</td>
-  		</tr>
-      <tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  	</tbody>
-  </table>
+  {{ data_key | safe }}
 </div>
 
 <table id="example" class="display"></table>
 <div class="t_key" style="display:none">지정 키워드
-  <table id="add_table" class="display">
-  	<thead>
-  		<tr>
-  			<th>Order</th>
-  			<th>Description</th>
-  			<th>Deadline</th>
-  			<th>Status</th>
-  			<th>Amount</th>
-  		</tr>
-  	</thead>
-  	<tbody>
-  		<tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>2</td>
-  			<td>Layout for poster</td>
-        <td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>3</td>
-  			<td>Image creation</td>
-  			<td>2016/01/23</td>
-  			<td>asdas</td>
-  			<td>€1.500,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  		<tr>
-  			<td>5</td>
-  			<td>Sticker production</td>
-  			<td>2016/02/18</td>
-  			<td>Planned</td>
-  			<td>€2.100,00</td>
-  		</tr>
-  		<tr>
-  			<td>6</td>
-  			<td>Glossy poster</td>
-  			<td>2016/03/17</td>
-  			<td>To Do</td>
-  			<td>€899,00</td>
-  		</tr>
-      <tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  	</tbody>
-  </table>
+  {{ data_add | safe }}
 </div>
 
 <div class="t_key" style="display:none">제외 키워드
-  <table id="del_table" class="display">
-  	<thead>
-  		<tr>
-  			<th>Order</th>
-  			<th>Description</th>
-  			<th>Deadline</th>
-  			<th>Status</th>
-  			<th>Amount</th>
-  		</tr>
-  	</thead>
-  	<tbody>
-  		<tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>2</td>
-  			<td>Layout for poster</td>
-        <td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>3</td>
-  			<td>Image creation</td>
-  			<td>2016/01/23</td>
-  			<td>asdas</td>
-  			<td>€1.500,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  		<tr>
-  			<td>5</td>
-  			<td>Sticker production</td>
-  			<td>2016/02/18</td>
-  			<td>Planned</td>
-  			<td>€2.100,00</td>
-  		</tr>
-  		<tr>
-  			<td>6</td>
-  			<td>Glossy poster</td>
-  			<td>2016/03/17</td>
-  			<td>To Do</td>
-  			<td>€899,00</td>
-  		</tr>
-      <tr>
-  			<td>1</td>
-  			<td>Alphabet puzzle</td>
-  			<td>2016/01/15</td>
-  			<td>Done</td>
-  			<td>€1.000,00</td>
-  		</tr>
-  		<tr>
-  			<td>4</td>
-  			<td>Create font</td>
-  			<td>2016/02/26</td>
-  			<td>Done</td>
-  			<td>€1.200,00</td>
-  		</tr>
-  	</tbody>
-  </table>
+  {{ data_del | safe }}
 </div>
