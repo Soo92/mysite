@@ -114,53 +114,53 @@ def reload():
             break
         f.close()
 
-    # if not today_file:
-    #     driver = webdriver.Chrome('templates/static/chromedriver')
-    #     # 쇼핑인사이트 이동
-    #     path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
-    #     driver.get(path)
-    #     # 기기별 전체 선택
-    #     driver.find_element_by_xpath('//*[@id="18_device_0"]').click()
-    #     # 성별 전체 선택
-    #     driver.find_element_by_xpath('//*[@id="19_gender_0"]').click()
-    #     # 연령별 전체 선택
-    #     driver.find_element_by_xpath('//*[@id="20_age_0"]').click()
-    #     # 분류 & 기간 선택
-    #     try:
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
-    #     except:
-    #         time.sleep(0.1)
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
-    #         driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
-    #         driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
-    #     # 조회하기 클릭
-    #     driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
-    #     time.sleep(1)
-    #     for p in range(0, 25):
-    #         # 인기검색어 가져오기
-    #         for i in range(1, 21):
-    #             keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
-    #             key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
-    #             key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
-    #             while(int(key_num)!=p*20+i):
-    #                 time.sleep(0.1)
-    #                 keyword_path = f'//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{i}]/a'
-    #                 key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
-    #                 key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
-    #             row_list.append(key_num+","+key_word)
-    #             keyword_list.append(key_word)
-    #             keyword_list_lower.append(key_word.lower())
-    #         # 다음 페이지 넘기기
-    #         driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
-    #     driver.close()
+    if not today_file:
+        driver = webdriver.Chrome('templates/static/chromedriver')
+        # 쇼핑인사이트 이동
+        path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
+        driver.get(path)
+        # 기기별 전체 선택
+        driver.find_element_by_xpath('//*[@id="18_device_0"]').click()
+        # 성별 전체 선택
+        driver.find_element_by_xpath('//*[@id="19_gender_0"]').click()
+        # 연령별 전체 선택
+        driver.find_element_by_xpath('//*[@id="20_age_0"]').click()
+        # 분류 & 기간 선택
+        try:
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
+        except:
+            time.sleep(0.1)
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[1]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000004'])").click()
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[2]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000108'])").click()
+            driver.find_element_by_xpath("(//span[contains(@class,'select_btn')])[3]").click()
+            driver.find_element_by_xpath("(//a[@data-cid='50000964'])").click()
+        # 조회하기 클릭
+        driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[1]/div/a').click()
+        time.sleep(1)
+        for p in range(0, 25):
+            # 인기검색어 가져오기
+            for i in range(1, 21):
+                keyword_path = '//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{}]/a'.format(i)
+                key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
+                key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
+                while(int(key_num)!=p*20+i):
+                    time.sleep(0.1)
+                    keyword_path = '//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{}]/a'.format(i)
+                    key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
+                    key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
+                row_list.append(key_num+","+key_word)
+                keyword_list.append(key_word)
+                keyword_list_lower.append(key_word.lower())
+            # 다음 페이지 넘기기
+            driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
+        driver.close()
 
     # 기존 키워드
     f = open(f_name,'r')
