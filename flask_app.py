@@ -8,7 +8,7 @@ sys.path.append("templates/static")
 sys.path.append("/home/SeongSuLee/mysite/templates/static")
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))+"/templates/static"
 print(THIS_FOLDER)
-MY_FILE = os.path.join(MY_DIR,"keyw.csv")
+MY_FILE = os.path.join(THIS_FOLDER,"keyw.csv")
 print(MY_FILE)
 
 for p in sys.path:
