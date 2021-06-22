@@ -3,13 +3,14 @@
 
 from flask import Flask,render_template
 import pandas as pd
-import templates.static.f_key as ff
 import sys
+sys.path.append("templates/static/")
+import f_key as ff
 
 for p in sys.path:
     print( p )
 
-app = Flask(__name__,static_url_path='/templates/')
+app = Flask(__name__,static_url_path='/templates/static/')
 
 @app.route('/t1')
 def t1():
