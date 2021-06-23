@@ -7,6 +7,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+<style>
+  .side_dt {
+    display:inline-block;
+  }
+</style>
 <script>
   $(document).ready(function() {
     document.cookie = "safeCookie1=foo; SameSite=Lax";
@@ -20,26 +25,32 @@
     var table_arr = {"each":[
       $('#csv_table').DataTable( {
         dom: 'Bfrtip',
+        "pageLength": 10,
+        orderCellsTop: true,
+        fixedHeader: true,
         colReorder: true,
         select: {toggleable: true},
+        lengthMenu: [
+          [ 10, 50, 100, -1 ],
+          [ '10 rows', '50 rows', '100 rows', 'Show all' ]
+        ],
         buttons: [
+          'pageLength',
           {action: function ( e, dt, button, config ) {location.reload();},
             text: '키워드 재확인'},
           {extend: 'colvis',text: '열 선택',},
-          {extend: 'colvisRestore',text: '열 복구',},
-          'csv',
           {text: '키워드 추가',attr:{id:'addRow'}},
-          {text: '키워드 삭제',attr:{id:'delRow'}     },
-          {text: '키워드 지정',attr:{id:'keepRow'}},
+          {text: '키워드 삭제',attr:{id:'delRow'}},
         ],
           "columnDefs": [
+            {"targets": 0,"cellType": "th"},
             {"targets": [3,4,5,6,7,8,9,11,12,13,15,16],"type": "num"},
             {"targets": 1,
               "render": function ( data, type, full, meta ) {
                 if (full[1].indexOf("지정")>-1) {
-                  data='<a href="#" onclick="toggleCustom(this)">★'+full[1]+'</a>'
+                  data='<a href="#">★'+full[1]+'</a>'
                 } else {
-                  data='<a href="#" onclick="toggleCustom(this)">☆'+full[1]+'</a>'
+                  data='<a href="#">☆'+full[1]+'</a>'
                 }
                 return data;
               }
@@ -49,20 +60,20 @@
               tmp_html=""
               tmp=data.split("val!")
               for (i=1;i<tmp.length;i++) {
-                  if (i!=1) {
-                    tmp_html=tmp_html+"</br>";
-                  }
-                  tmp2=tmp[i].split("lnk!")
-                  if (tmp2.length>1) {
-                    link_title=tmp2[0]
-                    link_href=tmp2[1]
-                  } else {
-                    link_href=tmp2[0]
-                    link_title=tmp2[0]
-                  }
-                  tmp_html=tmp_html+'<a href="https://search.shopping.naver.com/gate.nhn?id='+link_href+'" target="_blank" rel="noopener noreferrer">'+link_title+'</a>';
+                if (i!=1) {
+                  tmp_html=tmp_html+"</br>";
                 }
-                return tmp_html;
+                tmp2=tmp[i].split("lnk!")
+                if (tmp2.length>1) {
+                  link_title=tmp2[0]
+                  link_href=tmp2[1]
+                } else {
+                  link_href=tmp2[0]
+                  link_title=tmp2[0]
+                }
+                tmp_html=tmp_html+'<a href="https://search.shopping.naver.com/gate.nhn?id='+link_href+'" target="_blank" rel="noopener noreferrer">'+link_title+'</a>';
+              }
+              return tmp_html;
               }
             },
             {"targets": [3,4,5,6,7,8,10], visible:false }
@@ -70,23 +81,73 @@
       })
       ,$('#add_table').DataTable( {
         dom: 'Bfrtip',
-        select: {toggleable: true},
+        select: {style: 'multi'},
+        fixedHeader: true,
+        lengthMenu: [
+          [ 10, 50, 100, -1 ],
+          [ '10 rows', '50 rows', '100 rows', 'Show all' ]
+        ],
         buttons: [
+          'pageLength',
           {   action: function ( e, dt, button, config ) {location.reload();},
               text: '키워드 재확인'},
-          'csv',
-          {text: '키워드 지정제외',attr:{id:'delRow_m'}},
+        ],
+        "columnDefs": [
+          {"targets": 0,"cellType": "th",
+          "render": function ( data, type, full, meta ) {
+            if (full[1]!="") {
+              data="+"
+            }
+            return data;}
+          },
         ]
       })
       ,$('#del_table').DataTable( {
         dom: 'Bfrtip',
         colReorder: true,
         select: {toggleable: true},
+        fixedHeader: true,
+        lengthMenu: [
+          [ 10, 50, 100, -1 ],
+          [ '10 rows', '50 rows', '100 rows', 'Show all' ]
+        ],
         buttons: [
+          'pageLength',
           {   action: function ( e, dt, button, config ) {location.reload();},
               text: '키워드 재확인'},
-          'csv',
-          {text: '키워드 복구',attr:{id:'delRow_d'}},
+          {text: '제외 해제',attr:{id:'delRow_d'}},
+        ],
+        "columnDefs": [
+          {"targets": 0,"cellType": "th",
+          "render": function ( data, type, full, meta ) {
+            if (full[1]=="") {
+              data="+"
+            }
+            return data;}
+          },
+        ]
+      })
+      ,$('#key_com').DataTable( {
+        dom: 'Bfrtip',
+        colReorder: true,
+        select: {toggleable: true},
+        fixedHeader: true,
+        lengthMenu: [
+          [ 10, 50, 100, -1 ],
+          [ '10 rows', '50 rows', '100 rows', 'Show all' ]
+        ],
+        buttons: [
+          'pageLength',
+          {text: '삭제',attr:{id:'delRow_com'}},
+        ],
+        "columnDefs": [
+          {"targets": 0,"cellType": "th",
+          "render": function ( data, type, full, meta ) {
+            if (full[1]!="") {
+              data=""
+            }
+            return data;}
+          },
         ]
       })
     ]}
@@ -94,21 +155,145 @@
     var table=table_arr.each[0];
     var table_m=table_arr.each[1];
     var table_d=table_arr.each[2];
+    var table_c=table_arr.each[3];
+    table_c.row.add( ["+","",""] ).draw( false )
+    $('#csv_table thead tr').clone(true).appendTo( '#csv_table thead' );
+    $('#csv_table thead tr:eq(1) th').each( function (i) {
+      if (i!=0 && i!=2 && ["키워드","top3"].indexOf($(this).text())<0) {
+        if (i==1) {
+          title = "기존/지정/연관"
+          w=120
+        } else {
+          title = "min~max"
+          w=85
+        }
+        $(this).html( '<input type="text" placeholder="'+title+'" style="width:'+w+'px;"/>' );
+        $( 'input', this ).on( 'keydown change', function (e) {
+          if ( (e.keyCode == 13) && table.column(i).search() !== this.value ) {
+            tmp_num=this.value.split("~")
+            console.log(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1]))
+            if (i==1) {
+              table.column(i).search( this.value ).draw();
+            } else if(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1])) {
+              console.log("ss----------")
+              console.log(table.column(i).data())
+              table.column(i).data().filter( function ( value, index ) {
+                console.log(value,index)
+                console.log(tmp_num[0] <= value && value <= tmp_num[1])
+                return (tmp_num[0] <= value && value <= tmp_num[1]) ? true : false;
+              } ).draw();
+            }
+          }
+        } );
+      } else {
+        $(this).html('-');
+      }
+    } );
+    $('#csv_table tbody').on('click', 'tr', function (e) {
+        if (e.target.cellIndex==1) {
+          var key_f = table.row(this).data()[2];
+          var key_idx = table_m.column(1).data().indexOf(key_f);
+          var data = table.cell( $(this).children('td:first') ).data();
+          if (data.indexOf('지정')<0) {
+            if (key_idx<0) {
+              table_m.row.add( ["",key_f] ).draw( false )
+            }
+            table.cell($(this).children('td:first')).data("지정"+data).draw(false)
+          } else {
+            if (key_idx>-1) {
+              table_m.row( key_idx ).remove().draw(false);
+            }
+            table.cell($(this).children('td:first')).data(data.replace("★","").replace("지정","")).draw(false)
+          }
+        }
+    } );
+    $('#add_table tbody').on('click', 'tr', function (e) {
+      if (e.target.cellIndex==0) {
+        rows_m = table_m.rows( '.selected' )
+        rows_c = table_c.rows( '.selected' )
+
+        for (j=0;j<rows_c.count();j++) {
+          row_idx=rows_c.indexes()[j]
+          if (table_c.row(row_idx).data()[1]=="") {
+            table_c.row.add( ["+","",""] ).draw( false )
+            break
+          }
+        }
+
+        rows_mA=rows_m.column(1).data()
+        rows_idxs=rows_m.indexes()
+        for (i=0;i<rows_mA.count();i++) {
+          cell_m=rows_mA[i]
+          is_selected=rows_idxs.indexOf(i)>-1
+          console.log(cell_m)
+          console.log(rows_idxs.indexOf(i))
+          console.log(is_selected)
+          for (j=0;j<rows_c.count();j++) {
+            row_idx=rows_c.indexes()[j]
+            cell_c=table_c.row(row_idx).data()[1]
+            cell_com=cell_c
+            if (cell_m!="" && cell_c=="") {
+              cell_com=cell_m
+            } else if(is_selected && cell_m!="" && cell_c.split(" ").indexOf(cell_m)<-1) {
+              cell_com=cell_c+" "+cell_m
+            } else if(!is_selected && cell_c.split(" ").indexOf(cell_m)<-1) {
+              console.log(cell_c.split(" ").indexOf(cell_m))
+              cell_c.splice(cell_c.split(" ").indexOf(cell_m),1)
+              cell_com=cell_c.join(" ")
+            }
+            table_c.row(row_idx).data(["",cell_com,real_com(cell_com)]).draw(false)
+          }
+        }
+      }
+    } );
+    $('#key_com tbody').on('click', 'tr', function (e) {
+      if (e.target.cellIndex==0) {
+        row_c=table_c.row(this).data()
+        cell_c=row_c[1]
+        rows_m = table_m.rows()
+        tmp_c_arr=cell_c.split(" ")
+        for (j=0;j<tmp_c_arr.length;j++) {
+          tmp_c=tmp_c_arr[j]
+          for (i=0;i<rows_m.count();i++) {
+            cell_m=rows_m.data()[i][1]
+            if (tmp_c==cell_m) {
+              table_m.rows(i).select()
+              break
+            }
+          }
+        }
+      }
+    } );
+
     $('#addRow').on( 'click', function () {
       var new_key = $('input[type="search"]').val();
       var flag_key = table.column(1).data().indexOf(new_key)<0;
+      var col_cnt = table.columns().count()
       if (new_key=="") {alert("값이 비어있습니다")
-      } else if (flag_key) {  table.row.add( ['지정',new_key,'','',''] ).draw( false );
+      } else if (flag_key) {
+        tmp_row=['','지정',new_key]
+        for (i=2;i<col_cnt;i++) {
+          tmp_row.push("")
+        }
+        table.row.add( tmp_row ).draw( false );
+        table_m.row.add( ["",new_key] ).draw( false )
       } else {alert("이미 있는 키워드입니다")}} );
     $('#delRow').on( 'click', function () {
-      var rows = table.rows( '.selected' ).remove().draw();} );
-
-    $('#delRow_m').on( 'click', function () {
-      var rows = table_m.rows( '.selected' ).remove().draw();} );
-
+        var rows = table.rows( '.selected' )
+        for (i=0;i<rows.count();i++) {
+          table_d.row.add( ["", rows[i][2]] ).draw( false )
+        }
+        rows.remove().draw(false);
+      });
     $('#delRow_d').on( 'click', function () {
-      var rows = table_d.rows( '.selected' ).remove().draw();} );
+        var rows = table_d.rows( '.selected' )
+        rows.remove().draw(false)
+      });
   })
+
+  function real_com(str) {
+    return str
+  }
 
   function toggleDiv(e) {
     var x = document.getElementsByClassName('t_key');
@@ -116,12 +301,10 @@
     if (txt=="전체") {
       x[0].style.display = "block";
       x[1].style.display = "none";
-      x[2].style.display = "none";
-      $(e).prop('value',"지정/제외")
+      $(e).prop('value',"제외/지정")
     } else {
       x[0].style.display = "none";
       x[1].style.display = "block";
-      x[2].style.display = "block";
       $(e).prop('value',"전체")
     }
   }
@@ -130,17 +313,21 @@
   body {margin:2em;}
 </style>
 <div>
-  <input type="button" value="지정/제외" onclick="toggleDiv(this)">
+  <input type="button" value="제외/지정" onclick="toggleDiv(this)">
 </div>
 <div class="t_key" style="display:block">키워드 확인
   {{ data_key | safe }}
 </div>
 
-<table id="example" class="display"></table>
-<div class="t_key" style="display:none">지정 키워드
-  {{ data_add | safe }}
-</div>
-
-<div class="t_key" style="display:none">제외 키워드
-  {{ data_del | safe }}
+<div class="t_key" style="display:none">
+  <div style="width:42%;display: inline-block;float:left;margin-right: 10px;">
+    지정 키워드
+    {{ data_add | safe }}
+    제외 키워드
+    {{ data_del | safe }}
+  </div>
+  <div style="width:50%;display: inline-block;float:left;">
+    키조합
+    {{ data_com | safe }}
+  </div>
 </div>

@@ -35,10 +35,12 @@ def admin():
     FILE1 = os.path.join(THIS_FOLDER,"keyw.csv")
     FILE2 = os.path.join(THIS_FOLDER,"my.csv")
     FILE3 = os.path.join(THIS_FOLDER,"del.csv")
+    FILE4 = os.path.join(THIS_FOLDER,"keyc.csv")
     html_all = pd.read_csv(FILE1, engine='python').to_html(table_id = "csv_table",classes="display compact")
     html_add = pd.read_csv(FILE2, engine='python').to_html(table_id = "add_table",classes="display compact")
     html_del = pd.read_csv(FILE3, engine='python').to_html(table_id = "del_table",classes="display compact")
-    return render_template('ad_1.html',data_key=html_all,data_add=html_add,data_del=html_del)
+    html_com = pd.read_csv(FILE4, engine='python').to_html(table_id = "key_com",classes="display compact")
+    return render_template('ad_1.html',data_key=html_all,data_add=html_add,data_del=html_del,data_com=html_com)
 
 @app.route('/reload')
 def reload():

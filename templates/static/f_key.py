@@ -15,6 +15,7 @@ f_name=os.path.join(THIS_FOLDER,"keyw.csv")
 m_name=os.path.join(THIS_FOLDER,"my.csv")
 d_name=os.path.join(THIS_FOLDER,"del.csv")
 r_name=os.path.join(THIS_FOLDER,"rel.csv")
+c_name=os.path.join(THIS_FOLDER,"keyc.csv")
 today=datetime.today().strftime("%y%m%d")
 
 g_name=os.path.join(THIS_FOLDER,"chromedriver")
@@ -92,7 +93,7 @@ def call_RelKwdStat(_kwds_string):
     return r_data
 
 def reload():
-    for it in (f_name,m_name,d_name,r_name):
+    for it in (f_name,m_name,d_name,r_name,c_name):
         if (not os.path.isfile(it)):
             f = open(it, "w", encoding='euc-kr')
             if it==m_name:
