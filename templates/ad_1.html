@@ -181,16 +181,12 @@
           w=85
         }
         $(this).html( '<input type="text" placeholder="'+title+'" style="width:'+w+'px;"/>' );
-        $( 'input', this ).on( 'keydown change focusout', function (e) {
+        $( 'input', this ).on( 'keyup change focusout', function (e) {
           if ( (e.keyCode == 13 || e.type=="focusout") ) {
             tmp_num=this.value.split("~")
             col_idx=table.columns().indexes('visible').indexOf(i)
             title=$(this).attr('placeholder')
-            console.log(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1]))
-            console.log(title == "min~max")
-            console.log( tmp_num.length==2)
-            console.log(parseInt(tmp_num[0]))
-            console.log( parseInt(tmp_num[1]))
+            console.log("-------------------s")
             if (title == "기존/지정/연관" && table.column(col_idx).search() !== this.value) {
               console.log("a1")
               table.column(i).search( this.value ).draw();
@@ -203,7 +199,7 @@
                 var min = parseInt( tmp_num[0], 10 );
                 var max = parseInt( tmp_num[1], 10 );
                 var val = parseFloat( value ) || 0;
-                console.log(value,val,index,col_idx)
+                // console.log(value,val,index,col_idx)
 
                 if ( ( isNaN( min ) && isNaN( max ) ) ||
                      ( isNaN( min ) && val <= max ) ||
@@ -215,10 +211,11 @@
                 }
                 console.log("false")
                 return false;
-                // console.log(tmp_num[0]*1 <= value*1 && value*1 <= tmp_num[1]*1)
-                // return (tmp_num[0]*1 <= value*1 && value*1 <= tmp_num[1]*1)
               } ).draw();
+              console.log(table.column(col_idx).data().filter())
             }
+            console.log("-------------------e")
+            return false;
           }
         } );
       } else {
@@ -239,7 +236,7 @@
             if (key_idx>-1) {
               table_m.row( key_idx ).remove().draw(false);
             }
-            table.cell($(this).children('td:first')).data(data.replace("★","").replace("지정","")).draw(false)
+            table.cell($(this).children('td:first')).data(data.replace("지정","")).draw(false)
           }
         }
     } );
@@ -285,7 +282,6 @@
                 table_c.row(row_idx).remove().draw(false);
                 add_idx=table_c.column(0).data().indexOf("+")+1
                 table_c.row(add_idx).select()
-                console.log(add_idx)
               }
             }
             table_c.row(row_idx).data(["",cell_com,real_com(cell_com)]).draw(false)
@@ -310,6 +306,22 @@
           }
         }
       }
+      $.fn.dataTable.ext.search.push(
+          function( settings, data, dataIndex ) {
+              var min = parseInt( $('#csv_table thead tr:eq(1) th:nth-child(2) input').val(), 10 );
+              var max = parseInt( $('#max').val(), 10 );
+              var age = parseFloat( data[3] ) || 0; // use data for the age column
+
+              if ( ( isNaN( min ) && isNaN( max ) ) ||
+                   ( isNaN( min ) && age <= max ) ||
+                   ( min <= age   && isNaN( max ) ) ||
+                   ( min <= age   && age <= max ) )
+              {
+                  return true;
+              }
+              return false;
+          }
+      );
     } );
 
     $('#addRow').on( 'click', function () {
