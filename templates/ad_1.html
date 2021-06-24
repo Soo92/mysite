@@ -159,10 +159,12 @@
     table_c.row.add( ["+","",""] ).draw( false )
     $('#csv_table thead tr').clone(true).appendTo( '#csv_table thead' );
     $('#csv_table thead tr:eq(1) th').each( function (i) {
-      if (i!=0 && i!=2 && ["키워드","top3"].indexOf($(this).text())<0) {
+      if (i!=0) {
         if (i==1) {
           title = "기존/지정/연관"
           w=120
+        } else if (["키워드","top3"].indexOf($(this).text())>-1) {
+          title = "키워드"
         } else {
           title = "min~max"
           w=85
@@ -173,6 +175,8 @@
             tmp_num=this.value.split("~")
             console.log(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1]))
             if (i==1) {
+              table.column(i).search( this.value ).draw();
+            } else if(["키워드","top3"].indexOf($(this).text())>-1){
               table.column(i).search( this.value ).draw();
             } else if(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1])) {
               console.log("ss----------")
@@ -209,9 +213,10 @@
     } );
     $('#add_table tbody').on('click', 'tr', function (e) {
       if (e.target.cellIndex==0) {
+        sel_idx=this.rowIndex - 1
+
         rows_m = table_m.rows( '.selected' )
         rows_c = table_c.rows( '.selected' )
-
         for (j=0;j<rows_c.count();j++) {
           row_idx=rows_c.indexes()[j]
           if (table_c.row(row_idx).data()[1]=="") {
@@ -219,27 +224,31 @@
             break
           }
         }
-
         rows_mA=rows_m.column(1).data()
         rows_idxs=rows_m.indexes()
+        rows_in_sel=rows_idxs.indexOf(sel_idx)
+        if (rows_in_sel>-1) {
+          rows_idxs.splice(rows_in_sel,1)
+        } else {
+          rows_idxs.push(sel_idx)
+        }
         for (i=0;i<rows_mA.count();i++) {
           cell_m=rows_mA[i]
           is_selected=rows_idxs.indexOf(i)>-1
-          console.log(cell_m)
-          console.log(rows_idxs.indexOf(i))
-          console.log(is_selected)
           for (j=0;j<rows_c.count();j++) {
             row_idx=rows_c.indexes()[j]
             cell_c=table_c.row(row_idx).data()[1]
             cell_com=cell_c
-            if (cell_m!="" && cell_c=="") {
+            is_exist_key=cell_c.split(" ").indexOf(cell_m)>-1
+            if (is_selected && cell_m!="" && cell_c=="") {
               cell_com=cell_m
-            } else if(is_selected && cell_m!="" && cell_c.split(" ").indexOf(cell_m)<-1) {
+            } else if(is_selected && cell_m!="" && !is_exist_key) {
               cell_com=cell_c+" "+cell_m
-            } else if(!is_selected && cell_c.split(" ").indexOf(cell_m)<-1) {
-              console.log(cell_c.split(" ").indexOf(cell_m))
-              cell_c.splice(cell_c.split(" ").indexOf(cell_m),1)
-              cell_com=cell_c.join(" ")
+            } else if(!is_selected && is_exist_key) {
+              cell_c_arr=cell_c.split(" ")
+              key_ex_idx=cell_c_arr.indexOf(cell_m)
+              cell_c_arr.splice(key_ex_idx,1)
+              cell_com=cell_c_arr.join(" ")
             }
             table_c.row(row_idx).data(["",cell_com,real_com(cell_com)]).draw(false)
           }
@@ -252,13 +261,13 @@
         cell_c=row_c[1]
         rows_m = table_m.rows()
         tmp_c_arr=cell_c.split(" ")
+        table_m.rows().deselect()
         for (j=0;j<tmp_c_arr.length;j++) {
           tmp_c=tmp_c_arr[j]
           for (i=0;i<rows_m.count();i++) {
             cell_m=rows_m.data()[i][1]
             if (tmp_c==cell_m) {
               table_m.rows(i).select()
-              break
             }
           }
         }
