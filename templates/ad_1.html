@@ -132,6 +132,7 @@
         colReorder: true,
         select: {toggleable: true},
         fixedHeader: true,
+        "pageLength": -1,
         lengthMenu: [
           [ 10, 50, 100, -1 ],
           [ '10 rows', '50 rows', '100 rows', 'Show all' ]
@@ -141,14 +142,23 @@
           {text: '삭제',attr:{id:'delRow_com'}},
         ],
         "columnDefs": [
-          {"targets": 0,"cellType": "th",
-          "render": function ( data, type, full, meta ) {
-            if (full[1]!="") {
-              data=""
-            }
-            return data;}
-          },
-        ]
+        {"targets": 0,"cellType": "th",
+        "render": function ( data, type, full, meta ) {
+          if (full[1]!="") {
+            data=full[2].length
+          }
+          return data;}},
+        ],
+        "rowCallback": function( row, data, index ) {
+          var allData = this.api().column(2).data().toArray();
+          if (data[2]!="" && allData.indexOf(data[2]) != allData.lastIndexOf(data[2])) {
+            $('td:eq(1)', row).css('background-color', 'salmon');
+          } else if(data[2]=="") {
+            $('td:eq(1)', row).css('background-color', 'white');
+          } else {
+            $('td:eq(1)', row).css('background-color', 'limegreen');
+          }
+        }
       })
     ]}
 
@@ -165,26 +175,48 @@
           w=120
         } else if (["키워드","top3"].indexOf($(this).text())>-1) {
           title = "키워드"
+          w=90
         } else {
           title = "min~max"
           w=85
         }
         $(this).html( '<input type="text" placeholder="'+title+'" style="width:'+w+'px;"/>' );
-        $( 'input', this ).on( 'keydown change', function (e) {
-          if ( (e.keyCode == 13) && table.column(i).search() !== this.value ) {
+        $( 'input', this ).on( 'keydown change focusout', function (e) {
+          if ( (e.keyCode == 13 || e.type=="focusout") ) {
             tmp_num=this.value.split("~")
-            console.log(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1]))
-            if (i==1) {
+            col_idx=table.columns().indexes('visible').indexOf(i)
+            title=$(this).attr('placeholder')
+            console.log(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1]))
+            console.log(title == "min~max")
+            console.log( tmp_num.length==2)
+            console.log(parseInt(tmp_num[0]))
+            console.log( parseInt(tmp_num[1]))
+            if (title == "기존/지정/연관" && table.column(col_idx).search() !== this.value) {
+              console.log("a1")
               table.column(i).search( this.value ).draw();
-            } else if(["키워드","top3"].indexOf($(this).text())>-1){
-              table.column(i).search( this.value ).draw();
-            } else if(tmp_num.length==2 && parseInt(tmp_num[0]) && parseInt(tmp_num[1])) {
-              console.log("ss----------")
-              console.log(table.column(i).data())
-              table.column(i).data().filter( function ( value, index ) {
-                console.log(value,index)
-                console.log(tmp_num[0] <= value && value <= tmp_num[1])
-                return (tmp_num[0] <= value && value <= tmp_num[1]) ? true : false;
+            } else if(title == "키워드" && table.column(col_idx).search() !== this.value){
+              console.log("a2")
+              table.column(col_idx).search( this.value ).draw();
+            } else if(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1])) {
+              console.log("a3")
+              table.column(col_idx).data().filter( function ( value, index ) {
+                var min = parseInt( tmp_num[0], 10 );
+                var max = parseInt( tmp_num[1], 10 );
+                var val = parseFloat( value ) || 0;
+                console.log(value,val,index,col_idx)
+
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                     ( isNaN( min ) && val <= max ) ||
+                     ( min <= val   && isNaN( max ) ) ||
+                     ( min <= val   && val <= max ) )
+                {
+                  console.log("true")
+                  return true;
+                }
+                console.log("false")
+                return false;
+                // console.log(tmp_num[0]*1 <= value*1 && value*1 <= tmp_num[1]*1)
+                // return (tmp_num[0]*1 <= value*1 && value*1 <= tmp_num[1]*1)
               } ).draw();
             }
           }
@@ -248,7 +280,13 @@
               cell_c_arr=cell_c.split(" ")
               key_ex_idx=cell_c_arr.indexOf(cell_m)
               cell_c_arr.splice(key_ex_idx,1)
-              cell_com=cell_c_arr.join(" ")
+              cell_com=cell_c_arr.join(" ").trim()
+              if (cell_com=="") {
+                table_c.row(row_idx).remove().draw(false);
+                add_idx=table_c.column(0).data().indexOf("+")+1
+                table_c.row(add_idx).select()
+                console.log(add_idx)
+              }
             }
             table_c.row(row_idx).data(["",cell_com,real_com(cell_com)]).draw(false)
           }
@@ -288,20 +326,39 @@
         table_m.row.add( ["",new_key] ).draw( false )
       } else {alert("이미 있는 키워드입니다")}} );
     $('#delRow').on( 'click', function () {
-        var rows = table.rows( '.selected' )
-        for (i=0;i<rows.count();i++) {
-          table_d.row.add( ["", rows[i][2]] ).draw( false )
-        }
-        rows.remove().draw(false);
-      });
+      var rows = table.rows( '.selected' )
+      for (i=0;i<rows.count();i++) {
+        table_d.row.add( ["", rows[i][2]] ).draw( false )
+      }
+      rows.remove().draw(false);
+    });
     $('#delRow_d').on( 'click', function () {
-        var rows = table_d.rows( '.selected' )
+      var rows = table_d.rows( '.selected' )
+      rows.remove().draw(false)
+    });
+    $('#delRow_com').on( 'click', function () {
+        var rows = table_c.rows( '.selected' )
         rows.remove().draw(false)
-      });
+        if (table_c.rows().count()==0){
+          table_c.row.add( ["+","",""] ).draw( false )
+        }
+    });
   })
 
   function real_com(str) {
-    return str
+    var tmp_str=str.split(" ")
+    for (cc=tmp_str.length-1;cc>-1;cc=cc-1) {
+      tmp2=tmp_str[cc]
+      for (cc2=0;cc2<tmp2.length-1;cc2++) {
+        tmp3=tmp2.substring(cc2,tmp2.length)
+        for (cc3=cc-1;cc3>-1;cc3=cc3-1) {
+          if(tmp_str[cc3].indexOf(tmp3)>-1) {
+            tmp_str[cc3]=tmp_str[cc3].replace(tmp3,"")
+          }
+        }
+      }
+    }
+    return tmp_str.join(" ").replace(/ +/g, " ").trim()
   }
 
   function toggleDiv(e) {
@@ -325,7 +382,9 @@
   <input type="button" value="제외/지정" onclick="toggleDiv(this)">
 </div>
 <div class="t_key" style="display:block">키워드 확인
-  {{ data_key | safe }}
+  <div style="width:100%;display: inline-block;float:left;">
+    {{ data_key | safe }}
+  </div>
 </div>
 
 <div class="t_key" style="display:none">
