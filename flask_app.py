@@ -8,8 +8,8 @@ sys.path.append("templates/static")
 sys.path.append("/home/SeongSuLee/mysite/templates/static")
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))+"/templates/static"
 
-for p in sys.path:
-    print( p )
+# for p in sys.path:
+#     print( p )
 import f_key as ff
 
 app = Flask(__name__,static_url_path='/templates/static/')

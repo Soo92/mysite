@@ -38,7 +38,7 @@
           'pageLength',
           {action: function ( e, dt, button, config ) {location.reload();},
             text: '키워드 재확인'},
-          {extend: 'colvis',text: '열 선택',},
+          // {extend: 'colvis',text: '열 선택',},
           {text: '키워드 추가',attr:{id:'addRow'}},
           {text: '키워드 삭제',attr:{id:'delRow'}},
         ],
@@ -173,48 +173,46 @@
         if (i==1) {
           title = "기존/지정/연관"
           w=120
+          $(this).html( '<input type="text" id="'+"filter"+i+'" placeholder="'+title+'" style="width:'+w+'px;"/>' );
         } else if (["키워드","top3"].indexOf($(this).text())>-1) {
           title = "키워드"
           w=90
+          $(this).html( '<input type="text" id="'+"filter"+i+'" placeholder="'+title+'" style="width:'+w+'px;"/>' );
         } else {
           title = "min~max"
           w=85
+          $(this).html( '<input type="text" id="min'+i+'" name="min'+i+'" class="form-control" placeholder="Min" style="float:left;height:20px;"/><input type="text" id="max'+i+'" name="max'+i+'" class="form-control" placeholder="Max" style="float:left;height:20px;"/>' );
         }
-        $(this).html( '<input type="text" placeholder="'+title+'" style="width:'+w+'px;"/>' );
         $( 'input', this ).on( 'keyup change focusout', function (e) {
           if ( (e.keyCode == 13 || e.type=="focusout") ) {
             tmp_num=this.value.split("~")
             col_idx=table.columns().indexes('visible').indexOf(i)
             title=$(this).attr('placeholder')
-            console.log("-------------------s")
             if (title == "기존/지정/연관" && table.column(col_idx).search() !== this.value) {
-              console.log("a1")
               table.column(i).search( this.value ).draw();
             } else if(title == "키워드" && table.column(col_idx).search() !== this.value){
-              console.log("a2")
               table.column(col_idx).search( this.value ).draw();
-            } else if(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1])) {
-              console.log("a3")
-              table.column(col_idx).data().filter( function ( value, index ) {
-                var min = parseInt( tmp_num[0], 10 );
-                var max = parseInt( tmp_num[1], 10 );
-                var val = parseFloat( value ) || 0;
-                // console.log(value,val,index,col_idx)
-
-                if ( ( isNaN( min ) && isNaN( max ) ) ||
-                     ( isNaN( min ) && val <= max ) ||
-                     ( min <= val   && isNaN( max ) ) ||
-                     ( min <= val   && val <= max ) )
-                {
-                  console.log("true")
-                  return true;
-                }
-                console.log("false")
-                return false;
-              } ).draw();
-              console.log(table.column(col_idx).data().filter())
+            // } else if(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1])) {
+            //   console.log("a3")
+            //   table.column(col_idx).data().filter( function ( value, index ) {
+            //     var min = parseInt( tmp_num[0], 10 );
+            //     var max = parseInt( tmp_num[1], 10 );
+            //     var val = parseFloat( value ) || 0;
+            //     // console.log(value,val,index,col_idx)
+            //
+            //     if ( ( isNaN( min ) && isNaN( max ) ) ||
+            //          ( isNaN( min ) && val <= max ) ||
+            //          ( min <= val   && isNaN( max ) ) ||
+            //          ( min <= val   && val <= max ) )
+            //     {
+            //       console.log("true")
+            //       return true;
+            //     }
+            //     console.log("false")
+            //     return false;
+            //   } ).draw();
+            //   console.log(table.column(col_idx).data().filter())
             }
-            console.log("-------------------e")
             return false;
           }
         } );
@@ -306,22 +304,38 @@
           }
         }
       }
-      $.fn.dataTable.ext.search.push(
-          function( settings, data, dataIndex ) {
-              var min = parseInt( $('#csv_table thead tr:eq(1) th:nth-child(2) input').val(), 10 );
-              var max = parseInt( $('#max').val(), 10 );
-              var age = parseFloat( data[3] ) || 0; // use data for the age column
+    } );
 
-              if ( ( isNaN( min ) && isNaN( max ) ) ||
-                   ( isNaN( min ) && age <= max ) ||
-                   ( min <= age   && isNaN( max ) ) ||
-                   ( min <= age   && age <= max ) )
-              {
-                  return true;
-              }
-              return false;
-          }
-      );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(3,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(4,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(4,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(5,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(6,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(8,data))}    );
+    $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(9,data))}    );
+
+    for(f_i=1;f_i<$('thead tr:eq(1) th').length;f_i++) {
+      $('#min'+f_i+', #max'+f_i).keyup( function() {
+        table.draw();
+      } );
+    }
+    function get_filter_each(f_i,data) {
+      col_i=table.columns().indexes('visible').indexOf(f_i)
+      var min = parseInt( $('#min'+f_i).val(), 10 );
+      var max = parseInt( $('#max'+f_i).val(), 10 );
+      var va = parseFloat( data[col_i] ) || 0;
+      if ( ( isNaN( min ) && isNaN( max ) ) ||
+      ( isNaN( min ) && va <= max ) ||
+      ( min <= va    && isNaN( max ) ) ||
+      ( min <= va    && va <= max ) )
+      {
+        return true;
+      }
+      return false;
+    }
+
+    $('#filter1').keyup( function() {
+        table.draw();
     } );
 
     $('#addRow').on( 'click', function () {
