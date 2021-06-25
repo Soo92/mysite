@@ -1,5 +1,7 @@
 부식/현판/고무(상품구성아직)/
 
+1.검색 가이드라인
+2.상품 설정전체 추출
 4.0x90 디코딩 오류>파셜 방법찾기
 127.0.0.1 - - [25/Jun/2021 21:08:47] "[37mGET /reload HTTP/1.1[0m" 200 -
 [2021-06-25 21:12:20,385] ERROR in app: Exception on /admin [GET]
@@ -32,11 +34,9 @@ Traceback (most recent call last):
     return next(self.data)
 UnicodeDecodeError: 'euc_kr' codec can't decode byte 0x90 in position 1101: illegal multibyte sequence
 127.0.0.1 - - [25/Jun/2021 21:12:20] "[35m[1mGET /admin HTTP/1.1[0m" 500 -
-
-
-5.파이썬애니웨어에서도 되게하기 파일경로
 3.키워드 추가/삭제/복구 API
-3.상태 지속 갱신
+5.파이썬애니웨어에서도 되게하기 파일경로
+3.상태 지속 갱신, 신규 외에는 작업량 최소화
 5.테이크아웃 가격지속 상향조정
 6.상품별 광고/전환비용 정리레이아웃 고민
 

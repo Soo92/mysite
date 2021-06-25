@@ -28,7 +28,6 @@
         "pageLength": 10,
         orderCellsTop: true,
         fixedHeader: true,
-        colReorder: true,
         select: {toggleable: true},
         lengthMenu: [
           [ 10, 50, 100, -1 ],
@@ -104,7 +103,6 @@
       })
       ,$('#del_table').DataTable( {
         dom: 'Bfrtip',
-        colReorder: true,
         select: {toggleable: true},
         fixedHeader: true,
         lengthMenu: [
@@ -129,7 +127,6 @@
       })
       ,$('#key_com').DataTable( {
         dom: 'Bfrtip',
-        colReorder: true,
         select: {toggleable: true},
         fixedHeader: true,
         "pageLength": -1,
@@ -314,9 +311,12 @@
     $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(8,data))}    );
     $.fn.dataTable.ext.search.push(      function( settings, data, dataIndex ) {return(get_filter_each(9,data))}    );
 
+
     for(f_i=1;f_i<$('thead tr:eq(1) th').length;f_i++) {
-      $('#min'+f_i+', #max'+f_i).keyup( function() {
-        table.draw();
+      $('#min'+f_i+', #max'+f_i).on('keyup focusout', 'tr', function (e) {
+        if (e.event=="focusout" || e.keyCode==13) {
+          table.draw();
+        }
       } );
     }
     function get_filter_each(f_i,data) {
@@ -333,10 +333,6 @@
       }
       return false;
     }
-
-    $('#filter1').keyup( function() {
-        table.draw();
-    } );
 
     $('#addRow').on( 'click', function () {
       var new_key = $('input[type="search"]').val();
