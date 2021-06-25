@@ -306,8 +306,9 @@ def reload():
     # csv 파일 생성
     # 상품수 검색 제한 : 최대 25000제한이라;;
     # maxs=500+row_count_m
+    # maxs=2
     maxs=maxcc
-    f = open(f_name, "w")
+    f = open(f_name, "w",encoding='euc-kr')
     for i in range(len(row_list)):
         row_si=row_list[i].split(",")
         if i==0:
