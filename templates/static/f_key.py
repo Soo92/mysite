@@ -330,12 +330,12 @@ def reload():
                         row_si.append(str(int(float(cnt_lnk.split(",")[0])/(int(row_si[2])+int(row_si[3])+1))))
                         row_si.append(str(int(float(cnt_lnk.split(",")[0])/(float(row_si[4])+float(row_si[5])+1))))
                     else:
-                        print("-----------")
-                        print(cnt_lnk.split(","))
-                        print(float(cnt_lnk.split(",")[0]))
-                        print(cnt_lnk.find("Err")<0)
-                        print(cnt_lnk.find("Err")<0 and float(cnt_lnk.split(",")[0]))
-                        print("-----------")
+                        # print("-----------")
+                        # print(cnt_lnk.split(","))
+                        # print(float(cnt_lnk.split(",")[0]))
+                        # print(cnt_lnk.find("Err")<0)
+                        # print(cnt_lnk.find("Err")<0 and float(cnt_lnk.split(",")[0]))
+                        # print("-----------")
                         row_si.append("0,?,?,?")
                 else:
                     row_si.append("연관검색어,미확인,-,-")
@@ -343,5 +343,10 @@ def reload():
                     print("" in row_si[10:])
                     print(row_si)
             row_list[i]=",".join(row_si)
-        f.write(row_list[i]+"\n")
+        try:
+            f.write(row_list[i]+"\n")
+        except Exception as e:
+            print(str(e))
+            # print(row_list[i])
+            # os.system("pause")
     f.close()
