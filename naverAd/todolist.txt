@@ -1,46 +1,31 @@
-부식/현판/고무(상품구성아직)/
+말할꺼
+1.키워드관리 가이드라인(그룹별상품/상품별비용,지난7일 기준)
+2.검색 가이드라인
+3.필요한거 말>>목표
 
-1.검색 가이드라인
-2.상품 설정전체 추출(그룹별상품/상품별비용)
+todo
+2.키워드 추출 > 그룹 생성 > 작업용 복사 > 대량 이름 수정
 3.검색광고 공부
-4.키워드 탐색(구글 > 지정+ > 연관+ / 제외는 추가할때 제외하고 하게)
+4.키워드 탐색(구글 > 지정+ > 연관+ / 제외는 추가할때 제외하고 하게 로직 변경)
+3.키워드 추가/삭제/복구 API
+7.키워드지정 안되는 case 있음
+5.파이썬애니웨어에서도 되게하기 파일경로
+7.셀레늄 예외처리
+3.상태 지속 갱신, 신규 외에는 작업량 최소화
 4.0x90 디코딩 오류>파셜 방법찾기
 127.0.0.1 - - [25/Jun/2021 21:08:47] "[37mGET /reload HTTP/1.1[0m" 200 -
 [2021-06-25 21:12:20,385] ERROR in app: Exception on /admin [GET]
-Traceback (most recent call last):
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "flask_app.py", line 39, in admin
-    html_all = pd.read_csv(FILE1, engine='python',encoding='euc-kr').to_html(table_id = "csv_table",classes="display compact")
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 688, in read_csv
-    return _read(filepath_or_buffer, kwds)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 460, in _read
-    data = parser.read(nrows)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 1198, in read
-    ret = self._engine.read(nrows)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 2558, in read
-    content = self._get_lines(rows)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 3305, in _get_lines
-    new_row = self._next_iter_line(row_num=self.pos + rows + 1)
-  File "C:\Users\dltjd\AppData\Local\Programs\Python\Python36-32\lib\site-packages\pandas\io\parsers.py", line 3016, in _next_iter_line
-    return next(self.data)
-UnicodeDecodeError: 'euc_kr' codec can't decode byte 0x90 in position 1101: illegal multibyte sequence
-127.0.0.1 - - [25/Jun/2021 21:12:20] "[35m[1mGET /admin HTTP/1.1[0m" 500 -
-3.키워드 추가/삭제/복구 API
-5.파이썬애니웨어에서도 되게하기 파일경로
-3.상태 지속 갱신, 신규 외에는 작업량 최소화
+~~UnicodeDecodeError: 'euc_kr' codec can't decode byte 0x90 in position 1101: illegal multibyte sequence
 5.테이크아웃 가격지속 상향조정
 6.상품별 광고/전환비용 정리레이아웃 고민
+7.상품 full <> 보고서 비교 로직
+ -조회
+  > 상품에 있으나 보고서 없음: 아직 집계 안됨
+  > 보고서 있으나 상품에 없음: 키워드 삭제됨
+ -관리
+  > 분석 후 삭제 지정
+  > 없는 키워드그룹은 추가
+  > 키워드그룹에 소재 지정 추가
 
 1.유입수 100 이상
  > 광고 / 블로그 / 인스타 / 지식인 / 카페 / 핫딜
