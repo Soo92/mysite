@@ -166,30 +166,6 @@ def reload():
             driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
         driver.close()
 
-    # 기존 키워드
-    f = open(f_name,'r')
-    rdr = csv.reader(f)
-    row_count_p = sum(1 for row in rdr)-1
-    f.close()
-    f = open(f_name,'r')
-    rdr = csv.reader(f)
-    i=0
-    for line in rdr:
-        if i!=0:
-            cnt_check("기존검색",i,row_count_p)
-            line_exist=line[1].lower() in keyword_list_lower
-            if (not line_exist):
-                if not "기존" in line[0]:
-                    line[0]="기존"+line[0]
-                if today_file and len(line)>10 and line[10]!="":
-                    row_list.append(",".join(line))
-                else:
-                    row_list.append(",".join(line[:10]))
-                keyword_list.append(line[1])
-                keyword_list_lower.append(line[1].lower())
-        i+=1
-    f.close()
-
     # 내가 지정한 키워드
     arr=np.array(keyword_list_lower)
     m = open(m_name,'r')
@@ -216,6 +192,29 @@ def reload():
                 row_list[result[0][0]]=",".join(cur_row)
         i+=1
     m.close()
+
+    # 기존 키워드
+    f = open(f_name,'r')
+    rdr = csv.reader(f)
+    row_count_p = sum(1 for row in rdr)-1
+    f.close()
+    f = open(f_name,'r')
+    rdr = csv.reader(f)
+    i=0
+    for line in rdr:
+        if i!=0:
+            cnt_check("기존검색",i,row_count_p)
+            line_exist=line[1].lower() in keyword_list_lower
+            if (not line_exist):
+                if today_file and len(line)>10 and line[10]!="":
+                    row_list.append(",".join(line))
+                else:
+                    row_list.append(",".join(line[:10]))
+                keyword_list.append(line[1])
+                keyword_list_lower.append(line[1].lower())
+        i+=1
+    f.close()
+
     # 내가 제외한 키워드
     arr=np.array(keyword_list_lower)
     d = open(d_name,'r')
