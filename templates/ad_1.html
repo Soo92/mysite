@@ -35,8 +35,6 @@
         ],
         buttons: [
           'pageLength',
-          {action: function ( e, dt, button, config ) {location.reload();},
-            text: '키워드 재확인'},
           // {extend: 'colvis',text: '열 선택',},
           {text: '키워드 추가',attr:{id:'addRow'}},
           {text: '키워드 삭제',attr:{id:'delRow'}},
@@ -88,8 +86,6 @@
         ],
         buttons: [
           'pageLength',
-          {   action: function ( e, dt, button, config ) {location.reload();},
-              text: '키워드 재확인'},
         ],
         "columnDefs": [
           {"targets": 0,"cellType": "th",
@@ -111,8 +107,6 @@
         ],
         buttons: [
           'pageLength',
-          {   action: function ( e, dt, button, config ) {location.reload();},
-              text: '키워드 재확인'},
           {text: '제외 해제',attr:{id:'delRow_d'}},
         ],
         "columnDefs": [
@@ -168,7 +162,7 @@
     $('#csv_table thead tr:eq(1) th').each( function (i) {
       if (i!=0) {
         if (i==1) {
-          title = "기존/지정/연관"
+          title = "순위/지정/연관"
           w=120
           $(this).html( '<input type="text" id="'+"filter"+i+'" placeholder="'+title+'" style="width:'+w+'px;"/>' );
         } else if (["키워드","top3"].indexOf($(this).text())>-1) {
@@ -189,26 +183,6 @@
               table.column(i).search( this.value ).draw();
             } else if(title == "키워드" && table.column(col_idx).search() !== this.value){
               table.column(col_idx).search( this.value ).draw();
-            // } else if(title == "min~max" && tmp_num.length==2 && parseInt(tmp_num[0]+tmp_num[1])) {
-            //   console.log("a3")
-            //   table.column(col_idx).data().filter( function ( value, index ) {
-            //     var min = parseInt( tmp_num[0], 10 );
-            //     var max = parseInt( tmp_num[1], 10 );
-            //     var val = parseFloat( value ) || 0;
-            //     // console.log(value,val,index,col_idx)
-            //
-            //     if ( ( isNaN( min ) && isNaN( max ) ) ||
-            //          ( isNaN( min ) && val <= max ) ||
-            //          ( min <= val   && isNaN( max ) ) ||
-            //          ( min <= val   && val <= max ) )
-            //     {
-            //       console.log("true")
-            //       return true;
-            //     }
-            //     console.log("false")
-            //     return false;
-            //   } ).draw();
-            //   console.log(table.column(col_idx).data().filter())
             }
             return false;
           }
@@ -237,7 +211,7 @@
     } );
     $('#add_table tbody').on('click', 'tr', function (e) {
       if (e.target.cellIndex==0) {
-        sel_idx=this.rowIndex - 1
+        sel_idx=table_m.row(this).index()
 
         rows_m = table_m.rows( '.selected' )
         rows_c = table_c.rows( '.selected' )
@@ -256,13 +230,13 @@
         } else {
           rows_idxs.push(sel_idx)
         }
-        for (i=0;i<rows_mA.count();i++) {
-          cell_m=rows_mA[i]
-          is_selected=rows_idxs.indexOf(i)>-1
-          for (j=0;j<rows_c.count();j++) {
-            row_idx=rows_c.indexes()[j]
-            cell_c=table_c.row(row_idx).data()[1]
-            cell_com=cell_c
+        for (j=0;j<rows_c.count();j++) {
+          row_idx=rows_c.indexes()[j]
+          cell_c=table_c.row(row_idx).data()[1]
+          cell_com=cell_c
+          for (i=0;i<rows_mA.count();i++) {
+            cell_m=rows_mA[i]
+            is_selected=rows_idxs.indexOf(i)>-1
             is_exist_key=cell_c.split(" ").indexOf(cell_m)>-1
             if (is_selected && cell_m!="" && cell_c=="") {
               cell_com=cell_m
@@ -273,12 +247,13 @@
               key_ex_idx=cell_c_arr.indexOf(cell_m)
               cell_c_arr.splice(key_ex_idx,1)
               cell_com=cell_c_arr.join(" ").trim()
-              if (cell_com=="") {
-                table_c.row(row_idx).remove().draw(false);
-                add_idx=table_c.column(0).data().indexOf("+")+1
-                table_c.row(add_idx).select()
-              }
             }
+          }
+          if (cell_com=="") {
+            table_c.row(row_idx).remove().draw(false);
+            add_idx=table_c.column(0).data().indexOf("+")+1
+            table_c.row(add_idx).select()
+          } else {
             table_c.row(row_idx).data(["",cell_com,real_com(cell_com)]).draw(false)
           }
         }
@@ -335,15 +310,18 @@
     }
 
     $('#addRow').on( 'click', function () {
-      var new_key = $('input[type="search"]').val();
+      var new_key = $('#csv_table_filter label input').val();
       var flag_key = table.column(1).data().indexOf(new_key)<0;
       var col_cnt = table.columns().count()
       if (new_key=="") {alert("값이 비어있습니다")
       } else if (flag_key) {
-        tmp_row=['','지정',new_key]
-        for (i=2;i<col_cnt;i++) {
-          tmp_row.push("")
-        }
+        console.log(window.location.href)
+        theUrl=window.location.href.replace("/admin","/get_slbyK?key="+new_key)
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        tmp_row=xmlHttp.responseText.split(",");
+        tmp_row.unshift("")
         table.row.add( tmp_row ).draw( false );
         table_m.row.add( ["",new_key] ).draw( false )
       } else {alert("이미 있는 키워드입니다")}} );
@@ -365,15 +343,40 @@
           table_c.row.add( ["+","",""] ).draw( false )
         }
     });
+    var x = document.getElementsByClassName('t_key');
+    x[0].style.display = "none";
+    x[1].style.display = "block";
   })
 
   function real_com(str) {
     var tmp_str=str.split(" ")
-    for (cc=tmp_str.length-1;cc>-1;cc=cc-1) {
+    for (cc=tmp_str.length-1;cc>0;cc=cc-1) {
       tmp2=tmp_str[cc]
       for (cc2=0;cc2<tmp2.length-1;cc2++) {
         tmp3=tmp2.substring(cc2,tmp2.length)
         for (cc3=cc-1;cc3>-1;cc3=cc3-1) {
+          if(tmp_str[cc3].indexOf(tmp3)>-1) {
+            tmp_str[cc3]=tmp_str[cc3].replace(tmp3,"")
+          }
+        }
+      }
+    }
+    for (cc=0;cc<tmp_str.length-1;cc=cc+1) {
+      tmp2=tmp_str[cc]
+      for (cc2=tmp2.length;cc2>1;cc2=cc2-1) {
+        tmp3=tmp2.substring(0,cc2)
+        for (cc3=cc+1;cc3<tmp_str.length;cc3=cc3+1) {
+          if(tmp_str[cc3].indexOf(tmp3)>-1) {
+            tmp_str[cc3]=tmp_str[cc3].replace(tmp3,"")
+          }
+        }
+      }
+    }
+    for (cc=0;cc<tmp_str.length-1;cc=cc+1) {
+      tmp2=tmp_str[cc]
+      for (cc2=0;cc2<tmp2.length-1;cc2++) {
+        tmp3=tmp2.substring(cc2,tmp2.length)
+        for (cc3=cc+1;cc3<tmp_str.length;cc3=cc3+1) {
           if(tmp_str[cc3].indexOf(tmp3)>-1) {
             tmp_str[cc3]=tmp_str[cc3].replace(tmp3,"")
           }
@@ -387,12 +390,12 @@
     var x = document.getElementsByClassName('t_key');
     txt=$(e).prop('value')
     if (txt=="전체") {
-      x[0].style.display = "block";
-      x[1].style.display = "none";
-      $(e).prop('value',"제외/지정")
-    } else {
       x[0].style.display = "none";
       x[1].style.display = "block";
+      $(e).prop('value',"제외/지정")
+    } else {
+      x[0].style.display = "block";
+      x[1].style.display = "none";
       $(e).prop('value',"전체")
     }
   }
@@ -401,15 +404,12 @@
   body {margin:2em;}
 </style>
 <div>
+  <input type="button" value="변경저장" onclick="">
+  <input type="button" value="키워드재확인" onclick="location.reload();">
   <input type="button" value="제외/지정" onclick="toggleDiv(this)">
 </div>
-<div class="t_key" style="display:block">키워드 확인
-  <div style="width:100%;display: inline-block;float:left;">
-    {{ data_key | safe }}
-  </div>
-</div>
 
-<div class="t_key" style="display:none">
+<div class="t_key" style="display:block">
   <div style="width:42%;display: inline-block;float:left;margin-right: 10px;">
     지정 키워드
     {{ data_add | safe }}
@@ -419,5 +419,10 @@
   <div style="width:50%;display: inline-block;float:left;">
     키조합
     {{ data_com | safe }}
+  </div>
+</div>
+<div class="t_key" style="display:block">키워드 확인
+  <div style="width:100%;display: inline-block;float:left;">
+    {{ data_key | safe }}
   </div>
 </div>

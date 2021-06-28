@@ -92,6 +92,23 @@ def call_RelKwdStat(_kwds_string):
     r_data = r.json()
     return r_data
 
+def merge_sell_rel(row_si):
+    if len(row_si)==10 or "" in row_si[10:]:
+        if "" in row_si[10:]:
+            row_si=row_si[:10]
+        row_si[2]=(row_si[2].replace("< 10","5"))
+        row_si[3]=(row_si[3].replace("< 10","5"))
+        row_si.append(str(int(row_si[2])+int(row_si[3])))
+        row_si.append(str(int(float(row_si[4])+float(row_si[5]))))
+        cnt_lnk=str(sel_api(row_si[1]))
+        if cnt_lnk.find("Err")<0 and float(cnt_lnk.split(",")[0]):
+            row_si.append(cnt_lnk)
+            row_si.append(str(int(float(cnt_lnk.split(",")[0])/(int(row_si[2])+int(row_si[3])+1))))
+            row_si.append(str(int(float(cnt_lnk.split(",")[0])/(float(row_si[4])+float(row_si[5])+1))))
+        else:
+            row_si.append("0,?,?,?")
+    return ",".join(row_si)
+
 def reload():
     for it in (f_name,m_name,d_name,r_name,c_name):
         if (not os.path.isfile(it)):
@@ -153,13 +170,13 @@ def reload():
             for i in range(1, 21):
                 keyword_path = '//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{}]/a'.format(i)
                 key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
-                key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
+                key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1].replace(" ","")
                 while(int(key_num)!=p*20+i):
                     time.sleep(0.1)
                     keyword_path = '//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{}]/a'.format(i)
                     key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
                     key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
-                row_list.append(key_num+","+key_word)
+                row_list.append("순위"+key_num+","+key_word)
                 keyword_list.append(key_word)
                 keyword_list_lower.append(key_word.lower())
             # 다음 페이지 넘기기
@@ -245,7 +262,6 @@ def reload():
         key_tmp=[]
         while len(key_tmp)<5:
             if i==maxcc or i==len(keyword_list):
-                print(key_tmp)
                 break
             elif keyword_list[i]!="" and len(row_list[i].split(","))<3:
                 key_tmp.append(keyword_list[i])
@@ -253,7 +269,7 @@ def reload():
         cnt_check("연관검색",i,maxcc)
         if len(key_tmp)==0:
             break
-        kwds_string = ','.join(key_tmp)
+        kwds_string = ','.join(key_tmp).replace(" ","")
         returnData = None
         while returnData is None:
             try:
@@ -306,7 +322,7 @@ def reload():
     # 상품수 검색 제한 : 최대 25000제한이라;;
     # maxs=500+row_count_m
     # maxs=2
-    maxs=maxcc
+    # maxs=maxcc
     f = open(f_name, "w",encoding='euc-kr')
     for i in range(len(row_list)):
         row_si=row_list[i].split(",")
@@ -315,33 +331,7 @@ def reload():
                 row_list[i]=row_list[i]+",총조회,총클릭,상품수,top3,비율(조회),비율 (클릭)"
         else:
             cnt_check("상품수검색",i,len(row_list)-1)
-            if len(row_si)==10 or "" in row_si[10:]:
-                if "" in row_si[10:]:
-                    row_si=row_si[:10]
-                row_si[2]=(row_si[2].replace("< 10","5"))
-                row_si[3]=(row_si[3].replace("< 10","5"))
-                row_si.append(str(int(row_si[2])+int(row_si[3])))
-                row_si.append(str(int(float(row_si[4])+float(row_si[5]))))
-                if i<=maxs:
-                    cnt_lnk=str(sel_api(keyword_list[i]))
-                    if cnt_lnk.find("Err")<0 and float(cnt_lnk.split(",")[0]):
-                        row_si.append(cnt_lnk)
-                        row_si.append(str(int(float(cnt_lnk.split(",")[0])/(int(row_si[2])+int(row_si[3])+1))))
-                        row_si.append(str(int(float(cnt_lnk.split(",")[0])/(float(row_si[4])+float(row_si[5])+1))))
-                    else:
-                        # print("-----------")
-                        # print(cnt_lnk.split(","))
-                        # print(float(cnt_lnk.split(",")[0]))
-                        # print(cnt_lnk.find("Err")<0)
-                        # print(cnt_lnk.find("Err")<0 and float(cnt_lnk.split(",")[0]))
-                        # print("-----------")
-                        row_si.append("0,?,?,?")
-                else:
-                    row_si.append("연관검색어,미확인,-,-")
-                if "" in row_si[10:]:
-                    print("" in row_si[10:])
-                    print(row_si)
-            row_list[i]=",".join(row_si)
+            row_list[i]=merge_sell_rel(row_si)
         try:
             f.write(row_list[i]+"\n")
         except Exception as e:

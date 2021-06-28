@@ -1,7 +1,7 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask,render_template
+from flask import Flask,render_template,request
 import pandas as pd
 import sys,os
 sys.path.append("templates/static")
@@ -45,7 +45,30 @@ def admin():
 @app.route('/reload')
 def reload():
     ff.reload()
-    return "hello"
+    return "good"
+
+@app.route('/get_slbyK', methods=['GET', 'POST'])
+def get_slbyK():
+    key_w = request.args.get("key").replace(" ","")
+
+    sel_data=ff.sel_api(key_w)
+
+    returnData = ff.call_RelKwdStat(key_w)
+    df = pd.DataFrame(returnData['keywordList'])
+    df.rename({'compIdx':'경쟁도',
+       'monthlyAveMobileClkCnt':'평균클릭(폰)',
+       'monthlyAveMobileCtr':'평균클릭률(폰)',
+       'monthlyAvePcClkCnt':'평균클릭(PC)',
+       'monthlyAvePcCtr':'평클릭률(PC)',
+       'monthlyMobileQcCnt':'검색(폰)',
+       'monthlyPcQcCnt': '검색(PC)',
+       'plAvgDepth':'노출광고수',
+       'relKeyword':'키워드'},axis=1,inplace=True)
+    rel_data=df.head(1).to_string(header=False).replace("  ",",").replace("0","지정",1)
+    tmp_rel=rel_data.split(",")
+    print(rel_data)
+    print(len(tmp_rel))
+    return ff.merge_sell_rel(tmp_rel)
 
 if __name__ == '__main__':
     app.run()
