@@ -123,6 +123,17 @@ def reload():
     keyword_list = ["연관키워드"]
     keyword_list_lower = ["연관키워드"]
 
+    maxcc=1000
+
+    # 내가 제외한 키워드
+    arr_not=[]
+    d = open(d_name,'r')
+    rdr = csv.reader(d)
+    for line in rdr:
+        if (line[0]!=""):
+            arr_not.append(line[0].lower())
+    d.close()
+
     today_file=True
     if os.stat(f_name).st_size == 0:
         today_file=False
@@ -176,10 +187,13 @@ def reload():
                     keyword_path = '//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[1]/ul/li[{}]/a'.format(i)
                     key_num=driver.find_element_by_xpath(keyword_path).text.split("\n")[0]
                     key_word=driver.find_element_by_xpath(keyword_path).text.split("\n")[1]
-                row_list.append("순위"+key_num+","+key_word)
-                keyword_list.append(key_word)
-                keyword_list_lower.append(key_word.lower())
+                if key_word.lower() not in arr_not:
+                    row_list.append("순위"+key_num+","+key_word)
+                    keyword_list.append(key_word)
+                    keyword_list_lower.append(key_word.lower())
             # 다음 페이지 넘기기
+            if len(keyword_list)>maxcc/5:
+                break
             driver.find_element_by_xpath('//*[@id="content"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/a[2]').click()
         driver.close()
 
@@ -221,49 +235,25 @@ def reload():
     for line in rdr:
         if i!=0:
             cnt_check("기존검색",i,row_count_p)
-            line_exist=line[1].lower() in keyword_list_lower
-            if (not line_exist):
-                if today_file and len(line)>10 and line[10]!="":
-                    row_list.append(",".join(line))
-                else:
-                    row_list.append(",".join(line[:10]))
-                keyword_list.append(line[1])
-                keyword_list_lower.append(line[1].lower())
+            if line[1].lower() not in arr_not:
+                line_exist=line[1].lower() in keyword_list_lower
+                if (not line_exist):
+                    if today_file and len(line)>10 and line[10]!="":
+                        row_list.append(",".join(line))
+                    else:
+                        row_list.append(",".join(line[:10]))
+                    keyword_list.append(line[1])
+                    keyword_list_lower.append(line[1].lower())
         i+=1
     f.close()
 
-    # 내가 제외한 키워드
-    arr=np.array(keyword_list_lower)
-    d = open(d_name,'r')
-    rdr = csv.reader(d)
-    row_count_m = sum(1 for row in rdr)
-    d.close()
-    d = open(d_name,'r')
-    rdr = csv.reader(d)
-    i=0
-    for line in rdr:
-        if i!=0:
-            # 제외 키워드 삭제
-            cnt_check("제외검색",i,row_count_m)
-            result2 = np.where(arr == line[0].lower())
-            if (line[0]!="" and len(result2[0])!=0 and result2[0][0]>-1):
-                row_list.pop(result2[0][0])
-                keyword_list.pop(result2[0][0])
-                keyword_list_lower.pop(result2[0][0])
-                arr=np.array(keyword_list_lower)
-        i+=1
-    d.close()
-
-
     i=1
-    maxi=120
-    maxcc=3000
     for i in range(1,maxcc+1):
         key_tmp=[]
         while len(key_tmp)<5:
             if i==maxcc or i==len(keyword_list):
                 break
-            elif keyword_list[i]!="" and len(row_list[i].split(","))<3:
+            elif keyword_list[i]!="" and len(row_list[i].split(","))<3 and keyword_list[i].lower() not in arr_not:
                 key_tmp.append(keyword_list[i])
             i=i+1
         cnt_check("연관검색",i,maxcc)

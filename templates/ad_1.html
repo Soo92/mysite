@@ -315,15 +315,15 @@
       var col_cnt = table.columns().count()
       if (new_key=="") {alert("값이 비어있습니다")
       } else if (flag_key) {
-        // console.log(window.location.href)
-        // theUrl=window.location.href.replace("/admin","/get_slbyK?key="+new_key)
-        // var xmlHttp = new XMLHttpRequest();
-        // xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-        // xmlHttp.send( null );
-        // tmp_row=xmlHttp.responseText.split(",");
-        // tmp_row.unshift("")
-        // table.row.add( tmp_row ).draw( false );
-        // table_m.row.add( ["",new_key] ).draw( false )
+        console.log(window.location.href)
+        theUrl=window.location.href.replace("/admin","/get_slbyK?key="+new_key)
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        tmp_row=xmlHttp.responseText.split(",");
+        tmp_row.unshift("")
+        table.row.add( tmp_row ).draw( false );
+        table_m.row.add( ["",new_key] ).draw( false )
       } else {alert("이미 있는 키워드입니다")}} );
     $('#delRow').on( 'click', function () {
       var rows = table.rows( '.selected' )
