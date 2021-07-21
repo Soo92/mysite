@@ -33,7 +33,7 @@ for idx, it in enumerate(img_list):
     elif idx==1:
         sub_img="https://www.samhwasnd.com"+it['src']
     else:
-        sub_img=sub_img+"\n"+"https://www.samhwasnd.com"+it['src']
+        sub_img=sub_img+","+"https://www.samhwasnd.com"+it['src']
 print(main_img)
 print(sub_img)
 
