@@ -3,12 +3,16 @@ import time
 import csv
 from selenium import webdriver
 
+from bs4 import BeautifulSoup    #BeautifulSoup import
+
 import hashlib, hmac, base64, requests, time, os
 import pandas as pd
+from fake_useragent import UserAgent
 
 import urllib.request, json
-
+from urllib.request import urlopen, Request
 from datetime import datetime
+
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 f_name=os.path.join(THIS_FOLDER,"keyw.csv")
@@ -23,6 +27,26 @@ g_name=os.path.join(THIS_FOLDER,"chromedriver")
 # 검색 API 계정
 client_id = "IEu9KZec1kqGvGkpeZg8"
 client_secret = "ynbWZ12hy6"
+
+useragent = UserAgent()
+# print(useragent.chrome)
+# print(useragent.ie)
+# print(useragent.safari)
+# print(useragent.random)
+
+# 헤더 선언 및 referer, User-Agent 전송
+headers = {
+    'User-Agent' : useragent.chrome
+}
+
+def get_con(link):
+    link="https://smartstore.naver.com/signcody/products/"+link
+    print(link)
+    html1 = urlopen(Request(link, headers=headers)).read()
+    # print(html1)
+    sp = BeautifulSoup(html1, 'html.parser')
+    print(sp.select('div[class="se-main-container"]'))
+    return sp.select('div[id="content"]')
 
 def cnt_check(type,idx,max):
     print(type+":"+str(idx)+"/"+str(max))

@@ -2,6 +2,7 @@
 # A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask,render_template,request
+from bs4 import BeautifulSoup    #BeautifulSoup import
 import pandas as pd
 import sys,os
 sys.path.append("templates/static")
@@ -16,7 +17,8 @@ app = Flask(__name__,static_url_path='/templates/static/')
 
 @app.route('/t1')
 def t1():
-    return render_template('3tAcr.html',title='a')
+    print(ff.get_con("5519456740"))
+    return render_template('3tAcr.html',title='a', innerH='dd')
 @app.route('/t2')
 def t2():
     return render_template('3tAcr.html',title='b')
