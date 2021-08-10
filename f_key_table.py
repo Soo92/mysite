@@ -160,6 +160,12 @@ def get_ad_mass(path):
 def get_data_file():
     global driver
 
+    filedel_list=os.listdir(FILE_FOLDER)
+    for filedel in filedel_list:
+        if not nowDate in filedel:
+            del_fname=os.path.join(FILE_FOLDER,filedel)
+            os.remove(del_fname)
+
     g_name=os.path.join(THIS_FOLDER,"chromedriver")
     options = webdriver.ChromeOptions()
     # 창 숨기는 옵션 추가
@@ -446,49 +452,97 @@ def set_data_to_xls_keyword():
     ws = wb['키워드테이블']
 
 # 상품 csv 데이터 추출
+    pro_file=find_file("상품 리스트")
+    pro_file=os.path.join(FILE_FOLDER,pro_file)
+    df_pro=pd.read_csv(pro_file, encoding='utf-8-sig')
+    df_pro.rename(columns = {'상품번호(스마트스토어)' : '상품 ID', '할인가(PC)' : '판매가'}, inplace = True)
+
     mas_file=find_file("mas")
     mas_file=os.path.join(FILE_FOLDER,mas_file)
     df_mas=pd.read_csv(mas_file, encoding='utf-8-sig', skiprows=1)
+    df_mas.rename(columns = {'쇼핑몰 상품ID' : '상품 ID'}, inplace = True)
+    df_mas['노출상품명']=df_mas['노출상품명'].fillna(df_mas['기본상품명'])
 
     report_file=find_file("스토어팜-보고서")
     report_file=os.path.join(FILE_FOLDER,report_file)
     df_report=pd.read_csv(report_file, encoding='utf-8-sig', skiprows=1)
-    sum_col_val=['노출수','클릭수','총비용(VAT포함,원)','전환수','전환매출액(원)']
+    df_report.rename(columns = {'소재' : '소재 ID', '총비용(VAT포함,원)': '광고비용', '전환매출액(원)': '전환액'}, inplace = True)
+
+    sum_col_val=['노출수','클릭수','광고비용','전환수','전환액']
+    report_col_val=['노출상품명',  '광고그룹 이름',  '평균노출순위', '노출수',  '클릭수',  '전환수',  '광고비용', '전환액',     '소재 상태',    '소재 입찰가',   '소재 ID',  '광고그룹 ID', '상품 ID']
+    report_col_val_del=['(',      ')\r\n',         '/',           '/',      '/',       '/',      '/',        '\r\n',      '/',            "\r\n",         '/',         '/',           ""]
+    total_col_val=['상품명','상품 ID','판매가','대분류','중분류','소분류','세분류','노출수','클릭수','광고비용','전환수','전환액']
+
     x=10
     for sum_val in sum_col_val:
-        df_report[sum_val] = df_report[sum_val].str.replace(',', '')
-        df_report=df_report.astype({sum_val: int})
+        df_report[sum_val] = df_report[sum_val].astype(str).str.replace(',', '')
+        df_report=df_report.astype({sum_val: float})
         tmp_sum=df_report[sum_val].sum()
-        print(df_report[sum_val])
-        print(tmp_sum)
         ws.cell(10,x).value=int(tmp_sum)
         x=x+1
 
-    tmp_file=find_file("상품 리스트")
-    tmp_file=os.path.join(FILE_FOLDER,tmp_file)
-    f = open(tmp_file, 'r', encoding='utf-8-sig')
-    rdr = csv.reader(f)
-    y=11
-    for line in rdr:
+    df_mas=pd.merge(df_mas,df_report,on="소재 ID",how="outer")
+    df_mas=df_mas.sort_values(by=['소재 상태','상품 ID','클릭수','광고비용','노출수','광고그룹'], ascending=[False,True,False,True,False,False])
+    df_mas=df_mas[report_col_val]
+
+    df_mas_sum=df_mas.groupby('상품 ID').sum().reset_index()[['상품 ID','노출수','클릭수','광고비용','전환수','전환액']]
+    df_mas_sum=df_mas_sum.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
+
+    for df_idx in range(0,len(df_mas_sum)):
+        tmp_df=df_mas[df_mas['상품 ID']==df_mas_sum.iloc[df_idx]['상품 ID']]
+        if not "소재"+str(len(tmp_df)) in df_mas_sum.columns:
+            for sub_idx in range(0,len(tmp_df)):
+                if not "소재"+str(sub_idx+1) in df_mas_sum.columns:
+                    total_col_val.append("소재"+str(sub_idx+1))
+                    df_mas_sum["소재"+str(sub_idx+1)]=""
+        for sub_idx in range(0,len(tmp_df)):
+            tmp_df_val=""
+            v_idx=0
+            for each_col in report_col_val:
+                tmp_df_val = tmp_df_val + str(tmp_df.iloc[sub_idx][each_col]).replace(".0","")
+                tmp_df_val = tmp_df_val + report_col_val_del[v_idx]
+                v_idx=v_idx+1
+            df_mas_sum.at[df_idx,"소재"+str(sub_idx+1)]=str(tmp_df_val)
+
+    df_all=pd.merge(df_pro,df_mas_sum,on="상품 ID",how="outer")[total_col_val]
+    df_all=df_all.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
+    df_all['상품명']=df_all['상품명'].fillna("삭제상품")
+
+    y=12
+    for df_y in range(0,len(df_all)):
         x=3
-        for each in line[1:]:
-            ws.cell(y,x).value=each
+        for df_x in range(0,len(df_all.iloc[df_y])):
+            ws.cell(y,x).value=df_all.iloc[df_y,df_x]
+            if x>=15:
+                ws.column_dimensions[colnum_string(x)].width = 30
+                ws.row_dimensions[y].height = 48
+                ws.cell(y,x).alignment = Alignment(wrapText=True)
             x=x+1
-        tmp_df=df_mas[df_mas['기본상품명']==str(line[1])]
-        tmp_df=tmp_df.sort_values(by=['소재 상태','광고그룹 이름'], ascending=[False,True])
-        tmp_df=tmp_df[['기본상품명','광고그룹 이름','소재 입찰가','소재 상태','소재 ID','광고그룹 ID']]
-        for i in range(0,tmp_df.value_counts().size):
-            tmp_df2=df_report[df_report['소재']==tmp_df.iloc[i]['소재 ID']][['소재','평균노출순위','노출수','클릭수','전환수','총비용(VAT포함,원)','전환매출액(원)']]
-            tmp_df2.rename(columns = {'소재' : '소재 ID'}, inplace = True)
-            tmp_df=pd.merge(tmp_df,tmp_df2,on="소재 ID",how="left")
-        if '노출수' in tmp_df.columns:
-            for sum_val in sum_col_val:
-                tmp_sum=tmp_df[sum_val].sum()
-                ws.cell(y,x).value=int(tmp_sum)
-                x=x+1
         y=y+1
 
+    x=3
+    for total_val in total_col_val:
+        ws.cell(11,x).value=total_val
+        x=x+1
+    v_idx=0
+    tmp_df_val=""
+    for each_col in report_col_val:
+        tmp_df_val = tmp_df_val + each_col
+        tmp_df_val = tmp_df_val + report_col_val_del[v_idx]
+        v_idx=v_idx+1
+        ws.cell(8,15).value=tmp_df_val+"\r\n(노출▶클릭순▶)"
+        ws.cell(8,15).alignment = Alignment(wrapText=True)
+        ws.column_dimensions[colnum_string(15)].width = 30
+        ws.row_dimensions[8].height = 100
+
     wb.save(FILE_FOLDER+'/'+nowDate+'_☆마케팅보고서+키워드테이블.xlsx')
+
+def colnum_string(n):
+    string = ""
+    while n > 0:
+        n, remainder = divmod(n - 1, 26)
+        string = chr(65 + remainder) + string
+    return string
 
 def init():
     global THIS_FOLDER
@@ -500,13 +554,8 @@ def init():
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     FILE_FOLDER = THIS_FOLDER+'\자료'
     createFolder(FILE_FOLDER)
-    filedel_list=os.listdir(FILE_FOLDER)
-    for filedel in filedel_list:
-        if not nowDate in filedel:
-            del_fname=os.path.join(FILE_FOLDER,filedel)
-            os.remove(del_fname)
 
 init()
 # get_data_file()
-set_data_to_xls_keyword()
 # set_data_to_xls()
+set_data_to_xls_keyword()
