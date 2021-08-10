@@ -453,6 +453,16 @@ def set_data_to_xls_keyword():
     report_file=find_file("스토어팜-보고서")
     report_file=os.path.join(FILE_FOLDER,report_file)
     df_report=pd.read_csv(report_file, encoding='utf-8-sig', skiprows=1)
+    sum_col_val=['노출수','클릭수','총비용(VAT포함,원)','전환수','전환매출액(원)']
+    x=10
+    for sum_val in sum_col_val:
+        df_report[sum_val] = df_report[sum_val].str.replace(',', '')
+        df_report=df_report.astype({sum_val: int})
+        tmp_sum=df_report[sum_val].sum()
+        print(df_report[sum_val])
+        print(tmp_sum)
+        ws.cell(10,x).value=int(tmp_sum)
+        x=x+1
 
     tmp_file=find_file("상품 리스트")
     tmp_file=os.path.join(FILE_FOLDER,tmp_file)
@@ -461,17 +471,21 @@ def set_data_to_xls_keyword():
     y=11
     for line in rdr:
         x=3
-        tmp_df=df_mas[df_mas['기본상품명']==str(line[1])]
-        tmp_df=tmp_df.sort_values(by=['소재 상태','광고그룹 이름'], ascending=[False,True])
-        tmp_df=tmp_df[['기본상품명','광고그룹 이름','소재 입찰가','소재 상태','소재 ID','광고그룹 ID']]
-        print(tmp_df)
-        for i in range(0,tmp_df.value_counts().size):
-            tmp_df2=df_report[df_report['소재']==tmp_df.iloc[i]['소재 ID']][['평균노출순위','노출수','클릭수','전환수','총비용(VAT포함,원)','전환매출액(원)']]
-            print(tmp_df2)
-
         for each in line[1:]:
             ws.cell(y,x).value=each
             x=x+1
+        tmp_df=df_mas[df_mas['기본상품명']==str(line[1])]
+        tmp_df=tmp_df.sort_values(by=['소재 상태','광고그룹 이름'], ascending=[False,True])
+        tmp_df=tmp_df[['기본상품명','광고그룹 이름','소재 입찰가','소재 상태','소재 ID','광고그룹 ID']]
+        for i in range(0,tmp_df.value_counts().size):
+            tmp_df2=df_report[df_report['소재']==tmp_df.iloc[i]['소재 ID']][['소재','평균노출순위','노출수','클릭수','전환수','총비용(VAT포함,원)','전환매출액(원)']]
+            tmp_df2.rename(columns = {'소재' : '소재 ID'}, inplace = True)
+            tmp_df=pd.merge(tmp_df,tmp_df2,on="소재 ID",how="left")
+        if '노출수' in tmp_df.columns:
+            for sum_val in sum_col_val:
+                tmp_sum=tmp_df[sum_val].sum()
+                ws.cell(y,x).value=int(tmp_sum)
+                x=x+1
         y=y+1
 
     wb.save(FILE_FOLDER+'/'+nowDate+'_☆마케팅보고서+키워드테이블.xlsx')
