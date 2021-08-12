@@ -1,9 +1,12 @@
 import csv
 import datetime
 import openpyxl
+import clipboard
+import urllib.request
+import shutil
 from openpyxl import load_workbook
 from openpyxl.chart import BarChart, LineChart, Reference, Series
-from openpyxl.styles import Border, Alignment
+from openpyxl.styles import Border, Alignment, PatternFill
 from openpyxl.utils import get_column_letter
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -12,6 +15,7 @@ import zipfile
 import os, time, numpy as np, pandas as pd
 import xlsxwriter
 from bs4 import BeautifulSoup    #BeautifulSoup import
+import time
 
 def find_file(fname):
     file_flist=os.listdir(FILE_FOLDER)
@@ -37,6 +41,11 @@ def test():
                 driver.find_element_by_xpath(key).click()
             elif clk=="e":
                 break
+            elif clk=="m":
+                key=input("key")
+                posi_m=driver.find_element_by_xpath(key)
+                action = ActionChains(driver)
+                action.move_to_element(posi_m).perform()
             else:
                 key=input("key")
                 print(driver.find_element_by_xpath(key).get_attribute("innerHTML"))
@@ -45,6 +54,7 @@ def test():
 
 def get_cate_key(cate,arr_pro):
     path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
+    time.sleep(1)
     driver.get(path)
     cate_arr=cate.split(">>")
     # 기기별 전체 선택
@@ -81,6 +91,7 @@ def get_cate_key(cate,arr_pro):
     # return keyword_list
 
 def pre_login(path):
+    time.sleep(1)
     driver.get(path)
     driver.find_element_by_xpath("//input[@id='loginId']").clear()
     driver.find_element_by_xpath("//input[@id='loginId']").send_keys("signcody4657")
@@ -89,6 +100,7 @@ def pre_login(path):
     driver.find_element_by_xpath("//input[@id='loginPassword']").send_keys(Keys.RETURN)
 
 def pre_ad_login(path):
+    time.sleep(1)
     driver.get(path)
     driver.find_element_by_xpath("//a[@class='btn btn-lg btn-block btn-primary']").click()
     driver.find_element_by_xpath("//input[@id='uid']").clear()
@@ -98,6 +110,7 @@ def pre_ad_login(path):
     driver.find_element_by_xpath("//input[@id='upw']").send_keys(Keys.RETURN)
 
 def get_pr_report(path,arr_pro):
+    time.sleep(1)
     driver.get(path)
 
     element = driver.find_element_by_id("__naverpay")
@@ -121,6 +134,7 @@ def get_pr_report(path,arr_pro):
         driver.find_element_by_xpath("//a[@class='btn pre']").click()
 
 def get_pr_keyword(path):
+    time.sleep(1)
     driver.get(path)
     driver.find_element_by_xpath("//a[@data-nclicks-code='stu.selling']").click()
     driver.find_element_by_xpath('//div[@class="selectize-input items ng-valid ng-pristine has-options full has-items"]').click()
@@ -158,31 +172,6 @@ def get_ad_mass(path):
     time.sleep(1)
 
 def get_data_file():
-    global driver
-
-    filedel_list=os.listdir(FILE_FOLDER)
-    for filedel in filedel_list:
-        if not nowDate in filedel:
-            del_fname=os.path.join(FILE_FOLDER,filedel)
-            os.remove(del_fname)
-
-    g_name=os.path.join(THIS_FOLDER,"chromedriver")
-    options = webdriver.ChromeOptions()
-    # 창 숨기는 옵션 추가
-    # options.add_argument("headless")
-    prefs = {
-      "download.default_directory": FILE_FOLDER,
-      "download.prompt_for_download": False,
-      "download.directory_upgrade": True,
-      "safebrowsing.enabled": True
-    }
-    options.add_experimental_option('prefs', prefs)
-
-    driver = webdriver.Chrome(g_name, options=options)
-    driver.implicitly_wait(20)
-
-    pre_login("https://sell.smartstore.naver.com/#/bizadvisor/marketing")
-
     today_graph = nowDate + "_광고대비매출(주단위).csv"
     if find_file(today_graph)=="False":
         arr_pro=[]
@@ -224,7 +213,7 @@ def get_data_file():
         df.columns = columnNames
         df.to_csv(FILE_FOLDER + "/" + today_pro, encoding='utf-8-sig')
 
-    today_cate = nowDate + "_카테고리 리스트_판매중.csv"
+    today_cate = nowDate + "_카테고리별 인기검색어_판매중.csv"
     if find_file(today_cate)=="False":
         arr_pro=[]
         arr_cate=arr_cate[1:]
@@ -240,8 +229,6 @@ def get_data_file():
 
     zp_fname=find_file("mas")
     if zp_fname=="False":
-    # 검색광고 로그인
-        pre_ad_login("https://manage.searchad.naver.com/customers/392590/reports/rtt-a001-000000000451507")
     # 검색어
         get_ad_report("https://manage.searchad.naver.com/customers/392590/reports/rtt-a001-000000000451507")
     # 스토어팜
@@ -255,16 +242,67 @@ def get_data_file():
 
         na_list=os.listdir(FILE_FOLDER)
         for na in na_list:
-            if not nowDate in na:
+            if not nowDate in na and na != "import":
                 os.rename(FILE_FOLDER+"/"+na, FILE_FOLDER+"/"+nowDate+"_광고시스템-"+na.replace("+","-"))
-    driver.close()
 
-def set_data_to_xls():
+def colnum_string(n):
+    string = ""
+    while n > 0:
+        n, remainder = divmod(n - 1, 26)
+        string = chr(65 + remainder) + string
+    return string
+
+def make_chart(title,minR,maxR,cP1,cP2,wid):
+    cats = Reference(ws, min_col=2, max_col=2, min_row=minR, max_row=maxR)
+    value_ad = Reference(ws, min_col=3, max_col=3, min_row=minR, max_row=maxR)
+    value_cnt = Reference(ws, min_col=4, max_col=4, min_row=minR, max_row=maxR)
+    value_price = Reference(ws, min_col=5, max_col=5, min_row=minR, max_row=maxR)
+
+    chart_ad = LineChart()
+    chart_ad.add_data(value_ad)
+    chart_ad.set_categories(cats)
+    chart_ad.y_axis.axId = 200
+    chart_ad.y_axis.title = '광고비'
+    chart_ad.y_axis.majorGridlines = None
+    s = chart_ad.series[0]
+    s.graphicalProperties.line.solidFill = "0070C0"
+
+    chart_cnt = LineChart()
+    chart_cnt.add_data(value_cnt)
+    chart_cnt.y_axis.title = "매출건"
+
+    chart_cnt.title = title+"_매출건"
+    chart_cnt.width = wid
+    chart_cnt.height = 6
+    chart_cnt.y_axis.crosses = "max"
+    chart_cnt.legend.tagname="b"
+    s = chart_cnt.series[0]
+    s.graphicalProperties.line.solidFill = "F4B084"
+    chart_cnt += chart_ad
+    chart_cnt.legend=None
+
+    chart_price = LineChart()
+    chart_price.add_data(value_price)
+    chart_price.y_axis.title = "매출액"
+
+    chart_price.title = title+"_매출액"
+    chart_price.width = wid+1
+    chart_price.height = 6
+    chart_price.y_axis.crosses = "max"
+    s = chart_price.series[0]
+    s.graphicalProperties.line.solidFill = "FFC000"
+    chart_price += chart_ad
+    chart_price.legend=None
+
+    ws.add_chart(chart_cnt, cP1)
+    ws.add_chart(chart_price, cP2)
+
+def set_data_to_report():
 # 엑셀데이터 가져오기
     global wb
     global ws
 
-    wb = load_workbook(THIS_FOLDER+'\key_table.xlsx')
+    wb = load_workbook(THIS_FOLDER+'\마케팅보고서.xlsx')
     ws = wb['보고서']
     for row in ws['L7:AC22']:
         for cell in row:
@@ -396,60 +434,103 @@ def set_data_to_xls():
     ws.cell(1,2).value=str(int(next_month)+1)+"월"
     ws.cell(2,3).value=int(max_ad)*4
 
-    wb.save(FILE_FOLDER+'/'+nowDate+'_☆마케팅보고서+키워드테이블.xlsx')
+    wb.save(FILE_FOLDER+'/'+nowDate+'_☆마케팅보고서.xlsx')
 
-def make_chart(title,minR,maxR,cP1,cP2,wid):
-    cats = Reference(ws, min_col=2, max_col=2, min_row=minR, max_row=maxR)
-    value_ad = Reference(ws, min_col=3, max_col=3, min_row=minR, max_row=maxR)
-    value_cnt = Reference(ws, min_col=4, max_col=4, min_row=minR, max_row=maxR)
-    value_price = Reference(ws, min_col=5, max_col=5, min_row=minR, max_row=maxR)
+def check_warngg(g_id,s_id,s_name,warn_arr):
+    rslt_flg=True
+    y_posi=ws2['A2'].value
+    if driver.find_element_by_xpath('(//button[@class="btn-sm btn-toggle dropdown-toggle btn btn-default"])').text!="행 표시: 200":
+        driver.find_element_by_xpath('//button[@class="btn-sm btn-toggle dropdown-toggle btn btn-default"]').click()
+        driver.find_element_by_xpath("(//button[text()=200])").click()
+    # 행표시 200개 / 다음페이지 이동 / 노출가능 클릭
+    row_posi = driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/preceding-sibling::td[1]/span/a')
+    row_text=row_posi.text
+    if row_text!="노출가능":
+        action = ActionChains(driver)
+        try:
+            action.move_to_element(row_posi).perform()
+            row_posi.click()
+        except Exception as e:
+            # //td[@data-value="nad-a001-02-000000145968681"]/preceding-sibling::td[1]/span/a
+            # //td[@data-value="nad-a001-02-000000145968681"]/parent::tr/preceding-sibling::tr[1]/td[1]
+            # test()
+            row_posi_parent=driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/parent::tr/preceding-sibling::tr[1]/td[1]')
+            action.move_to_element(row_posi_parent).perform()
+            row_posi.click()
+        row_detail = driver.find_element_by_xpath('//div[@class="list-dot"]').text
+        row_detail_img = driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/following-sibling::td/div/div/div/div[@class="image-preview"]').get_attribute("style")
+        img_link=row_detail_img.split('"')[1]
+        tmp_img_link=img_link.split(".")
+        urllib.request.urlretrieve(img_link, OUTPUT_FOLDER+"\\"+s_id+"."+tmp_img_link[len(tmp_img_link)-1])
+        ws2.cell(y_posi,2).value=g_id
+        ws2.cell(y_posi,3).value=s_id
+        ws2.cell(y_posi,4).value=s_name
+        ws2.cell(y_posi,5).value=row_text
+        ws2.cell(y_posi,6).value=row_detail.replace("더 알아보기","")
+        warn_arr.append([g_id,s_id,s_name,row_text,row_detail])
+        y_posi=y_posi+1
+        ws2['A2'].value=y_posi
+        rslt_flg=False
+        driver.find_element_by_xpath('//button[@class="modal-button btn btn-default"]').click()
+    return rslt_flg
 
-    chart_ad = LineChart()
-    chart_ad.add_data(value_ad)
-    chart_ad.set_categories(cats)
-    chart_ad.y_axis.axId = 200
-    chart_ad.y_axis.title = '광고비'
-    chart_ad.y_axis.majorGridlines = None
-    s = chart_ad.series[0]
-    s.graphicalProperties.line.solidFill = "0070C0"
 
-    chart_cnt = LineChart()
-    chart_cnt.add_data(value_cnt)
-    chart_cnt.y_axis.title = "매출건"
+# //td[@data-value="nad-a001-02-000000101417703"]/preceding-sibling::td[1]/span/a
 
-    chart_cnt.title = title+"_매출건"
-    chart_cnt.width = wid
-    chart_cnt.height = 6
-    chart_cnt.y_axis.crosses = "max"
-    chart_cnt.legend.tagname="b"
-    s = chart_cnt.series[0]
-    s.graphicalProperties.line.solidFill = "F4B084"
-    chart_cnt += chart_ad
-    chart_cnt.legend=None
-
-    chart_price = LineChart()
-    chart_price.add_data(value_price)
-    chart_price.y_axis.title = "매출액"
-
-    chart_price.title = title+"_매출액"
-    chart_price.width = wid+1
-    chart_price.height = 6
-    chart_price.y_axis.crosses = "max"
-    s = chart_price.series[0]
-    s.graphicalProperties.line.solidFill = "FFC000"
-    chart_price += chart_ad
-    chart_price.legend=None
-
-    ws.add_chart(chart_cnt, cP1)
-    ws.add_chart(chart_price, cP2)
-
-def set_data_to_xls_keyword():
+def set_data_to_ad():
 # 엑셀데이터 가져오기
     global wb
     global ws
+    global ws2
+    global ws3
 
-    wb = load_workbook(THIS_FOLDER+'\key_table.xlsx')
-    ws = wb['키워드테이블']
+    today_graph = nowDate+'_☆광고관리.xlsx'
+    if find_file(today_graph)!="False":
+        return
+
+    wb = load_workbook(THIS_FOLDER+'\광고관리.xlsx')
+    ws = wb['검색광고']
+    ws2 = wb['직접점검필요']
+    ws3 = wb['추가홍보문구']
+
+# 노출 상태 종류
+    goodgg_val=ws['O2'].value
+    goodgg_col=ws['O2'].fill.start_color.index
+    badgg_val=ws['P2'].value
+    badgg_col=ws['P2'].fill.start_color.index
+    chapri_val=ws['Q2'].value
+    chapri_col=ws['Q2'].fill.start_color.index
+    wait_val=ws['R2'].value
+    wait_col="FFC65911"
+    newgg_val=ws['O3'].value
+    newgg_col=ws['O3'].fill.start_color.index
+    offgg_val=ws['P3'].value
+    # offgg_col=ws['P3'].fill.start_color.index
+    offgg_col="FFAEAAAA"
+    warngg_val=ws['Q3'].value
+    warngg_col=ws['Q3'].fill.start_color.index
+    emptygg_val=ws['R3'].value
+    # emptygg_col=ws['R3'].fill.start_color.index
+    emptygg_col="FFFFFFFF"
+
+    gg_val=[goodgg_val,badgg_val,chapri_val,wait_val,newgg_val,offgg_val,warngg_val,emptygg_val]
+    gg_col=[goodgg_col,badgg_col,chapri_col,wait_col,newgg_col,offgg_col,warngg_col,emptygg_col]
+
+# 양호소재 컷트라인
+    cut_rank=ws['C3'].value
+    cut_show=ws['D3'].value
+    cut_clk=ws['E3'].value
+    cut_buy=ws['F3'].value
+    cut_price_u=ws['G3'].value
+    cut_price_d=ws['H3'].value
+
+# 입찰가 조절라인
+    price_dwn_cut=ws['C5'].value
+    price_dwn_val=ws['C6'].value
+    price_up_cut=ws['D5'].value
+    price_up_val=ws['D6'].value
+
+    price_default=ws['F5'].value
 
 # 상품 csv 데이터 추출
     pro_file=find_file("상품 리스트")
@@ -462,15 +543,16 @@ def set_data_to_xls_keyword():
     df_mas=pd.read_csv(mas_file, encoding='utf-8-sig', skiprows=1)
     df_mas.rename(columns = {'쇼핑몰 상품ID' : '상품 ID'}, inplace = True)
     df_mas['노출상품명']=df_mas['노출상품명'].fillna(df_mas['기본상품명'])
+    c_id=df_mas["CUST_ID"].iat[0]
 
     report_file=find_file("스토어팜-보고서")
     report_file=os.path.join(FILE_FOLDER,report_file)
     df_report=pd.read_csv(report_file, encoding='utf-8-sig', skiprows=1)
-    df_report.rename(columns = {'소재' : '소재 ID', '총비용(VAT포함,원)': '광고비용', '전환매출액(원)': '전환액'}, inplace = True)
+    df_report.rename(columns = {'소재' : '소재 ID', '총비용(VAT포함,원)': '광고비용', '전환매출액(원)': '전환액', '광고그룹': '광고그룹 이름'}, inplace = True)
 
     sum_col_val=['노출수','클릭수','광고비용','전환수','전환액']
-    report_col_val=['노출상품명',  '광고그룹 이름',  '평균노출순위', '노출수',  '클릭수',  '전환수',  '광고비용', '전환액',     '소재 상태',    '소재 입찰가',   '소재 ID',  '광고그룹 ID', '상품 ID']
-    report_col_val_del=['(',      ')\r\n',         '/',           '/',      '/',       '/',      '/',        '\r\n',      '/',            "\r\n",         '/',         '/',           ""]
+    report_col_val=['노출상태',   '노출상품명',  '광고그룹 이름',  '평균노출순위', '노출수',  '클릭수',  '전환수',  '광고비용', '전환액',     '소재 상태',    '소재 입찰가',   '소재 ID',  '광고그룹 ID', '상품 ID']
+    report_col_val_del=['\r\n',  '(',           ')\r\n',         '/',           '/',      '/',       '/',      '/',        '\r\n',      '/',            "\r\n",         '/',         '/',           ""]
     total_col_val=['상품명','상품 ID','판매가','대분류','중분류','소분류','세분류','노출수','클릭수','광고비용','전환수','전환액']
 
     x=10
@@ -481,28 +563,118 @@ def set_data_to_xls_keyword():
         ws.cell(10,x).value=int(tmp_sum)
         x=x+1
 
-    df_mas=pd.merge(df_mas,df_report,on="소재 ID",how="outer")
-    df_mas=df_mas.sort_values(by=['소재 상태','상품 ID','클릭수','광고비용','노출수','광고그룹'], ascending=[False,True,False,True,False,False])
+    df_mas=pd.merge(df_mas,df_report,on=["소재 ID","광고그룹 이름"],how="outer")
+    df_mas=df_mas.sort_values(by=['소재 상태','상품 ID','클릭수','광고비용','노출수','광고그룹 이름'], ascending=[False,True,False,True,False,False])
+    df_mas["노출상태"]=goodgg_val
+    df_mas.loc[(df_mas['평균노출순위']>=price_dwn_cut),"노출상태"]=chapri_val+" 인상 " + df_mas["소재 입찰가"].astype(str) + ">" + (df_mas["소재 입찰가"]+price_dwn_val).astype(str) + ""
+    df_mas.loc[(df_mas['평균노출순위']<=price_up_cut),"노출상태"]=chapri_val+" 인하 " + df_mas["소재 입찰가"].astype(str) + ">" + (df_mas["소재 입찰가"]+price_up_val).astype(str) + ""
+    df_mas.loc[(df_mas['평균노출순위']<=cut_rank) & (df_mas['노출수']<=cut_show) & (df_mas['클릭수']<=cut_clk) & (df_mas['전환수']<=cut_buy) & ~((cut_price_d <= df_mas['소재 입찰가']) & (df_mas['소재 입찰가'] <= cut_price_u)),"노출상태"]=badgg_val
+    df_mas.loc[(pd.isnull(df_mas['노출수'])),"노출상태"]=warngg_val
+
+    df_grp=df_mas.groupby('광고그룹 이름').sum().reset_index().copy()
+    df_grp_arr=df_grp['광고그룹 이름'].values
+
+    warn_detail=[]
+    for g_name in df_grp_arr:
+        g_id=df_mas[df_mas['광고그룹 이름']==g_name]['광고그룹 ID'].iloc[1]
+        df_sid=df_mas[(df_mas['노출상태']==warngg_val) & (df_mas['광고그룹 이름']==g_name) & (df_mas['소재 상태']=="on")].copy()
+        df_sid_arr=df_sid['소재 ID'].values
+        df_sname_arr=df_sid['노출상품명'].values
+        if len(df_sid_arr)>0:
+            path="https://manage.searchad.naver.com/customers/"+str(c_id)+"/adgroups/"+str(g_id)
+            time.sleep(1)
+            driver.get(path)
+            s_idx=0
+            for s_id in df_sid_arr:
+                s_name=df_sname_arr[s_idx]
+                tmp_flag=check_warngg(g_id,s_id,s_name,warn_detail)
+                if stillNew & tmp_flag:
+                    df_mas.loc[(df_mas['소재 ID']==str(s_id)),"노출상태"]=wait_val
+                elif tmp_flag:
+                    df_mas.loc[(df_mas['소재 ID']==str(s_id)),"노출상태"]=badgg_val
+                s_idx=s_idx+1
+
     df_mas=df_mas[report_col_val]
 
-    df_mas_sum=df_mas.groupby('상품 ID').sum().reset_index()[['상품 ID','노출수','클릭수','광고비용','전환수','전환액']]
+    df_mas_sum=df_mas.groupby('상품 ID').sum().reset_index()[['상품 ID','노출수','클릭수','광고비용','전환수','전환액']].copy()
     df_mas_sum=df_mas_sum.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
 
+    df_mas_each=pd.DataFrame(columns=df_mas.columns)
+
     for df_idx in range(0,len(df_mas_sum)):
-        tmp_df=df_mas[df_mas['상품 ID']==df_mas_sum.iloc[df_idx]['상품 ID']]
+        this_pro_id=df_mas_sum.iloc[df_idx]['상품 ID']
+        tmp_df=df_mas[df_mas['상품 ID'].astype(str)==str(this_pro_id)]
+        this_pro_gid=df_mas[df_mas['상품 ID'].astype(str)==str(this_pro_id)]
         if not "소재"+str(len(tmp_df)) in df_mas_sum.columns:
             for sub_idx in range(0,len(tmp_df)):
                 if not "소재"+str(sub_idx+1) in df_mas_sum.columns:
                     total_col_val.append("소재"+str(sub_idx+1))
                     df_mas_sum["소재"+str(sub_idx+1)]=""
+
+        cnt_good=0
+        cnt_bad=0
+        cnt_price=0
+        cnt_warn=0
+        cnt_all=0
+        df_grp_each=tmp_df.groupby('광고그룹 이름').sum().reset_index().copy()
+        df_grp_arr_each=df_grp_each['광고그룹 이름'].values
+
+        grp_minus=np.setdiff1d(df_grp_arr,df_grp_arr_each)
+        for x in grp_minus:
+            sub_idx=sub_idx+1
+            tmp_col_arr=tmp_df.columns.to_list()
+            tmp_arr=tmp_col_arr
+            idx1=tmp_col_arr.index("노출상태")
+            tmp_arr[idx1]=emptygg_val
+            idx2=tmp_col_arr.index("광고그룹 이름")
+            tmp_arr[idx2]=x
+            idx3=tmp_col_arr.index("광고그룹 ID")
+            tmp_arr[idx3]=df_mas[df_mas['광고그룹 이름']==x]['광고그룹 ID'].iloc[1]
+            tmp_df.loc[len(tmp_df)]=tmp_arr
+
         for sub_idx in range(0,len(tmp_df)):
+            if cnt_all<10:
+                tmp_what_show=tmp_df.iloc[sub_idx]["노출상태"]
+                if goodgg_val in tmp_what_show:
+                    cnt_good=cnt_good+1
+                elif badgg_val in tmp_what_show:
+                    cnt_bad=cnt_bad+1
+                elif newgg_val in tmp_what_show:
+                    cnt_price=cnt_price+1
+                elif warngg_val in tmp_what_show:
+                    cnt_warn=cnt_warn+1
+                elif offgg_val in tmp_what_show or emptygg_val in tmp_what_show:
+                    if not tmp_df['노출상태'].iat[0] in [badgg_val,warngg_val]:
+                        tmp_df['노출상태'].iat[sub_idx]=newgg_val
+                        tmp_df['상품 ID'].iat[sub_idx]=tmp_df.iloc[0]['상품 ID']
+                        tmp_df['소재 입찰가'].iat[sub_idx]=price_default
+                cnt_all=cnt_all+1
+            elif tmp_df['노출상태'].iat[sub_idx]!=emptygg_val:
+                if cnt_bad==0:
+                    tmp_df['노출상태'].iat[sub_idx]=offgg_val
+                else:
+                    tmp_df['노출상태'].iat[sub_idx]=newgg_val
+                    cnt_bad=cnt_bad-1
+
+            # todo on/off 소재 일괄 변경
+            # todo 신규소재 키워드 부여
+            # todo 상품등록
+            # todo 입찰가 변경
+
             tmp_df_val=""
             v_idx=0
             for each_col in report_col_val:
                 tmp_df_val = tmp_df_val + str(tmp_df.iloc[sub_idx][each_col]).replace(".0","")
                 tmp_df_val = tmp_df_val + report_col_val_del[v_idx]
                 v_idx=v_idx+1
-            df_mas_sum.at[df_idx,"소재"+str(sub_idx+1)]=str(tmp_df_val)
+            df_mas_sum["소재"+str(sub_idx+1)].iat[df_idx]=str(tmp_df_val)
+
+        df_mas_each=df_mas_each.append(tmp_df, ignore_index = True)
+
+    df_mas_each.to_csv(FILE_FOLDER+"/"+nowDate+"_광고소재리스트.csv", encoding='utf-8-sig')
+
+    df_warn_detail=pd.DataFrame(warn_detail,columns=['광고그룹 ID','소재 ID','노출상품명','제한상태','제한사유'])
+    df_warn_detail.to_csv(OUTPUT_FOLDER+"/점검소재리스트.csv", encoding='utf-8-sig')
 
     df_all=pd.merge(df_pro,df_mas_sum,on="상품 ID",how="outer")[total_col_val]
     df_all=df_all.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
@@ -517,6 +689,11 @@ def set_data_to_xls_keyword():
                 ws.column_dimensions[colnum_string(x)].width = 30
                 ws.row_dimensions[y].height = 48
                 ws.cell(y,x).alignment = Alignment(wrapText=True)
+                delim=str(ws.cell(y,x).value).split("\r\n")[0]
+                for gg in gg_val:
+                    gg_idx=gg_val.index(gg)
+                    if gg in delim:
+                        ws.cell(y,x).fill=PatternFill("solid", fgColor=gg_col[gg_idx])
             x=x+1
         y=y+1
 
@@ -533,29 +710,78 @@ def set_data_to_xls_keyword():
         ws.cell(8,15).value=tmp_df_val+"\r\n(노출▶클릭순▶)"
         ws.cell(8,15).alignment = Alignment(wrapText=True)
         ws.column_dimensions[colnum_string(15)].width = 30
-        ws.row_dimensions[8].height = 100
+        ws.row_dimensions[8].height = 115
 
-    wb.save(FILE_FOLDER+'/'+nowDate+'_☆마케팅보고서+키워드테이블.xlsx')
-
-def colnum_string(n):
-    string = ""
-    while n > 0:
-        n, remainder = divmod(n - 1, 26)
-        string = chr(65 + remainder) + string
-    return string
+    wb.save(FILE_FOLDER+'/'+startDate+'~'+nowDate+'_☆광고관리.xlsx')
 
 def init():
     global THIS_FOLDER
     global FILE_FOLDER
+    global OUTPUT_FOLDER
     global nowDate
+    global startDate
+    global stillNew
 
     now = datetime.datetime.now()
     nowDate = now.strftime('%Y%m%d')
+    startDate = nowDate
+    stillNew = True
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     FILE_FOLDER = THIS_FOLDER+'\자료'
     createFolder(FILE_FOLDER)
+    filedel_list=os.listdir(FILE_FOLDER)
+    day_check=4
+    for filedel in filedel_list:
+        if "☆광고관리" in filedel:
+            startD = datetime.datetime.strptime(filedel.split("_")[0].split("~")[0], "%Y%m%d")
+            date_diff = now - startD
+            if date_diff.days>day_check:
+                stillNew = False
+            if date_diff.days>day_check+1:
+                os.remove(del_fname)
+            startDate = startD.strftime('%Y%m%d')
+        elif not nowDate in filedel:
+            del_fname=os.path.join(FILE_FOLDER,filedel)
+            try:
+                os.remove(del_fname)
+            except Exception as e:
+                shutil.rmtree(del_fname)
+    OUTPUT_FOLDER = FILE_FOLDER+'\import'
+    createFolder(OUTPUT_FOLDER)
 
+def driver_init():
+    global driver
+
+    g_name=os.path.join(THIS_FOLDER,"chromedriver")
+    options = webdriver.ChromeOptions()
+    # 창 숨기는 옵션 추가
+    # options.add_argument("headless")
+    prefs = {
+      "download.default_directory": FILE_FOLDER,
+      "download.prompt_for_download": False,
+      "download.directory_upgrade": True,
+      "safebrowsing.enabled": True
+    }
+    options.add_experimental_option('prefs', prefs)
+
+    driver = webdriver.Chrome(g_name, options=options)
+    driver.implicitly_wait(20)
+
+def timer_start():
+    global start_t
+    start_t = time.time()
+
+def timer_chk():
+    print("time :", time.time() - start_t)
+
+timer_start()
 init()
-# get_data_file()
-# set_data_to_xls()
-set_data_to_xls_keyword()
+driver_init()
+pre_login("https://sell.smartstore.naver.com/#/bizadvisor/marketing")
+pre_ad_login("https://manage.searchad.naver.com/customers/392590/reports/rtt-a001-000000000451507")
+get_data_file()
+set_data_to_report()
+set_data_to_ad()
+
+driver.close()
+timer_chk()
