@@ -69,6 +69,14 @@ def get_header(method, uri, api_key, secret_key, customer_id):
     return {'Content-Type': 'application/json; charset=UTF-8', 'X-Timestamp': timestamp, 'X-API-KEY': API_KEY, 'X-Customer': str(CUSTOMER_ID), 'X-Signature': signature}
 
 def call_RelKwd(_kwds_string):
+    tmp_kwds=_kwds_string.split(",")
+    if len(tmp_kwds)>5:
+        tmp_arr=[]
+        ra = random.sample(range(0,len(tmp_kwds)-1),5)
+        ra.sort()
+        for r in ra:
+            tmp_arr.append(tmp_kwds[r])
+        _kwds_string=",".join(tmp_arr)
     global BASE_URL,CUSTOMER_ID,API_KEY,SECRET_KEY
     BASE_URL = 'https://api.naver.com'
     CUSTOMER_ID = '392590'
@@ -81,14 +89,25 @@ def call_RelKwd(_kwds_string):
     # ManageCustomerLink Usage Sample
     returnData = None
     df = pd.DataFrame()
+    # print(_kwds_string)
     while returnData is None:
+        # print(returnData)
         try:
             r = requests.get(BASE_URL + uri, params=prm, headers=get_header(method, uri, API_KEY, SECRET_KEY, CUSTOMER_ID))
             returnData = r.json()
+            # print("tryyy")
             df = pd.DataFrame(returnData['keywordList'])
+            # print("sss")
         except Exception as e:
-            print("rel Keyword Error:\r\n" + str(e))
+            # print("rel Keyword Error:\r\n" + str(e))
+            # print(returnData)
+            if 'code' in returnData:
+                time.sleep(10)
+                print("errror")
+                test()
+            # print("fffkkk")
             time.sleep(0.5)
+            test()
             r = requests.get(BASE_URL + uri, params=prm, headers=get_header(method, uri, API_KEY, SECRET_KEY, CUSTOMER_ID))
             returnData = r.json()
             df = pd.DataFrame(returnData['keywordList'])
@@ -500,13 +519,20 @@ def check_warngg(g_id,s_id,s_name,warn_arr):
     # 행표시 200개 / 다음페이지 이동 / 노출가능 클릭
     row_posi = driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/preceding-sibling::td[1]/span/a')
     row_text=row_posi.text
-    if row_text!="노출가능":
+    if row_text=="소재 연동제한":
+        driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/preceding-sibling::td[1]/preceding-sibling::td[1]/preceding-sibling::td[1]/input').click()
+        action = ActionChains(driver)
+        action.move_to_element(driver.find_element_by_xpath('//div[@class="inner-left"]')).perform()
+        driver.find_element_by_xpath('//button[@class="ml-2 btn btn-default btn-sm"]').click()
+        driver.find_element_by_xpath('//button[@class="btn btn-primary Confirm_modal-button__1Kwk6 btn btn-secondary"]').click()
+    elif row_text!="노출가능":
         action = ActionChains(driver)
         try:
             action.move_to_element(row_posi).perform()
             row_posi.click()
         except Exception as e:
-            # //td[@data-value="nad-a001-02-000000145968681"]/preceding-sibling::td[1]/span/a
+            # //td[@data-value="nad-a001-02-000000145968672"]/preceding-sibling::td[1]/span/a
+            # //td[@data-value="nad-a001-02-000000145968672"]/preceding-sibling::td[1]/preceding-sibling::td[1]/preceding-sibling::td[1]/input
             # //td[@data-value="nad-a001-02-000000145968681"]/parent::tr/preceding-sibling::tr[1]/td[1]
             # test()
             row_posi_parent=driver.find_element_by_xpath('//td[@data-value="'+s_id+'"]/parent::tr/preceding-sibling::tr[1]/td[1]')
@@ -651,11 +677,18 @@ def set_data_to_ad():
 
     df_mas=df_mas[report_col_val]
 
+
+
+
+
     df_mas_sum=df_mas.groupby('상품 ID').sum().reset_index()[['상품 ID','노출수','클릭수','광고비용','전환수','전환액']].copy()
     df_mas_sum=df_mas_sum.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
 
 
-    df_rel_key=call_RelKwd("LED간판")
+
+
+
+    df_rel_key=pd.DataFrame()
     df_mas_each=pd.DataFrame(columns=df_mas.columns)
 
     for df_idx in range(0,len(df_mas_sum)):
@@ -724,9 +757,12 @@ def set_data_to_ad():
                     key_idx=key_idx+1
                 tmp_showname=tmp_showname.replace(" ",",")
                 df_rel_key_each=call_RelKwd(tmp_showname)
-                print(df_rel_key_each)
-                test()
-                df_rel_key.append(df_rel_key_each)
+                df_rel_key_each['상품 ID']=this_pro_id
+
+                if len(df_rel_key.columns) != len(df_rel_key_each.columns):
+                    df_rel_key=df_rel_key_each
+                else:
+                    df_rel_key=df_rel_key.append(df_rel_key_each)
                 # todo on/off 소재 일괄 변경
                 # todo 상품등록
                 # todo 입찰가 변경
@@ -740,6 +776,99 @@ def set_data_to_ad():
             df_mas_sum["소재"+str(sub_idx+1)].iat[df_idx]=str(tmp_df_val)
 
         df_mas_each=df_mas_each.append(tmp_df, ignore_index = True)
+
+
+
+
+    for df_idx in range(0,len(df_mas_sum)):
+        this_pro_id=df_mas_sum.iloc[df_idx]['상품 ID']
+        tmp_df=df_mas[df_mas['상품 ID'].astype(str)==str(this_pro_id)]
+        this_pro_gid=df_mas[df_mas['상품 ID'].astype(str)==str(this_pro_id)]
+        if not "소재"+str(len(tmp_df)) in df_mas_sum.columns:
+            for sub_idx in range(0,len(tmp_df)):
+                if not "소재"+str(sub_idx+1) in df_mas_sum.columns:
+                    total_col_val.append("소재"+str(sub_idx+1))
+                    df_mas_sum["소재"+str(sub_idx+1)]=""
+
+        cnt_good=0
+        cnt_bad=0
+        cnt_price=0
+        cnt_warn=0
+        cnt_all=0
+        df_grp_each=tmp_df.groupby('광고그룹 이름').sum().reset_index().copy()
+        df_grp_arr_each=df_grp_each['광고그룹 이름'].values
+
+        grp_minus=np.setdiff1d(df_grp_arr,df_grp_arr_each)
+        for x in grp_minus:
+            sub_idx=sub_idx+1
+            tmp_col_arr=tmp_df.columns.to_list()
+            tmp_arr=tmp_col_arr
+            idx1=tmp_col_arr.index("노출상태")
+            tmp_arr[idx1]=emptygg_val
+            idx2=tmp_col_arr.index("광고그룹 이름")
+            tmp_arr[idx2]=x
+            idx3=tmp_col_arr.index("광고그룹 ID")
+            tmp_arr[idx3]=df_mas[df_mas['광고그룹 이름']==x]['광고그룹 ID'].iloc[1]
+            tmp_df.loc[len(tmp_df)]=tmp_arr
+
+        key_idx=0
+        for sub_idx in range(0,len(tmp_df)):
+            if cnt_all<10:
+                tmp_what_show=tmp_df.iloc[sub_idx]["노출상태"]
+                if goodgg_val in tmp_what_show:
+                    cnt_good=cnt_good+1
+                elif badgg_val in tmp_what_show:
+                    cnt_bad=cnt_bad+1
+                elif newgg_val in tmp_what_show:
+                    cnt_price=cnt_price+1
+                elif warngg_val in tmp_what_show:
+                    cnt_warn=cnt_warn+1
+                elif offgg_val in tmp_what_show or emptygg_val in tmp_what_show:
+                    if not tmp_df['노출상태'].iat[0] in [badgg_val,warngg_val]:
+                        tmp_df['노출상태'].iat[sub_idx]=newgg_val
+                        tmp_df['상품 ID'].iat[sub_idx]=tmp_df.iloc[0]['상품 ID']
+                        tmp_df['소재 상태'].iat[sub_idx]="on"
+                        tmp_df['소재 입찰가'].iat[sub_idx]=price_default
+                cnt_all=cnt_all+1
+            elif tmp_df['노출상태'].iat[sub_idx]!=emptygg_val:
+                if cnt_bad==0:
+                    tmp_df['노출상태'].iat[sub_idx]=offgg_val
+                else:
+                    tmp_df['노출상태'].iat[sub_idx]=newgg_val
+                    cnt_bad=cnt_bad-1
+
+            # todo 신규소재 키워드 부여
+            if tmp_df['노출상태'].iat[sub_idx]==newgg_val:
+                tmp_showname=tmp_df['노출상품명'].iat[key_idx]
+                if tmp_showname=="노출상품명":
+                    tmp_showname=tmp_df['노출상품명'].iat[random.randint(0,key_idx-1)]
+                else:
+                    key_idx=key_idx+1
+                tmp_showname=tmp_showname.replace(" ",",")
+                df_rel_key_each=call_RelKwd(tmp_showname)
+                df_rel_key_each['상품 ID']=this_pro_id
+
+                if len(df_rel_key.columns) != len(df_rel_key_each.columns):
+                    df_rel_key=df_rel_key_each
+                else:
+                    df_rel_key=df_rel_key.append(df_rel_key_each)
+                # todo on/off 소재 일괄 변경
+                # todo 상품등록
+                # todo 입찰가 변경
+
+            tmp_df_val=""
+            v_idx=0
+            for each_col in report_col_val:
+                tmp_df_val = tmp_df_val + str(tmp_df.iloc[sub_idx][each_col]).replace(".0","")
+                tmp_df_val = tmp_df_val + report_col_val_del[v_idx]
+                v_idx=v_idx+1
+            df_mas_sum["소재"+str(sub_idx+1)].iat[df_idx]=str(tmp_df_val)
+
+        df_mas_each=df_mas_each.append(tmp_df, ignore_index = True)
+
+
+
+
 
     df_rel_key.to_csv(OUTPUT_FOLDER+"/상품 신규키워드 연관.csv", encoding='utf-8-sig')
     df_mas_each.to_csv(FILE_FOLDER+"/"+nowDate+"_광고소재리스트.csv", encoding='utf-8-sig')
