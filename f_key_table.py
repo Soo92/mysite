@@ -2,7 +2,11 @@ import csv
 import datetime
 import openpyxl
 import clipboard
-import urllib.request
+import requests
+import hashlib, hmac, base64, requests, time, os
+import urllib.request, json
+from urllib.request import urlopen, Request
+import random
 import shutil
 from openpyxl import load_workbook
 from openpyxl.chart import BarChart, LineChart, Reference, Series
@@ -51,6 +55,57 @@ def test():
                 print(driver.find_element_by_xpath(key).get_attribute("innerHTML"))
         except Exception as e:
             print("Error:" + str(e))
+
+def generate(timestamp, method, uri, secret_key):
+    message = "{}.{}.{}".format(timestamp, method, uri)
+#     hash = hmac.new(bytes(secret_key, "utf-8"), bytes(message, "utf-8"), hashlib.sha256)
+    hash = hmac.new(secret_key.encode("utf-8"), message.encode("utf-8"), hashlib.sha256)
+    hash.hexdigest()
+    return base64.b64encode(hash.digest())
+
+def get_header(method, uri, api_key, secret_key, customer_id):
+    timestamp = str(int(time.time() * 1000))
+    signature = generate(timestamp, method, uri, SECRET_KEY)
+    return {'Content-Type': 'application/json; charset=UTF-8', 'X-Timestamp': timestamp, 'X-API-KEY': API_KEY, 'X-Customer': str(CUSTOMER_ID), 'X-Signature': signature}
+
+def call_RelKwd(_kwds_string):
+    global BASE_URL,CUSTOMER_ID,API_KEY,SECRET_KEY
+    BASE_URL = 'https://api.naver.com'
+    CUSTOMER_ID = '392590'
+    API_KEY = '01000000008fa2a584355277148cf5b1792f0a1650becf66b049812186ce69dbfb7cbf4ec3'
+    SECRET_KEY = 'AQAAAACPoqWENVJ3FIz1sXkvChZQySFY24NP0GvvyT3R14cXaQ=='
+
+    uri = '/keywordstool'
+    method = 'GET'
+    prm = {'hintKeywords' : _kwds_string , 'showDetail':1}
+    # ManageCustomerLink Usage Sample
+    returnData = None
+    df = pd.DataFrame()
+    while returnData is None:
+        try:
+            r = requests.get(BASE_URL + uri, params=prm, headers=get_header(method, uri, API_KEY, SECRET_KEY, CUSTOMER_ID))
+            returnData = r.json()
+            df = pd.DataFrame(returnData['keywordList'])
+        except Exception as e:
+            print("rel Keyword Error:\r\n" + str(e))
+            time.sleep(0.5)
+            r = requests.get(BASE_URL + uri, params=prm, headers=get_header(method, uri, API_KEY, SECRET_KEY, CUSTOMER_ID))
+            returnData = r.json()
+            df = pd.DataFrame(returnData['keywordList'])
+            pass
+    df['총검색']=df['monthlyMobileQcCnt'].astype(str).replace("< 10",0).astype(float)+df['monthlyPcQcCnt'].astype(str).replace("< 10",0).astype(float)
+    df['총클릭']=df['monthlyAveMobileClkCnt'].astype(float)+df['monthlyAvePcClkCnt'].astype(float)
+    df.rename({'compIdx':'경쟁도',
+       'monthlyAveMobileClkCnt':'평균클릭(폰)',
+       'monthlyAveMobileCtr':'평균클릭률(폰)',
+       'monthlyAvePcClkCnt':'평균클릭(PC)',
+       'monthlyAvePcCtr':'평클릭률(PC)',
+       'monthlyMobileQcCnt':'검색(폰)',
+       'monthlyPcQcCnt': '검색(PC)',
+       'plAvgDepth':'노출광고수',
+       'relKeyword':'키워드'},axis=1,inplace=True)
+    df=df[(df['총검색'] > df['총검색'].quantile(0.95)) & (df['총클릭'] > df['총클릭'].quantile(0.95))]
+    return df
 
 def get_cate_key(cate,arr_pro):
     path = 'https://datalab.naver.com/shoppingInsight/sCategory.naver'
@@ -599,6 +654,8 @@ def set_data_to_ad():
     df_mas_sum=df_mas.groupby('상품 ID').sum().reset_index()[['상품 ID','노출수','클릭수','광고비용','전환수','전환액']].copy()
     df_mas_sum=df_mas_sum.sort_values(by=['노출수','클릭수','광고비용'], ascending=[False,False,True])
 
+
+    df_rel_key=call_RelKwd("LED간판")
     df_mas_each=pd.DataFrame(columns=df_mas.columns)
 
     for df_idx in range(0,len(df_mas_sum)):
@@ -632,6 +689,7 @@ def set_data_to_ad():
             tmp_arr[idx3]=df_mas[df_mas['광고그룹 이름']==x]['광고그룹 ID'].iloc[1]
             tmp_df.loc[len(tmp_df)]=tmp_arr
 
+        key_idx=0
         for sub_idx in range(0,len(tmp_df)):
             if cnt_all<10:
                 tmp_what_show=tmp_df.iloc[sub_idx]["노출상태"]
@@ -647,6 +705,7 @@ def set_data_to_ad():
                     if not tmp_df['노출상태'].iat[0] in [badgg_val,warngg_val]:
                         tmp_df['노출상태'].iat[sub_idx]=newgg_val
                         tmp_df['상품 ID'].iat[sub_idx]=tmp_df.iloc[0]['상품 ID']
+                        tmp_df['소재 상태'].iat[sub_idx]="on"
                         tmp_df['소재 입찰가'].iat[sub_idx]=price_default
                 cnt_all=cnt_all+1
             elif tmp_df['노출상태'].iat[sub_idx]!=emptygg_val:
@@ -656,10 +715,21 @@ def set_data_to_ad():
                     tmp_df['노출상태'].iat[sub_idx]=newgg_val
                     cnt_bad=cnt_bad-1
 
-            # todo on/off 소재 일괄 변경
             # todo 신규소재 키워드 부여
-            # todo 상품등록
-            # todo 입찰가 변경
+            if tmp_df['노출상태'].iat[sub_idx]==newgg_val:
+                tmp_showname=tmp_df['노출상품명'].iat[key_idx]
+                if tmp_showname=="노출상품명":
+                    tmp_showname=tmp_df['노출상품명'].iat[random.randint(0,key_idx-1)]
+                else:
+                    key_idx=key_idx+1
+                tmp_showname=tmp_showname.replace(" ",",")
+                df_rel_key_each=call_RelKwd(tmp_showname)
+                print(df_rel_key_each)
+                test()
+                df_rel_key.append(df_rel_key_each)
+                # todo on/off 소재 일괄 변경
+                # todo 상품등록
+                # todo 입찰가 변경
 
             tmp_df_val=""
             v_idx=0
@@ -671,6 +741,7 @@ def set_data_to_ad():
 
         df_mas_each=df_mas_each.append(tmp_df, ignore_index = True)
 
+    df_rel_key.to_csv(OUTPUT_FOLDER+"/상품 신규키워드 연관.csv", encoding='utf-8-sig')
     df_mas_each.to_csv(FILE_FOLDER+"/"+nowDate+"_광고소재리스트.csv", encoding='utf-8-sig')
 
     df_warn_detail=pd.DataFrame(warn_detail,columns=['광고그룹 ID','소재 ID','노출상품명','제한상태','제한사유'])
@@ -774,8 +845,10 @@ def timer_start():
 def timer_chk():
     print("time :", time.time() - start_t)
 
+
 timer_start()
 init()
+
 driver_init()
 pre_login("https://sell.smartstore.naver.com/#/bizadvisor/marketing")
 pre_ad_login("https://manage.searchad.naver.com/customers/392590/reports/rtt-a001-000000000451507")
