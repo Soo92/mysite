@@ -2,6 +2,7 @@ from io import BytesIO
 from PIL import Image
 import csv
 import datetime
+import dateutil.relativedelta
 import openpyxl
 import clipboard
 import requests
@@ -88,58 +89,33 @@ def set_chg_report():
                 mer_t=str(df2.index[y]+1)+")"+str(df2.iloc[y])
                 ws_chg.cell(13+y+pre_cnt,11+x).value=mer_t
 # 광고대비 매출 csv 추출
-    print(df_web_dict["광고대비전환"].columns[1:])
     df=df_web_dict["광고대비전환"]
-    df=df[df.columns[1:]].astype(str).replace(",","").astype(int)
+    df[df.columns[1:]]=df[df.columns[1:]].replace(',','', regex=True).replace(",","").astype(int)
     next_y=set_df_to_sht(df,ws_chg,5,2)+2
 
-    df_gsum=df.groupby(df.index//4).sum()
-    ws_chg.cell(next_y,2).value="월간"
-    print(df_gsum)
-    test()
-    next_y=set_df_to_sht(df_gsum,ws_chg,next_y,2)+2
-    print(next_y)
-
-    # for i in range(1,len(df.columns)):
-    #     col=df.columns[i]
-    #     if i==2 or i==4:
-    #         df[col] = df[col].str.replace(',', '')
-    #         df=df.astype({col: float})
-    # for x in range(1,len(df.columns)):
-    #     for y in range(0,df.value_counts().size):
-    #         ws_chg.cell(6+y,1+x).value=df.iloc[y,x]
-    # make_chart("주간",df.value_counts().size+2,df.value_counts().size+5,"B6","F6",8)
-    # make_chart("전체",6,df.value_counts().size+5,"J28","J39",35)
-    #
-    # tail_df_a=[96,48,16]
-    # detail_df_a=[["반기","B36","F36",8],["분기","B25","F25",8],["월간","B14","F14",8]]
-    # idx=0
-    # last_y=y+1
-    # for tl in tail_df_a:
-    #     df=df.tail(tl)
-    #     del_tail=tail_df_a[idx]/4
-    #     arr_tmp=[]
-    #     for y in range(0,df.value_counts().size):
-    #         # print(df.iloc[y])
-    #         tmp_idx=(int(y//del_tail))
-    #         if len(arr_tmp) < tmp_idx+1:
-    #             arr_tmp.append([df.iloc[y,1],df.iloc[y,2],df.iloc[y,3],df.iloc[y,4]])
-    #         else:
-    #             for j in range(1,4):
-    #                 arr_tmp[tmp_idx][j]=arr_tmp[tmp_idx][j]+df.iloc[y,j+1]
-    #     df_tmp=df
-    #     ws_chg.cell(7+last_y,2).value=detail_df_a[idx][0]+" 부분합"
-    #     for x in range(0,len(arr_tmp[0])):
-    #         for y in range(0,len(arr_tmp)):
-    #             ws_chg.cell(8+last_y+y,2+x).value=arr_tmp[y][x]
-    #     make_chart(detail_df_a[idx][0],8+last_y,8+last_y+y,detail_df_a[idx][1],detail_df_a[idx][2],detail_df_a[idx][3])
-    #     last_y=last_y+y+3
-    #     idx=idx+1
-    #
-    # max_ad=df.tail(4).iloc[:,2].max()
-    # next_month=nowDate[4:6]
-    # ws_chg.cell(1,2).value=str(int(next_month)+1)+"월"
-    # ws_chg.cell(2,3).value=int(max_ad)*4
+    arr_part=["주간","월간","분기","반기"]
+    arr_cc=  [4,     3,     2]
+    arr_half=["상","하"]
+    for ii in range(1,len(arr_part)):
+        delim=arr_cc[ii-1]
+        df_gsum=df.groupby((df.index+delim-(len(df)%delim))//delim).sum()
+        val_arr=[]
+        idx=len(df)-1
+        prev_part=arr_part[ii-1]
+        cur_part=arr_part[ii]
+        while idx>-1:
+            val=df.iloc[idx][prev_part]
+            if cur_part=="월간":
+                val=val[:6]
+            elif cur_part=="분기":
+                val=val[:3]+str(int(val[3:5])//4+1)+"분기"
+            elif cur_part=="반기":
+                val=val[:3]+arr_half[(int(val[3:4])-1)//2]+"반기"
+            val_arr.insert(0, val)
+            idx=idx-delim
+        df_gsum.insert(0, cur_part, val_arr)
+        df=df_gsum
+        next_y=set_df_to_sht(df_gsum,ws_chg,next_y,2)+2
 
 def set_sell_report():
 # 엑셀데이터 가져오기
@@ -261,11 +237,18 @@ def set_sell_report():
     wb.save(FILE_FOLDER+'/'+startDate+'~'+nowDate+'_☆마케팅보고서.xlsx')
 
 def set_desc_report():
+    ym_now=datetime.datetime.now().strftime('%y/%m')
+    ym_prev=(datetime.datetime.now()+dateutil.relativedelta.relativedelta(months=-1)).strftime('%y/%m')
+    ym_pprev=(datetime.datetime.now()+dateutil.relativedelta.relativedelta(months=-2)).strftime('%y/%m')
     month_now=int(datetime.datetime.now().strftime('%m'))
     month_prev=(month_now+11)%12
     month_pprev=(month_now+10)%12
     day_now=int(datetime.datetime.now().strftime('%d'))
-    df_mas_sum=df_web_dict["소재부분합리스트"].copy()[['대표이미지 URL','기본상품명','상품가격','네이버쇼핑 카테고리','노출수','클릭수','전환수','쇼핑몰 상품 ID']]
+    # Desc 총 표기
+    df_mas_rpt_sAd=df_web_dict["광고대비전환"].copy().replace(',','', regex=True)
+    df_mas_rpt_store=df_web_dict["광고대비매출"].copy().replace(',','', regex=True)
+    df_mas_rpt_store["매출액"]=df_mas_rpt_store["매출액"].astype(str).str.replace(",","").astype(int)
+    df_mas_sum=df_web_dict["소재부분합리스트"].copy()[['대표이미지 URL','기본상품명','상품가격','네이버쇼핑 카테고리','노출수','클릭수','전환수','쇼핑몰 상품 ID','전환매출액(원)']]
     if not isFirstWeek:
         ws_desc["B2"].value="마케팅 주간보고"
         ws_desc["B4"].value=str(month_prev)+"월 방문수 및 전환율"
@@ -276,31 +259,54 @@ def set_desc_report():
         ws_desc["B13"].value="ㄴworst 4 외 항목은 주간광고상세를 참고하세요"
         rate=10
         df_mas_sum=df_mas_sum[df_mas_sum["노출수"] > df_mas_sum["노출수"].quantile((100-rate)/100)]
-        # df_mas_sum=df_mas_sum[df_mas_sum["클릭수"] < df_mas_sum["클릭수"].quantile((rate*2)/100)]
         df_mas_sum=df_mas_sum.sort_values(by="클릭수", ascending=True).head(4)
     else:
+        ym_now=ym_prev
+        ym_prev=ym_pprev
         ws_desc["B2"].value="마케팅 월간보고"
         ws_desc["B4"].value=str(month_pprev)+"월 방문수 및 전환율"
         ws_desc["F4"].value=str(month_prev)+"월 방문수 및 전환율"
-        ws_desc["J5"].value="직전대비 전환증액률"
+        ws_desc["J5"].value="전월대비 전환증액률"
         ws_desc["B9"].value=str(month_prev)+"월 지출광고비"
         ws_desc["B10"].value=str(month_now)+"월 필요광고비"
         ws_desc["D10"].fill=PatternFill("solid", fgColor="FFFFFF00")
-        ws_desc["B13"].value="ㄴtop4 외 항목은 주간광고상세를 참고하세요"
+        ws_desc["B13"].value="ㄴbest 4 외 항목은 주간광고상세를 참고하세요"
         rate=10
-        tmp_df1=df_mas_sum.sort_values(by="전환매출액(원)", ascending=False).head(4)
-        tmp_df2=df_mas_sum.sort_values(by="전환수", ascending=False).head(4)
-        df_mas_sum=pd.merge(tmp_df1,tmp_df2).head(4)
+        df_mas_sum=df_mas_sum[(df_mas_sum["전환매출액(원)"] > df_mas_sum["전환매출액(원)"].quantile((100-rate)/100)) & df_mas_sum["전환매출액(원)"]!=0]
+        df_mas_sum=df_mas_sum.sort_values(by="전환수", ascending=False).head(4)
+
+    ad_df_prev=df_mas_rpt_sAd.loc[df_mas_rpt_sAd["주간"].str.contains(ym_prev)].sum()
+    ad_clk=int(ad_df_prev["클릭수"])
+    ad_buy=int(ad_df_prev["전환수"])
+    ad_total_p=int(ad_df_prev["전환액"])
+    ad_ad_p=int(ad_df_prev["광고비"])
+    ws_desc["C6"].value=ad_clk
+    ws_desc["D6"].value=float(ad_buy/ad_clk)*100//1/100
+    ws_desc["E6"].value=ad_total_p
+    ws_desc["D9"].value=ad_ad_p
+
+    ad_df_now=df_mas_rpt_sAd.loc[df_mas_rpt_sAd["주간"].str.contains(ym_now)].sum()
+    ad_clk=int(ad_df_now["클릭수"])
+    ad_buy=int(ad_df_now["전환수"])
+    ad_total_n=int(ad_df_now["전환액"])
+    ad_ad_n=int(ad_df_now["광고비"])
+    ws_desc["G6"].value=ad_clk
+    ws_desc["H6"].value=float(ad_buy*100/ad_clk//1)/100
+    ws_desc["I6"].value=ad_total_n
+    ws_desc["D10"].value=ad_ad_n
+
+    store_df_prev=df_mas_rpt_store.loc[df_mas_rpt_store["주간"].str.contains(ym_prev)].sum()
+    store_total_p=int(store_df_prev["매출액"])
+    ws_desc["E8"].value=store_total_p
+    store_df_now=df_mas_rpt_store.loc[df_mas_rpt_store["주간"].str.contains(ym_now)].sum()
+    store_total_n=int(store_df_now["매출액"])
+    ws_desc["I8"].value=store_total_n
+
+    ws_desc["J6"].value=float(ad_total_n*100/ad_total_p//1)/100
+    ws_desc["J8"].value=float(store_total_n*100/store_total_p//1)/100
+
     y=14
     x=4
-    df_mas_warn=df_web_dict["점검소재리스트"].copy()[['쇼핑몰 상품 ID','기본상품명','노출상품명','제한 사유']]
-    warn_dict={
-        "연관성 있는 카테고리":"카테고리 수정 요청/상품과 연관성 있는 카테고리로 수정해 주세요",
-        "분할된 비율":"이미지 수정 요청/분할된 이미지는 서로 달라야 하며 분할된 비율이 동일해야 합니다.",
-        "이미지 내 텍스트":"이미지 수정 요청/이미지 내 텍스트가 기재된 경우 광고 등록이 불가합니다.",
-        "테두리, 공백이 확인":"이미지 수정 요청/테두리, 공백 등 품질이 떨어지는 이미지는 광고 진행이 불가합니다.",
-        "무의미하게 반복나열":"상품명 수정 요청/상품과 관련이 없는 수식어로 반복나열되거나 유사 문구를 반복하여 기재할 수 없습니다."
-    }
     for idx in range(0,len(df_mas_sum)):
         each_mas=df_mas_sum.iloc[idx]
         ws_ad.column_dimensions[colnum_string(x-2)].width = 6.5
@@ -312,16 +318,29 @@ def set_desc_report():
         ws_desc.cell(y+1,x+3).value=each_mas['노출수']
         ws_desc.cell(y+1,x+4).value=each_mas['클릭수']
         ws_desc.cell(y+1,x+5).value=each_mas['전환수']
-        df_warn_each=df_mas_warn[(df_mas_warn["쇼핑몰 상품 ID"].astype(str)==each_mas['쇼핑몰 상품 ID'].astype(str))]
-        if len(df_warn_each)>0:
-            df_warn_each=df_warn_each.iloc[0]
-            for key in warn_dict.keys:
-                if key in df_warn_each["제한 사유"]:
-                    fid_title=warn_dict[key].split("/")[0]
-                    fid_detail=warn_dict[key].split("/")[1]
-        else:
-            feed_title="이미지 수정 요청"
-            feed_detail="상품성 있는 이미지로 수정이 필요해보입니다."
+        ws_desc.cell(y+1,x+6).value=each_mas['전환매출액(원)']
+        feed_title="-"
+        feed_detail="-"
+        if not isFirstWeek:
+            warn_dict={
+                "연관성 있는 카테고리":"카테고리 수정 요청/상품과 연관성 있는 카테고리로 수정해 주세요",
+                "분할된 비율":"이미지 수정 요청/분할된 이미지는 서로 달라야 하며 분할된 비율이 동일해야 합니다.",
+                "이미지 내 텍스트":"이미지 수정 요청/이미지 내 텍스트가 기재된 경우 광고 등록이 불가합니다.",
+                "테두리, 공백이 확인":"이미지 수정 요청/공백, 테두리 등이 눈에 띄는 이미지는 광고 진행이 불가합니다.",
+                "무의미하게 반복나열":"상품명 수정 요청/상품과 관련이 없는 수식어로 반복나열되거나 유사 문구를 반복하여 기재할 수 없습니다."
+            }
+            df_mas_warn=df_web_dict["점검소재리스트"].copy()[['쇼핑몰 상품 ID','기본상품명','노출상품명','제한 사유']]
+            df_warn_each=df_mas_warn[(df_mas_warn["쇼핑몰 상품 ID"].astype(str)==each_mas['쇼핑몰 상품 ID'].astype(str))]
+            if len(df_warn_each)>0:
+                df_warn_each=df_warn_each.iloc[0]
+                for key in warn_dict.keys():
+                    if df_warn_each["제한 사유"].find(key)>-1:
+                        feed_title=warn_dict[key].split("/")[0]
+                        feed_detail=warn_dict[key].split("/")[1]
+                        break
+            else:
+                feed_title="이미지 수정 요청"
+                feed_detail="상품성 있는 이미지로 수정이 필요해보입니다."
         ws_desc.cell(y+1,x+2).value=feed_title
         ws_desc.cell(y+2,x+2).value=feed_detail
         y=y+4
@@ -352,11 +371,11 @@ def set_ad_report():
             for gg in gg_val:
                 ws_ad.cell(yy,xx).value=gg
                 ws_ad.cell(yy,xx).fill=PatternFill("solid", fgColor=gg_col[gg_val.index(gg)])
-                if xx==x+3:
-                    yy=3
-                    xx=x
-                else:
+                if yy==3:
+                    yy=2
                     xx=xx+1
+                else:
+                    yy=yy+1
         x=x+1
     y=y+1
     for df_y in range(0,len(df_all)):
@@ -672,12 +691,16 @@ def get_adp_report(path):
             break
         tmp_date=tmp_dval.split("~")[1]
         tmp_date=tmp_date[2:4] + "/" + tmp_date[4:6] + "월" + str((int(tmp_date[6:8])+7)//7) + "주차"
-
         tmp_arr=[tmp_date]
+        loadin = driver.find_element_by_xpath("//*[@class='highcharts-axis-labels highcharts-xaxis-labels']/*").get_attribute("innerHTML")
+        tmp_ddd=tmp_dval.split("~")[0]
+        tmp_ddd=tmp_ddd[len(tmp_ddd)-4:len(tmp_ddd)-2]+"."+tmp_ddd[len(tmp_ddd)-2:len(tmp_ddd)]+"."
+        while loadin != tmp_ddd:
+            loadin = driver.find_element_by_xpath("//*[@class='highcharts-axis-labels highcharts-xaxis-labels']/*").get_attribute("innerHTML")
         par = driver.find_elements_by_xpath("//th")
         for eachf in from_col:
             idxd=par.index(driver.find_element_by_xpath("//th/div/div/span[text()='"+eachf+"']/../../.."))
-            tmp_arr.append(int(driver.find_element_by_xpath("//tr[@class='summary-row']/td["+str(idxd+1)+"]").get_attribute("innerHTML").replace("원","")))
+            tmp_arr.append(int(driver.find_element_by_xpath("//tr[@class='summary-row']/td["+str(idxd+1)+"]").get_attribute("innerHTML").replace(",","").replace("원","")))
         arr_pro.insert(0,tmp_arr)
         driver.find_element_by_xpath("(//button[text()=' < '])").click()
     df = pd.DataFrame(arr_pro)
@@ -852,8 +875,10 @@ def get_status_mass():
     goodgg_col='FF00B050'
     badgg_val='불량 소재'
     badgg_col='FFFF0000'
-    chapri_val='입찰가 변경'
-    chapri_col='FF0070C0'
+    chapriup_val='입찰가 변경인상'
+    chapriup_col='FF0070C0'
+    chapridwn_val='입찰가 변경인하'
+    chapridwn_col='FFF4B084'
     wait_val='대기 소재'
     wait_col='FFC65911'
     newgg_val='신규 소재'
@@ -865,8 +890,8 @@ def get_status_mass():
     emptygg_val='빈 그룹'
     emptygg_col='FFFFFFFF'
 
-    gg_val=[goodgg_val,badgg_val,chapri_val,wait_val,newgg_val,offgg_val,warngg_val,emptygg_val]
-    gg_col=[goodgg_col,badgg_col,chapri_col,wait_col,newgg_col,offgg_col,warngg_col,emptygg_col]
+    gg_val=[goodgg_val,badgg_val,chapriup_val,chapridwn_val,wait_val,newgg_val,offgg_val,warngg_val,emptygg_val]
+    gg_col=[goodgg_col,badgg_col,chapriup_col,chapridwn_col,wait_col,newgg_col,offgg_col,warngg_col,emptygg_col]
 
     df_status=df_web_dict["광고소재리스트"].copy()
     df_report=df_web_dict["스토어팜-보고서"].copy()
@@ -894,8 +919,8 @@ def get_status_mass():
         df_status[each_col]=df_status[each_col].astype(str).str.replace(",","").astype(float)
 
     df_status["소재현황"]=goodgg_val
-    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"소재현황"]=chapri_val+"인상 " + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"]+price_dwn_val).astype(int).astype(str)
-    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"소재현황"]=chapri_val+"인하 " + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"]+price_up_val).astype(int).astype(str)
+    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"소재현황"]=chapriup_val + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"]+price_dwn_val).astype(int).astype(str)
+    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"소재현황"]=chapridwn_val + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"]+price_up_val).astype(int).astype(str)
     df_status.loc[(df_status['평균노출순위']<=cut_rank) & (df_status['노출수']<=cut_show) & (df_status['클릭수']<=cut_clk) & (df_status['전환수']<=cut_buy)
     & ~((cut_pri_dwn < df_status['입찰가']) & (df_status['입찰가'] < cut_pri_up)),"소재현황"]=badgg_val
     if nextWeekDay==df_admin_dict["정기보고(요일)"]:
@@ -1093,7 +1118,8 @@ def update(admin_df):
     df_admin_dict={}
     for key in df_admin_col:
         df_admin_dict[key]=admin_df[key]
-    for filedel in THIS_FOLDER:
+    filedel_list=os.listdir(THIS_FOLDER)
+    for filedel in filedel_list:
         if not "※" in filedel and weekDel in filedel and nowWeekDay=="월":
             del_fname=os.path.join(THIS_FOLDER,filedel)
             os.remove(del_fname)
