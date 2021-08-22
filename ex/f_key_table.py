@@ -27,6 +27,118 @@ import xlsxwriter
 from bs4 import BeautifulSoup    #BeautifulSoup import
 import time
 
+def set_df_to_sht(df,sht,y,x):
+    dfy=y
+    dfx=x
+    for col in df.columns:
+        sht.cell(dfy,dfx).value=col
+        dfx=dfx+1
+    for dfy in range(0,len(df)):
+        dfx=x
+        for col in df.columns:
+            sht.cell(dfy+y+1,dfx).value=df.iloc[dfy][col]
+            dfx=dfx+1
+    return dfy+y+1
+
+def set_chg_report():
+# 엑셀데이터 가져오기
+    in_keyword_per_cut=df_admin_dict["키워드 상위(%)"]
+    in_keyword_cnt_cut=df_admin_dict["키워드 최대갯수"]
+    ws_chg.cell(5,12).value=in_keyword_per_cut
+    ws_chg.cell(6,12).value=in_keyword_cnt_cut
+# 인기키워드 top 25개중 10개 추출
+    arr_key_rank=[25]
+    arr_key_cnt=[10]
+# 유입 csv 데이터 추출
+    df=df_web_dict["검색어-보고서"][["검색어","노출수","클릭수","전환수"]]
+    df=df[1:]
+    columnNames = df.columns
+    for i in range(1,4):
+        col=columnNames[i]
+        df[col] = df[col].astype(str).str.replace(',', '')
+        df=df.astype({col: int})
+        df=df.sort_values(by=col, ascending=False)
+        df2=df[df[col] > df[col].quantile((100-in_keyword_per_cut)/100)]
+        df2=df2.head(in_keyword_cnt_cut)
+        ws_chg.cell(6+i,11).value=col
+        for j in range(0,df2.value_counts().size):
+            ws_chg.cell(6+i,12+j).value=(df2.iloc[j,0]+"\r\n"+str(df2.iloc[j,i]))
+            ws_chg.cell(6+i,12+j).alignment = Alignment(wrapText=True)
+# 인기 csv 데이터 추출
+    df=df_web_dict["인기검색어"]
+    for i in range(1,len(df.columns)):
+        col=df.columns[i]
+        tmp_col=col.split(">")
+        ws_chg.cell(11,11+i).value=("\r\n").join(tmp_col[0:len(tmp_col)-1])
+        ws_chg.cell(11,11+i).alignment = Alignment(wrapText=True)
+        ws_chg.cell(12,11+i).value=tmp_col[len(tmp_col)-1]
+        ws_chg.column_dimensions[get_column_letter(11+i)].width = 10
+    for x in range(1,len(df.columns)):
+        pre=0
+        pre_cnt=0
+        for i in range(0,len(arr_key_rank)):
+            if i>0:
+                pre=arr_key_rank[i-1]
+                pre_cnt=pre_cnt+arr_key_cnt[i-1]
+            ws_chg.column_dimensions[get_column_letter(12+x)].width = 10
+            df2=df.iloc[pre:arr_key_rank[i],x]
+            df2=df2.sample(arr_key_cnt[i])
+            df2=df2.sort_index()
+            for y in range(0,df2.value_counts().size):
+                mer_t=str(df2.index[y]+1)+")"+str(df2.iloc[y])
+                ws_chg.cell(13+y+pre_cnt,11+x).value=mer_t
+# 광고대비 매출 csv 추출
+    df=df_web_dict["광고대비전환"]
+    next_y=set_df_to_sht(df,ws_chg,5,2)+2
+
+    df_gsum=df.groupby(df.index//4).sum()
+    ws_chg.cell(next_y,2)="월간"
+    print(df_gsum)
+    test()
+    next_y=set_df_to_sht(df_gsum,ws_chg,next_y,2)+2
+    print(next_y)
+
+    # for i in range(1,len(df.columns)):
+    #     col=df.columns[i]
+    #     if i==2 or i==4:
+    #         df[col] = df[col].str.replace(',', '')
+    #         df=df.astype({col: float})
+    # for x in range(1,len(df.columns)):
+    #     for y in range(0,df.value_counts().size):
+    #         ws_chg.cell(6+y,1+x).value=df.iloc[y,x]
+    # make_chart("주간",df.value_counts().size+2,df.value_counts().size+5,"B6","F6",8)
+    # make_chart("전체",6,df.value_counts().size+5,"J28","J39",35)
+    #
+    # tail_df_a=[96,48,16]
+    # detail_df_a=[["반기","B36","F36",8],["분기","B25","F25",8],["월간","B14","F14",8]]
+    # idx=0
+    # last_y=y+1
+    # for tl in tail_df_a:
+    #     df=df.tail(tl)
+    #     del_tail=tail_df_a[idx]/4
+    #     arr_tmp=[]
+    #     for y in range(0,df.value_counts().size):
+    #         # print(df.iloc[y])
+    #         tmp_idx=(int(y//del_tail))
+    #         if len(arr_tmp) < tmp_idx+1:
+    #             arr_tmp.append([df.iloc[y,1],df.iloc[y,2],df.iloc[y,3],df.iloc[y,4]])
+    #         else:
+    #             for j in range(1,4):
+    #                 arr_tmp[tmp_idx][j]=arr_tmp[tmp_idx][j]+df.iloc[y,j+1]
+    #     df_tmp=df
+    #     ws_chg.cell(7+last_y,2).value=detail_df_a[idx][0]+" 부분합"
+    #     for x in range(0,len(arr_tmp[0])):
+    #         for y in range(0,len(arr_tmp)):
+    #             ws_chg.cell(8+last_y+y,2+x).value=arr_tmp[y][x]
+    #     make_chart(detail_df_a[idx][0],8+last_y,8+last_y+y,detail_df_a[idx][1],detail_df_a[idx][2],detail_df_a[idx][3])
+    #     last_y=last_y+y+3
+    #     idx=idx+1
+    #
+    # max_ad=df.tail(4).iloc[:,2].max()
+    # next_month=nowDate[4:6]
+    # ws_chg.cell(1,2).value=str(int(next_month)+1)+"월"
+    # ws_chg.cell(2,3).value=int(max_ad)*4
+
 def set_sell_report():
 # 엑셀데이터 가져오기
     in_keyword_per_cut=df_admin_dict["키워드 상위(%)"]
@@ -93,9 +205,6 @@ def set_sell_report():
             ws.column_dimensions[get_column_letter(12+x)].width = 10
             df2=df.iloc[pre:arr_key_rank[i],[0,x]]
             df2=df2.sample(arr_key_cnt[i])
-            while (df2.iloc[:,1].str.contains(arr_exc)).any():
-                df2=df.iloc[pre:arr_key_rank[i],[0,x]]
-                df2=df2.sample(arr_key_cnt[i])
             df2=df2.sort_index()
             for y in range(0,df2.value_counts().size):
                 mer_t=str(df2.iloc[y,1])+" > "+str(df2.iloc[y,0])
@@ -165,6 +274,7 @@ def set_desc_report():
         ws_desc["B13"].value="ㄴworst 4 외 항목은 주간광고상세를 참고하세요"
         rate=10
         df_mas_sum=df_mas_sum[df_mas_sum["노출수"] > df_mas_sum["노출수"].quantile((100-rate)/100)]
+        # df_mas_sum=df_mas_sum[df_mas_sum["클릭수"] < df_mas_sum["클릭수"].quantile((rate*2)/100)]
         df_mas_sum=df_mas_sum.sort_values(by="클릭수", ascending=True).head(4)
     else:
         ws_desc["B2"].value="마케팅 월간보고"
@@ -181,6 +291,14 @@ def set_desc_report():
         df_mas_sum=pd.merge(tmp_df1,tmp_df2).head(4)
     y=14
     x=4
+    df_mas_warn=df_web_dict["점검소재리스트"].copy()[['쇼핑몰 상품 ID','기본상품명','노출상품명','제한 사유']]
+    warn_dict={
+        "연관성 있는 카테고리":"카테고리 수정 요청/상품과 연관성 있는 카테고리로 수정해 주세요",
+        "분할된 비율":"이미지 수정 요청/분할된 이미지는 서로 달라야 하며 분할된 비율이 동일해야 합니다.",
+        "이미지 내 텍스트":"이미지 수정 요청/이미지 내 텍스트가 기재된 경우 광고 등록이 불가합니다.",
+        "테두리, 공백이 확인":"이미지 수정 요청/테두리, 공백 등 품질이 떨어지는 이미지는 광고 진행이 불가합니다.",
+        "무의미하게 반복나열":"상품명 수정 요청/상품과 관련이 없는 수식어로 반복나열되거나 유사 문구를 반복하여 기재할 수 없습니다."
+    }
     for idx in range(0,len(df_mas_sum)):
         each_mas=df_mas_sum.iloc[idx]
         ws_ad.column_dimensions[colnum_string(x-2)].width = 6.5
@@ -192,8 +310,18 @@ def set_desc_report():
         ws_desc.cell(y+1,x+3).value=each_mas['노출수']
         ws_desc.cell(y+1,x+4).value=each_mas['클릭수']
         ws_desc.cell(y+1,x+5).value=each_mas['전환수']
-        # ws_ad.cell(y,x).value=each_mas['피드백 구분']
-        # ws_ad.cell(y,x).value=each_mas['피드백 상세']
+        df_warn_each=df_mas_warn[(df_mas_warn["쇼핑몰 상품 ID"].astype(str)==each_mas['쇼핑몰 상품 ID'].astype(str))]
+        if len(df_warn_each)>0:
+            df_warn_each=df_warn_each.iloc[0]
+            for key in warn_dict.keys:
+                if key in df_warn_each["제한 사유"]:
+                    fid_title=warn_dict[key].split("/")[0]
+                    fid_detail=warn_dict[key].split("/")[1]
+        else:
+            feed_title="이미지 수정 요청"
+            feed_detail="상품성 있는 이미지로 수정이 필요해보입니다."
+        ws_desc.cell(y+1,x+2).value=feed_title
+        ws_desc.cell(y+2,x+2).value=feed_detail
         y=y+4
 
 def set_ad_report():
@@ -1044,7 +1172,7 @@ def make_report_file():
 
     set_desc_report()
     set_ad_report()
-    # set_chg_report()
+    set_chg_report()
     # if store_id_exist:
     #     set_sell_report()
     # else:
