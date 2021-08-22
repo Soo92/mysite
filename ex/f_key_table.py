@@ -88,11 +88,13 @@ def set_chg_report():
                 mer_t=str(df2.index[y]+1)+")"+str(df2.iloc[y])
                 ws_chg.cell(13+y+pre_cnt,11+x).value=mer_t
 # 광고대비 매출 csv 추출
+    print(df_web_dict["광고대비전환"].columns[1:])
     df=df_web_dict["광고대비전환"]
+    df=df[df.columns[1:]].astype(str).replace(",","").astype(int)
     next_y=set_df_to_sht(df,ws_chg,5,2)+2
 
     df_gsum=df.groupby(df.index//4).sum()
-    ws_chg.cell(next_y,2)="월간"
+    ws_chg.cell(next_y,2).value="월간"
     print(df_gsum)
     test()
     next_y=set_df_to_sht(df_gsum,ws_chg,next_y,2)+2
@@ -675,7 +677,7 @@ def get_adp_report(path):
         par = driver.find_elements_by_xpath("//th")
         for eachf in from_col:
             idxd=par.index(driver.find_element_by_xpath("//th/div/div/span[text()='"+eachf+"']/../../.."))
-            tmp_arr.append(driver.find_element_by_xpath("//tr[@class='summary-row']/td["+str(idxd+1)+"]").get_attribute("innerHTML").replace("원",""))
+            tmp_arr.append(int(driver.find_element_by_xpath("//tr[@class='summary-row']/td["+str(idxd+1)+"]").get_attribute("innerHTML").replace("원","")))
         arr_pro.insert(0,tmp_arr)
         driver.find_element_by_xpath("(//button[text()=' < '])").click()
     df = pd.DataFrame(arr_pro)
