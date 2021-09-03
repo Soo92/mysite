@@ -21,6 +21,7 @@ from openpyxl.drawing.image import Image
 import PIL
 import io
 import urllib3
+import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -336,7 +337,7 @@ def set_desc_report():
     buy2_per=round(int(ws_desc["E9"].value)/((int(ws_desc["C9"].value)+int(ws_desc["D9"].value))/2),2)
     buy2_text=get_per_text(buy2_per,str(buy2_per)+"배 증가","현상 유지",str(buy2_per)+"배 감소")
     to_ad_per=round(float(ws_desc["E12"].value)/((float(ws_desc["C12"].value)+float(ws_desc["D12"].value))/2),2)
-    to_ad_text=get_per_text(to_ad_per,str(to_ad_per)+"배 좋아졌습니다.","증감이 없습니다.",str(to_ad_per)+"배 나빠졌습니다.")
+    to_ad_text=get_per_text(to_ad_per,str(to_ad_per)+"배 증가했습니다.","증감이 없습니다.",str(to_ad_per)+"배 감소했습니다.")
     ef_per=round(float(ws_desc["E10"].value)/((float(ws_desc["C10"].value)+float(ws_desc["D10"].value))/2),2)
     ef_text=get_per_text(ef_per,str(ef_per)+"배 좋아졌습니다.","양호합니다.",str(ef_per)+"배 나빠졌습니다.")
     ef_text2=""
@@ -373,7 +374,7 @@ def set_desc_report():
     ws_desc["I9"].value="(광고비 "+ad_text+" 대비, 전환수 "+buy1_text+" / 전환액 "+buy2_text+")"
     ws_desc["I10"].value=str(month_r)+"월 광고비는 "+need_ad_price
     ws_desc["I11"].value="매출총액은 "+total_text+"로 "+total_desc
-    ws_desc["I12"].value=str(month_l)+"월 매출의 "+str(round(ws_desc["E12"].value*100))+"%는 광고 유입이며, 3개월 평균 대비 "+ to_ad_text
+    ws_desc["I12"].value=str(month_l)+"월 매출의 "+str(round(ws_desc["E12"].value*100))+"%는 광고 유입이며, 2개월 평균 대비 "+ to_ad_text
 
     df_mas_sum=df_web_dict["소재부분합리스트"].copy()[['대표이미지 URL','기본상품명','상품가격','네이버쇼핑 카테고리','노출수','클릭수','전환수','쇼핑몰 상품 ID','전환매출액(원)']]
     df_mas_worst=df_mas_sum[df_mas_sum["노출수"] > df_mas_sum["노출수"].quantile((100-rate)/100)].copy()
@@ -611,7 +612,13 @@ def driver_init():
     options.add_argument("--start-maximized")
     options.add_experimental_option('prefs', prefs)
 
-    driver = webdriver.Chrome(g_name, options=options)
+    chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
+    try:
+        driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
+    except:
+        chromedriver_autoinstaller.install(True)
+        driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
+    # driver = webdriver.Chrome(g_name, options=options)
     driver.implicitly_wait(10)
 
 # ---------------- 서브 모듈
@@ -813,8 +820,8 @@ def make_new_name(old_name,df_rel_key,df_pid):
             new_arr.pop(len(new_arr)-1)
             tmp_name=trim_name(" ".join(new_arr))
     new_name=" ".join(new_arr)
-    print("1",old_name)
-    print("2",new_name)
+    # print("1",old_name)
+    # print("2",new_name)
 
 # 인기검색어 추가
     pop_all_file=find_file("상품리스트.csv",FILE_FOLDER)
@@ -822,7 +829,7 @@ def make_new_name(old_name,df_rel_key,df_pid):
         pop_all_file_name=os.path.join(FILE_FOLDER,pop_all_file)
         df_web_key=pd.read_csv(pop_all_file_name, encoding='utf-8-sig')
     df_web_key=df_web_key[["상품번호(스마트스토어)","카테고리명"]].copy().drop_duplicates()
-    df_web_key=df_web_key.loc[df_web_key["상품번호(스마트스토어)"].astype(str)==str(df_pid),"카테고리명"].astype(str).str.replace(">"," > ").values[0]
+    df_web_key=df_web_key.loc[df_web_key["상품번호(스마트스토어)"].astype(float)==df_pid,"카테고리명"].astype(str).str.replace(">"," > ").values[0]
     pop_cate_file=find_file("인기검색어.csv",THIS_FOLDER)
     if find_file(pop_cate_file,THIS_FOLDER)!="False":
         pop_cate_file_name=os.path.join(THIS_FOLDER,pop_cate_file)
@@ -862,8 +869,8 @@ def trim_name(name):
                 if tmp_str[cc3].find(tmp3)>-1:
                     tmp_str[cc3]=tmp_str[cc3].replace(tmp3,"")
 
-    print("3",name)
-    print("4"," ".join(" ".join(tmp_str).split()).strip())
+    # print("3",name)
+    # print("4"," ".join(" ".join(tmp_str).split()).strip())
     return " ".join(" ".join(tmp_str).split()).strip()
 
 def pre_logout(path):
@@ -920,7 +927,7 @@ def get_pr_report(path):
         arr_col.append(eachc.text.replace("\n",""))
     time.sleep(1)
     driver.find_element_by_xpath("//a[@class='btn select_data']").click()
-    print(nowDate[6:])
+    # print(nowDate[6:])
     if nowDate[6:]=="01":
         driver.find_element_by_xpath("//span[text()='지난 달']").click()
     else:
@@ -1035,8 +1042,9 @@ def get_ad_report(path):
     driver.find_element_by_xpath('//div[@class="pl-2 filter-checkbox"][2]').click()
     driver.find_element_by_xpath('//button[@class="btn btn-sm btn-default-blue apply-button"]').click()
     driver.find_element_by_xpath("(//span[text()='다운로드'])").click()
-    time.sleep(1)
     tmp_file=find_file("보고서(주1회)",FILE_FOLDER)
+    while tmp_file=="False":
+        tmp_file=find_file("보고서(주1회)",FILE_FOLDER)
     tmp_file=os.path.join(FILE_FOLDER,tmp_file)
     df=pd.read_csv(tmp_file, encoding='utf-8-sig', skiprows=1)
     os.remove(tmp_file)
@@ -1466,7 +1474,7 @@ def get_new_sid():
     for i in range(0,5):
         df_mas=insert_row(0,df_mas,df_mas.columns)
     df_mas["입찰가"]=int(df_admin_dict["기본입찰가"])
-    df_mas["네이버쇼핑 상품 ID"]=str(df_admin_dict["네이버쇼핑 상품 ID"])
+    df_mas["네이버쇼핑 상품 ID"]=df_mas["네이버쇼핑 상품 ID"].astype(str)
     return df_mas
 def get_on_sid():
     df_mas=df_web_dict["소재현황리스트"].copy()
@@ -1597,25 +1605,25 @@ def set_data_to_ad():
 
 if __name__ == '__main__':
 
-    conti=input("if you dont want to test, e")
-    if conti!="e":
-        global THIS_FOLDER
-        global FILE_FOLDER
-        global nowWeekDay
-        global weekDel
-        THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-        FILE_FOLDER = "C:/Users/dltjd/ALINE/mysite/ex/알리네 간판"
-        nowWeekDay="화"
-        weekDel="☆"
-        file_admin=find_file("상품리스트","C:/Users/dltjd/ALINE/mysite/ex/알리네 간판")
-        if file_admin!="False":
-            admin_file=os.path.join("C:/Users/dltjd/ALINE/mysite/ex/알리네 간판",file_admin)
-            df_admin=pd.read_csv(admin_file, encoding='utf-8-sig')
-        while True:
-            pid=input("pid")
-            pname=df_admin.loc[df_admin["상품번호(스마트스토어)"].astype(str)==str(pid)]["상품명"].values[0]
-            print(pname)
-            print(get_rel_key(pname,pid))
+    # conti=input("if you dont want to test, e")
+    # if conti!="e":
+    #     global THIS_FOLDER
+    #     global FILE_FOLDER
+    #     global nowWeekDay
+    #     global weekDel
+    #     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    #     FILE_FOLDER = "C:/Users/dltjd/ALINE/mysite/ex/알리네 간판"
+    #     nowWeekDay="화"
+    #     weekDel="☆"
+    #     file_admin=find_file("상품리스트","C:/Users/dltjd/ALINE/mysite/ex/알리네 간판")
+    #     if file_admin!="False":
+    #         admin_file=os.path.join("C:/Users/dltjd/ALINE/mysite/ex/알리네 간판",file_admin)
+    #         df_admin=pd.read_csv(admin_file, encoding='utf-8-sig')
+    #     while True:
+    #         pid=input("pid")
+    #         pname=df_admin.loc[df_admin["상품번호(스마트스토어)"].astype(str)==str(pid)]["상품명"].values[0]
+    #         print(pname)
+    #         print(get_rel_key(pname,pid))
 
     timer_start()
     init()
