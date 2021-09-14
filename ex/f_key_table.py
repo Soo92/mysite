@@ -1065,8 +1065,9 @@ def get_ad_mass(path):
             time.sleep(5)
             tmp=driver.find_element_by_xpath("(//tbody[@class='has-data ng-star-inserted']/tr[1]/td[11]/elena-mass-result)").get_attribute("innerHTML")
         driver.find_element_by_xpath("(//tbody[@class='has-data ng-star-inserted']/tr[1]/td[11]/elena-mass-result)").click()
-        time.sleep(1)
         zp_fname=find_file("mas",FILE_FOLDER)
+        while zp_fname=="False":
+            zp_fname=find_file("mas",FILE_FOLDER)
         os.chdir(FILE_FOLDER)
         zipfile.ZipFile(zp_fname).extractall()
         os.remove(zp_fname)
@@ -1237,10 +1238,10 @@ def get_status_mass():
 
     df_status["소재현황"]=goodgg_val
     tmp_df=df_status.loc[(df_status['평균노출순위']>=price_dwn_cut)].copy()
-    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"소재현황"]=chapriup_val + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"].astype(int)+int(price_dwn_val)*((df_status['평균노출순위'].astype(float)-float(price_dwn_cut))//10+1)).astype(int,errors='ignore').astype(str)
-    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"입찰가"]=(df_status["입찰가"].astype(int)+int(price_dwn_val)*((df_status['평균노출순위'].astype(float)-float(price_dwn_cut))//10+1)).astype(int,errors='ignore')
-    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"소재현황"]=chapridwn_val + df_status["입찰가"].astype(int).astype(str) + ">" + (df_status["입찰가"].astype(int)+int(price_up_val)*((float(price_up_cut)-df_status['평균노출순위'].astype(float))//10+1)).astype(int,errors='ignore').astype(str)
-    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"입찰가"]=(df_status["입찰가"].astype(int)+int(price_up_val)*((float(price_up_cut)-df_status['평균노출순위'].astype(float))//10+1)).astype(int,errors='ignore')
+    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"소재현황"]=chapriup_val + df_status["입찰가"].astype(int,errors='ignore').astype(str) + ">" + (df_status["입찰가"].astype(int,errors='ignore')+int(price_dwn_val)*((df_status['평균노출순위'].astype(float)-float(price_dwn_cut))//10+1)).astype(int,errors='ignore').astype(str)
+    df_status.loc[(df_status['평균노출순위']>=price_dwn_cut),"입찰가"]=(df_status["입찰가"].astype(int,errors='ignore')+int(price_dwn_val)*((df_status['평균노출순위'].astype(float)-float(price_dwn_cut))//10+1)).astype(int,errors='ignore')
+    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"소재현황"]=chapridwn_val + df_status["입찰가"].astype(int,errors='ignore').astype(str) + ">" + (df_status["입찰가"].astype(int,errors='ignore')+int(price_up_val)*((float(price_up_cut)-df_status['평균노출순위'].astype(float))//10+1)).astype(int,errors='ignore').astype(str)
+    df_status.loc[(df_status['평균노출순위']<=price_up_cut),"입찰가"]=(df_status["입찰가"].astype(int,errors='ignore')+int(price_up_val)*((float(price_up_cut)-df_status['평균노출순위'].astype(float))//10+1)).astype(int,errors='ignore')
     df_status.loc[(df_status['평균노출순위']<=cut_rank) & (df_status['노출수']<=cut_show) & (df_status['클릭수']<=cut_clk) & (df_status['전환수']<=cut_buy)
     & ~((cut_pri_dwn < df_status['입찰가']) & (df_status['입찰가'] < cut_pri_up)),"소재현황"]=badgg_val
     if nextWeekDay==df_admin_dict["정기보고(요일)"]:
@@ -1471,10 +1472,11 @@ def get_new_sid():
         df_sub=df_web_dict["상품리스트"][["상품번호(스마트스토어)","추가홍보문구1","추가홍보문구2"]]
         df_mas=pd.merge(df_mas,df_sub,left_on="네이버쇼핑 상품 ID",right_on="상품번호(스마트스토어)",how="left")
         df_mas=df_mas.drop(columns=['상품번호(스마트스토어)'])
-    for i in range(0,5):
-        df_mas=insert_row(0,df_mas,df_mas.columns)
     df_mas["입찰가"]=int(df_admin_dict["기본입찰가"])
     df_mas["네이버쇼핑 상품 ID"]=df_mas["네이버쇼핑 상품 ID"].astype(str)
+    df_mas=insert_row(0,df_mas,df_mas.columns)
+    for i in range(0,4):
+        df_mas=insert_row(0,df_mas,['d',"","","","",""])
     return df_mas
 def get_on_sid():
     df_mas=df_web_dict["소재현황리스트"].copy()
@@ -1547,14 +1549,17 @@ def import_data_to_ad(key,key_file):
         ready_to_ad("소재 On-Off 수정",key_file)
     elif key=="☆입찰가변경리스트":
         ready_to_ad("소재 입찰가 수정",key_file)
-    elif key=="☆삭제소재리스트":
-        g_id_arr=df["광고그룹 ID"].copy().drop_duplicates().values
-        for g_id in g_id_arr:
-            path="https://manage.searchad.naver.com/customers/"+str(df_admin_dict["CUST_ID"])+"/adgroups/"+str(g_id)
-            driver_execute(path)
-            s_id_arr=df.loc[df["광고그룹 ID"]==g_id,"소재 ID"].copy().drop_duplicates().values
-            # for s_id in s_id_arr:
-            #     remove_s_id(s_id)
+    # elif key=="☆삭제소재리스트":
+    #     g_id_arr=df["광고그룹 ID"].copy().drop_duplicates().values
+    #     for g_id in g_id_arr:
+    #         path="https://manage.searchad.naver.com/customers/"+str(df_admin_dict["CUST_ID"])+"/adgroups/"+str(g_id)
+    #         driver_execute(path)
+    #         s_id_arr=df.loc[df["광고그룹 ID"]==g_id,"소재 ID"].copy().drop_duplicates().values
+    #         for s_id in s_id_arr:
+    #             remove_s_id(s_id)
+    #     ad_file=find_file("광고소재리스트",FILE_FOLDER)
+    #     ad_file=os.path.join(FILE_FOLDER,ad_file)
+    #     os.remove(ad_file)
     # elif key=="☆점검소재리스트":
     #     s_id_arr=df.copy().drop_duplicates().values
     #     for s_id in s_id_arr:
