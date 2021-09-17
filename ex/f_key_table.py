@@ -324,8 +324,12 @@ def set_desc_report():
         part_link=driver.find_element_by_xpath("//div[@style='flex-direction: column; padding-bottom: 0px; padding-top: 0px;']/div/div/a").get_attribute("href")
         driver_execute(part_link)
         date_up=driver.find_element_by_xpath("//time").get_attribute("title")[2:].replace("년 ",".").replace("월 ","/").replace("일","")
-        look_cnt=driver.find_element_by_xpath("//span[contains(text(),'조회')]/span").text
-        ws_desc["O6"].value=date_up+" ("+look_cnt+"회)"
+        if len(driver.find_elements_by_xpath("//span[contains(text(),'조회')]/span"))>0:
+            look_cnt=driver.find_element_by_xpath("//span[contains(text(),'조회')]/span").text
+            ws_desc["O6"].value=date_up+" ("+look_cnt+"회)"
+        else:
+            look_cnt=driver.find_element_by_xpath("//a[contains(text(),'좋아요')]/span").text
+            ws_desc["O6"].value=date_up+" ("+look_cnt+"개)"
         ws_desc["O6"].hyperlink = part_link
         ws_desc["O6"].style = "Hyperlink"
 
@@ -1036,11 +1040,14 @@ def get_pr_keyword(path):
 
 def get_ad_report(path):
     driver_execute(path)
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, 200)")
     driver.find_element_by_xpath('//button[@class="btn-sm dropdown-toggle btn btn-default"]').click()
     driver.find_element_by_xpath("(//button[text()='필터 만들기'])").click()
     driver.find_element_by_xpath('//button[@style="word-break: keep-all;"]').click()
     driver.find_element_by_xpath('//div[@class="pl-2 filter-checkbox"][2]').click()
     driver.find_element_by_xpath('//button[@class="btn btn-sm btn-default-blue apply-button"]').click()
+    driver.execute_script("window.scrollTo(0, -200)")
     driver.find_element_by_xpath("(//span[text()='다운로드'])").click()
     tmp_file=find_file("보고서(주1회)",FILE_FOLDER)
     while tmp_file=="False":
